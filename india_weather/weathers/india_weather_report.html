@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>India Weather Dashboard — 28 States &amp; 8 Union Territories</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(135deg, #0a0f1e 0%, #0f2744 60%, #1a1035 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+      padding: 0 0 3rem;
+    }
+
+    /* ── Header ── */
+    header {
+      background: rgba(0,0,0,.45);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 1.4rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: .8rem;
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .header-left h1 { font-size: 1.55rem; font-weight: 800; letter-spacing: -.5px; color: #f8fafc; }
+    .header-left p  { font-size: .78rem; color: #94a3b8; margin-top: .2rem; }
+    .header-right   { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+
+    .status-pill {
+      display: flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px; padding: .28rem .75rem;
+      font-size: .75rem; color: #94a3b8; white-space: nowrap;
+    }
+    .dot { width:8px; height:8px; border-radius:50%; background:#22c55e;
+             box-shadow:0 0 6px #22c55e; animation:pulse 2s infinite; }
+    .dot.loading { background:#f59e0b; box-shadow:0 0 6px #f59e0b; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    #refresh-btn {
+      background: rgba(99,102,241,.25); border: 1px solid rgba(99,102,241,.5);
+      color: #c7d2fe; border-radius: 999px; padding: .32rem 1rem;
+      font-size: .78rem; cursor: pointer; transition: background .2s;
+    }
+    #refresh-btn:hover    { background: rgba(99,102,241,.45); }
+    #refresh-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+    /* ── State nav ── */
+    #state-nav {
+      display: flex; flex-wrap: wrap; gap: .45rem;
+      padding: 1rem 1.5rem; max-width: 1800px; margin: 0 auto;
+    }
+    .state-btn {
+      border: 1px solid var(--c); color: var(--c);
+      background: transparent; border-radius: 999px;
+      padding: .3rem .85rem; font-size: .73rem; cursor: pointer;
+      transition: background .18s, color .18s;
+      white-space: nowrap;
+    }
+    .state-btn:hover, .state-btn.active {
+      background: var(--c); color: #0a0f1e; font-weight: 600;
+    }
+    .state-btn.ut-separator {
+      border: none; color: #64748b; background: transparent;
+      font-size: .65rem; text-transform: uppercase; letter-spacing: .08em;
+      padding: .25rem .5rem; cursor: default; pointer-events: none;
+      white-space: nowrap;
+    }
+    .state-btn.all-btn { border-color:#64748b; color:#64748b; }
+    .state-btn.all-btn:hover, .state-btn.all-btn.active {
+      background:#64748b; color:#0a0f1e;
+    }
+
+    /* ── State sections ── */
+    .state-section {
+      max-width: 1800px; margin: 1.5rem auto 0; padding: 0 1.5rem;
+    }
+    .state-header {
+      display: flex; align-items: center; gap: .75rem;
+      margin-bottom: 1rem; padding-bottom: .6rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    .state-header h2 {
+      font-size: 1.15rem; font-weight: 700; color: var(--accent);
+    }
+    .state-badge {
+      font-size: .7rem; background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: .35rem; padding: .15rem .55rem; color: #94a3b8;
+    }
+    .state-load-status {
+      margin-left: auto; font-size: .7rem; color: #64748b;
+    }
+
+    /* ── City grid ── */
+    .city-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ── City card ── */
+    .city-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.09);
+      border-top: 3px solid var(--accent);
+      border-radius: .85rem; padding: 1.1rem;
+      transition: opacity .25s, transform .2s;
+      min-height: 140px;
+    }
+    .city-card.refreshing { opacity: .4; }
+    .city-card:hover      { transform: translateY(-2px); }
+    .city-card.is-hottest { border-top-color: #f97316 !important; box-shadow: 0 0 14px rgba(249,115,22,.35); }
+    .city-card.is-coldest { border-top-color: #38bdf8 !important; box-shadow: 0 0 14px rgba(56,189,248,.35); }
+
+    .temp-badge {
+      display: inline-flex; align-items: center; gap: .25rem;
+      font-size: .62rem; font-weight: 700; border-radius: 999px;
+      padding: .15rem .5rem; margin-top: .25rem;
+    }
+    .temp-badge.hot { background: rgba(249,115,22,.18); color: #fb923c; border: 1px solid rgba(249,115,22,.35); }
+    .temp-badge.cold { background: rgba(56,189,248,.15); color: #38bdf8; border: 1px solid rgba(56,189,248,.3); }
+
+    .city-card-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: .6rem;
+    }
+    .city-name  { font-size: .95rem; font-weight: 700; color: #f1f5f9; }
+    .city-region { font-size: .62rem; color: #64748b; margin-top: .1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px; }
+    .city-region.wrong-location { color: #f87171; font-weight: 600; }
+    .city-obs   { font-size: .65rem; color: #475569; margin-top: .15rem; }
+    .city-temp  { font-size: 1.55rem; font-weight: 800; color: #f8fafc; line-height:1; }
+    .city-icon  { font-size: 1.4rem; text-align:right; line-height:1; }
+    .city-desc  { font-size: .76rem; color: #94a3b8; font-style: italic; margin-bottom: .75rem; }
+
+    .city-metrics {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .4rem;
+    }
+    .city-metric { font-size: .7rem; color: #64748b; }
+    .city-metric span { color: #cbd5e1; font-weight: 600; }
+
+    /* ── Forecast strip ── */
+    .city-forecast {
+      margin-top: .75rem; padding-top: .6rem;
+      border-top: 1px solid rgba(255,255,255,.07);
+      display: flex; gap: .45rem; overflow-x: auto;
+    }
+    .fc-day {
+      flex: 0 0 auto; text-align: center; font-size: .65rem;
+      background: rgba(255,255,255,.05); border-radius: .4rem;
+      padding: .3rem .5rem; min-width: 56px;
+    }
+    .fc-day .fc-date { color: #64748b; margin-bottom: .2rem; }
+    .fc-day .fc-hi   { color: #fbbf24; font-weight: 700; }
+    .fc-day .fc-lo   { color: #60a5fa; }
+
+    /* ── Skeleton ── */
+    .skeleton-line {
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.06) 25%,
+        rgba(255,255,255,.12) 50%,
+        rgba(255,255,255,.06) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: .3rem; height: .9rem; margin: .4rem 0;
+    }
+    .skeleton-line.w80  { width:80%; }
+    .skeleton-line.w55  { width:55%; }
+    .skeleton-line.w70  { width:70%; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    .error-msg {
+      color: #f87171; font-size: .78rem; padding: .5rem .7rem;
+      background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.22);
+      border-radius: .45rem; margin-top: .4rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center; margin-top: 2.5rem;
+      color: #334155; font-size: .75rem;
+    }
+    footer a { color: #475569; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>&#127868; India Weather Dashboard</h1>
+      <p>Live weather for 28 states + 8 union territories &amp; 780+ districts &mdash; powered by wttr.in</p>
+  </div>
+  <div class="header-right">
+    <div class="status-pill">
+      <span class="dot" id="live-dot"></span>
+      <span id="live-label">Live</span>
+    </div>
+    <div class="status-pill">&#128336; Refresh in <span id="countdown">5:00</span></div>
+    <div class="status-pill">&#128260; <span id="last-updated">&mdash;</span></div>
+    <div class="status-pill" id="pill-hot" style="display:none">&#128293; <span id="global-hot">&mdash;</span></div>
+    <div class="status-pill" id="pill-cold" style="display:none">&#10052; <span id="global-cold">&mdash;</span></div>
+    <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
+  </div>
+</header>
+
+<div id="state-nav">
+  <button class="state-btn all-btn active" style="--c:#64748b"
+          onclick="filterState('all', this)">All States</button>
+</div>
+
+<div id="state-container"></div>
+
+<footer>
+  Data from <a href="https://wttr.in" target="_blank">wttr.in</a> &bull;
+  28 state agents + 8 UT agents &bull; Auto-refreshes every 10 min &bull; Cache-busted per request
+</footer>
+
+<script>
+  const STATES = [
+    { id: "andhra_pradesh", name: "Andhra Pradesh", color: "#e84393", cities: ["Alluri Sitharama Raju", "Anakapalli", "Ananthapuramu", "Annamayya", "Bapatla", "Chittoor", "Dr. B.R. Ambedkar Konaseema", "East Godavari", "Eluru", "Guntur", "Kakinada", "Krishna", "Kurnool", "Nandyal", "NTR", "Palnadu", "Parvathipuram Manyam", "Prakasam", "Sri Potti Sriramulu Nellore", "Sri Sathya Sai", "Srikakulam", "Tirupati", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR"] },
+    { id: "arunachal_pradesh", name: "Arunachal Pradesh", color: "#6366f1", cities: ["Anjaw", "Bichom", "Changlang", "Dibang Valley", "East Kameng", "East Siang", "Itanagar", "Kamle", "Kra Daadi", "Kurung Kumey", "Lepa Rada", "Lohit", "Longding", "Lower Dibang Valley", "Lower Siang", "Lower Subansiri", "Namsai", "Pakke-Kessang", "Papum Pare", "Shi Yomi", "Siang", "Tawang", "Tirap", "Upper Siang", "Upper Subansiri", "West Kameng", "West Siang"] },
+    { id: "assam", name: "Assam", color: "#10b981", cities: ["Bajali", "Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup", "Kamrup Metropolitan", "Karbi Anglong", "Kokrajhar", "Lakhimpur", "Majuli", "Marigaon", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tamulpur", "Tinsukia", "Udalguri", "West Karbi Anglong"] },
+    { id: "bihar", name: "Bihar", color: "#f59e0b", cities: ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Pashchim Champaran", "Patna", "Purbi Champaran", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali"] },
+    { id: "chhattisgarh", name: "Chhattisgarh", color: "#ef4444", cities: ["Balod", "Balodabazar-Bhatapara", "Balrampur-Ramanujganj", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dakshin Bastar Dantewada", "Dhamtari", "Durg", "Gariyaband", "Gaurela-Pendra-Marwahi", "Janjgir-Champa", "Jashpur", "Kabirdham", "Khairagarh-Chhindgarh-Gandai", "Kondagaon", "Korba", "Korea", "Mahasamund", "Manendragarh-Chirmiri-Bharatpur", "Mohla", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sakti", "Sarangarh-Bilaigarh", "Sukma", "Surajpur", "Surguja"] },
+    { id: "goa", name: "Goa", color: "#06b6d4", cities: ["North Goa", "South Goa"] },
+    { id: "gujarat", name: "Gujarat", color: "#f97316", cities: ["Ahmedabad", "Amreli", "Anand", "Arvalli", "Banas Kantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dangs", "Devbhumi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kachchh", "Kheda", "Mahesana", "Mahisagar", "Morbi", "Narmada", "Navsari", "Panch Mahals", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"] },
+    { id: "haryana", name: "Haryana", color: "#84cc16", cities: ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"] },
+    { id: "himachal_pradesh", name: "Himachal Pradesh", color: "#3b82f6", cities: ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"] },
+    { id: "jharkhand", name: "Jharkhand", color: "#a855f7", cities: ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahebganj", "Saraikela Kharsawan", "Simdega", "West Singhbhum"] },
+    { id: "karnataka", name: "Karnataka", color: "#ec4899", cities: ["Bagalkote", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagara", "Chikkaballapura", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Vijayanagara", "Yadgir"] },
+    { id: "kerala", name: "Kerala", color: "#14b8a6", cities: ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"] },
+    { id: "madhya_pradesh", name: "Madhya Pradesh", color: "#f43f5e", cities: ["Agar-Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Maihar", "Mandla", "Mandsaur", "Mauganj", "Morena", "Nagda", "Narsinghpur", "Niwari", "Panna", "Pandhurna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha", "Chachaura"] },
+    { id: "maharashtra", name: "Maharashtra", color: "#8b5cf6", cities: ["Ahilyanagar", "Akola", "Amravati", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Chhatrapati Sambhajinagar", "Dharashiv", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"] },
+    { id: "manipur", name: "Manipur", color: "#0ea5e9", cities: ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"] },
+    { id: "meghalaya", name: "Meghalaya", color: "#22c55e", cities: ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "Eastern West Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"] },
+    { id: "mizoram", name: "Mizoram", color: "#eab308", cities: ["Aizawl", "Champhai", "Hnahthial", "Khawzawl", "Kolasib", "Lawngtlai", "Lunglei", "Mamit", "Saitual", "Serchhip", "Siaha"] },
+    { id: "nagaland", name: "Nagaland", color: "#64748b", cities: ["Chumoukedima", "Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon Nagaland", "Niuland", "Noklak", "Peren", "Phek", "Shamator", "Tseminyu", "Tuensang", "Wokha", "Zunheboto"] },
+    { id: "odisha", name: "Odisha", color: "#fb923c", cities: ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Deogarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"] },
+    { id: "punjab", name: "Punjab", color: "#facc15", cities: ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Malerkotla", "Mansa", "Moga", "Pathankot", "Patiala", "Rupnagar", "S.A.S. Nagar", "Sangrur", "Shahid Bhagat Singh Nagar", "Sri Muktsar Sahib", "Tarn Taran"] },
+    { id: "rajasthan", name: "Rajasthan", color: "#f97316", cities: ["Ajmer", "Alwar", "Anupgarh", "Balotra", "Banswara", "Baran", "Barmer", "Beawar", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Deeg", "Dholpur", "Didwana-Kuchaman", "Dudu", "Dungarpur", "Gangapur City", "Hanumangarh", "Jaipur", "Jaipur Rural", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Jodhpur Rural", "Karauli", "Kekri", "Khairthal-Tijara", "Kota", "Kotputli-Behror", "Nagaur", "Neem Ka Thana", "Pali", "Phalodi", "Pratapgarh", "Rajsamand", "Salumbar", "Sanchore", "Sawai Madhopur", "Shahpura", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"] },
+    { id: "sikkim", name: "Sikkim", color: "#2dd4bf", cities: ["East Sikkim", "North Sikkim", "Pakyong", "Soreng", "South Sikkim", "West Sikkim"] },
+    { id: "tamil_nadu", name: "Tamil Nadu", color: "#0ea5e9", cities: ["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupattur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"] },
+    { id: "telangana", name: "Telangana", color: "#dc2626", cities: ["Adilabad", "Bhadradri Kothagudem", "Hanumakonda", "Hyderabad", "Jagitial", "Jangaon", "Jayashankar Bhupalpally", "Jogulamba Gadwal", "Kamareddy", "Karimnagar", "Khammam", "Kumuram Bheem Asifabad", "Mahabubabad", "Mahbubnagar", "Mancherial", "Medak", "Medchal-Malkajgiri", "Mulugu", "Nagarkurnool", "Nalgonda", "Narayanpet", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Ranga Reddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal Rural", "Yadadri Bhuvanagiri"] },
+    { id: "tripura", name: "Tripura", color: "#7c3aed", cities: ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"] },
+    { id: "uttar_pradesh", name: "Uttar Pradesh", color: "#16a34a", cities: ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Ayodhya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda Uttar Pradesh", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Lakhimpur Kheri", "Kushinagar", "Lalitpur", "Lucknow", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"] },
+    { id: "uttarakhand", name: "Uttarakhand", color: "#0369a1", cities: ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"] },
+    { id: "west_bengal", name: "West Bengal", color: "#be185d", cities: ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"] },
+    { id: "andaman_nicobar", name: "Andaman & Nicobar Islands", color: "#38bdf8", cities: ["Nicobars", "North and Middle Andaman", "South Andaman"] },
+    { id: "chandigarh", name: "Chandigarh", color: "#a3e635", cities: ["Chandigarh"] },
+    { id: "dnh_dd", name: "Dadra & Nagar Haveli and Daman & Diu", color: "#e879f9", cities: ["Dadra and Nagar Haveli", "Daman", "Diu"] },
+    { id: "delhi", name: "Delhi (NCT)", color: "#f87171", cities: ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"] },
+    { id: "jammu_kashmir", name: "Jammu and Kashmir", color: "#818cf8", cities: ["Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Jammu", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Srinagar", "Udhampur"] },
+    { id: "ladakh", name: "Ladakh", color: "#94a3b8", cities: ["Kargil", "Leh"] },
+    { id: "lakshadweep", name: "Lakshadweep", color: "#34d399", cities: ["Kavaratti", "Agatti", "Minicoy", "Amini"] },
+    { id: "puducherry", name: "Puducherry", color: "#fb7185", cities: ["Karaikal", "Mahe", "Puducherry", "Yanam"] },
+  ];
+  const UT_IDS = new Set(["andaman_nicobar", "chandigarh", "dnh_dd", "delhi", "jammu_kashmir", "ladakh", "lakshadweep", "puducherry"]);
+
+  // ── Constants ──────────────────────────────────────────────────────────────
+  const REFRESH_SECS = 600;
+  const BATCH_SIZE   = 6;
+  const BATCH_DELAY  = 80;   // ms between batches within a state
+
+  // ── State ──────────────────────────────────────────────────────────────────
+  let countdown      = REFRESH_SECS;
+  let timerID;
+  let activeFilter   = "all";
+  let abortCtrl      = null;   // current AbortController
+  const dataCache    = {};    // city -> parsed object or null (error)
+
+  // ── Weather icons ──────────────────────────────────────────────────────────
+  const ICONS = {
+    sunny:"&#9728;&#65039;", clear:"&#9728;&#65039;", "partly cloudy":"&#9925;",
+    cloudy:"&#9729;&#65039;", overcast:"&#9729;&#65039;", mist:"&#127787;&#65039;",
+    fog:"&#127787;&#65039;", rain:"&#127783;&#65039;", drizzle:"&#127782;&#65039;",
+    snow:"&#10052;&#65039;", sleet:"&#127784;&#65039;", thunder:"&#9928;&#65039;",
+    blizzard:"&#127784;&#65039;", haze:"&#127787;&#65039;", smoke:"&#127787;&#65039;"
+  };
+  function icon(desc) {
+    const d = (desc||"").toLowerCase();
+    for (const [k,v] of Object.entries(ICONS)) if (d.includes(k)) return v;
+    return "&#127777;&#65039;";
+  }
+
+  // ── DOM helpers ────────────────────────────────────────────────────────────
+  function skeleton() {
+    return `<div class="skeleton-line w80"></div>
+            <div class="skeleton-line w55"></div>
+            <div class="skeleton-line w70"></div>`;
+  }
+
+  function parse(json, cityName) {
+    const cur  = json.current_condition[0];
+    const area = json.nearest_area[0];
+    const resolvedCountry = area.country[0].value;
+    const resolvedRegion  = area.region[0].value;
+    const resolvedArea    = area.areaName[0].value;
+    const wrongLocation   = resolvedCountry !== "India";
+    return {
+      city:cityName, region:resolvedRegion,
+      resolvedLabel: resolvedArea + ", " + resolvedRegion + (wrongLocation ? ", " + resolvedCountry : ""),
+      wrongLocation,
+      temp:cur.temp_C, feelsLike:cur.FeelsLikeC, humidity:cur.humidity,
+      desc:cur.weatherDesc[0].value, wind:cur.windspeedKmph,
+      windDir:cur.winddir16Point, vis:cur.visibility, pressure:cur.pressure,
+      uv:cur.uvIndex, cloud:cur.cloudcover,
+      obsTime:cur.localObsDateTime||cur.observation_time||"&mdash;",
+      forecast:json.weather.map(d=>({
+        date:d.date, maxC:d.maxtempC, minC:d.mintempC,
+        desc:d.hourly[4].weatherDesc[0].value
+      }))
+    };
+  }
+
+  function renderCard(el, d) {
+    const ic   = icon(d.desc);
+    const rows = d.forecast.map(f=>`
+      <div class="fc-day">
+        <div class="fc-date">${f.date.slice(5)}</div>
+        <div>${icon(f.desc)}</div>
+        <div class="fc-hi">${f.maxC}&deg;</div>
+        <div class="fc-lo">${f.minC}&deg;</div>
+      </div>`).join("");
+    el.innerHTML = `
+      <div class="city-card-top">
+        <div>
+          <div class="city-name">${displayName(d.city)}</div>
+          <div class="city-region${d.wrongLocation ? ' wrong-location' : ''}">${d.resolvedLabel}${d.wrongLocation ? ' &#9888;' : ''}</div>
+          <div class="city-obs">${d.obsTime}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="city-icon">${ic}</div>
+          <div class="city-temp">${d.temp}&deg;C</div>
+        </div>
+      </div>
+      <div class="city-desc">${d.desc}</div>
+      <div class="city-metrics">
+        <div class="city-metric">&#128167; Humidity <span>${d.humidity}%</span></div>
+        <div class="city-metric">&#127788; Wind <span>${d.wind} km/h ${d.windDir}</span></div>
+        <div class="city-metric">&#128065; Visibility <span>${d.vis} km</span></div>
+        <div class="city-metric">&#9729; Cloud <span>${d.cloud}%</span></div>
+        <div class="city-metric">&#127774; UV Index <span>${d.uv}</span></div>
+        <div class="city-metric">&#127897; Pressure <span>${d.pressure} mb</span></div>
+      </div>
+      <div class="city-forecast">${rows}</div>`;
+    el.classList.remove("refreshing");
+  }
+
+  function setCardError(el, city, msg) {
+    el.innerHTML = `<div class="city-name">${city}</div>
+                    <div class="error-msg">&#9888; ${msg}</div>`;
+    el.classList.remove("refreshing");
+  }
+
+  function updateStateStatus(stateId) {
+    const cards  = document.querySelectorAll(`#section-${stateId} .city-card`);
+    const loaded = [...cards].filter(c => !c.classList.contains("refreshing")).length;
+    const el = document.getElementById(`status-${stateId}`);
+    if (el) el.textContent = `${loaded}/${cards.length} loaded`;
+  }
+
+  // ── Temperature Extremes ────────────────────────────────────────────────────
+  // Per-state: highlight hottest + coldest card; update state header
+  function updateStateExtremes(stateId) {
+    const cards = Array.from(document.querySelectorAll(`#section-${stateId} .city-card`))
+      .filter(c => !c.classList.contains("refreshing") && c.querySelector(".city-temp"));
+
+    if (cards.length === 0) return;
+
+    // Remove previous highlights
+    cards.forEach(c => {
+      c.classList.remove("is-hottest","is-coldest");
+      c.querySelectorAll(".temp-badge").forEach(b => b.remove());
+    });
+
+    const temps = cards.map(c => ({
+      card: c,
+      name: c.querySelector(".city-name")?.textContent || "",
+      temp: parseFloat(c.querySelector(".city-temp")?.textContent || "0"),
+    }));
+
+    const maxT = Math.max(...temps.map(t => t.temp));
+    const minT = Math.min(...temps.map(t => t.temp));
+
+    temps.forEach(t => {
+      if (t.temp === maxT) {
+        t.card.classList.add("is-hottest");
+        const badge = document.createElement("span");
+        badge.className = "temp-badge hot"; badge.textContent = "&#128293; Hottest in state";
+        badge.innerHTML = "&#128293; Hottest in state";
+        t.card.querySelector(".city-name")?.after(badge);
+      }
+      if (t.temp === minT && minT !== maxT) {
+        t.card.classList.add("is-coldest");
+        const badge = document.createElement("span");
+        badge.className = "temp-badge cold";
+        badge.innerHTML = "&#10052; Coldest in state";
+        t.card.querySelector(".city-name")?.after(badge);
+      }
+    });
+
+    // Update state header status to also show extremes
+    const hotCard = temps.find(t => t.temp === maxT);
+    const coldCard = temps.find(t => t.temp === minT);
+    const el = document.getElementById(`status-${stateId}`);
+    const loaded = cards.length;
+    const total  = document.querySelectorAll(`#section-${stateId} .city-card`).length;
+    if (el && hotCard && coldCard) {
+      el.innerHTML = `${loaded}/${total} loaded &nbsp;&#128293; <b style="color:#fb923c">${hotCard.name} ${maxT}°C</b> &nbsp;&#10052; <b style="color:#38bdf8">${coldCard.name} ${minT}°C</b>`;
+    }
+  }
+
+  // Global: find hottest + coldest across all loaded districts
+  function updateGlobalExtremes() {
+    const allCards = Array.from(document.querySelectorAll(".city-card"))
+      .filter(c => !c.classList.contains("refreshing") && c.querySelector(".city-temp"));
+
+    if (allCards.length < 2) return;
+
+    const entries = allCards.map(c => {
+      // Determine state name from parent section
+      const sec = c.closest(".state-section");
+      const stateHeading = sec?.querySelector("h2")?.textContent || "";
+      return {
+        name:  c.querySelector(".city-name")?.textContent || "",
+        state: stateHeading,
+        temp:  parseFloat(c.querySelector(".city-temp")?.textContent || "0"),
+      };
+    });
+
+    const maxT = Math.max(...entries.map(e => e.temp));
+    const minT = Math.min(...entries.map(e => e.temp));
+    const hot  = entries.find(e => e.temp === maxT);
+    const cold = entries.find(e => e.temp === minT);
+
+    const pillHot  = document.getElementById("pill-hot");
+    const pillCold = document.getElementById("pill-cold");
+    const spanHot  = document.getElementById("global-hot");
+    const spanCold = document.getElementById("global-cold");
+
+    if (hot && pillHot && spanHot) {
+      pillHot.style.display = "";
+      spanHot.textContent = `${hot.name}, ${hot.state} — ${maxT}°C`;
+    }
+    if (cold && pillCold && spanCold) {
+      pillCold.style.display = "";
+      spanCold.textContent = `${cold.name}, ${cold.state} — ${minT}°C`;
+    }
+  }
+
+  function setGlobalStatus(fetching) {
+    const dot   = document.getElementById("live-dot");
+    const label = document.getElementById("live-label");
+    const btn   = document.getElementById("refresh-btn");
+    if (fetching) {
+      dot.classList.add("loading"); label.textContent = "Fetching…"; btn.disabled = true;
+    } else {
+      dot.classList.remove("loading"); label.textContent = "Live"; btn.disabled = false;
+      document.getElementById("last-updated").textContent =
+        new Date().toLocaleTimeString("en-IN", {hour:"2-digit",minute:"2-digit"});
+    }
+  }
+
+  // Strip state-qualifier suffixes added for wttr.in disambiguation
+  const STATE_SUFFIXES = new RegExp("\\s+(Uttar Pradesh|Nagaland|Madhya Pradesh|West Bengal|Tamil Nadu|Andhra Pradesh|Himachal Pradesh|Arunachal Pradesh|Karnataka|Maharashtra|India)$", "i");
+  function displayName(city) { return city.replace(STATE_SUFFIXES, '').trim(); }
+
+  // ── Core fetch ─────────────────────────────────────────────────────────────
+  // Fetch a single city. Returns true if successful, false if aborted/error.
+  async function fetchCity(city, cardEl, signal) {
+    cardEl.classList.add("refreshing");
+    cardEl.innerHTML = skeleton();
+    try {
+      const url  = `https://wttr.in/${encodeURIComponent(city)}?format=j1`;
+      const resp = await fetch(url, { cache:"no-store", signal });
+      if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+      const data = parse(await resp.json(), city);
+      dataCache[city] = data;
+      renderCard(cardEl, data);
+      return true;
+    } catch(e) {
+      if (e.name === "AbortError") { cardEl.innerHTML = skeleton(); cardEl.classList.add("refreshing"); return false; }
+      dataCache[city] = null;
+      setCardError(cardEl, city, e.message);
+      return false;
+    }
+  }
+
+  // ── Load a single state (respects abort signal) ────────────────────────────
+  async function loadState(state, signal, forceRefresh = false) {
+    const grid = document.getElementById(`grid-${state.id}`);
+    if (!grid) return;
+
+    const toFetch = [];
+    state.cities.forEach((city, idx) => {
+      const card = grid.querySelectorAll(".city-card")[idx];
+      if (!card) return;
+      if (!forceRefresh && dataCache[city]) {
+        // Serve from cache immediately
+        renderCard(card, dataCache[city]);
+      } else {
+        toFetch.push({ city, card });
+      }
+    });
+
+    updateStateStatus(state.id);
+    if (toFetch.length === 0) {
+      updateStateExtremes(state.id);
+      updateGlobalExtremes();
+      return;
+    }
+
+    for (let i = 0; i < toFetch.length; i += BATCH_SIZE) {
+      if (signal && signal.aborted) return;
+      const batch = toFetch.slice(i, i + BATCH_SIZE);
+      await Promise.allSettled(batch.map(t => fetchCity(t.city, t.card, signal)));
+      updateStateStatus(state.id);
+      if (i + BATCH_SIZE < toFetch.length && !(signal && signal.aborted)) {
+        await new Promise(r => setTimeout(r, BATCH_DELAY));
+      }
+    }
+    updateStateStatus(state.id);
+    if (!(signal && signal.aborted)) {
+      updateStateExtremes(state.id);   // highlight hottest/coldest in this state
+      updateGlobalExtremes();          // refresh India-wide extremes pill
+    }
+  }
+
+  // ── Load all states sequentially in background ────────────────────────────
+  async function loadAllStates(signal, forceRefresh = false) {
+    setGlobalStatus(true);
+    for (const state of STATES) {
+      if (signal && signal.aborted) break;
+      await loadState(state, signal, forceRefresh);
+    }
+    if (!(signal && signal.aborted)) setGlobalStatus(false);
+  }
+
+  // ── Build DOM layout ───────────────────────────────────────────────────────
+  function buildLayout() {
+    const nav = document.getElementById("state-nav");
+    const container = document.getElementById("state-container");
+    nav.innerHTML = `<button class="state-btn all-btn active" style="--c:#64748b"
+                             onclick="filterState('all',this)">All States &amp; UTs</button>`;
+    container.innerHTML = "";
+
+    let utSeparatorAdded = false;
+    STATES.forEach(state => {
+      // Insert UT separator before first UT
+      if (!utSeparatorAdded && UT_IDS.has(state.id)) {
+        utSeparatorAdded = true;
+        const sep = document.createElement("span");
+        sep.className = "state-btn ut-separator";
+        sep.textContent = "Union Territories";
+        nav.appendChild(sep);
+      }
+      const btn = document.createElement("button");
+      btn.className = "state-btn";
+      btn.style.setProperty("--c", state.color);
+      btn.textContent = state.name;
+      btn.onclick = () => filterState(state.id, btn);
+      nav.appendChild(btn);
+
+      const section = document.createElement("div");
+      section.className = "state-section";
+      section.id = `section-${state.id}`;
+      section.innerHTML = `
+        <div class="state-header" style="--accent:${state.color}">
+          <h2 style="--accent:${state.color}">${state.name}</h2>
+          <span class="state-badge">${state.cities.length} districts</span>
+          <span class="state-load-status" id="status-${state.id}">Waiting&hellip;</span>
+        </div>
+        <div class="city-grid" id="grid-${state.id}"></div>`;
+      container.appendChild(section);
+
+      const grid = section.querySelector(".city-grid");
+      state.cities.forEach(() => {
+        const card = document.createElement("div");
+        card.className = "city-card";
+        card.style.setProperty("--accent", state.color);
+        card.innerHTML = skeleton();
+        card.classList.add("refreshing");
+        grid.appendChild(card);
+      });
+    });
+  }
+
+  // ── Filter by state ────────────────────────────────────────────────────────
+  function filterState(id, btnEl) {
+    // Update active button
+    document.querySelectorAll(".state-btn").forEach(b => b.classList.remove("active"));
+    btnEl.classList.add("active");
+    activeFilter = id;
+
+    // Show/hide sections
+    STATES.forEach(s => {
+      const sec = document.getElementById(`section-${s.id}`);
+      if (sec) sec.style.display = (id === "all" || id === s.id) ? "" : "none";
+    });
+
+    // Abort whatever is running
+    if (abortCtrl) abortCtrl.abort();
+    abortCtrl = new AbortController();
+    const signal = abortCtrl.signal;
+
+    if (id === "all") {
+      // Back to all: scroll top, resume loading everything from cache where possible
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      loadAllStates(signal, false);
+    } else {
+      // Specific state: scroll into view, load just this state (fast)
+      const target = document.getElementById(`section-${id}`);
+      if (target) {
+        const headerH = document.querySelector("header")?.offsetHeight || 0;
+        const top = target.getBoundingClientRect().top + window.scrollY - headerH - 12;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+      const state = STATES.find(s => s.id === id);
+      if (state) {
+        setGlobalStatus(true);
+        loadState(state, signal, false).then(() => {
+          if (!signal.aborted) setGlobalStatus(false);
+        });
+      }
+    }
+  }
+
+  // ── Timer ──────────────────────────────────────────────────────────────────
+  function startTimer() {
+    clearInterval(timerID);
+    countdown = REFRESH_SECS;
+    timerID = setInterval(() => {
+      countdown--;
+      const m = String(Math.floor(countdown / 60)).padStart(1, "0");
+      const s = String(countdown % 60).padStart(2, "0");
+      const el = document.getElementById("countdown");
+      if (el) el.textContent = `${m}:${s}`;
+      if (countdown <= 0) triggerRefresh();
+    }, 1000);
+  }
+
+  // ── Manual / auto refresh ──────────────────────────────────────────────────
+  function triggerRefresh() {
+    startTimer();
+    if (abortCtrl) abortCtrl.abort();
+    abortCtrl = new AbortController();
+    const signal = abortCtrl.signal;
+
+    if (activeFilter === "all") {
+      // Clear entire cache, extremes, and reload everything
+      Object.keys(dataCache).forEach(k => delete dataCache[k]);
+      document.querySelectorAll(".is-hottest,.is-coldest").forEach(c => c.classList.remove("is-hottest","is-coldest"));
+      document.querySelectorAll(".temp-badge").forEach(b => b.remove());
+      document.getElementById("pill-hot").style.display  = "none";
+      document.getElementById("pill-cold").style.display = "none";
+      loadAllStates(signal, true);
+    } else {
+      // Clear only current state's cache and reload it
+      const state = STATES.find(s => s.id === activeFilter);
+      if (state) {
+        state.cities.forEach(c => delete dataCache[c]);
+        setGlobalStatus(true);
+        loadState(state, signal, true).then(() => {
+          if (!signal.aborted) setGlobalStatus(false);
+        });
+      }
+    }
+  }
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+  buildLayout();
+  startTimer();
+  abortCtrl = new AbortController();
+  // On first load: load all states sequentially (no cache yet)
+  loadAllStates(abortCtrl.signal, false);
+</script>
+</body>
+</html>

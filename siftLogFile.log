@@ -1,0 +1,2550 @@
+Warning | 19-06-2026 10:22:52 | 0 |  |  | Empty filename passed to function 
+
+Debug | 19-06-2026 10:22:52 | 0 |  |  | Sift2 25.11.12 
+
+Debug | 19-06-2026 10:22:52 | 0 |  |  | Qt compile 6.9.3 run 6.9.3 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | Pcs::backgroundStartServer() 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | Pcs::backgroundStartServer() return 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | Pcs::startServerIfNeeded 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | SessionThread construct 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 19-06-2026 10:22:53 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | " Setting Json File Path: " 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Opened project QDir( "C:/Users/ReddyA41" , nameFilters = { "*" },  QDir::SortFlags( Name | IgnoreCase ) , QDir::Filters( Dirs|Files|Drives|AllEntries ) ) 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | ProjectNotifier newProject 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | CheckVersion::runRequestForVersion.  enter 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | SiftWindow::open done 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::configure Port "COM4"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | "Serial" "COM4" setup for "Shell" 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Command Server listening on port 8875 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Log Server listening on port 8877 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::configure Port "COM5"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | "Serial" "COM5" setup for "Shell" 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | In fill json buffer view 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::configure Port "COM6"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | "Serial" "COM6" setup for "Shell" 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::configure Port "COM7"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | "Serial" "COM7" setup for "Shell" 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Port::configure Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | "Serial" "COM3" setup for "Shell" 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Pcs::isServerRunning taskList = "INFO: No tasks are running which match the specified criteria." 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Pcs::isServerRunning result = false 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Pcs::startServer() 
+
+Debug | 19-06-2026 10:22:54 | 0 |  |  | Pcs::startServer starting: "C:/Program Files/Sift2/pcs.exe" 
+
+Debug | 19-06-2026 10:22:55 | 0 |  |  | Pcs::startServer worked 
+
+Debug | 19-06-2026 10:22:55 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 19-06-2026 10:22:56 | 0 |  |  | Latest versions available = QJsonDocument({"pre":"26.05.27","stable":"25.11.12"}) 
+
+Debug | 19-06-2026 10:22:56 | 0 |  |  | CheckVersion::runRequestForVersion.  done 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::connect connected 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted return 
+
+
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 19-06-2026 10:22:57 | 0 |  |  | Port::Open Port "COM4"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 19-06-2026 10:22:57 | 0 |  |  | Port::Open Port "COM5"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 19-06-2026 10:22:57 | 0 |  |  | Port::Open Port "COM6"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 19-06-2026 10:22:57 | 0 |  |  | Port::Open Port "COM7"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 19-06-2026 10:22:57 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 19-06-2026 10:22:58 | 0 |  |  | Port::Open() Opening "COM3" 
+
+Debug | 19-06-2026 10:22:58 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 19-06-2026 10:22:58 | 0 |  |  | Port::Open() Opening "COM3" successful 
+
+Debug | 19-06-2026 10:22:58 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 19-06-2026 10:26:41 | 0 |  |  | 4212  Connecting... 
+
+Debug | 19-06-2026 10:26:41 | 0 |  |  |  Thread started 
+
+Debug | 19-06-2026 10:26:41 | 0 |  |  | 4212  Client connected 
+
+Debug | 19-06-2026 10:26:42 | 0 |  |  | 4212  Disconnected 
+
+Debug | 19-06-2026 10:26:55 | 0 |  |  | 1164  Connecting... 
+
+Debug | 19-06-2026 10:26:55 | 0 |  |  |  Thread started 
+
+Debug | 19-06-2026 10:26:55 | 0 |  |  | 1164  Client connected 
+
+Debug | 19-06-2026 10:26:56 | 0 |  |  | 1164  Disconnected 
+
+Debug | 19-06-2026 10:27:56 | 0 |  |  | 5584  Connecting... 
+
+Debug | 19-06-2026 10:27:56 | 0 |  |  |  Thread started 
+
+Debug | 19-06-2026 10:27:56 | 0 |  |  | 5584  Client connected 
+
+Debug | 19-06-2026 10:27:56 | 0 |  |  | 5584  Data in:  "GET / HTTP/1.1\r\nUser-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.8115\r\nHost: 127.0.0.1:8875\r\nConnection: Keep-Alive\r\n\r\n" 
+
+Debug | 19-06-2026 10:27:56 | 0 |  |  | 5584  Disconnected 
+
+Debug | 19-06-2026 10:27:56 | 0 |  |  | Client connected ! 
+
+Debug | 19-06-2026 10:28:04 | 0 |  |  | 4644  Connecting... 
+
+Debug | 19-06-2026 10:28:04 | 0 |  |  |  Thread started 
+
+Debug | 19-06-2026 10:28:04 | 0 |  |  | 4644  Client connected 
+
+Debug | 19-06-2026 10:28:04 | 0 |  |  | 4644  Data in:  "GET / HTTP/1.1\r\nUser-Agent: Mozilla/5.0 (Windows NT; Windows NT 10.0; en-IN) WindowsPowerShell/5.1.26100.8115\r\nHost: 127.0.0.1:8875\r\nConnection: Keep-Alive\r\n\r\n" 
+
+Debug | 19-06-2026 10:28:04 | 0 |  |  | 4644  Disconnected 
+
+Debug | 19-06-2026 10:28:10 | 0 |  |  | Client connected ! 
+
+Debug | 19-06-2026 10:28:30 | 0 |  |  | 4528  Connecting... 
+
+Debug | 19-06-2026 10:28:30 | 0 |  |  |  Thread started 
+
+Debug | 19-06-2026 10:28:30 | 0 |  |  | 4528  Client connected 
+
+Debug | 19-06-2026 10:28:30 | 0 |  |  | 4528  Data in:  "runUw mainApp \"DeviceSetupManager PUB_overrideCompletedPersistent true\"\n" 
+
+Debug | 19-06-2026 10:28:32 | 0 |  |  | 4528  Disconnected 
+
+Debug | 19-06-2026 10:28:39 | 0 |  |  | 4528  Connecting... 
+
+Debug | 19-06-2026 10:28:39 | 0 |  |  |  Thread started 
+
+Debug | 19-06-2026 10:28:39 | 0 |  |  | 4528  Client connected 
+
+Debug | 19-06-2026 10:28:40 | 0 |  |  | 4528  Disconnected 
+
+Debug | 19-06-2026 10:32:18 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:32:18 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:32:18 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:32:18 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 19-06-2026 10:32:18 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 19-06-2026 10:32:19 | 0 |  |  | Port::Open Port "COM5"|Serial|Shell|Native failed "Device is not open" 
+
+Debug | 19-06-2026 10:32:19 | 0 |  |  | NOTSEND: runUw mainApp "DeviceSetupManager PUB_overrideCompletedPersistent true" 
+
+Debug | 19-06-2026 10:36:23 | 0 |  |  | Pcs::availableDevices() 
+
+Debug | 19-06-2026 10:36:23 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 19-06-2026 10:36:23 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 19-06-2026 10:36:23 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 19-06-2026 10:36:24 | 0 |  |  | Pcs::isServerRunning taskList = "\"pcs.exe\",\"560\",\"Console\",\"2\",\"18,672 K\"" 
+
+Debug | 19-06-2026 10:36:24 | 0 |  |  | Pcs::isServerRunning result = true 
+
+Debug | 19-06-2026 10:36:24 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::connect connected 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::getDevices() 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::getDevices "l" 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::getDevices "" 
+
+Debug | 19-06-2026 10:36:26 | 0 |  |  | Pcs::availableDevices QList() 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::destroy Port "COM4"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::~Port Port "COM4"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | PortThread destruct 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::destroy Port "COM5"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::~Port Port "COM5"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | PortThread destruct 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::destroy Port "COM6"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::~Port Port "COM6"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | PortThread destruct 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::destroy Port "COM7"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::~Port Port "COM7"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | PortThread destruct 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::destroy Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:54:59 | 0 |  |  | Port::close() Port "COM3"|Serial|Shell|Native " " 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::close() closed  Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::~Port Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | PortThread destruct 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::configure Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | "Serial" "COM3" setup for "Shell" 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::open 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | ConnectionNotifier::annouceConnectionChanged 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::Open() Opening "COM3" 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::Open() Opening "COM3" successful 
+
+Debug | 19-06-2026 10:55:00 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 19-06-2026 11:07:58 | 0 |  |  | Pcs::availableDevices() 
+
+Debug | 19-06-2026 11:07:58 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 19-06-2026 11:07:58 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 19-06-2026 11:07:58 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 19-06-2026 11:07:59 | 0 |  |  | Pcs::isServerRunning taskList = "\"pcs.exe\",\"560\",\"Console\",\"2\",\"16,604 K\"" 
+
+Debug | 19-06-2026 11:07:59 | 0 |  |  | Pcs::isServerRunning result = true 
+
+Debug | 19-06-2026 11:07:59 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::connect connected 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::getDevices() 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::getDevices "l" 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::getDevices "" 
+
+Debug | 19-06-2026 11:08:01 | 0 |  |  | Pcs::availableDevices QList() 
+
+Debug | 19-06-2026 11:41:59 | 0 |  |  | Pcs::availableDevices() 
+
+Debug | 19-06-2026 11:41:59 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 19-06-2026 11:41:59 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 19-06-2026 11:41:59 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 19-06-2026 11:42:00 | 0 |  |  | Pcs::isServerRunning taskList = "\"pcs.exe\",\"560\",\"Console\",\"2\",\"16,472 K\"" 
+
+Debug | 19-06-2026 11:42:00 | 0 |  |  | Pcs::isServerRunning result = true 
+
+Debug | 19-06-2026 11:42:00 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::connect connected 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::getDevices() 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::getDevices "l" 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::getDevices "" 
+
+Debug | 19-06-2026 11:42:02 | 0 |  |  | Pcs::availableDevices QList() 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Waiting for SessionThread QThread(0x1d74551bee0, name = "SessionThread") to end 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | SessionThread finishing 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Session destruct Session(0x1d7455428f0) 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Port::destroy Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Port::close() Port "COM3"|Serial|Shell|Native " " 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Port::close() closed  Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Port::~Port Port "COM3"|Serial|Shell|Native 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | PortThread destruct 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | Done waiting for SessionThread to end, delete it 
+
+Debug | 19-06-2026 14:40:45 | 0 |  |  | SessionThread destruct 
+
+Warning | 07-07-2026 09:18:16 | 0 |  |  | Empty filename passed to function 
+
+Debug | 07-07-2026 09:18:16 | 0 |  |  | Sift2 25.11.12 
+
+Debug | 07-07-2026 09:18:16 | 0 |  |  | Qt compile 6.9.3 run 6.9.3 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | Pcs::backgroundStartServer() 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | Pcs::backgroundStartServer() return 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | Pcs::startServerIfNeeded 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | SessionThread construct 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 07-07-2026 09:18:17 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 07-07-2026 09:18:19 | 0 |  |  | " Setting Json File Path: " 
+
+Debug | 07-07-2026 09:18:19 | 0 |  |  | Opened project QDir( "C:/Users/ReddyA41" , nameFilters = { "*" },  QDir::SortFlags( Name | IgnoreCase ) , QDir::Filters( Dirs|Files|Drives|AllEntries ) ) 
+
+Debug | 07-07-2026 09:18:19 | 0 |  |  | ProjectNotifier newProject 
+
+Debug | 07-07-2026 09:18:19 | 0 |  |  | CheckVersion::runRequestForVersion.  enter 
+
+Debug | 07-07-2026 09:18:19 | 0 |  |  | SiftWindow::open done 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::configure Port "COM10"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | "Serial" "COM10" setup for "Shell" 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Command Server listening on port 8875 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Log Server listening on port 8877 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::configure Port "COM11"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | "Serial" "COM11" setup for "Shell" 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | In fill json buffer view 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | "Serial" "COM8" setup for "Shell" 
+
+hell|Native 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::configure Port "COM9"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | "Serial" "COM9" setup for "Shell" 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Port::configure Port "COM3"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | "Serial" "COM3" setup for "Shell" 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Pcs::isServerRunning taskList = "INFO: No tasks are running which match the specified criteria." 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Pcs::isServerRunning result = false 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Pcs::startServer() 
+
+Debug | 07-07-2026 09:18:20 | 0 |  |  | Pcs::startServer starting: "C:/Program Files/Sift2/pcs.exe" 
+
+Debug | 07-07-2026 09:18:21 | 0 |  |  | Pcs::startServer worked 
+
+Debug | 07-07-2026 09:18:21 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 07-07-2026 09:18:22 | 0 |  |  | Latest versions available = QJsonDocument({"pre":"26.05.27","stable":"25.11.12"}) 
+
+Debug | 07-07-2026 09:18:22 | 0 |  |  | CheckVersion::runRequestForVersion.  done 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::connect connected 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::waitServerStarted return 
+
+
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Port::Open() Opening "COM10" 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Port::Open() Opening "COM10" successful 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:18:23 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::Open() Opening "COM11" 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::Open() Opening "COM11" successful 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::Open() Opening "COM8" 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::Open() Opening "COM8" successful 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:18:24 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::Open() Opening "COM9" 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::Open() Opening "COM9" successful 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::Open() Opening "COM3" 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::Open() Opening "COM3" successful 
+
+Debug | 07-07-2026 09:18:25 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::availableDevices() 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::isServerRunning taskList = "\"pcs.exe\",\"43412\",\"Console\",\"5\",\"17,524 K\"" 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::isServerRunning result = true 
+
+Debug | 07-07-2026 09:18:50 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::connect connected 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::getDevices() 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::getDevices "l" 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::getDevices "" 
+
+Debug | 07-07-2026 09:18:52 | 0 |  |  | Pcs::availableDevices QList() 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::destroy Port "COM10"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::close() Port "COM10"|Serial|Shell|Native " " 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::close() closed  Port "COM10"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::~Port Port "COM10"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | PortThread destruct 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::configure Port "COM10"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | "Serial" "COM10" setup for "Shell" 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::destroy Port "COM11"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::close() Port "COM11"|Serial|Shell|Native " " 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::close() closed  Port "COM11"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::~Port Port "COM11"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | PortThread destruct 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | Port::configure Port "COM11"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:46 | 0 |  |  | "Serial" "COM11" setup for "Shell" 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::destroy Port "COM8"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::close() Port "COM8"|Serial|Shell|Native " " 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::close() closed  Port "COM8"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::~Port Port "COM8"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | PortThread destruct 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::configure Port "COM8"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | "Serial" "COM8" setup for "Shell" 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::destroy Port "COM9"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::close() Port "COM9"|Serial|Shell|Native " " 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::close() closed  Port "COM9"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::Open() Opening "COM10" 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::~Port Port "COM9"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | PortThread destruct 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::configure Port "COM9"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | "Serial" "COM9" setup for "Shell" 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::destroy Port "COM3"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::close() Port "COM3"|Serial|Shell|Native " " 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::close() closed  Port "COM3"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::~Port Port "COM3"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | PortThread destruct 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::configure Port "COM3"|Serial|Shell|Native 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | "Serial" "COM3" setup for "Shell" 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | ConnectionNotifier::annouceConnectionChanged 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::Open() Opening "COM11" 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::Open() Opening "COM11" successful 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:20:47 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Connection setting default port to "COM9" 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Port::Open() Opening "COM8" 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Port::Open() Opening "COM8" successful 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:20:48 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::Open() Opening "COM9" 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::Open() Opening "COM9" successful 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::Open() Opening "COM3" 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::Open() Opening "COM3" successful 
+
+Debug | 07-07-2026 09:20:49 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:21:02 | 0 |  |  | Connection setting default port to "D: COM8" 
+
+Debug | 07-07-2026 09:21:04 | 0 |  |  | handleSerialError, serial device resource timeout, failed or removed 
+
+Warning | 07-07-2026 09:21:04 | 0 |  |  | QIODevice::write (QSerialPort): device not open 
+
+Debug | 07-07-2026 09:21:04 | 0 |  |  | Failed to write to port Port "COM8"|Serial|Shell|Native "The wait operation timed out." 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Port::Open() Opening "COM8" 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Port::Open() Opening "COM8" successful 
+
+Debug | 07-07-2026 09:21:06 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:22:50 | 0 |  |  | Connection setting default port to "#: COM9" 
+
+Debug | 07-07-2026 09:22:50 | 0 |  |  | handleSerialError, serial device resource timeout, failed or removed 
+
+Warning | 07-07-2026 09:22:51 | 0 |  |  | QIODevice::write (QSerialPort): device not open 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Failed to write to port Port "COM9"|Serial|Shell|Native "The wait operation timed out." 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Port "COM9"|Serial|Shell|Native not open 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Port::open 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Port::Open() Opening "COM9" 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Port::Open() Opening "COM9" successful 
+
+Debug | 07-07-2026 09:22:51 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 07-07-2026 09:23:30 | 0 |  |  | Connection setting default port to "D: COM8" 
+
+Debug | 07-07-2026 09:24:10 | 0 |  |  | Connection::udw - waiting for result 
+
+e DSID_SERIAL_NUMBER" 3000 
+
+Debug | 07-07-2026 09:24:10 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:24:10 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:24:10 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:24:13 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:24:13 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 09:24:13 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_092413.sift" 
+
+Debug | 07-07-2026 09:24:13 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:24:13 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:24:13 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:24:19 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 09:24:24 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 09:24:24 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:24:24 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:24:24 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:24:52 | 0 |  |  | Connection setting default port to "D: COM8" 
+
+Debug | 07-07-2026 09:24:55 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 09:24:55 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:24:55 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:24:55 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:24:55 | 0 |  |  | Connection setting default port to "#: COM9" 
+
+Debug | 07-07-2026 09:25:15 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 09:25:15 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:25:15 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:25:15 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:25:15 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 4" 3000 
+
+Debug | 07-07-2026 09:25:16 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:16 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:16 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:18 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:25:19 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:19 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:25:19 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:21 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:25:21 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 38" 3000 
+
+Debug | 07-07-2026 09:25:21 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:21 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:21 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:22 | 0 |  |  | Connection setting default port to "D: COM8" 
+
+Debug | 07-07-2026 09:25:24 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:25:24 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:24 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:25:24 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:24 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 4" 3000 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:25:25 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 38" 3000 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:25:36 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:25:37 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 09:25:37 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:25:37 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:25:37 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 38" 3000 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:25:45 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 38" 3000 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:25:53 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:25:57 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 38" 3000 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:25:58 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 37" 3000 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 36" 3000 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:26:14 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 36" 3000 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:27:03 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 38" 3000 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:27:07 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:31:34 | 0 |  |  | Connection setting default port to "#: COM9" 
+
+Debug | 07-07-2026 09:52:06 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 10" 3000 
+
+Debug | 07-07-2026 09:52:06 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:06 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:06 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:07 | 0 |  |  | Connection setting default port to "D: COM8" 
+
+Debug | 07-07-2026 09:52:09 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:52:09 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:09 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:52:09 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:52:13 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:52:13 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 10" 3000 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:52:14 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 10" 3000 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:52:27 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:52:35 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:52:35 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 11" 3000 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | PortWatcher::wait() return "     Cal Linefeed Page Error;udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | Port::Udw captured result = "     Cal Linefeed Page Error;" 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | Emiting udw result "Cal Linefeed Page Error" 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | Connection::udw -- setValue "Cal Linefeed Page Error" 
+
+Debug | 07-07-2026 09:52:36 | 0 |  |  | Connection::udw - returning result QVariant(QString, "Cal Linefeed Page Error") 
+
+Debug | 07-07-2026 09:52:42 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:52:42 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 11" 3000 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | PortWatcher::wait() return "     Cal Linefeed Page Error;udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | Port::Udw captured result = "     Cal Linefeed Page Error;" 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | Emiting udw result "Cal Linefeed Page Error" 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | Connection::udw -- setValue "Cal Linefeed Page Error" 
+
+Debug | 07-07-2026 09:52:43 | 0 |  |  | Connection::udw - returning result QVariant(QString, "Cal Linefeed Page Error") 
+
+Debug | 07-07-2026 09:52:47 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:52:47 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 15" 3000 
+
+Debug | 07-07-2026 09:52:47 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:47 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:47 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:50 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:52:50 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:50 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:52:50 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 17" 3000 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:52:58 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 25" 3000 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:53:35 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:53:39 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:53:39 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 32" 3000 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:53:40 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:53:49 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:53:49 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 4" 3000 
+
+Debug | 07-07-2026 09:53:49 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:53:49 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:53:49 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:53:50 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:53:50 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:53:50 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:53:50 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:53:50 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:53:50 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 40" 3000 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:53:54 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:54:03 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:54:03 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 41" 3000 
+
+Debug | 07-07-2026 09:54:04 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:54:04 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:54:04 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:54:06 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:54:07 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:54:07 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:54:07 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:57:41 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 41" 3000 
+
+Debug | 07-07-2026 09:57:41 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:57:41 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:57:41 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:57:42 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:57:42 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:57:42 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:57:42 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:57:42 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:57:42 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:58:08 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:58:08 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 43" 3000 
+
+Debug | 07-07-2026 09:58:09 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:09 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:09 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:10 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:10 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:58:10 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:58:10 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:58:10 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:58:10 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:58:19 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 61" 3000 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:58:20 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:58:24 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:58:24 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 6" 3000 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:58:25 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:58:29 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:58:29 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 62" 3000 
+
+Debug | 07-07-2026 09:58:29 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:29 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:29 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:30 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:30 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:58:30 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:58:30 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:58:30 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:58:30 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:58:36 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 90" 3000 
+
+Debug | 07-07-2026 09:58:36 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:36 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:36 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:39 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:58:39 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:39 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:58:39 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 90" 3000 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 90" 3000 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:58:43 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | Failed to remove portWatcher ( PortWatcher(0x2b6d0522ec0) ) from object list 
+
+Debug | 07-07-2026 09:58:46 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:59:05 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:59:05 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 114" 3000 
+
+Debug | 07-07-2026 09:59:05 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:59:05 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:59:05 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:59:08 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:59:08 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:59:08 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:59:08 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:59:34 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:59:34 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 169" 3000 
+
+Debug | 07-07-2026 09:59:34 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:59:34 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:59:34 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:59:35 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:59:35 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:59:35 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:59:35 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:59:35 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:59:35 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:59:45 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:59:45 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 500" 3000 
+
+Debug | 07-07-2026 09:59:45 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:59:45 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:59:45 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:59:46 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:59:46 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 09:59:46 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 09:59:46 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 09:59:46 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 09:59:46 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 09:59:54 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 07-07-2026 09:59:54 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 501" 3000 
+
+Debug | 07-07-2026 09:59:54 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 09:59:54 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 09:59:54 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 09:59:57 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 09:59:57 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 09:59:57 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 09:59:57 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 501" 3000 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 10:00:06 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 10:00:17 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 10" 3000 
+
+Debug | 07-07-2026 10:00:17 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:00:17 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:00:17 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:00:18 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:00:18 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:00:18 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 10:00:18 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:00:18 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 10:00:18 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 10:00:20 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 15" 3000 
+
+Debug | 07-07-2026 10:00:20 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:00:20 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:00:20 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:00:23 | 0 |  |  | Connection::udw - returning result QVariant(Invalid) 
+
+Debug | 07-07-2026 10:00:23 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:00:23 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 07-07-2026 10:00:23 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | Port::udw "pe_digital_sensor.set MAIN_DOOR 1" 3000 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 10:01:12 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | Connection::udw - waiting for result 
+
+OOR 0" 3000 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | PortWatcher::wait() return "udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | Port::Udw captured result = "" 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 10:01:50 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 10:02:02 | 0 |  |  | Control 'C' 
+
+Debug | 07-07-2026 10:16:29 | 0 |  |  | Connection setting default port to "#: COM9" 
+
+Debug | 07-07-2026 10:19:01 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:19:01 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_101901.sift" 
+
+Debug | 07-07-2026 10:19:11 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:19:16 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:19:16 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_101916.sift" 
+
+Debug | 07-07-2026 10:19:25 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:19:56 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:19:56 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_101956.sift" 
+
+Debug | 07-07-2026 10:20:05 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:20:10 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:20:10 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102010.sift" 
+
+Debug | 07-07-2026 10:20:19 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:20:25 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:20:25 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102025.sift" 
+
+Debug | 07-07-2026 10:20:34 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:20:39 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:20:39 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102039.sift" 
+
+Debug | 07-07-2026 10:20:49 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:21:11 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:21:11 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102111.sift" 
+
+Debug | 07-07-2026 10:21:20 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:21:26 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:21:26 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102126.sift" 
+
+Debug | 07-07-2026 10:21:35 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:21:40 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:21:40 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102140.sift" 
+
+Debug | 07-07-2026 10:21:49 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:22:55 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:22:55 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102255.sift" 
+
+Debug | 07-07-2026 10:23:04 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:24:09 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:24:09 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102409.sift" 
+
+Debug | 07-07-2026 10:24:19 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:25:24 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:25:24 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102524.sift" 
+
+Debug | 07-07-2026 10:25:33 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:26:38 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:26:38 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102638.sift" 
+
+Debug | 07-07-2026 10:26:48 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:27:53 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:27:53 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102753.sift" 
+
+Debug | 07-07-2026 10:28:02 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:29:08 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:29:08 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_102908.sift" 
+
+Debug | 07-07-2026 10:29:17 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:30:22 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:30:22 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_103022.sift" 
+
+Debug | 07-07-2026 10:30:31 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:30:37 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:30:37 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_103037.sift" 
+
+Debug | 07-07-2026 10:30:47 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:43:51 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:43:51 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104351.sift" 
+
+Debug | 07-07-2026 10:44:00 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:44:06 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:44:06 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104406.sift" 
+
+Debug | 07-07-2026 10:44:15 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:44:46 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:44:46 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104446.sift" 
+
+Debug | 07-07-2026 10:44:55 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:45:01 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:45:01 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104501.sift" 
+
+Debug | 07-07-2026 10:45:10 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:45:16 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:45:16 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104516.sift" 
+
+Debug | 07-07-2026 10:45:25 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:45:31 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:45:31 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104531.sift" 
+
+Debug | 07-07-2026 10:45:40 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:46:03 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:46:03 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104603.sift" 
+
+Debug | 07-07-2026 10:46:12 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:46:17 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:46:17 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104617.sift" 
+
+Debug | 07-07-2026 10:46:26 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:46:32 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:46:32 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104632.sift" 
+
+Debug | 07-07-2026 10:46:41 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:47:47 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:47:47 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104747.sift" 
+
+Debug | 07-07-2026 10:47:56 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:49:01 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:49:01 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_104901.sift" 
+
+Debug | 07-07-2026 10:49:11 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:50:16 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:50:16 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_105016.sift" 
+
+Debug | 07-07-2026 10:50:26 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:51:31 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:51:31 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_105131.sift" 
+
+Debug | 07-07-2026 10:51:40 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:52:46 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:52:46 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_105246.sift" 
+
+Debug | 07-07-2026 10:52:55 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:54:00 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:54:00 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_105400.sift" 
+
+Debug | 07-07-2026 10:54:10 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:55:15 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:55:15 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_105515.sift" 
+
+Debug | 07-07-2026 10:55:24 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:55:30 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:55:30 | 0 |  |  | UpdateLogging true "C:/Users/ReddyA41/ERROR:INVALID_26Jul07_105530.sift" 
+
+Debug | 07-07-2026 10:55:39 | 0 |  |  | UpdateLogging false "" 
+
+Debug | 07-07-2026 10:57:10 | 0 |  |  | Connection setting default port to "D: COM8" 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 11" 3000 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | PortWatcher::wait() return "     Cal Linefeed Page Error;udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | Port::Udw captured result = "     Cal Linefeed Page Error;" 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | Emiting udw result "Cal Linefeed Page Error" 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | Connection::udw -- setValue "Cal Linefeed Page Error" 
+
+Debug | 07-07-2026 10:57:31 | 0 |  |  | Connection::udw - returning result QVariant(QString, "Cal Linefeed Page Error") 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | Port::udw "reports_mgr.virtual_tap_report 17" 3000 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 10:57:40 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | Connection::udw - waiting for result 
+
+rt 25" 3000 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | Emiting udw result "" 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 07-07-2026 10:57:47 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 07-07-2026 10:57:54 | 0 |  |  | Control 'C' 
+
+Debug | 07-07-2026 12:11:41 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 12:11:41 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:11:41 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:11:41 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:11 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 12:12:11 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:11 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:11 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:32 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 12:12:32 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:32 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:32 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:54 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 12:12:54 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:54 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 12:12:54 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 15:16:21 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>] 
+
+Debug | 07-07-2026 15:16:21 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 15:16:21 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 15:16:21 | 0 |  |  | Warning:  Unsupported CSI code: \033[<...>? 
+
+Debug | 07-07-2026 15:59:23 | 0 |  |  | handleSerialError, serial device resource timeout, failed or removed 
+
+Warning | 09-07-2026 11:58:22 | 0 |  |  | Empty filename passed to function 
+
+Debug | 09-07-2026 11:58:22 | 0 |  |  | Sift2 25.11.12 
+
+Debug | 09-07-2026 11:58:22 | 0 |  |  | Qt compile 6.9.3 run 6.9.3 
+
+Debug | 09-07-2026 11:58:23 | 0 |  |  | Pcs::backgroundStartServer() 
+
+Debug | 09-07-2026 11:58:23 | 0 |  |  | Pcs::startServerIfNeeded 
+
+) return 
+
+Debug | 09-07-2026 11:58:23 | 0 |  |  | SessionThread construct 
+
+Debug | 09-07-2026 11:58:23 | 0 |  |  | Pcs::connect() "localhost" 8779 
+
+Debug | 09-07-2026 11:58:23 | 0 |  |  | Pcs::isServerRunning() 
+
+Debug | 09-07-2026 11:58:23 | 0 |  |  | Pcs::isServerRunning check taskList 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | " Setting Json File Path: " 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Opened project QDir( "C:/Users/ReddyA41" , nameFilters = { "*" },  QDir::SortFlags( Name | IgnoreCase ) , QDir::Filters( Dirs|Files|Drives|AllEntries ) ) 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | ProjectNotifier newProject 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | CheckVersion::runRequestForVersion.  enter 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | SiftWindow::open done 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::configure Port "COM10"|Serial|Shell|Native 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | "Serial" "COM10" setup for "Shell" 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Command Server listening on port 8875 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Log Server listening on port 8877 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::configure Port "COM11"|Serial|Shell|Native 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | "Serial" "COM11" setup for "Shell" 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | In fill json buffer view 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::configure Port "COM8"|Serial|Shell|Native 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | "Serial" "COM8" setup for "Shell" 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::configure Port "COM9"|Serial|Shell|Native 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | "Serial" "COM9" setup for "Shell" 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port "NoName"|NoDevice|NoChannel|NoProtocol constructed, metatypes registered:  true 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::create Port "NoName"|NoDevice|NoChannel|NoProtocol 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | Port::configure Port "COM3"|Serial|Shell|Native 
+
+Debug | 09-07-2026 11:58:24 | 0 |  |  | "Serial" "COM3" setup for "Shell" 
+
+Debug | 09-07-2026 11:58:25 | 0 |  |  | Pcs::isServerRunning taskList = "INFO: No tasks are running which match the specified criteria." 
+
+Debug | 09-07-2026 11:58:25 | 0 |  |  | Pcs::isServerRunning result = false 
+
+Debug | 09-07-2026 11:58:25 | 0 |  |  | Pcs::startServer() 
+
+Debug | 09-07-2026 11:58:25 | 0 |  |  | Pcs::startServer starting: "C:/Program Files/Sift2/pcs.exe" 
+
+Debug | 09-07-2026 11:58:25 | 0 |  |  | Pcs::startServer worked 
+
+Debug | 09-07-2026 11:58:25 | 0 |  |  | Pcs::connect connectToHost 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::connect connected 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::getVersion() 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::version "?v" 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::version "2.3.0" 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::startServerIfNeeded return 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 09-07-2026 11:58:27 | 0 |  |  | Port::Open Port "COM10"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 09-07-2026 11:58:27 | 0 |  |  | Port::Open Port "COM11"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 09-07-2026 11:58:27 | 0 |  |  | Port::Open Port "COM8"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open, device type = serial 
+
+Warning | 09-07-2026 11:58:27 | 0 |  |  | Port::Open Port "COM9"|Serial|Shell|Native failed "Unknown error" 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | handleSerialError, device can only perform action when open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 09-07-2026 11:58:27 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 09-07-2026 11:58:28 | 0 |  |  | Port::Open() Opening "COM3" 
+
+Debug | 09-07-2026 11:58:28 | 0 |  |  | handleSerialError, error state cleared, no error 
+
+Debug | 09-07-2026 11:58:28 | 0 |  |  | Port::Open() Opening "COM3" successful 
+
+Debug | 09-07-2026 11:58:28 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 09-07-2026 11:58:39 | 0 |  |  | Latest versions available = QJsonDocument({"pre":"26.07.07","stable":"26.05.27"}) 
+
+Debug | 09-07-2026 11:58:39 | 0 |  |  | CheckVersion::runRequestForVersion.  done 
+
+Debug | 09-07-2026 13:41:35 | 0 |  |  | Connection setting default port to "COM8" 
+
+Debug | 09-07-2026 13:41:35 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 13:41:35 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 13:41:35 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 13:41:35 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 13:41:35 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::Open() Opening "COM10" 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::Open() Opening "COM10" successful 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::Open() Opening "COM11" 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::Open() Opening "COM11" successful 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 13:41:36 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::Open() Opening "COM8" 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::Open() Opening "COM8" successful 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Wrote:    OpenMode( "ReadOnly|WriteOnly" ) 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::open 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Pcs::waitServerStarted 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Pcs::waitServerStarted return 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::open, device type = serial 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::Open() Opening "COM9" 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::Open() Opening "COM9" successful 
+
+Debug | 09-07-2026 13:41:37 | 0 |  |  | Port::open connected device to handleReadyRead 
+
+Debug | 09-07-2026 13:41:43 | 0 |  |  | Connection setting default port to "D: COM9" 
+
+Debug | 09-07-2026 14:03:32 | 0 |  |  | Favorites::onSend() 9 0 
+
+Debug | 09-07-2026 14:03:34 | 0 |  |  | Favorites::onSend() 11 0 
+
+Debug | 09-07-2026 14:03:39 | 0 |  |  | Favorites::onSend() 11 0 
+
+Debug | 09-07-2026 14:03:41 | 0 |  |  | Favorites::onSend() 12 0 
+
+Debug | 09-07-2026 14:06:03 | 0 |  |  | Favorites::onSend() 7 1 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | Port::udw "nca.get_preferred_address" 3000 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | Emiting udw result "" 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 14:27:03 | 0 |  |  | PortWatcher "::.*:(\\d+\\.\\d+\\.\\d+\\.\\d+)" wait 
+
+Debug | 09-07-2026 14:27:06 | 0 |  |  | PortWatcher.  Found match on pattern= "::.*:(\\d+\\.\\d+\\.\\d+\\.\\d+)" 
+
+Debug | 09-07-2026 14:27:06 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 09-07-2026 14:32:47 | 0 |  |  | Control 'C' 
+
+Debug | 09-07-2026 14:40:53 | 0 |  |  | Connection::udw - waiting for result 
+
+000 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | Emiting udw result "" 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 14:40:54 | 0 |  |  | PortWatcher "::.*:(\\d+\\.\\d+\\.\\d+\\.\\d+)" wait 
+
+Debug | 09-07-2026 14:40:57 | 0 |  |  | PortWatcher.  Found match on pattern= "::.*:(\\d+\\.\\d+\\.\\d+\\.\\d+)" 
+
+Debug | 09-07-2026 14:40:57 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Connection::udw - waiting for result 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Port::udw "udw.get_verbose_fw_rev" 3000 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | PortWatcher::wait() return "Ares_sunspearPlusWl_lp1 Built:Thu, 02 Jul 2026 05:11:29 +0200 {SXL1A6.36.1.27-20;udws() returns 0 (0x0)" 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Port::Udw captured result = "Ares_sunspearPlusWl_lp1 Built:Thu, 02 Jul 2026 05:11:29 +0200 {SXL1A6.36.1.27-20;" 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Emiting udw result "Ares_sunspearPlusWl_lp1 Built:Thu, 02 Jul 2026 05:11:29 +0200 {SXL1A6.36.1.27-20" 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Connection::udw -- setValue "Ares_sunspearPlusWl_lp1 Built:Thu, 02 Jul 2026 05:11:29 +0200 {SXL1A6.36.1.27-20" 
+
+Debug | 09-07-2026 14:43:03 | 0 |  |  | Connection::udw - returning result QVariant(QString, "Ares_sunspearPlusWl_lp1 Built:Thu, 02 Jul 2026 05:11:29 +0200 {SXL1A6.36.1.27-20") 
+
+Debug | 09-07-2026 14:46:16 | 0 |  |  | Favorites::onSend() 43 4 
+
+Debug | 09-07-2026 14:46:17 | 0 |  |  | Favorites::onSend() 44 4 
+
+Debug | 09-07-2026 14:46:19 | 0 |  |  | Favorites::onSend() 45 4 
+
+Debug | 09-07-2026 14:46:20 | 0 |  |  | Favorites::onSend() 46 4 
+
+Debug | 09-07-2026 14:46:21 | 0 |  |  | Favorites::onSend() 47 4 
+
+Debug | 09-07-2026 14:46:22 | 0 |  |  | Favorites::onSend() 48 4 
+
+Debug | 09-07-2026 14:46:23 | 0 |  |  | Favorites::onSend() 49 4 
+
+Debug | 09-07-2026 14:46:24 | 0 |  |  | Favorites::onSend() 50 4 
+
+Debug | 09-07-2026 15:08:28 | 0 |  |  | Favorites::onSend() 43 4 
+
+Debug | 09-07-2026 15:08:30 | 0 |  |  | Favorites::onSend() 44 4 
+
+Debug | 09-07-2026 15:08:31 | 0 |  |  | Favorites::onSend() 45 4 
+
+Debug | 09-07-2026 15:08:32 | 0 |  |  | Favorites::onSend() 46 4 
+
+Debug | 09-07-2026 15:08:33 | 0 |  |  | Favorites::onSend() 47 4 
+
+Debug | 09-07-2026 15:08:33 | 0 |  |  | Favorites::onSend() 48 4 
+
+Debug | 09-07-2026 15:08:34 | 0 |  |  | Favorites::onSend() 49 4 
+
+Debug | 09-07-2026 15:08:35 | 0 |  |  | Favorites::onSend() 50 4 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | Connection::udw - waiting for result 
+
+000 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | Port::Udw waiting for result 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | PortWatcher "(.*)udws\\(\\) returns" wait 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | PortWatcher.  Found match on pattern= "(.*)udws\\(\\) returns" 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | PortWatcher::wait() return ";udws() returns 0 (0x0)" 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | Port::Udw captured result = ";" 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | Emiting udw result "" 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | Connection::udw -- setValue "" 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | Connection::udw - returning result QVariant(QString, "") 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | PortWatcher::wait() "" 3000 
+
+Debug | 09-07-2026 15:10:31 | 0 |  |  | PortWatcher "::.*:(\\d+\\.\\d+\\.\\d+\\.\\d+)" wait 
+
+Debug | 09-07-2026 15:10:34 | 0 |  |  | PortWatcher.  Found match on pattern= "::.*:(\\d+\\.\\d+\\.\\d+\\.\\d+)" 
+
+Debug | 09-07-2026 15:10:34 | 0 |  |  | PortWatcher::wait() return "" 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Waiting for SessionThread QThread(0x1ffe4d6b620, name = "SessionThread") to end 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | SessionThread finishing 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Session destruct Session(0x1ffe4d58280) 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::destroy Port "COM3"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() Port "COM3"|Serial|Shell|Native " " 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() closed  Port "COM3"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::~Port Port "COM3"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | PortThread destruct 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::destroy Port "COM9"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() Port "COM9"|Serial|Shell|Native " " 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() closed  Port "COM9"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::~Port Port "COM9"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | PortThread destruct 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::destroy Port "COM8"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() Port "COM8"|Serial|Shell|Native " " 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() closed  Port "COM8"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::~Port Port "COM8"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | PortThread destruct 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::destroy Port "COM11"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() Port "COM11"|Serial|Shell|Native " " 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() closed  Port "COM11"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::~Port Port "COM11"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | PortThread destruct 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::destroy Port "COM10"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() Port "COM10"|Serial|Shell|Native " " 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::close() closed  Port "COM10"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Port::~Port Port "COM10"|Serial|Shell|Native 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | PortThread destruct 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | Done waiting for SessionThread to end, delete it 
+
+Debug | 09-07-2026 19:01:31 | 0 |  |  | SessionThread destruct 
+

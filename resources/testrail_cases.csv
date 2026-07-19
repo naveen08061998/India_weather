@@ -1,0 +1,382 @@
+﻿Case ID,Title,Pre-conditions,Step #,Step Description,Expected Result
+C86452392,Administration - Enable/Disable - Disable Scan to Computer (WSD),,1,"Disabled the Scan to Computer function
+
+- Access to EWS -> Security -> Printer Features.
+
+- Uncheck the Scan to Computer function.
+
+- Click on Apply button.
+
+- Check for the Scan to Computer app from control panel.
+Step applicable for Consumer devices with Scan to Computer.","Verify the Scan to Computer has disappeared from the front panel.
+LED status, Sound and screen displays correctly."
+C86452392,Administration - Enable/Disable - Disable Scan to Computer (WSD),,2,"Enabled the Scan to Computer function
+
+- Access to EWS -> Security -> Printer Features.
+
+- Checked the Scan to Computer function.
+
+- Click on Apply button.
+
+- Check for the Scan to Computer app from control panel.
+
+- Perform a Scan to Computer from control panle.
+Step applicable for Consumer devices with Scan to Computer.","Scan to Computer app appears on the front panel.
+Scan to Computer job can be completed without error, and output is correctly.
+LED status, Sound and screen displays correctly."
+C86452392,Administration - Enable/Disable - Disable Scan to Computer (WSD),,3,"Disabled the Web Scan function
+
+- Access to EWS -> Network -> Adcanced Settings > Remote Scan.
+
+- Turn off Network Initiated Scanning, eSCL, eSCL Secure and Web Scan.
+
+- Check Scan > Web Scan from EWS.
+Step applicable for Consumer devices with Web Scan.","Verify the Web Scan has disabled from the front panel.
+LED status, Sound and screen displays correctly."
+C86452392,Administration - Enable/Disable - Disable Scan to Computer (WSD),,4,"Enabled the Web Scan function
+
+- Access to EWS -> Network -> Adcanced Settings > Remote Scan.
+
+- Turn On Network Initiated Scanning, eSCL, eSCL Secure and Web Scan.
+
+- Check Scan > Web Scan from EWS.
+
+- Perform a Web Scan from EWS.
+Step applicable for Consumer devices with Web Scan.","Web Scan is enabled on EWS page.
+Web Scan job can be completed without error, and output is correctly.
+LED status, Sound and screen displays correctly."
+C86452392,Administration - Enable/Disable - Disable Scan to Computer (WSD),,5,"Disabled the WSD function
+
+- Access to EWS -> Network -> Adcanced Settings > Web Services (Microsoft).
+
+- Turn off WS-Scan.
+
+- Perform a WS-Scan job from PC (WSD).
+Step applicable for Consumer devices with WSD.","Verify the WS-Scan has disabled and cannot perform from PC.
+LED status, Sound and screen displays correctly."
+C86452392,Administration - Enable/Disable - Disable Scan to Computer (WSD),,6,"Enabled the WSD function
+
+- Access to EWS -> Network -> Adcanced Settings > Web Services (Microsoft).
+
+- Turn On WS-Scan.
+
+- Perform a WS-Scan job from PC (WSD).
+Step applicable for Consumer devices with WSD.","WS-Scan is enabled on EWS page.
+WS-Scan job can be completed without error, and output is correctly.
+LED status, Sound and screen displays correctly."
+C86452405,Core - Preview - Edit and Manipulate - support,"Pre-conditions :
+
+- Device in ready state with latest build
+
+- Feature is ready for testing",1,"Scan to USB ->Preview with default settings
+
+- Load original file on glass.
+
+- Insert USB thumb drive to printer.
+
+- Perform Scan to USB preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,2,"Scan to USB ->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,3,"Scan to USB ->Preview with user configured settings
+
+- Load original file on glass.
+
+- Insert USB thumb drive to printer.
+
+- Perform Scan to USB preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,4,"Scan to USB ->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,5,"Scan to Email ->Preview with default settings
+
+- Load original file on glass.
+
+- Perform Scan to Email preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,6,"Scan to Email ->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,7,"Scan to Email ->Preview with user configured settings
+
+- Load original file on glass.
+
+- Perform Scan to Email preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,8,"Scan to Email ->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,9,"Scan to Network Folder ->Preview with default settings
+
+- Load original file on glass.
+
+- Perform Scan to Network Folder preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,10,"Scan to Network Folder ->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,11,"Scan to Network Folder ->Preview with user configured settings
+
+- Load original file on glass.
+
+- Perform Scan to Network Folder preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,12,"Scan to Network Folder ->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,13,"Scan to SharePoint ->Preview with default settings
+
+- Load original file on glass.
+
+- Perform Scan to SharePoint preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,14,"Scan to SharePoint->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,15,"Scan to SharePoint ->Preview with user configured settings
+
+- Load original file on glass.
+
+- Perform Scan to SharePoint preview job.",Verify the preview job completed without error.
+C86452405,Core - Preview - Edit and Manipulate - support,,16,"Scan to SharePoint->Preview - Edit and Manipulate
+
+- Follow above step, edit and Manipulate the preview.",Verify the preview Edit and Manipulate operation completed without error.
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),"Pre-conditions:
+
+
+
+- Device in ready state with latest build
+
+- Feature is ready for testing",1,"Default HP Scan
+- Inititate Scan from PC Software.
+- Select Device.
+- Send Scan job with default settings.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,2,"User configured HP Scan
+- Inititate Scan from PC Software.
+- Select Device.
+- Send Scan job with user configured settings.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,3,"Default WSD Scan
+- Inititate WSD Scan from WSD.
+- Select Device.
+- Send WSD Scan job with default settings.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,4,"User configured WSD Scan
+- Inititate WSD Scan from WSD.
+- Select Device.
+- Send WSD Scan job with user configured settings.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,5,"Default Web Scan
+- Inititate Web Scan from EWS.
+- Select Device.
+- Send WSD Scan job with default settings.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,6,"User configured Web Scan
+- Inititate Web Scan from EWS.
+- Select Device.
+- Send WSD Scan job with user configured settings.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,7,"Web Scan from  - PC side 1. Do a web scan and save the file with below settings: Glass/ADF, TIFF/JPG/PDF, Color/B&W/Gray, Different scan paper size Letter, 75-1200dpi, Different Quality: 0-100, Lighter/Darker: 1-92. Repeat above step but do cancel","Scan job could do successfully. Refer to CR DUNE-154321Scan output saved on PC successfully. Refer to CR DUNE-268750/DUNE-251652.    Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,8,Web scan from Android/ iOS mobile1. Access the EWS from Android/ iOS mobile.2. Check Document source option or other scan options.3. Perform a default ADF/Glass scan job.,"Verify the scan option are works. Refer to CR DUNE-240102/DUNE-281583Scan job could do successfully. Scan output saved on PC successfully.  Refer to CR DUNE-306858Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,9,"Web Scan Personlize1. Access to EWS->Home page,click ""Personalize"" button to add Web Scan widget.2. Make sure Web Scan is disabled from EWS->Settings->Security->Administrator Settings page.3. Click Web Scan widget on EWS->Home page.",Web Scan widget function should work correctly for better user experience.
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,10,EWS enable/disable scan feature1. Enable/Disable Scan from Security > Printer Features from EWS.2. Check Scan icon on Home screen.,Scan icon should be disabled on FP.
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,11,EWS Sign-In and Permission1. Click the Guest checkbox to lock the Scan to Computer.2. Check the Scan to Computer on FP,No unsupport scan to option and Scan to Computer should be locked and should sign in to access. Refer to CR DUNE-302519
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,12,"WSD Scan - Flatbed/ADF1. Send a WS SCAN job with follow settings:ADF/Glass, Simplex/Duplex, Use different Color mode, Use different file type (BMP…), Use different dpi (75-1200 dpi), Use different brightness (Max, Min, Normal), Use different Contrast (Max, Min, Normal)","Scan job could do successfully.Scan output saved on PC successfully.Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,13,"WSD Scan preview - Flatbed/ADF1. Send a WS SCAN preview job with follow settings:ADF/Glass, Use different Color mode, Use different file type (BMP…), Use different dpi (75-1200 dpi), Use different brightness (Max, Min, Normal), Use different Contrast (Max, Min, Normal)Notes: If performing preview from ADF, please try the single or multiple (>=2) original targets into ADF.","Preview job could do successfully. Refer to CR DUNE-295387Preview output saved on PC successfully.Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,14,"WSD Scan Cancel - Flatbed/ADF1. Open Windows Fax and Scan/Windows Scan/Paint app on PC to perform a simplex/duplex scan job from ADF/Glass.2. Click cancel button Windows Fax and Scan app.3. Perform a scan job from ADF/Glass again.Notes: If performing scan job from ADF, please try the single or multiple (>=2) original targets into ADF.",Scan job could do successfully.Scan output saved on PC successfully. Refer to CR DUNE-294344/DUNE-294346/DUNE-309990/DUNE-302002
+C86452406,Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS),,15,"W-Scan tool scan1. Select different Client Type eSCL/WS Scan/Rest Scan.2. Do a scan job with below settings: Simplex/Duplex, Glass/ADF, JPG/Tiff, Color/B&W/Gray, 75-1200dpi, JPEG Compression.","Scan job could do successfully.Scan output saved on PC successfully.Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452407,Core - Remote Scan - Scan to Computer - OCR - Searchable PDF (OCR),"Pre-conditions:
+Device in ready state with latest build
+Feature is ready for testing",1,"Default Searchable PDF (OCR)
+
+- Settings: File Type = Searchable PDF (OCR) with default other settings.
+
+- Scan a text-heavy document.
+
+- Open output file and attempt to select/search text.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+Text is selectable and searchable. No gibberish characters.
+LED status, Sound and CGD displays correctly."
+C86452407,Core - Remote Scan - Scan to Computer - OCR - Searchable PDF (OCR),,2,"User Configured Searchable PDF (OCR)
+
+- Settings: File Type = Searchable PDF (OCR) with default other settings.
+
+- Scan a text-heavy document.
+
+- Open output file and attempt to select/search text.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+Text is selectable and searchable. No gibberish characters.
+LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)","Pre-conditions:
+Device in ready state with latest build
+Feature is ready for testing",1,"Default HP Scan over USB connection
+- Open HP Scan Assistant : Enable Scan to Computer from PC successfully.
+- Touch Scan to Computer button on FP.
+- Select Destination PC > file type.
+- Send Scan job with default settings via USB connection.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,2,"User configured HP Scan over network connection
+- Open HP Scan Assistant : Enable Scan to Computer from PC successfully.
+- Touch Scan to Computer button on FP.
+- Select Destination PC > file type.
+- Send Scan job with user configured settings via Network connection.","Scan job could do successfully.
+Scan output saved on PC successfully.
+Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.
+Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.
+LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,3,1. Touch Scan > Scan to Computer.2. Check the All Options button.,All Options button should be consistented with spec.
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,4,"FrontPanel Scan - Simplex/Duplex1. Send a FP Scan job with follow settings:Flatbed/ADF, Document/Picture, Use different scan size (8x10, Letter, A4, Legal...), 75-1200dpi, Color mode, Different file type (JPEG, PDF…), Orientation, Connection: USB/Network","Scan job could do successfully. Refer to CR DUNE-307609.Scan output saved on PC successfully.Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,5,"FrontPanel Scan - Check Job Queue/History1. Go to EWS/FP Job Queue/History.2. Check the scan settings(file type, dpi, color, scanner source...) for each failed/successed scan job.","Check scan parameters like File Type, file size, Color Mode, etc which should match the settings."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,6,"FrontPanel Scan B large size - Flatbed1. Send a FP Scan job with follow settings:Document/Picture, Use different Paper Size (A3, B4(250x353mm), 11x17 inch target, JIS B4(257X364mm), Detect Content on Page, Entire Scan Area), Use different resolution (75-1200dpi), Use different color mode(Color, B/W, Gray...), Use different file type (PNG, PDF, PNG, BMP, TIF), Use different file type, Portrait/Landscape2. Repeat above step but do cancel","Scan job could do/cancel successfully. Refer to SSWS-8490Scan output saved on PC successfully. Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,7,"FrontPanel/EWS Scan - Multiple pages ADF1. Load 10-15 original targets into ADF.2. Perform the scan job with different dpi, file type, page sides and color.3. Repeat above scan job but do cancel.","Scan job could do/cancel successfully.Scan output saved on PC successfully. Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,8,"FrontPanel/EWS Scan - Max pages ADF1. Load ADF max original targets (30-35) into ADF.2. Perform the different size(5x7/A4/Legal) scan job with simplex/duplex, different dpi(75-300), file type and color.","Scan job could do/cancel successfully.Scan output saved on PC successfully. Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,9,"FrontPanel Scan - Add page1. Send a FP Scan job with follow settings:Flatbed, Use different scan size, file type, Color Mode, and Resolution(75-1200).2. Touch Add page on FP 5-10 times.3. Repeat above but do cancel.",The add screen should be displayed. Refer to CR DUNE-254704/DUNE-121466.The scan job should be performed successfully. Refer to CR DUNE-153364
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,10,"FrontPanel Scan - Cancel  size in different time periods1. Send a FP Scan job with follow settings:ADF/Glass, Use Legal/Letter/8x10 target, Simplex/Duplex.2. Touch cancel button immediately/in the middle of the scan (20%/30%50%)/near the end of the scan (80%) on FP.","No ADF Jam, test scan process without errors and can be cancelled as expected. Refer to CR DUNE-186240/DUNE-300402."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,11,"FrontPanel Scan - ADF and Glass alternately1. Make sure the HP Scan's source is ""Flatbed"".2. Load the original both on glass and ADF and Perform a scan job from FP.",Scan job could do successfully.Scan_AddPage screen should be displayed after the scan is complete.Refer to CR DUNE-258041.
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,12,FrontPanel enable/disable automatically1. Make sure the SW is installed via USB/Network.2. Unplug/plug the USB cable or disconnect/connect the network.3. Initiate a scan job from front panel.,"Verify the ""scan computer is enabled"" in Manage Scan to Computer automatically.Scan job could do successfully."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,13,FrontPanel Scan maximum clients (10PCs)1. Prepare 10 PCs with below OS:5 PCs with Windows 10 OS4 PCs with Windows 11 OS2. Install SW build on each PC with one printer successfully.,"Scan job could do/cancel successfully.Scan output saved on PC successfully. Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452408,"Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",,14,FrontPanel different shortcut scan1. Make sure the SW is installed via USB/Network.2. Please run this test case on each shortcut available.Shortcut List:Save as PDFSave as JPEGEmail as PDFEmail as JPEGSend to CloudEveryday Scan,"Scan job could do/cancel successfully.Scan output saved on PC successfully. Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.LED status, Sound and CGD displays correctly."
+C86452454,Core - Job Logs,,1,"Scan to computer, check Job Logs after completed FP scan job. 
+
+- Completed the scan job from FP with default settings.
+
+- Verify job details in Job app on FP and Job Queue from EWS.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,2,"Scan to computer, check Job Logs after canceled FP scan job. 
+
+- Perform scan job from FP with user configured settings.
+
+- Cancel the scan job.
+
+- Verify job details in Job app on FP and Job Queue from EWS.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,3,"EWS Scan, check Job Logs after completed EWS scan job. 
+
+- Completed scan job from EWS with user configured settings.
+
+- Verify job details in Job app on FP and Job Queue from EWS.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,4,"EWS Scan, check Job Logs after canceled EWS scan job. 
+
+- Perform scan job from EWS with default settings.
+
+- Cancel the scan job.
+
+- Verify job details in Job app on FP and Job Queue from EWS.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,5,"Scan from computer, check Job Logs after completed SW scan job.
+
+- Perform a SW job from PC with default settings.
+
+- Verify job details in Job app on FP and Job Queue from FP.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,6,"Scan from computer, check Job Logs after canceled SW scan job.
+
+- Perform a SW job from PC with user configured settings.
+
+- Cancel the scan job.
+
+- Verify job details in Job app on FP and Job Queue from FP.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,7,"Scan to USB/Email/Network Folder/SharePoint, check Job Logs after completed FP scan job. 
+
+- Completed the scan job from FP with default settings.
+
+- Verify job details in Job app on FP and Job Queue from EWS.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452454,Core - Job Logs,,8,"Scan to USB/Email/Network Folder/SharePoint, check Job Logs after canceled FP scan job. 
+
+- Perform scan job from FP with user configured settings.
+
+- Cancel the scan job.
+
+- Verify job details in Job app on FP and Job Queue from EWS.
+Step applicable for Consumer devices with CGD/MGD.",Scan Job log settings and job state should show correctly in Job log.
+C86452443,UX - Help Animations (UI),"Pre-conditions:
+Device in ready state with latest build
+Feature is ready for testing",1,"- Touch Menu > Help icon or press '?' Help button on FP.
+
+- Touch 'How to Videos'.
+
+- Select all videos and Play it.
+Step applicable for Consumer devices with CGD/MGD.","Video plays smoothly with audio (if supported).
+LED status, Sound and CGD displays correctly."
+C86452444,"UX - Help Content (UI, EWS)","Pre-conditions:
+Device in ready state with latest build
+Feature is ready for testing",1,"- Touch Menu > Help icon or press '?' Help button on FP/EWS.
+
+- Select all Help Content and check it.","Help Content is consistent with spec.
+LED status, Sound and CGD displays correctly."
+C86452452,UX - User Notification - UI Toast Messages,"Pre-conditions:
+Device in ready state with latest build
+Feature is ready for testing",1,"Test Load ADF toast
+
+- Load a original target into ADF.
+
+- Check top-bar/center notification
+
+- Check duration.
+Step applicable for Consumer devices with CGD/MGD.","Toast appears: 'ADF Loaded' message. The string please refer to Scan workflow spec.
+Persists ~3-5s then fades."
+C86452452,UX - User Notification - UI Toast Messages,,2,"Test FP Scan toast
+
+- Send a scan from FP.
+
+- Check top-bar/center notification during scan.
+
+- Check duration.
+Step applicable for Consumer devices with CGD/MGD.","Toast appears: 'Starting...', 'Sending...', 'Scanning...' then 'Scan successful. Be sure to remove originals.'.  The string please refer to Scan workflow spec.
+Persists ~3-5s then fades."
+C86452452,UX - User Notification - UI Toast Messages,,3,"Test FP Scan Cancel toast
+
+- Send a scan from FP.
+
+- Cancel this scan job.
+
+- Check top-bar/center notification during scan.
+
+- Check duration.
+Step applicable for Consumer devices with CGD/MGD.","Toast appears: 'Canceling...' and 'Scan Canceled'.  The string please refer to Scan workflow spec.
+Persists ~3-5s then fades."
+C86452460,Core - Quick Sets - Quick Set,"Pre-conditions:
+
+- Device in ready state with latest build
+
+- Feature is ready for testing",1,"1.Create Scan quick set with default settings in EWS.
+2.Perform a scan ADF/Glass job from FP.","Verify the created quick sets on FP should be consistent with EWS.
+The scan output should be consistent with the setting."
+C86452460,Core - Quick Sets - Quick Set,,2,"1.Create Scan quick set with non-default settings in EWS.
+2.Perform a scan ADF/Glass job from FP.","Verify the created quick sets on FP should be consistent with EWS.
+The scan output should be consistent with the setting."
+C86452460,Core - Quick Sets - Quick Set,,3,"1.Create multiple scan quick sets on EWS.(For example:50~100)
+2.Perform a scan ADF/Glass job from FP.","Verify multiple scan quick sets should display on FP without any issue.
+The scan output should be consistent with the setting."
+C86452462,UX-Error-EWS Quick Set,"Pre-conditions:
+
+- Device in ready state with latest build
+
+- Feature is ready for testing",1,"Create Scan quick set with error in EWS. (For example, leave file empty, or input invalid value)",Verify the error message displayed correctly in EWS.
+C86452462,UX-Error-EWS Quick Set,,2,"Solve the error and continue to create scan quick set in EWS.
+Perform scan ADF/glass from FP.","Verify the scan quick set could be created successfully in EWS.
+The scan job could be completed successfully."

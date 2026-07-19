@@ -1,0 +1,59 @@
+{
+  "Andaman and Nicobar Islands": [
+    "Nicobars",
+    "North And Middle Andaman",
+    "South Andamans"
+  ],
+  "Chandigarh": [
+    "Chandigarh"
+  ],
+  "Dadra and Nagar Haveli and Daman and Diu": [
+    "Dadra And Nagar Haveli",
+    "Diu"
+  ],
+  "Delhi": [
+    "Central",
+    "East",
+    "New Delhi",
+    "North",
+    "North East",
+    "North West",
+    "South",
+    "South East",
+    "South West",
+    "West"
+  ],
+  "Jammu and Kashmir": [
+    "Anantnag",
+    "Bandipora",
+    "Baramulla",
+    "Budgam",
+    "Doda",
+    "Ganderbal",
+    "Jammu",
+    "Kathua",
+    "Kishtwar",
+    "Kulgam",
+    "Kupwara",
+    "Poonch",
+    "Pulwama",
+    "Rajouri",
+    "Ramban",
+    "Reasi",
+    "Samba",
+    "Shopian",
+    "Srinagar",
+    "Udhampur"
+  ],
+  "Ladakh": [
+    "Kargil",
+    "Leh Ladakh"
+  ],
+  "Lakshadweep": [
+    "Lakshadweep District"
+  ],
+  "Puducherry": [
+    "Karaikal",
+    "Puducherry"
+  ]
+}

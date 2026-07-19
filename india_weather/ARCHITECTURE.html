@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>India Weather Agents — Architecture</title>
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface2: #1f2937;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --accent2: #3fb950;
+            --accent3: #f78166;
+            --accent4: #d2a8ff;
+            --accent5: #ffa657;
+            --text: #e6edf3;
+            --muted: #8b949e;
+            --code-bg: #1c2128;
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: "Segoe UI", system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-bottom: 4rem;
+        }
+
+        /* ── Nav ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13, 17, 23, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: .75rem 2rem;
+            flex-wrap: wrap;
+        }
+
+        nav .logo {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent);
+            white-space: nowrap
+        }
+
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: .82rem;
+            white-space: nowrap
+        }
+
+        nav a:hover {
+            color: var(--text)
+        }
+
+        /* ── Hero ── */
+        .hero {
+            background: linear-gradient(135deg, #0d1117 0%, #1a2332 60%, #0d2137 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 3rem 2rem 2.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: .5rem
+        }
+
+        .hero p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 620px;
+            margin: 0 auto
+        }
+
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: .6rem;
+            flex-wrap: wrap;
+            margin-top: 1rem
+        }
+
+        .badge {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: .2rem .75rem;
+            font-size: .75rem;
+            color: var(--muted);
+        }
+
+        .badge.green {
+            border-color: var(--accent2);
+            color: var(--accent2)
+        }
+
+        .badge.blue {
+            border-color: var(--accent);
+            color: var(--accent)
+        }
+
+        .badge.purple {
+            border-color: var(--accent4);
+            color: var(--accent4)
+        }
+
+        .badge.orange {
+            border-color: var(--accent5);
+            color: var(--accent5)
+        }
+
+        /* ── Layout ── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem
+        }
+
+        section {
+            padding: 2.5rem 0
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+            padding-bottom: .6rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        h2 .num {
+            background: var(--accent);
+            color: #0d1117;
+            border-radius: 50%;
+            width: 1.6rem;
+            height: 1.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: .5rem 0 .75rem
+        }
+
+        /* ── Cards ── */
+        .card-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr))
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: .75rem;
+            padding: 1.2rem;
+        }
+
+        .card .icon {
+            font-size: 1.6rem;
+            margin-bottom: .5rem
+        }
+
+        .card h4 {
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .35rem
+        }
+
+        .card p {
+            font-size: .8rem;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        /* ── Flowchart (pure CSS/HTML) ── */
+        .flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .flow-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: .6rem;
+            padding: .55rem 1rem;
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--text);
+            text-align: center;
+            min-width: 120px;
+            white-space: nowrap;
+        }
+
+        .flow-box.blue {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(88, 166, 255, .08)
+        }
+
+        .flow-box.green {
+            border-color: var(--accent2);
+            color: var(--accent2);
+            background: rgba(63, 185, 80, .08)
+        }
+
+        .flow-box.orange {
+            border-color: var(--accent5);
+            color: var(--accent5);
+            background: rgba(255, 166, 87, .08)
+        }
+
+        .flow-box.purple {
+            border-color: var(--accent4);
+            color: var(--accent4);
+            background: rgba(210, 168, 255, .08)
+        }
+
+        .flow-box.red {
+            border-color: var(--accent3);
+            color: var(--accent3);
+            background: rgba(247, 129, 102, .08)
+        }
+
+        .flow-arrow {
+            color: var(--muted);
+            font-size: 1.1rem;
+            font-weight: 700
+        }
+
+        .flow-down {
+            color: var(--muted);
+            font-size: 1.2rem;
+            margin: .1rem 0
+        }
+
+        .flow-label {
+            font-size: .7rem;
+            color: var(--muted);
+            text-align: center;
+            max-width: 160px;
+            line-height: 1.4
+        }
+
+        /* ── Architecture diagram ── */
+        .arch {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: .85rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .arch-row {
+            display: flex;
+            align-items: stretch;
+            gap: 1rem;
+            min-width: 700px
+        }
+
+        .arch-col {
+            flex: 1;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: .6rem;
+            padding: 1rem;
+        }
+
+        .arch-col h4 {
+            font-size: .75rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--muted);
+            margin-bottom: .8rem;
+            padding-bottom: .5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .arch-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: .45rem;
+            padding: .4rem .65rem;
+            font-size: .75rem;
+            margin-bottom: .4rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .arch-item .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .arch-connector {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--muted);
+            padding: 0 .2rem;
+        }
+
+        /* ── Code blocks ── */
+        .code-wrap {
+            position: relative;
+            margin: .75rem 0
+        }
+
+        .code-label {
+            position: absolute;
+            top: .6rem;
+            right: .75rem;
+            font-size: .65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .06em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: .65rem;
+            padding: 1.1rem 1.2rem;
+            font-size: .8rem;
+            line-height: 1.65;
+            overflow-x: auto;
+            font-family: "Cascadia Code", "Fira Code", monospace;
+            color: #c9d1d9;
+        }
+
+        .kw {
+            color: #ff7b72
+        }
+
+        /* keywords */
+        .fn {
+            color: #d2a8ff
+        }
+
+        /* function names */
+        .st {
+            color: #a5d6ff
+        }
+
+        /* strings */
+        .cm {
+            color: #8b949e
+        }
+
+        /* comments */
+        .nu {
+            color: #79c0ff
+        }
+
+        /* numbers/vars */
+        .op {
+            color: #ffa657
+        }
+
+        /* operators/decorators */
+
+        /* ── Step list ── */
+        .steps {
+            list-style: none;
+            padding: 0;
+            counter-reset: step
+        }
+
+        .steps li {
+            counter-increment: step;
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+            align-items: flex-start;
+        }
+
+        .steps li::before {
+            content: counter(step);
+            background: var(--accent);
+            color: #0d1117;
+            font-weight: 900;
+            font-size: .75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: .1rem;
+        }
+
+        .steps li .step-body h4 {
+            font-size: .9rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: .2rem
+        }
+
+        .steps li .step-body p {
+            font-size: .82rem;
+            color: var(--muted)
+        }
+
+        /* ── Table ── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .82rem
+        }
+
+        th {
+            background: var(--surface2);
+            text-align: left;
+            padding: .55rem .85rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-size: .7rem;
+            letter-spacing: .06em;
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: .55rem .85rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text)
+        }
+
+        tr:last-child td {
+            border-bottom: none
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, .02)
+        }
+
+        td code {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: .3rem;
+            padding: .1rem .4rem;
+            font-size: .75rem;
+            font-family: monospace;
+            color: var(--accent);
+        }
+
+        /* ── Divider ── */
+        hr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0
+        }
+
+        /* ── Callout ── */
+        .callout {
+            border-radius: .65rem;
+            padding: 1rem 1.2rem;
+            font-size: .82rem;
+            display: flex;
+            gap: .75rem;
+            align-items: flex-start;
+            margin: .75rem 0;
+        }
+
+        .callout.blue {
+            background: rgba(88, 166, 255, .07);
+            border: 1px solid rgba(88, 166, 255, .25)
+        }
+
+        .callout.green {
+            background: rgba(63, 185, 80, .07);
+            border: 1px solid rgba(63, 185, 80, .25)
+        }
+
+        .callout.orange {
+            background: rgba(255, 166, 87, .07);
+            border: 1px solid rgba(255, 166, 87, .25)
+        }
+
+        .callout .ci {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: .05rem
+        }
+
+        .callout p {
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        .callout p strong {
+            color: var(--text)
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <span class="logo">&#127868; India Weather — Architecture</span>
+        <a href="#overview">Overview</a>
+        <a href="#agent">Agent Layer</a>
+        <a href="#orchestrator">Orchestrator</a>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#dataflow">Data Flow</a>
+        <a href="#api">wttr.in API</a>
+        <a href="#summary">Summary</a>
+    </nav>
+
+    <div class="hero">
+        <h1>&#127760; India Weather Agent System</h1>
+        <p>Architecture, data flow, and inner workings of the 36-agent weather monitoring system covering all Indian
+            states and union territories.</p>
+        <div class="badges">
+            <span class="badge green">36 Agents</span>
+            <span class="badge blue">780+ Districts</span>
+            <span class="badge purple">No API Key</span>
+            <span class="badge orange">No Server Needed</span>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════════ -->
+    <div class="container">
+
+        <!-- 1. OVERVIEW -->
+        <section id="overview">
+            <h2><span class="num">1</span> System Overview</h2>
+
+            <div class="arch">
+                <div class="arch-row">
+
+                    <!-- Layer 1 -->
+                    <div class="arch-col">
+                        <h4 style="color:#3fb950">&#9001; Layer 1 — Agents</h4>
+                        <div class="arch-item"><span class="dot"
+                                style="background:#3fb950"></span>agent_andhra_pradesh.py</div>
+                        <div class="arch-item"><span class="dot" style="background:#3fb950"></span>agent_assam.py</div>
+                        <div class="arch-item"><span class="dot" style="background:#3fb950"></span>agent_bihar.py</div>
+                        <div class="arch-item"><span class="dot" style="background:#3fb950"></span>agent_delhi.py</div>
+                        <div class="arch-item"><span class="dot" style="background:#3fb950"></span>agent_kerala.py</div>
+                        <div class="arch-item" style="color:#8b949e">&#8230; 31 more agent files</div>
+                        <div style="margin-top:.5rem;font-size:.7rem;color:#8b949e">36 total: 28 states + 8 UTs</div>
+                    </div>
+
+                    <div class="arch-connector">&#8594;</div>
+
+                    <!-- Layer 2 -->
+                    <div class="arch-col">
+                        <h4 style="color:#58a6ff">&#9001; Layer 2 — Orchestrator</h4>
+                        <div class="arch-item"><span class="dot" style="background:#58a6ff"></span>orchestrator.py</div>
+                        <div style="font-size:.75rem;color:#8b949e;margin:.4rem 0 .6rem .7rem;line-height:1.5">
+                            &#9656; Auto-discovers all agents<br>
+                            &#9656; Runs them in parallel (8 workers)<br>
+                            &#9656; Aggregates results<br>
+                            &#9656; Saves JSON output
+                        </div>
+                        <div class="arch-item"><span class="dot" style="background:#58a6ff"></span>weather_report.py
+                        </div>
+                        <div style="font-size:.75rem;color:#8b949e;margin:.4rem 0 0 .7rem;line-height:1.5">
+                            &#9656; Generates HTML dashboard
+                        </div>
+                    </div>
+
+                    <div class="arch-connector">&#8594;</div>
+
+                    <!-- Layer 3 -->
+                    <div class="arch-col">
+                        <h4 style="color:#ffa657">&#9001; Layer 3 — Dashboard</h4>
+                        <div class="arch-item"><span class="dot"
+                                style="background:#ffa657"></span>india_weather_report.html</div>
+                        <div style="font-size:.75rem;color:#8b949e;margin:.4rem 0 .6rem .7rem;line-height:1.5">
+                            &#9656; Runs in browser (no server)<br>
+                            &#9656; JS fetches wttr.in live<br>
+                            &#9656; AbortController on filter<br>
+                            &#9656; In-memory dataCache<br>
+                            &#9656; Auto-refresh every 10 min
+                        </div>
+                    </div>
+
+                    <div class="arch-connector">&#8646;</div>
+
+                    <!-- External -->
+                    <div class="arch-col">
+                        <h4 style="color:#d2a8ff">&#9001; External — wttr.in</h4>
+                        <div class="arch-item"><span class="dot" style="background:#d2a8ff"></span>Free weather API
+                        </div>
+                        <div style="font-size:.75rem;color:#8b949e;margin:.4rem 0 .6rem .7rem;line-height:1.5">
+                            &#9656; No API key required<br>
+                            &#9656; Global weather stations<br>
+                            &#9656; Current conditions<br>
+                            &#9656; 3-day forecast<br>
+                            &#9656; JSON format=j1
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- 2. AGENT LAYER -->
+        <section id="agent">
+            <h2><span class="num">2</span> Layer 1 — Agent Files</h2>
+
+            <div class="card-grid" style="margin-bottom:1.5rem">
+                <div class="card">
+                    <div class="icon">&#128196;</div>
+                    <h4>What is an Agent?</h4>
+                    <p>A single Python file responsible for one state or UT. It knows which districts to cover and how
+                        to fetch + parse weather data for each one.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#128204;</div>
+                    <h4>How many exist?</h4>
+                    <p>36 agents — one per state/UT. 28 state agents + 8 union territory agents. Each agent is
+                        completely independent.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#128268;</div>
+                    <h4>Public Interface</h4>
+                    <p>Every agent exposes the same 3 functions: <strong>fetch()</strong>,
+                        <strong>get_summary()</strong>, <strong>get_all_summaries()</strong> — making them
+                        interchangeable.</p>
+                </div>
+            </div>
+
+            <h3>Agent File Structure (e.g. agent_kerala.py)</h3>
+            <div class="code-wrap">
+                <span class="code-label">Python</span>
+                <pre><span class="cm"># ── 1. Identity ──────────────────────────────────────</span>
+<span class="nu">STATE</span> = <span class="st">"Kerala"</span>
+
+<span class="cm"># ── 2. Coverage ──────────────────────────────────────</span>
+<span class="nu">DISTRICTS</span> = [
+    <span class="st">"Alappuzha"</span>, <span class="st">"Ernakulam"</span>, <span class="st">"Idukki"</span>,
+    <span class="st">"Kannur"</span>, <span class="st">"Kasaragod"</span>, <span class="st">"Kollam"</span>,
+    <span class="st">"Kottayam"</span>, <span class="st">"Kozhikode"</span>, <span class="st">"Malappuram"</span>,
+    <span class="st">"Palakkad"</span>, <span class="st">"Pathanamthitta"</span>, <span class="st">"Thiruvananthapuram"</span>,
+    <span class="st">"Thrissur"</span>, <span class="st">"Wayanad"</span>,  <span class="cm"># 14 districts</span>
+]
+
+<span class="cm"># ── 3. Raw API call ───────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">fetch</span>(city: <span class="nu">str</span>) -> <span class="nu">dict</span>:
+    url = <span class="st">f"https://wttr.in/{city}?format=j1"</span>
+    response = requests.get(url, timeout=<span class="nu">15</span>)
+    response.raise_for_status()
+    <span class="kw">return</span> response.json()          <span class="cm"># raw JSON from wttr.in</span>
+
+<span class="cm"># ── 4. Parse one city ─────────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">get_summary</span>(city: <span class="nu">str</span>) -> <span class="nu">dict</span>:
+    data    = fetch(city)
+    current = data[<span class="st">"current_condition"</span>][<span class="nu">0</span>]
+    area    = data[<span class="st">"nearest_area"</span>][<span class="nu">0</span>]
+    <span class="kw">return</span> {
+        <span class="st">"city"</span>:          city,
+        <span class="st">"temperature_c"</span>: current[<span class="st">"temp_C"</span>],
+        <span class="st">"humidity"</span>:      current[<span class="st">"humidity"</span>],
+        <span class="st">"description"</span>:   current[<span class="st">"weatherDesc"</span>][<span class="nu">0</span>][<span class="st">"value"</span>],
+        <span class="st">"wind_kmph"</span>:     current[<span class="st">"windspeedKmph"</span>],
+        <span class="st">"uv_index"</span>:      current[<span class="st">"uvIndex"</span>],
+        <span class="st">"forecast"</span>:      [...],  <span class="cm"># 3-day forecast list</span>
+    }
+
+<span class="cm"># ── 5. Loop all districts ─────────────────────────────</span>
+<span class="kw">def</span> <span class="fn">get_all_summaries</span>() -> <span class="nu">list</span>:
+    results = []
+    <span class="kw">for</span> city <span class="kw">in</span> DISTRICTS:
+        <span class="kw">try</span>:
+            results.append(get_summary(city))  <span class="cm"># success</span>
+        <span class="kw">except</span> Exception <span class="kw">as</span> exc:
+            results.append({<span class="st">"city"</span>: city, <span class="st">"error"</span>: str(exc)})  <span class="cm"># isolated failure</span>
+    <span class="kw">return</span> results</pre>
+            </div>
+
+            <div class="flow" style="margin-top:1.5rem">
+                <div class="flow-row">
+                    <div class="flow-box blue">get_all_summaries()</div>
+                    <div class="flow-arrow">&#8594;</div>
+                    <div class="flow-box green">loop DISTRICTS</div>
+                    <div class="flow-arrow">&#8594;</div>
+                    <div class="flow-box green">get_summary(city)</div>
+                    <div class="flow-arrow">&#8594;</div>
+                    <div class="flow-box purple">fetch(city)</div>
+                    <div class="flow-arrow">&#8594;</div>
+                    <div class="flow-box orange">wttr.in API</div>
+                </div>
+                <div class="flow-down">&#8595;</div>
+                <div class="flow-row">
+                    <div class="flow-box blue">list of district dicts</div>
+                    <div class="flow-arrow">&#8592;</div>
+                    <div class="flow-box green">parsed + normalized</div>
+                    <div class="flow-arrow">&#8592;</div>
+                    <div class="flow-box green">structured summary</div>
+                    <div class="flow-arrow">&#8592;</div>
+                    <div class="flow-box purple">raw JSON</div>
+                    <div class="flow-arrow">&#8592;</div>
+                    <div class="flow-box orange">JSON response</div>
+                </div>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- 3. ORCHESTRATOR -->
+        <section id="orchestrator">
+            <h2><span class="num">3</span> Layer 2 — Orchestrator</h2>
+
+            <div class="callout blue">
+                <span class="ci">&#9432;</span>
+                <p><strong>orchestrator.py</strong> is the central manager. It auto-discovers all 36 agents, runs them
+                    in parallel using a thread pool, aggregates the results, and outputs JSON + HTML. You never need to
+                    edit it when adding a new agent — it detects new <code>agent_*.py</code> files automatically.</p>
+            </div>
+
+            <h3>How Agent Discovery Works</h3>
+            <div class="code-wrap">
+                <span class="code-label">Python</span>
+                <pre><span class="kw">def</span> <span class="fn">_discover_agents</span>():
+    agents = {}
+    <span class="cm"># Scans for every file matching agent_*.py</span>
+    <span class="kw">for</span> path <span class="kw">in</span> sorted(BASE_DIR.glob(<span class="st">"agent_*.py"</span>)):
+        mod_name = <span class="st">f"india_weather.{path.stem}"</span>
+        mod = importlib.import_module(mod_name)  <span class="cm"># dynamic import</span>
+        agents[mod.STATE] = mod                  <span class="cm"># "Kerala" → module</span>
+    <span class="kw">return</span> agents
+
+<span class="nu">AGENTS</span> = _discover_agents()   <span class="cm"># runs once at startup → 36 agents</span></pre>
+            </div>
+
+            <h3 style="margin-top:1.2rem">How Parallel Execution Works</h3>
+            <div class="code-wrap">
+                <span class="code-label">Python</span>
+                <pre><span class="kw">def</span> <span class="fn">fetch_states</span>(state_names, workers=<span class="nu">8</span>):
+    <span class="cm"># ThreadPoolExecutor runs 8 states simultaneously</span>
+    <span class="kw">with</span> ThreadPoolExecutor(max_workers=workers) <span class="kw">as</span> pool:
+        futures = {
+            pool.submit(fetch_state, state): state   <span class="cm"># each state → own thread</span>
+            <span class="kw">for</span> state <span class="kw">in</span> state_names
+        }
+        <span class="kw">for</span> future <span class="kw">in</span> as_completed(futures):   <span class="cm"># result arrives as it finishes</span>
+            result = future.result()
+            print(f<span class="st">"[{done}/{total}] {state} ✓ {result['ok']} districts"</span>)</pre>
+            </div>
+
+            <h3 style="margin-top:1.2rem">Parallel Timeline (8 workers)</h3>
+            <div class="arch" style="margin-top:.75rem">
+                <div
+                    style="font-size:.75rem;font-family:monospace;line-height:2;overflow-x:auto;white-space:nowrap;color:#8b949e">
+                    <div><span style="color:#58a6ff">Thread 1</span> [Andhra Pradesh ] ████████████ done ✓</div>
+                    <div><span style="color:#3fb950">Thread 2</span> [Assam ] ████████████████ done ✓</div>
+                    <div><span style="color:#ffa657">Thread 3</span> [Bihar ] ████████████████████ done ✓</div>
+                    <div><span style="color:#d2a8ff">Thread 4</span> [Delhi ] ████████ done ✓</div>
+                    <div><span style="color:#f78166">Thread 5</span> [Gujarat ] ████████████████ done ✓</div>
+                    <div><span style="color:#58a6ff">Thread 6</span> [Haryana ] ████████████ done ✓</div>
+                    <div><span style="color:#3fb950">Thread 7</span> [Karnataka ] █████████████████ done ✓</div>
+                    <div><span style="color:#ffa657">Thread 8</span> [Kerala ] ████████ done ✓</div>
+                    <div style="margin-top:.3rem;color:#484f58"> ... next 28 states queue up as threads free ...</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top:1.5rem">Orchestrator CLI Commands</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>What it does</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>python -m india_weather.orchestrator</code></td>
+                        <td>Fetch all 36 states/UTs → save JSON + regenerate HTML</td>
+                    </tr>
+                    <tr>
+                        <td><code>--states Kerala</code></td>
+                        <td>Fetch only Kerala's 14 districts</td>
+                    </tr>
+                    <tr>
+                        <td><code>--states "Tamil Nadu,Goa"</code></td>
+                        <td>Fetch multiple specific states</td>
+                    </tr>
+                    <tr>
+                        <td><code>--output json</code></td>
+                        <td>Save JSON only, skip HTML</td>
+                    </tr>
+                    <tr>
+                        <td><code>--output html</code></td>
+                        <td>Regenerate HTML only, no live fetch</td>
+                    </tr>
+                    <tr>
+                        <td><code>--workers 12</code></td>
+                        <td>Use 12 parallel threads (default: 8)</td>
+                    </tr>
+                    <tr>
+                        <td><code>--verbose</code></td>
+                        <td>Print each district's temperature as it loads</td>
+                    </tr>
+                    <tr>
+                        <td><code>--list-states</code></td>
+                        <td>Show all 36 registered agents</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr />
+
+        <!-- 4. DASHBOARD -->
+        <section id="dashboard">
+            <h2><span class="num">4</span> Layer 3 — HTML Dashboard</h2>
+
+            <div class="callout green">
+                <span class="ci">&#9432;</span>
+                <p><strong>No server needed.</strong> The HTML file runs entirely in the browser. JavaScript fetches
+                    weather data directly from wttr.in using the browser's native <code>fetch()</code> API. You can open
+                    it by double-clicking the file — no Python required.</p>
+            </div>
+
+            <div class="card-grid" style="margin:1.2rem 0">
+                <div class="card">
+                    <div class="icon">&#9889;</div>
+                    <h4>AbortController</h4>
+                    <p>When you click a state button mid-load, all in-flight requests are instantly cancelled. The
+                        selected state's requests start immediately instead of waiting in queue.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#128190;</div>
+                    <h4>dataCache</h4>
+                    <p>Every loaded city is stored in memory as <code>dataCache["Kozhikode"] = {...}</code>. Switching
+                        back to a previously viewed state shows data instantly — zero network calls.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#128260;</div>
+                    <h4>Per-State Loading</h4>
+                    <p>Clicking "Kerala" fires only 14 requests, not 780. Background loading continues for other states
+                        after the selected one is done.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#9888;</div>
+                    <h4>Wrong Location Guard</h4>
+                    <p>Every card checks <code>country !== "India"</code>. If wttr.in resolves the city to another
+                        country, the resolved location turns red with a ⚠ warning.</p>
+                </div>
+            </div>
+
+            <h3>JavaScript Engine Inside the HTML</h3>
+            <div class="code-wrap">
+                <span class="code-label">JavaScript (inside HTML)</span>
+                <pre><span class="cm">// ── Globals ──────────────────────────────────────────</span>
+<span class="kw">const</span> <span class="nu">dataCache</span>  = {};         <span class="cm">// { "Kozhikode": {...}, "Thrissur": {...} }</span>
+<span class="kw">let</span>   <span class="nu">abortCtrl</span>  = <span class="kw">null</span>;       <span class="cm">// active AbortController</span>
+<span class="kw">let</span>   <span class="nu">activeFilter</span> = <span class="st">"all"</span>;    <span class="cm">// current selected state</span>
+
+<span class="cm">// ── Fetch one city ────────────────────────────────────</span>
+<span class="kw">async function</span> <span class="fn">fetchCity</span>(city, cardEl, signal) {
+    <span class="kw">const</span> url  = <span class="st">`https://wttr.in/${city}?format=j1`</span>;
+    <span class="kw">const</span> resp = <span class="kw">await</span> fetch(url, { cache: <span class="st">"no-store"</span>, signal });
+    <span class="cm">// cache:"no-store" → browser never serves stale data</span>
+    <span class="cm">// signal          → linked to AbortController (cancellable)</span>
+    <span class="kw">const</span> data = parse(<span class="kw">await</span> resp.json(), city);
+    dataCache[city] = data;    <span class="cm">// store in memory cache</span>
+    renderCard(cardEl, data);
+}
+
+<span class="cm">// ── Load one state ────────────────────────────────────</span>
+<span class="kw">async function</span> <span class="fn">loadState</span>(state, signal) {
+    state.cities.forEach((city, idx) => {
+        <span class="kw">if</span> (dataCache[city]) renderCard(card, dataCache[city]);  <span class="cm">// instant from cache</span>
+        <span class="kw">else</span> toFetch.push({ city, card });                       <span class="cm">// needs network</span>
+    });
+    <span class="cm">// Fetch in batches of 6, 80ms apart</span>
+    <span class="kw">for</span> (<span class="kw">let</span> i = <span class="nu">0</span>; i &lt; toFetch.length; i += <span class="nu">6</span>) {
+        <span class="kw">if</span> (signal.aborted) <span class="kw">return</span>;   <span class="cm">// stop if filter changed</span>
+        <span class="kw">await</span> Promise.allSettled(batch.map(t => fetchCity(t.city, t.card, signal)));
+        <span class="kw">await</span> <span class="kw">new</span> Promise(r => setTimeout(r, <span class="nu">80</span>));
+    }
+}
+
+<span class="cm">// ── Filter click ──────────────────────────────────────</span>
+<span class="kw">function</span> <span class="fn">filterState</span>(id, btn) {
+    <span class="kw">if</span> (abortCtrl) abortCtrl.abort();   <span class="cm">// ← CANCEL all in-flight fetches</span>
+    abortCtrl = <span class="kw">new</span> AbortController();   <span class="cm">// fresh controller for new requests</span>
+
+    <span class="cm">// Show only selected section</span>
+    STATES.forEach(s => section.style.display = (s.id === id) ? <span class="st">""</span> : <span class="st">"none"</span>);
+
+    <span class="cm">// Scroll into view + load only this state</span>
+    scrollTo(target); loadState(STATES.find(s => s.id === id), abortCtrl.signal);
+}</pre>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- 5. DATA FLOW -->
+        <section id="dataflow">
+            <h2><span class="num">5</span> End-to-End Data Flow</h2>
+
+            <ol class="steps">
+                <li>
+                    <div class="step-body">
+                        <h4>User opens the HTML file</h4>
+                        <p>Browser loads <code>india_weather_report.html</code> from disk. No server, no backend process
+                            is needed. JavaScript starts immediately.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>buildLayout() — DOM is created</h4>
+                        <p>JavaScript reads the embedded <code>STATES</code> array (28 states + 8 UTs) and creates all
+                            the section headers, state buttons, and empty card placeholders in the DOM.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>loadAllStates() — sequential state-by-state loading</h4>
+                        <p>States load one by one: Andhra Pradesh (26 cities), then Arunachal Pradesh (27), etc. Each
+                            state fires up to 6 concurrent requests. The next state starts only after the current one
+                            finishes.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>fetch() → wttr.in API</h4>
+                        <p>For each district, the browser sends: <code>GET https://wttr.in/Kozhikode?format=j1</code>
+                            with <code>cache: "no-store"</code>. wttr.in's servers query the nearest weather station and
+                            return a JSON with current conditions + 3-day forecast.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>parse() — normalize the response</h4>
+                        <p>Raw JSON is stripped to only the fields we need: temperature, humidity, wind, UV, visibility,
+                            pressure, cloud cover, observation time, and 3-day forecast. Also checks if country = India
+                            (wrong-location guard).</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>dataCache[city] = data — stored in memory</h4>
+                        <p>The parsed result is saved so if you switch away and come back to the same state, those cards
+                            render instantly without any network request.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>renderCard() — painted to the screen</h4>
+                        <p>Card shows: city name, resolved location, observation time, temperature, weather icon,
+                            description, metrics grid (7 values), and a 3-day mini forecast strip.</p>
+                    </div>
+                </li>
+                <li>
+                    <div class="step-body">
+                        <h4>Auto-refresh every 10 minutes</h4>
+                        <p>A countdown timer fires <code>triggerRefresh()</code> which clears the cache for the current
+                            view and re-fetches all data. The 10-minute interval matches wttr.in's own data update
+                            frequency.</p>
+                    </div>
+                </li>
+            </ol>
+
+            <div class="arch" style="margin-top:1.5rem">
+                <div style="overflow-x:auto;white-space:nowrap">
+                    <div class="flow" style="align-items:flex-start">
+                        <div class="flow-row" style="flex-wrap:nowrap">
+                            <div style="text-align:center">
+                                <div class="flow-box blue">Browser opens HTML</div>
+                                <div class="flow-label">Double-click the file</div>
+                            </div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box green">buildLayout()</div>
+                                <div class="flow-label">Creates 36 sections<br>+780 card placeholders</div>
+                            </div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box green">loadAllStates()</div>
+                                <div class="flow-label">State-by-state,<br>6 concurrent per batch</div>
+                            </div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box purple">fetch(city)</div>
+                                <div class="flow-label">GET wttr.in/City<br>cache:no-store</div>
+                            </div>
+                            <div class="flow-arrow">&#8594;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box orange">wttr.in server</div>
+                                <div class="flow-label">Weather station data<br>JSON response</div>
+                            </div>
+                        </div>
+                        <div style="align-self:center; padding-left:67%">&#8593;</div>
+                        <div class="flow-row" style="flex-wrap:nowrap">
+                            <div style="text-align:center">
+                                <div class="flow-box blue">renderCard()</div>
+                                <div class="flow-label">Paints temp, icon,<br>metrics, forecast</div>
+                            </div>
+                            <div class="flow-arrow">&#8592;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box green">dataCache[city]=data</div>
+                                <div class="flow-label">In-memory store<br>instant on re-visit</div>
+                            </div>
+                            <div class="flow-arrow">&#8592;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box green">parse(json, city)</div>
+                                <div class="flow-label">Normalize fields<br>check country=India</div>
+                            </div>
+                            <div class="flow-arrow">&#8592;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box purple">resp.json()</div>
+                                <div class="flow-label">Raw wttr.in JSON<br>current + forecast</div>
+                            </div>
+                            <div class="flow-arrow">&#8592;</div>
+                            <div style="text-align:center">
+                                <div class="flow-box orange">HTTP 200 OK</div>
+                                <div class="flow-label">JSON: temp, humidity<br>wind, UV, 3-day</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr />
+
+        <!-- 6. wttr.in API -->
+        <section id="api">
+            <h2><span class="num">6</span> wttr.in API — What We Get</h2>
+
+            <div class="callout orange">
+                <span class="ci">&#9888;</span>
+                <p><strong>Important:</strong> wttr.in is a free, public API with no authentication. It resolves city
+                    names by geocoding — if a name is ambiguous, it may return data for the wrong location. This is why
+                    we use "Banda Uttar Pradesh" instead of just "Banda" (which resolved to Argentina!).</p>
+            </div>
+
+            <h3>Request Format</h3>
+            <div class="code-wrap">
+                <span class="code-label">HTTP GET</span>
+                <pre>https://wttr.in/{city}?format=j1
+
+Examples:
+  https://wttr.in/Kozhikode?format=j1
+  https://wttr.in/New%20Delhi?format=j1
+  https://wttr.in/Banda%20Uttar%20Pradesh?format=j1   ← disambiguated</pre>
+            </div>
+
+            <h3 style="margin-top:1.2rem">Response Structure (simplified)</h3>
+            <div class="code-wrap">
+                <span class="code-label">JSON</span>
+                <pre>{
+  <span class="st">"nearest_area"</span>: [{
+    <span class="st">"areaName"</span>:  [{ <span class="st">"value"</span>: <span class="st">"Kozhikode"</span> }],
+    <span class="st">"region"</span>:    [{ <span class="st">"value"</span>: <span class="st">"Kerala"</span> }],     <span class="cm">← we check this = "India"</span>
+    <span class="st">"country"</span>:   [{ <span class="st">"value"</span>: <span class="st">"India"</span> }],
+    <span class="st">"latitude"</span>:  <span class="st">"11.250"</span>, <span class="st">"longitude"</span>: <span class="st">"75.783"</span>
+  }],
+
+  <span class="st">"current_condition"</span>: [{
+    <span class="st">"temp_C"</span>:         <span class="st">"29"</span>,        <span class="cm">← temperature</span>
+    <span class="st">"FeelsLikeC"</span>:     <span class="st">"34"</span>,
+    <span class="st">"humidity"</span>:       <span class="st">"82"</span>,
+    <span class="st">"windspeedKmph"</span>:  <span class="st">"18"</span>,
+    <span class="st">"winddir16Point"</span>: <span class="st">"WSW"</span>,
+    <span class="st">"visibility"</span>:     <span class="st">"10"</span>,
+    <span class="st">"pressure"</span>:       <span class="st">"1010"</span>,
+    <span class="st">"uvIndex"</span>:        <span class="st">"7"</span>,
+    <span class="st">"cloudcover"</span>:     <span class="st">"65"</span>,
+    <span class="st">"weatherDesc"</span>:    [{ <span class="st">"value"</span>: <span class="st">"Partly Cloudy"</span> }],
+    <span class="st">"localObsDateTime"</span>: <span class="st">"2026-07-18 01:45 PM"</span>
+  }],
+
+  <span class="st">"weather"</span>: [           <span class="cm">← 3-day forecast array</span>
+    {
+      <span class="st">"date"</span>:     <span class="st">"2026-07-18"</span>,
+      <span class="st">"maxtempC"</span>: <span class="st">"30"</span>,
+      <span class="st">"mintempC"</span>: <span class="st">"24"</span>,
+      <span class="st">"hourly"</span>:  [<span class="cm">...</span>]   <span class="cm">← hourly[4] = midday description</span>
+    },
+    { <span class="cm">/* day 2 */</span> },
+    { <span class="cm">/* day 3 */</span> }
+  ]
+}</pre>
+            </div>
+
+            <h3 style="margin-top:1.2rem">Fields Used on Each Card</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Display</th>
+                        <th>JSON Path</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Temperature</td>
+                        <td><code>current_condition[0].temp_C</code></td>
+                        <td>29°C</td>
+                    </tr>
+                    <tr>
+                        <td>Feels Like</td>
+                        <td><code>current_condition[0].FeelsLikeC</code></td>
+                        <td>34°C</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td><code>current_condition[0].weatherDesc[0].value</code></td>
+                        <td>Partly Cloudy</td>
+                    </tr>
+                    <tr>
+                        <td>Humidity</td>
+                        <td><code>current_condition[0].humidity</code></td>
+                        <td>82%</td>
+                    </tr>
+                    <tr>
+                        <td>Wind</td>
+                        <td><code>windspeedKmph + winddir16Point</code></td>
+                        <td>18 km/h WSW</td>
+                    </tr>
+                    <tr>
+                        <td>Visibility</td>
+                        <td><code>current_condition[0].visibility</code></td>
+                        <td>10 km</td>
+                    </tr>
+                    <tr>
+                        <td>UV Index</td>
+                        <td><code>current_condition[0].uvIndex</code></td>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>Pressure</td>
+                        <td><code>current_condition[0].pressure</code></td>
+                        <td>1010 mb</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Cover</td>
+                        <td><code>current_condition[0].cloudcover</code></td>
+                        <td>65%</td>
+                    </tr>
+                    <tr>
+                        <td>Observation Time</td>
+                        <td><code>localObsDateTime</code></td>
+                        <td>01:45 PM</td>
+                    </tr>
+                    <tr>
+                        <td>Resolved Location</td>
+                        <td><code>nearest_area[0].areaName + region</code></td>
+                        <td>Kozhikode, Kerala</td>
+                    </tr>
+                    <tr>
+                        <td>3-Day Forecast</td>
+                        <td><code>weather[0..2].maxtempC/mintempC</code></td>
+                        <td>30°/24°, 28°/23°, 29°/24°</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr />
+
+        <!-- 7. SUMMARY -->
+        <section id="summary">
+            <h2><span class="num">7</span> Summary Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>File</th>
+                        <th>Responsibility</th>
+                        <th>Language</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>State Agent</td>
+                        <td><code>agent_kerala.py</code> (×28)</td>
+                        <td>Defines districts, fetches + parses weather for one state</td>
+                        <td>Python</td>
+                    </tr>
+                    <tr>
+                        <td>UT Agent</td>
+                        <td><code>agent_delhi.py</code> (×8)</td>
+                        <td>Same as state agent but for a union territory</td>
+                        <td>Python</td>
+                    </tr>
+                    <tr>
+                        <td>Orchestrator</td>
+                        <td><code>orchestrator.py</code></td>
+                        <td>Discovers agents, runs them in parallel, saves output</td>
+                        <td>Python</td>
+                    </tr>
+                    <tr>
+                        <td>Report Generator</td>
+                        <td><code>weather_report.py</code></td>
+                        <td>Builds the self-contained HTML dashboard file</td>
+                        <td>Python</td>
+                    </tr>
+                    <tr>
+                        <td>Live Dashboard</td>
+                        <td><code>india_weather_report.html</code></td>
+                        <td>Fetches live data in-browser, caches, filters, auto-refreshes</td>
+                        <td>HTML + JS</td>
+                    </tr>
+                    <tr>
+                        <td>Weather Source</td>
+                        <td>wttr.in (external)</td>
+                        <td>Free public weather API — current conditions + 3-day forecast</td>
+                        <td>REST API</td>
+                    </tr>
+                    <tr>
+                        <td>Data Cache</td>
+                        <td><code>india_weather_data.json</code></td>
+                        <td>Snapshot of last orchestrator run — all states + districts</td>
+                        <td>JSON</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="card-grid" style="margin-top:1.5rem">
+                <div class="card">
+                    <div class="icon">&#128202;</div>
+                    <h4>System Scale</h4>
+                    <p>36 agents · 28 states · 8 union territories · 780+ districts · ~740 live API calls per full
+                        refresh</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#9889;</div>
+                    <h4>Performance</h4>
+                    <p>State filter responds in &lt;2s (AbortController). Cached states render instantly. Full load ~90s
+                        sequentially or ~30s with 8 workers.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">&#128274;</div>
+                    <h4>No Secrets</h4>
+                    <p>Zero API keys. Zero passwords. Zero tokens. Everything uses the free public wttr.in endpoint —
+                        safe to share the HTML file openly.</p>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /container -->
+
+</body>
+
+</html>

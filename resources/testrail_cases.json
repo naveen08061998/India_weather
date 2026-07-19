@@ -1,0 +1,904 @@
+{
+  "offset": 0,
+  "limit": 250,
+  "size": 11,
+  "_links": {
+    "next": null,
+    "prev": null
+  },
+  "cases": [
+    {
+      "id": 86452392,
+      "title": "Administration - Enable/Disable - Disable Scan to Computer (WSD)",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833557,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 3,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test : Focused test for Enable/Disable Scan to Computer.</p>\n\n<ul>\n<li>EWS/Driver</li>\n<li>Enable/Disable Scan to computer/WSD/Web Scan</li>\n<li>Different UI types. MGD, CGD</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Error handling (ADF Jam, pick error, Sleep/Wake, etc.)</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": null,
+      "custom_steps_separated": [
+        {
+          "content": "<p>Disabled the Scan to Computer function</p>\n\n<ol>\n<li>Access to EWS -> Security -> Printer Features.</li>\n<li>Uncheck the Scan to Computer function.</li>\n<li>Click on Apply button.</li>\n<li><p>Check for the Scan to Computer app from control panel.<br />Step applicable for Consumer devices with Scan to Computer.</p></li>\n</ol>",
+          "expected": "<p>Verify the Scan to Computer has disappeared from the front panel.<br />LED status, Sound and screen displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Enabled the Scan to Computer function</p>\n\n<ol>\n<li>Access to EWS -> Security -> Printer Features.</li>\n<li>Checked the Scan to Computer function.</li>\n<li>Click on Apply button.</li>\n<li>Check for the Scan to Computer app from control panel.</li>\n<li><p>Perform a Scan to Computer from control panle.<br />Step applicable for Consumer devices with Scan to Computer.</p></li>\n</ol>",
+          "expected": "<p>Scan to Computer app appears on the front panel.<br />Scan to Computer job can be completed without error, and output is correctly.<br />LED status, Sound and screen displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Disabled the Web Scan function</p>\n\n<ol>\n<li>Access to EWS -> Network -> Adcanced Settings > Remote Scan.</li>\n<li>Turn off Network Initiated Scanning, eSCL, eSCL Secure and Web Scan.</li>\n<li><p>Check Scan > Web Scan from EWS.<br />Step applicable for Consumer devices with Web Scan.</p></li>\n</ol>",
+          "expected": "<p>Verify the Web Scan has disabled from the front panel.<br />LED status, Sound and screen displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Enabled the Web Scan function</p>\n\n<ol>\n<li>Access to EWS -> Network -> Adcanced Settings > Remote Scan.</li>\n<li>Turn On Network Initiated Scanning, eSCL, eSCL Secure and Web Scan.</li>\n<li>Check Scan > Web Scan from EWS.</li>\n<li><p>Perform a Web Scan from EWS.<br />Step applicable for Consumer devices with Web Scan.</p></li>\n</ol>",
+          "expected": "<p>Web Scan is enabled on EWS page.<br />Web Scan job can be completed without error, and output is correctly.<br />LED status, Sound and screen displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Disabled the WSD function</p>\n\n<ol>\n<li>Access to EWS -> Network -> Adcanced Settings > Web Services (Microsoft).</li>\n<li>Turn off WS-Scan.</li>\n<li><p>Perform a WS-Scan job from PC (WSD).<br />Step applicable for Consumer devices with WSD.</p></li>\n</ol>",
+          "expected": "<p>Verify the WS-Scan has disabled and cannot perform from PC.<br />LED status, Sound and screen displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Enabled the WSD function</p>\n\n<ol>\n<li>Access to EWS -> Network -> Adcanced Settings > Web Services (Microsoft).</li>\n<li>Turn On WS-Scan.</li>\n<li><p>Perform a WS-Scan job from PC (WSD).<br />Step applicable for Consumer devices with WSD.</p></li>\n</ol>",
+          "expected": "<p>WS-Scan is enabled on EWS page.<br />WS-Scan job can be completed without error, and output is correctly.<br />LED status, Sound and screen displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452405,
+      "title": "Core - Preview - Edit and Manipulate - support",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833562,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 16,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test : Focus on Scan Preview - Edit and Manipulate.</p>\n\n<ul>\n<li>Preview</li>\n</ul></li>\n<li><p>Optional Settings:</p>\n\n<ul>\n<li>Document Source: ADF, Glass</li>\n<li>Color Mode: Black Only, Greyscale, Color</li>\n<li>Resolution: 75, 150, 200, 300, 400, 600 dpi</li>\n<li>Original Sides: 1-Sided, 2-Sided</li>\n<li>Original Size: <supported></li>\n<li>Lighter/Darker: 1 to 9</li>\n<li>File Type: PDF, JPEG, TIFF, PDF/A</li>\n<li>File Size: Large, Small, Medium</li>\n<li>Content Orientation: Portrait, Landscape</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Error handling (Miss pick error, Sleep/Wake, etc.)</li>\n<li>Performance/Speed</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions :</p>\n\n<ul>\n<li>Device in ready state with latest build</li>\n<li>Feature is ready for testing</li>\n</ul>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>Scan to USB ->Preview with default settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Insert USB thumb drive to printer.</li>\n<li>Perform Scan to USB preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to USB ->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to USB ->Preview with user configured settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Insert USB thumb drive to printer.</li>\n<li>Perform Scan to USB preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to USB ->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Email ->Preview with default settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Perform Scan to Email preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Email ->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Email ->Preview with user configured settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Perform Scan to Email preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Email ->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Network Folder ->Preview with default settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Perform Scan to Network Folder preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Network Folder ->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Network Folder ->Preview with user configured settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Perform Scan to Network Folder preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to Network Folder ->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to SharePoint ->Preview with default settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Perform Scan to SharePoint preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to SharePoint->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to SharePoint ->Preview with user configured settings</p>\n\n<ol>\n<li>Load original file on glass.</li>\n<li>Perform Scan to SharePoint preview job.</li>\n</ol>",
+          "expected": "<p>Verify the preview job completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to SharePoint->Preview - Edit and Manipulate</p>\n\n<ol>\n<li>Follow above step, edit and Manipulate the preview.</li>\n</ol>",
+          "expected": "<p>Verify the preview Edit and Manipulate operation completed without error.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452406,
+      "title": "Core - Remote Scan - Scan to Computer - App Pull (WSD/EWS)",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1779868839,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 17,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\r\n\r\n<ul>\r\n<li><p>Scope/Intent/Objective of test: Focused test on \"Pull\" scan from Software solution.</p>\r\n\r\n<ul>\r\n<li>PC Software(HP Scan) Installed, WSD Scan driver installed</li>\r\n<li>Driver, WSD Scan, Web Scan</li>\r\n</ul></li>\r\n<li><p>Optional Settings:</p>\r\n\r\n<ul>\r\n<li>Document Source: ADF, Glass </li>\r\n<li>File Type: PDF, JPEG, TIFF, PNG, BMP</li>\r\n<li>Color Mode: Black Only, Greyscale, Color </li>\r\n<li>Sides: 1-Sided, 2-Sided</li>\r\n<li>Paper Size: <supported> </li>\r\n<li>Resolution: 75, 150, 200, 300, 400, 600, 1200 dpi</li>\r\n<li>Quality and File Size: 0-100</li>\r\n<li>Lighter/Darker: -4 to +4 </li>\r\n<li>Page Orientation: Portrait, Landscape</li>\r\n<li>Item Type: Document, Photo</li>\r\n</ul></li>\r\n<li><p>Additional Observations:</p>\r\n\r\n<ul>\r\n<li>LED status</li>\r\n<li>Sound</li>\r\n<li>CGD displays</li>\r\n</ul></li>\r\n<li><p>Conflicting features: </p>\r\n\r\n<ul>\r\n<li>None</li>\r\n</ul></li>\r\n<li><p>Out of scope for test</p>\r\n\r\n<ul>\r\n<li>Push scan</li>\r\n<li>Error handling (Miss pick error, Sleep/Wake, etc.)</li>\r\n<li>Performance/Speed</li>\r\n</ul></li>\r\n<li><p>Applicable products</p>\r\n\r\n<ul>\r\n<li>Ink consumer printer</li>\r\n<li>Ink SMB printer</li>\r\n<li>Laser consumer printer</li>\r\n<li>Laser SMB printer</li>\r\n</ul></li>\r\n</ul>\r\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:</p>\r\n\r\n<ul>\r\n<li>Device in ready state with latest build</li>\r\n<li>Feature is ready for testing</li>\r\n</ul>\r\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>Default HP Scan</p><ol><li>Inititate Scan from PC Software.</li><li>Select Device.</li><li>Send Scan job with default settings.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>User configured HP Scan</p><ol><li>Inititate Scan from PC Software.</li><li>Select Device.</li><li>Send Scan job with user configured settings.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Default WSD Scan</p><ol><li>Inititate WSD Scan from WSD.</li><li>Select Device.</li><li>Send WSD Scan job with default settings.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>User configured WSD Scan</p><ol><li>Inititate WSD Scan from WSD.</li><li>Select Device.</li><li>Send WSD Scan job with user configured settings.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Default Web Scan</p><ol><li>Inititate Web Scan from EWS.</li><li>Select Device.</li><li>Send WSD Scan job with default settings.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>User configured Web Scan</p><ol><li>Inititate Web Scan from EWS.</li><li>Select Device.</li><li>Send WSD Scan job with user configured settings.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">Web Scan from \u00a0- PC side\u00a0</p><p>1. Do a web scan and save the file with below settings:\u00a0</p><p>Glass/ADF, TIFF/JPG/PDF, Color/B&W/Gray, Different scan paper size Letter, 75-1200dpi, Different Quality: 0-100, Lighter/Darker: 1-9</p><p>2. Repeat above step but do cancel</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do successfully. Refer to CR DUNE-154321</p><p>Scan output saved on PC successfully. Refer to CR DUNE-268750/DUNE-251652.<span style=\"white-space:pre;\">\u00a0 \u00a0\u00a0</span></p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">Web scan from Android/ iOS mobile</p><p>1. Access the EWS from Android/ iOS mobile.</p><p>2. Check Document source option or other scan options.</p><p>3. Perform a default ADF/Glass scan job.</p><p><br></p>",
+          "expected": "<p id=\"isPasted\">Verify the scan option are works. Refer to CR DUNE-240102/DUNE-281583</p><p>Scan job could do successfully. Scan output saved on PC successfully. \u00a0Refer to CR DUNE-306858</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p><br></p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">Web Scan Personlize</p><p>1. Access to EWS->Home page,click \"Personalize\" button to add Web Scan widget.</p><p>2. Make sure Web Scan is disabled from EWS->Settings->Security->Administrator Settings page.</p><p>3. Click Web Scan widget on EWS->Home page.</p><p><br></p>",
+          "expected": "<p>Web Scan widget function should work correctly for better user experience.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">EWS enable/disable scan feature</p><p>1. Enable/Disable Scan from Security > Printer Features from EWS.</p><p>2. Check Scan icon on Home screen.</p>",
+          "expected": "<p>Scan icon should be disabled on FP.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">EWS Sign-In and Permission</p><p>1. Click the Guest checkbox to lock the Scan to Computer.</p><p>2. Check the Scan to Computer on FP</p>",
+          "expected": "<p>No unsupport scan to option and Scan to Computer should be locked and should sign in to access. Refer to CR DUNE-302519</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">WSD Scan - Flatbed/ADF</p><p>1. Send a WS SCAN job with follow settings:</p><p>ADF/Glass, Simplex/Duplex, Use different Color mode, Use different file type (BMP\u2026), Use different dpi (75-1200 dpi), Use different brightness (Max, Min, Normal), Use different Contrast (Max, Min, Normal)</p><p><br></p>",
+          "expected": "<p id=\"isPasted\">Scan job could do successfully.</p><p>Scan output saved on PC successfully.</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">WSD Scan preview - Flatbed/ADF</p><p>1. Send a WS SCAN preview job with follow settings:</p><p>ADF/Glass, Use different Color mode, Use different file type (BMP\u2026), Use different dpi (75-1200 dpi), Use different brightness (Max, Min, Normal), Use different Contrast (Max, Min, Normal)</p><p>Notes: If performing preview from ADF, please try the single or multiple (>=2) original targets into ADF.</p><p><br></p>",
+          "expected": "<p id=\"isPasted\">Preview job could do successfully. Refer to CR DUNE-295387</p><p>Preview output saved on PC successfully.</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">WSD Scan Cancel - Flatbed/ADF</p><p>1. Open Windows Fax and Scan/Windows Scan/Paint app on PC to perform a simplex/duplex scan job from ADF/Glass.</p><p>2. Click cancel button Windows Fax and Scan app.</p><p>3. Perform a scan job from ADF/Glass again.</p><p>Notes: If performing scan job from ADF, please try the single or multiple (>=2) original targets into ADF.</p><p><br></p>",
+          "expected": "<p id=\"isPasted\">Scan job could do successfully.</p><p>Scan output saved on PC successfully. Refer to CR DUNE-294344/DUNE-294346/DUNE-309990/DUNE-302002<span style=\"white-space:pre;\">\u00a0 \u00a0\u00a0</span></p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">W-Scan tool scan</p><p>1. Select different Client Type eSCL/WS Scan/Rest Scan.</p><p>2. Do a scan job with below settings:\u00a0</p><p>Simplex/Duplex, Glass/ADF, JPG/Tiff, Color/B&W/Gray, 75-1200dpi, JPEG Compression.</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do successfully.</p><p>Scan output saved on PC successfully.</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452407,
+      "title": "Core - Remote Scan - Scan to Computer - OCR - Searchable PDF (OCR)",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833572,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 18,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test: Focused test on Scan to Computer - OCR - Searchable PDF (OCR).</p>\n\n<ul>\n<li>OCR Language Pack installed</li>\n<li>Verify text layer creation</li>\n</ul></li>\n<li><p>Optional Settings:</p>\n\n<ul>\n<li>Document Source: ADF, Glass </li>\n<li>File Type: PDF, JPEG, TIFF, PNG, BMP</li>\n<li>Color Mode: Black Only, Greyscale, Color </li>\n<li>Sides: 1-Sided, 2-Sided</li>\n<li>Paper Size: <supported> </li>\n<li>Resolution: 75, 150, 200, 300, 400, 600, 1200 dpi</li>\n<li>Quality and File Size: 0-100</li>\n<li>Lighter/Darker: -4 to +4 </li>\n<li>Page Orientation: Portrait, Landscape</li>\n<li>Item Type: Document, Photo</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>JPG, PNG, BMP, Tiff</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:<br />Device in ready state with latest build<br />Feature is ready for testing</p>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>Default Searchable PDF (OCR)</p>\n\n<ol>\n<li>Settings: File Type = Searchable PDF (OCR) with default other settings.</li>\n<li>Scan a text-heavy document.</li>\n<li>Open output file and attempt to select/search text.</li>\n</ol>",
+          "expected": "<p>Scan job could do successfully.<br />Scan output saved on PC successfully.<br />Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br />Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br />Text is selectable and searchable. No gibberish characters.<br />LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>User Configured Searchable PDF (OCR)</p>\n\n<ol>\n<li>Settings: File Type = Searchable PDF (OCR) with default other settings.</li>\n<li>Scan a text-heavy document.</li>\n<li>Open output file and attempt to select/search text.</li>\n</ol>",
+          "expected": "<p>Scan job could do successfully.<br />Scan output saved on PC successfully.<br />Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br />Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br />Text is selectable and searchable. No gibberish characters.<br />LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452408,
+      "title": "Core - Remote Scan - Scan to Computer - Printer Push (UI Shortcut, TCP/IP)",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1779869085,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 19,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\r\n\r\n<ul>\r\n<li><p>Scope/Intent/Objective of test: Focused test on Printer Push (UI Shortcut, TCP/IP).</p>\r\n\r\n<ul>\r\n<li>PC Software Installed via USB, Network</li>\r\n<li>Different UI types. MGD, CGD</li>\r\n</ul></li>\r\n<li><p>Optional Settings:</p>\r\n\r\n<ul>\r\n<li>Document Source: ADF, Glass </li>\r\n<li>File Type: PDF, JPEG, TIFF, PNG, BMP</li>\r\n<li>Color Mode: Black Only, Greyscale, Color </li>\r\n<li>Sides: 1-Sided, 2-Sided</li>\r\n<li>Paper Size: <supported> </li>\r\n<li>Resolution: 75, 150, 200, 300, 400, 600, 1200 dpi</li>\r\n<li>Quality and File Size: 0-100</li>\r\n<li>Lighter/Darker: -4 to +4 </li>\r\n<li>Page Orientation: Portrait, Landscape</li>\r\n<li>Item Type: Document, Photo</li>\r\n</ul></li>\r\n<li><p>Additional Observations:</p>\r\n\r\n<ul>\r\n<li>LED status</li>\r\n<li>Sound</li>\r\n<li>CGD displays</li>\r\n</ul></li>\r\n<li><p>Conflicting features: </p>\r\n\r\n<ul>\r\n<li>None</li>\r\n</ul></li>\r\n<li><p>Out of scope for test</p>\r\n\r\n<ul>\r\n<li>Pull scan</li>\r\n<li>Error handling (Miss pick error, Sleep/Wake, etc.)</li>\r\n<li>Performance/Speed</li>\r\n</ul></li>\r\n<li><p>Applicable products</p>\r\n\r\n<ul>\r\n<li>Ink consumer printer</li>\r\n<li>Ink SMB printer</li>\r\n<li>Laser consumer printer</li>\r\n<li>Laser SMB printer</li>\r\n</ul></li>\r\n</ul>\r\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:<br />Device in ready state with latest build<br />Feature is ready for testing</p>\r\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>Default HP Scan over USB connection</p><ol><li>Open HP Scan Assistant : Enable Scan to Computer from PC successfully.</li><li>Touch Scan to Computer button on FP.</li><li>Select Destination PC > file type.</li><li>Send Scan job with default settings via USB connection.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>User configured HP Scan over network connection</p><ol><li>Open HP Scan Assistant : Enable Scan to Computer from PC successfully.</li><li>Touch Scan to Computer button on FP.</li><li>Select Destination PC > file type.</li><li>Send Scan job with user configured settings via Network connection.</li></ol>",
+          "expected": "<p>Scan job could do successfully.<br>Scan output saved on PC successfully.<br>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.<br>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.<br>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">1. Touch Scan > Scan to Computer.</p><p>2. Check the All Options button.</p>",
+          "expected": "<p>All Options button should be consistented with spec.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan - Simplex/Duplex</p><p>1. Send a FP Scan job with follow settings:</p><p>Flatbed/ADF, Document/Picture, Use different scan size (8x10, Letter, A4, Legal...), 75-1200dpi, Color mode, Different file type (JPEG, PDF\u2026), Orientation, Connection: USB/Network</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do successfully. Refer to CR DUNE-307609.</p><p>Scan output saved on PC successfully.</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan - Check Job Queue/History</p><p>1. Go to EWS/FP Job Queue/History.</p><p>2. Check the scan settings(file type, dpi, color, scanner source...) for each failed/successed scan job.</p>",
+          "expected": "<p>Check scan parameters like File Type, file size, Color Mode, etc which should match the settings.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan B large size - Flatbed</p><p>1. Send a FP Scan job with follow settings:</p><p>Document/Picture, Use different Paper Size (A3, B4(250x353mm), 11x17 inch target, JIS B4(257X364mm), Detect Content on Page, Entire Scan Area), Use different resolution (75-1200dpi), Use different color mode(Color, B/W, Gray...), Use different file type (PNG, PDF, PNG, BMP, TIF), Use different file type, Portrait/Landscape</p><p>2. Repeat above step but do cancel</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do/cancel successfully. Refer to SSWS-8490</p><p>Scan output saved on PC successfully.\u00a0</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel/EWS Scan - Multiple pages ADF</p><p>1. Load 10-15 original targets into ADF.</p><p>2. Perform the scan job with different dpi, file type, page sides and color.</p><p>3. Repeat above scan job but do cancel.</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do/cancel successfully.</p><p>Scan output saved on PC successfully.\u00a0</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel/EWS Scan - Max pages ADF</p><p>1. Load ADF max original targets (30-35) into ADF.</p><p>2. Perform the different size(5x7/A4/Legal) scan job with simplex/duplex, different dpi(75-300), file type and color.</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do/cancel successfully.</p><p>Scan output saved on PC successfully.\u00a0</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan - Add page</p><p>1. Send a FP Scan job with follow settings:</p><p>Flatbed, Use different scan size, file type, Color Mode, and Resolution(75-1200).</p><p>2. Touch Add page on FP 5-10 times.</p><p>3. Repeat above but do cancel.</p><p><br></p>",
+          "expected": "<p id=\"isPasted\">The add screen should be displayed. Refer to CR DUNE-254704/DUNE-121466.</p><p>The scan job should be performed successfully. Refer to CR DUNE-153364 \u00a0</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan - Cancel \u00a0size in different time periods</p><p>1. Send a FP Scan job with follow settings:</p><p>ADF/Glass, Use Legal/Letter/8x10 target, Simplex/Duplex.</p><p>2. Touch cancel button immediately/in the middle of the scan (20%/30%50%)/near the end of the scan (80%) on FP.</p><p><br></p>",
+          "expected": "<p>No ADF Jam, test scan process without errors and can be cancelled as expected. Refer to CR DUNE-186240/DUNE-300402.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan - ADF and Glass alternately</p><p>1. Make sure the HP Scan's source is \"Flatbed\".</p><p>2. Load the original both on glass and ADF and Perform a scan job from FP.</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do successfully.</p><p>Scan_AddPage screen should be displayed after the scan is complete.Refer to CR DUNE-258041.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel enable/disable automatically</p><p>1. Make sure the SW is installed via USB/Network.</p><p>2. Unplug/plug the USB cable or disconnect/connect the network.</p><p>3. Initiate a scan job from front panel.</p>",
+          "expected": "<p id=\"isPasted\">Verify the \"scan computer is enabled\" in Manage Scan to Computer automatically.</p><p>Scan job could do successfully.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel Scan maximum clients (10PCs)</p><p>1. Prepare 10 PCs with below OS:</p><p>5 PCs with Windows 10 OS</p><p>4 PCs with Windows 11 OS</p><p>2. Install SW build on each PC with one printer successfully.</p><p><br></p>",
+          "expected": "<p id=\"isPasted\">Scan job could do/cancel successfully.</p><p>Scan output saved on PC successfully.\u00a0</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p id=\"isPasted\">FrontPanel different shortcut scan</p><p>1. Make sure the SW is installed via USB/Network.</p><p>2. Please run this test case on each shortcut available.</p><p>Shortcut List:</p><p>Save as PDF</p><p>Save as JPEG</p><p>Email as PDF</p><p>Email as JPEG</p><p>Send to Cloud</p><p>Everyday Scan</p>",
+          "expected": "<p id=\"isPasted\">Scan job could do/cancel successfully.</p><p>Scan output saved on PC successfully.\u00a0</p><p>Check scan output parameters like File Type, file size, Color Mode, etc which should match the settings.</p><p>Scan output quality should have no ghosting, no truncation, and no other unacceptable quality issues.</p><p>LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452454,
+      "title": "Core - Job Logs",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833583,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 38,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description: </p>\n\n<ul>\n<li><p>Perform multiple scan jobs and check if Job logs capture required entries. </p></li>\n<li><p>Scope/Intent/Objective of test: Focused test on Job Log/Queue.</p>\n\n<ul>\n<li>Check FP,EWS Job Logs/Queue</li>\n<li>Cancel job from FP/EWS</li>\n<li>Different UI types. MGD, CGD</li>\n</ul></li>\n<li><p>Optional Settings:</p>\n\n<ul>\n<li>Document Source: ADF, Glass </li>\n<li>File Type: PDF, JPEG, TIFF, PNG, BMP</li>\n<li>Color Mode: Black Only, Greyscale, Color </li>\n<li>Sides: 1-Sided, 2-Sided</li>\n<li>Paper Size: <supported> </li>\n<li>Resolution: 75, 150, 200, 300, 400, 600, 1200 dpi</li>\n<li>Quality and File Size: 0-100</li>\n<li>Lighter/Darker: -4 to +4 </li>\n<li>Page Orientation: Portrait, Landscape</li>\n<li>Item Type: Document, Photo</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Error handling (Miss pick error, Sleep/Wake, etc.)</li>\n<li>Performance/Speed</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": null,
+      "custom_steps_separated": [
+        {
+          "content": "<p>Scan to computer, check Job Logs after completed FP scan job. </p>\n\n<ol>\n<li>Completed the scan job from FP with default settings.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from EWS.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to computer, check Job Logs after canceled FP scan job. </p>\n\n<ol>\n<li>Perform scan job from FP with user configured settings.</li>\n<li>Cancel the scan job.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from EWS.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>EWS Scan, check Job Logs after completed EWS scan job. </p>\n\n<ol>\n<li>Completed scan job from EWS with user configured settings.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from EWS.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>EWS Scan, check Job Logs after canceled EWS scan job. </p>\n\n<ol>\n<li>Perform scan job from EWS with default settings.</li>\n<li>Cancel the scan job.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from EWS.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan from computer, check Job Logs after completed SW scan job.</p>\n\n<ol>\n<li>Perform a SW job from PC with default settings.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from FP.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan from computer, check Job Logs after canceled SW scan job.</p>\n\n<ol>\n<li>Perform a SW job from PC with user configured settings.</li>\n<li>Cancel the scan job.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from FP.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to USB/Email/Network Folder/SharePoint, check Job Logs after completed FP scan job. </p>\n\n<ol>\n<li>Completed the scan job from FP with default settings.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from EWS.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Scan to USB/Email/Network Folder/SharePoint, check Job Logs after canceled FP scan job. </p>\n\n<ol>\n<li>Perform scan job from FP with user configured settings.</li>\n<li>Cancel the scan job.</li>\n<li><p>Verify job details in Job app on FP and Job Queue from EWS.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Scan Job log settings and job state should show correctly in Job log.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452443,
+      "title": "UX - Help Animations (UI)",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833587,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 61,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test: Focused test on Help Animations.</p>\n\n<ul>\n<li>Different UI. CGD/MGD</li>\n<li>Test all videos under ? help screen</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Text help</li>\n<li>Error handling (Miss pick error, Sleep/Wake, etc.)</li>\n<li>Performance/Speed</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:<br />Device in ready state with latest build<br />Feature is ready for testing</p>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<ol>\n<li>Touch Menu > Help icon or press '?' Help button on FP.</li>\n<li>Touch 'How to Videos'.</li>\n<li><p>Select all videos and Play it.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Video plays smoothly with audio (if supported).<br />LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452444,
+      "title": "UX - Help Content (UI, EWS)",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833591,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 62,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test: Focused test on Help Content (UI, EWS).</p>\n\n<ul>\n<li>Test all Help Content</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Error handling (Miss pick error, Sleep/Wake, etc.)</li>\n<li>Performance/Speed</li>\n<li>Video</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:<br />Device in ready state with latest build<br />Feature is ready for testing</p>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<ol>\n<li>Touch Menu > Help icon or press '?' Help button on FP/EWS.</li>\n<li>Select all Help Content and check it.</li>\n</ol>",
+          "expected": "<p>Help Content is consistent with spec.<br />LED status, Sound and CGD displays correctly.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452452,
+      "title": "UX - User Notification - UI Toast Messages",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833596,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 70,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test: Focused test on UI Toast Messages.</p>\n\n<ul>\n<li>Test scan/cancel scan on FP</li>\n<li>Test ADF Load</li>\n<li>CGD Only</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Permanent logs</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:<br />Device in ready state with latest build<br />Feature is ready for testing</p>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>Test Load ADF toast</p>\n\n<ol>\n<li>Load a original target into ADF.</li>\n<li>Check top-bar/center notification</li>\n<li><p>Check duration.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Toast appears: 'ADF Loaded' message. The string please refer to Scan workflow spec.<br />Persists ~3-5s then fades.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Test FP Scan toast</p>\n\n<ol>\n<li>Send a scan from FP.</li>\n<li>Check top-bar/center notification during scan.</li>\n<li><p>Check duration.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Toast appears: 'Starting...', 'Sending...', 'Scanning...' then 'Scan successful. Be sure to remove originals.'.\u00a0\u00a0The string please refer to Scan workflow spec.<br />Persists ~3-5s then fades.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Test FP Scan Cancel toast</p>\n\n<ol>\n<li>Send a scan from FP.</li>\n<li>Cancel this scan job.</li>\n<li>Check top-bar/center notification during scan.</li>\n<li><p>Check duration.<br />Step applicable for Consumer devices with CGD/MGD.</p></li>\n</ol>",
+          "expected": "<p>Toast appears: 'Canceling...' and 'Scan Canceled'.\u00a0\u00a0The string please refer to Scan workflow spec.<br />Persists ~3-5s then fades.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452460,
+      "title": "Core - Quick Sets - Quick Set",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833601,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 72,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test: Focused test on EWS Quick Set.</p>\n\n<ul>\n<li>Quick Set type/setting/quantity</li>\n<li>Printer state: Ready state</li>\n<li>Connection: Wireless/Wired</li>\n</ul></li>\n<li><p>Optional Settings:</p>\n\n<ul>\n<li>Document Source: ADF, Glass</li>\n<li>File Type: PDF, JPEG, TIFF, PNG, BMP</li>\n<li>Color Mode: Black Only, Greyscale, Color</li>\n<li>Sides: 1-Sided, 2-Sided</li>\n<li>Paper Size: <supported></li>\n<li>Resolution: 75, 150, 200, 300, 400, 600, 1200 dpi</li>\n<li>Quality and File Size: 0-100</li>\n<li>Lighter/Darker: -4 to +4</li>\n<li>Page Orientation: Portrait, Landscape</li>\n<li>Item Type: Document, Photo</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Performance/Speed</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:</p>\n\n<ul>\n<li>Device in ready state with latest build</li>\n<li>Feature is ready for testing</li>\n</ul>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>1.Create Scan quick set with default settings in EWS.<br />2.Perform a scan ADF/Glass job from FP.</p>",
+          "expected": "<p>Verify the created quick sets on FP should be consistent with EWS.<br />The scan output should be consistent with the setting.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>1.Create Scan quick set with non-default settings in EWS.<br />2.Perform a scan ADF/Glass job from FP.</p>",
+          "expected": "<p>Verify the created quick sets on FP should be consistent with EWS.<br />The scan output should be consistent with the setting.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>1.Create multiple scan quick sets on EWS.(For example:50~100)<br />2.Perform a scan ADF/Glass job from FP.</p>",
+          "expected": "<p>Verify multiple scan quick sets should display on FP without any issue.<br />The scan output should be consistent with the setting.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    },
+    {
+      "id": 86452462,
+      "title": "UX-Error-EWS Quick Set",
+      "section_id": 9339201,
+      "template_id": 2,
+      "type_id": 18,
+      "priority_id": 2,
+      "milestone_id": null,
+      "refs": null,
+      "created_by": 3526,
+      "created_on": 1774603061,
+      "updated_by": 3526,
+      "updated_on": 1774833607,
+      "estimate": null,
+      "estimate_forecast": null,
+      "suite_id": 206852,
+      "display_order": 74,
+      "is_deleted": 0,
+      "case_assignedto_id": null,
+      "custom_scenario_type": null,
+      "custom_automationstatus": null,
+      "custom_deliveryteam": 210,
+      "custom_tags": null,
+      "custom_testrail_bdd_scenario": null,
+      "custom_description": "<p>Description:</p>\n\n<ul>\n<li><p>Scope/Intent/Objective of test: Focused test on EWS Quick Set error.</p>\n\n<ul>\n<li>Error message/clear error</li>\n<li>Printer state: Ready state</li>\n<li>Connection: Wireless/Wired</li>\n</ul></li>\n<li><p>Optional Settings:</p>\n\n<ul>\n<li>Document Source: ADF, Glass</li>\n<li>File Type: PDF, JPEG, TIFF, PNG, BMP</li>\n<li>Color Mode: Black Only, Greyscale, Color</li>\n<li>Sides: 1-Sided, 2-Sided</li>\n<li>Paper Size: <supported></li>\n<li>Resolution: 75, 150, 200, 300, 400, 600, 1200 dpi</li>\n<li>Quality and File Size: 0-100</li>\n<li>Lighter/Darker: -4 to +4</li>\n<li>Page Orientation: Portrait, Landscape</li>\n<li>Item Type: Document, Photo</li>\n</ul></li>\n<li><p>Additional Observations:</p>\n\n<ul>\n<li>LED status</li>\n<li>Sound</li>\n<li>CGD displays</li>\n</ul></li>\n<li><p>Conflicting features: </p>\n\n<ul>\n<li>None</li>\n</ul></li>\n<li><p>Out of scope for test</p>\n\n<ul>\n<li>Performance/Speed</li>\n</ul></li>\n<li><p>Applicable products</p>\n\n<ul>\n<li>Ink consumer printer</li>\n<li>Ink SMB printer</li>\n<li>Laser consumer printer</li>\n<li>Laser SMB printer</li>\n</ul></li>\n</ul>\n",
+      "custom_mission": null,
+      "custom_goals": null,
+      "custom_automation_id": null,
+      "custom_preconds": "<p>Pre-conditions:</p>\n\n<ul>\n<li>Device in ready state with latest build</li>\n<li>Feature is ready for testing</li>\n</ul>\n",
+      "custom_steps_separated": [
+        {
+          "content": "<p>Create Scan quick set with error in EWS. (For example, leave file empty, or input invalid value)</p>",
+          "expected": "<p>Verify the error message displayed correctly in EWS.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        },
+        {
+          "content": "<p>Solve the error and continue to create scan quick set in EWS.<br />Perform scan ADF/glass from FP.</p>",
+          "expected": "<p>Verify the scan quick set could be created successfully in EWS.<br />The scan job could be completed successfully.</p>",
+          "additional_info": "",
+          "refs": "",
+          "markdown_editor_id": 1
+        }
+      ],
+      "custom_steps": null,
+      "custom_expected": null,
+      "comments": [],
+      "labels": []
+    }
+  ]
+}

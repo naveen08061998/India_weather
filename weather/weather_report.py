@@ -1,0 +1,319 @@
+"""
+Weather Report Orchestrator — Live Dashboard
+Generates weather/weathers.html: a self-contained live page that uses
+JavaScript to fetch wttr.in data directly in the browser and auto-refreshes
+every 5 minutes with a visible countdown.  No server required.
+"""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+OUTPUT_FILE = Path(__file__).parent / "weathers.html"
+
+LIVE_HTML = """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Weather — Bengaluru &amp; Chennai</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+      padding: 2rem 1rem;
+    }
+    header { text-align: center; margin-bottom: 2rem; }
+    header h1 { font-size: 2rem; font-weight: 700; color: #f1f5f9; }
+    .tagline { color: #94a3b8; font-size: .85rem; margin-top: .3rem; }
+
+    .status-bar {
+      display: flex; justify-content: center; align-items: center;
+      gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1.5rem;
+    }
+    .status-pill {
+      display: flex; align-items: center; gap: .45rem;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px; padding: .35rem .85rem;
+      font-size: .8rem; color: #94a3b8;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #22c55e; box-shadow: 0 0 6px #22c55e;
+      animation: pulse 2s infinite;
+    }
+    .dot.loading { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    #countdown { font-variant-numeric: tabular-nums; }
+
+    #refresh-btn {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.2);
+      color: #e2e8f0; border-radius: 999px;
+      padding: .35rem 1rem; font-size: .8rem;
+      cursor: pointer; transition: background .2s;
+    }
+    #refresh-btn:hover  { background: rgba(255,255,255,.18); }
+    #refresh-btn:disabled { opacity: .5; cursor: not-allowed; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem; max-width: 900px; margin: 0 auto;
+    }
+    .card {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      border-top: 4px solid var(--accent);
+      border-radius: 1rem; padding: 1.5rem;
+      backdrop-filter: blur(8px); transition: opacity .3s;
+    }
+    .card.refreshing { opacity: .45; }
+    .card-header {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: .75rem;
+    }
+    .card h2  { font-size: 1.5rem; color: var(--accent); }
+    .subtitle { color: #94a3b8; font-size: .8rem;  margin-top: .2rem; }
+    .obs-time { color: #64748b;  font-size: .72rem; margin-top: .3rem; }
+    .big-temp {
+      font-size: 1.7rem; font-weight: 700;
+      text-align: right; line-height: 1.3; color: #f8fafc;
+    }
+    .description { color: #cbd5e1; font-style: italic; margin-bottom: 1.2rem; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: .65rem; margin-bottom: 1.4rem;
+    }
+    .metric { background: rgba(255,255,255,.06); border-radius: .5rem; padding: .55rem .7rem; }
+    .metric-label {
+      display: block; font-size: .68rem;
+      text-transform: uppercase; letter-spacing: .05em; color: #94a3b8;
+    }
+    .metric-value { display: block; font-size: .92rem; font-weight: 600; color: #e2e8f0; margin-top: .12rem; }
+
+    .card h3 {
+      font-size: .95rem; color: #cbd5e1; margin-bottom: .65rem;
+      border-bottom: 1px solid rgba(255,255,255,.1); padding-bottom: .35rem;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    thead tr { color: #94a3b8; }
+    th, td { padding: .4rem .45rem; text-align: left; }
+    tbody tr:nth-child(odd) { background: rgba(255,255,255,.04); }
+
+    .skeleton-line {
+      background: linear-gradient(90deg,
+        rgba(255,255,255,.07) 25%, rgba(255,255,255,.14) 50%, rgba(255,255,255,.07) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: .3rem; height: 1rem; margin: .5rem 0;
+    }
+    .skeleton-line.wide  { width: 80%; }
+    .skeleton-line.short { width: 45%; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    .error-msg {
+      color: #f87171; font-size: .85rem; margin-top: .5rem;
+      padding: .6rem .8rem;
+      background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.25);
+      border-radius: .5rem;
+    }
+    footer { text-align: center; margin-top: 2.5rem; color: #475569; font-size: .78rem; }
+    footer a { color: #64748b; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>&#127780;&#65039; Live Weather Dashboard</h1>
+  <p class="tagline">Real-time conditions for Bengaluru &amp; Chennai</p>
+</header>
+
+<div class="status-bar">
+  <div class="status-pill">
+    <span class="dot" id="live-dot"></span>
+    <span id="live-label">Live</span>
+  </div>
+  <div class="status-pill">&#128336; Next refresh in <span id="countdown">5:00</span></div>
+  <div class="status-pill">&#128260; Updated: <span id="last-updated">&#8212;</span></div>
+  <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
+</div>
+
+<div class="grid">
+  <div class="card" id="card-bengaluru" style="--accent:#f97316;"></div>
+  <div class="card" id="card-chennai"   style="--accent:#0ea5e9;"></div>
+</div>
+
+<footer>
+  Data sourced from <a href="https://wttr.in" target="_blank">wttr.in</a>
+  &nbsp;&bull;&nbsp; Auto-refreshes every 5 minutes
+  &nbsp;&bull;&nbsp; Agents: agent_bengaluru.py &amp; agent_chennai.py
+</footer>
+
+<script>
+  const CITIES = [
+    { id: "bengaluru", name: "Bengaluru" },
+    { id: "chennai",   name: "Chennai"   }
+  ];
+  const REFRESH_SECS = 300;
+  let countdown = REFRESH_SECS;
+  let timer;
+
+  const ICONS = {
+    "sunny":"&#9728;&#65039;","clear":"&#9728;&#65039;","partly cloudy":"&#9925;",
+    "cloudy":"&#9729;&#65039;","overcast":"&#9729;&#65039;","mist":"&#127787;&#65039;",
+    "fog":"&#127787;&#65039;","rain":"&#127783;&#65039;","drizzle":"&#127782;&#65039;",
+    "snow":"&#10052;&#65039;","sleet":"&#127784;&#65039;","thunder":"&#9928;&#65039;",
+    "blizzard":"&#127784;&#65039;"
+  };
+
+  function weatherIcon(desc) {
+    const d = (desc || "").toLowerCase();
+    for (const [k, v] of Object.entries(ICONS)) {
+      if (d.includes(k)) return v;
+    }
+    return "&#127777;&#65039;";
+  }
+
+  function skeleton() {
+    return `<div class="skeleton-line wide"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line wide"></div>
+            <div class="skeleton-line short"></div>
+            <div class="skeleton-line wide"></div>`;
+  }
+
+  function parse(json, cityName) {
+    const cur  = json.current_condition[0];
+    const area = json.nearest_area[0];
+    return {
+      city:       cityName,
+      region:     area.region[0].value,
+      country:    area.country[0].value,
+      temp:       cur.temp_C,
+      feelsLike:  cur.FeelsLikeC,
+      humidity:   cur.humidity,
+      desc:       cur.weatherDesc[0].value,
+      windKmph:   cur.windspeedKmph,
+      windDir:    cur.winddir16Point,
+      visibility: cur.visibility,
+      pressure:   cur.pressure,
+      uvIndex:    cur.uvIndex,
+      cloudCover: cur.cloudcover,
+      obsTime:    cur.localObsDateTime || cur.observation_time || "&#8212;",
+      forecast: json.weather.map(d => ({
+        date: d.date,
+        maxC: d.maxtempC,
+        minC: d.mintempC,
+        desc: d.hourly[4].weatherDesc[0].value
+      }))
+    };
+  }
+
+  function renderCard(el, d) {
+    const icon = weatherIcon(d.desc);
+    const rows = d.forecast.map(f =>
+      `<tr><td>${f.date}</td><td>${weatherIcon(f.desc)} ${f.desc}</td>
+           <td>${f.maxC} &deg;C</td><td>${f.minC} &deg;C</td></tr>`
+    ).join("");
+
+    el.innerHTML = `
+      <div class="card-header">
+        <div>
+          <h2>${d.city}</h2>
+          <p class="subtitle">${d.region}, ${d.country}</p>
+          <p class="obs-time">Observed: ${d.obsTime}</p>
+        </div>
+        <div class="big-temp">${icon}<br>${d.temp}&deg;C</div>
+      </div>
+      <p class="description">${d.desc}</p>
+      <div class="metrics">
+        <div class="metric"><span class="metric-label">Feels Like</span><span class="metric-value">${d.feelsLike} &deg;C</span></div>
+        <div class="metric"><span class="metric-label">Humidity</span><span class="metric-value">${d.humidity} %</span></div>
+        <div class="metric"><span class="metric-label">Wind</span><span class="metric-value">${d.windKmph} km/h ${d.windDir}</span></div>
+        <div class="metric"><span class="metric-label">Visibility</span><span class="metric-value">${d.visibility} km</span></div>
+        <div class="metric"><span class="metric-label">Pressure</span><span class="metric-value">${d.pressure} mb</span></div>
+        <div class="metric"><span class="metric-label">UV Index</span><span class="metric-value">${d.uvIndex}</span></div>
+        <div class="metric"><span class="metric-label">Cloud Cover</span><span class="metric-value">${d.cloudCover} %</span></div>
+      </div>
+      <h3>3-Day Forecast</h3>
+      <table>
+        <thead><tr><th>Date</th><th>Condition</th><th>High</th><th>Low</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    el.classList.remove("refreshing");
+  }
+
+  async function fetchCity(city) {
+    const r = await fetch("https://wttr.in/" + city.name + "?format=j1");
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return parse(await r.json(), city.name);
+  }
+
+  async function refreshAll() {
+    const dot = document.getElementById("live-dot");
+    const btn = document.getElementById("refresh-btn");
+    dot.classList.add("loading");
+    btn.disabled = true;
+
+    CITIES.forEach(c => {
+      const el = document.getElementById("card-" + c.id);
+      if (!el.innerHTML.trim()) el.innerHTML = skeleton();
+      else el.classList.add("refreshing");
+    });
+
+    await Promise.allSettled(CITIES.map(async city => {
+      const el = document.getElementById("card-" + city.id);
+      try {
+        renderCard(el, await fetchCity(city));
+      } catch (err) {
+        el.classList.remove("refreshing");
+        let errEl = el.querySelector(".error-msg");
+        if (!errEl) { errEl = document.createElement("div"); errEl.className = "error-msg"; el.appendChild(errEl); }
+        errEl.textContent = "Warning: Could not load " + city.name + ": " + err.message;
+      }
+    }));
+
+    document.getElementById("last-updated").textContent = new Date().toLocaleTimeString();
+    dot.classList.remove("loading");
+    btn.disabled = false;
+    countdown = REFRESH_SECS;
+  }
+
+  function startCountdown() {
+    clearInterval(timer);
+    timer = setInterval(() => {
+      countdown--;
+      if (countdown <= 0) { countdown = REFRESH_SECS; refreshAll(); }
+      const m = Math.floor(countdown / 60);
+      const s = String(countdown % 60).padStart(2, "0");
+      document.getElementById("countdown").textContent = m + ":" + s;
+    }, 1000);
+  }
+
+  function triggerRefresh() { refreshAll(); }
+
+  refreshAll();
+  startCountdown();
+</script>
+</body>
+</html>"""
+
+
+def run() -> Path:
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_FILE.write_text(LIVE_HTML, encoding="utf-8")
+    print(f"Live dashboard saved → {OUTPUT_FILE.resolve()}")
+    print("Open weathers.html in a browser — it fetches & auto-refreshes every 5 min.")
+    return OUTPUT_FILE
+
+
+if __name__ == "__main__":
+    run()

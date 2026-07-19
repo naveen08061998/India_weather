@@ -1,0 +1,325 @@
+{
+  "generated_at": "2026-07-18T13:57:56",
+  "total_states": 2,
+  "total_districts": 8,
+  "total_ok": 8,
+  "total_errors": 0,
+  "states": [
+    {
+      "state": "Goa",
+      "fetched_at": "2026-07-18T13:57:41",
+      "elapsed_s": 2.42,
+      "total": 2,
+      "ok": 2,
+      "errors": 0,
+      "districts": [
+        {
+          "city": "North Goa",
+          "state": "Goa",
+          "region": "Goa",
+          "country": "India",
+          "temperature_c": "28",
+          "feels_like_c": "31",
+          "humidity": "75",
+          "description": "Light rain shower",
+          "wind_kmph": "20",
+          "wind_dir": "WNW",
+          "visibility_km": "10",
+          "pressure_mb": "1010",
+          "uv_index": "9",
+          "cloud_cover": "66",
+          "observation_time": "07:11 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "28",
+              "min_c": "26",
+              "description": "Light rain shower"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "28",
+              "min_c": "26",
+              "description": "Light rain shower"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "28",
+              "min_c": "26",
+              "description": "Light rain shower"
+            }
+          ]
+        },
+        {
+          "city": "South Goa",
+          "state": "Goa",
+          "region": "Goa",
+          "country": "India",
+          "temperature_c": "27",
+          "feels_like_c": "29",
+          "humidity": "79",
+          "description": "Light rain shower",
+          "wind_kmph": "15",
+          "wind_dir": "WNW",
+          "visibility_km": "10",
+          "pressure_mb": "1010",
+          "uv_index": "9",
+          "cloud_cover": "63",
+          "observation_time": "07:11 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "27",
+              "min_c": "25",
+              "description": "Light rain shower"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "29",
+              "min_c": "25",
+              "description": "Patchy rain nearby"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "28",
+              "min_c": "25",
+              "description": "Light rain shower"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "state": "Sikkim",
+      "fetched_at": "2026-07-18T13:57:56",
+      "elapsed_s": 17.66,
+      "total": 6,
+      "ok": 6,
+      "errors": 0,
+      "districts": [
+        {
+          "city": "East Sikkim",
+          "state": "Sikkim",
+          "region": "West Bengal",
+          "country": "India",
+          "temperature_c": "12",
+          "feels_like_c": "9",
+          "humidity": "90",
+          "description": "Patchy light drizzle",
+          "wind_kmph": "10",
+          "wind_dir": "SSE",
+          "visibility_km": "5",
+          "pressure_mb": "1013",
+          "uv_index": "6",
+          "cloud_cover": "72",
+          "observation_time": "07:13 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Patchy light drizzle"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "13",
+              "min_c": "5",
+              "description": "Moderate or heavy rain in area with thunder"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Light rain shower"
+            }
+          ]
+        },
+        {
+          "city": "North Sikkim",
+          "state": "Sikkim",
+          "region": "West Bengal",
+          "country": "India",
+          "temperature_c": "12",
+          "feels_like_c": "9",
+          "humidity": "90",
+          "description": "Patchy light drizzle",
+          "wind_kmph": "10",
+          "wind_dir": "SSE",
+          "visibility_km": "5",
+          "pressure_mb": "1013",
+          "uv_index": "6",
+          "cloud_cover": "72",
+          "observation_time": "07:13 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Patchy light drizzle"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "13",
+              "min_c": "5",
+              "description": "Moderate or heavy rain in area with thunder"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Light rain shower"
+            }
+          ]
+        },
+        {
+          "city": "Pakyong",
+          "state": "Sikkim",
+          "region": "Sikkim",
+          "country": "India",
+          "temperature_c": "23",
+          "feels_like_c": "18",
+          "humidity": "86",
+          "description": "Patchy light drizzle",
+          "wind_kmph": "6",
+          "wind_dir": "SSW",
+          "visibility_km": "5",
+          "pressure_mb": "1007",
+          "uv_index": "5",
+          "cloud_cover": "71",
+          "observation_time": "07:13 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "23",
+              "min_c": "17",
+              "description": "Patchy light drizzle"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "20",
+              "min_c": "17",
+              "description": "Light rain"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "20",
+              "min_c": "17",
+              "description": "Light drizzle"
+            }
+          ]
+        },
+        {
+          "city": "Soreng",
+          "state": "Sikkim",
+          "region": "West Bengal",
+          "country": "India",
+          "temperature_c": "21",
+          "feels_like_c": "15",
+          "humidity": "85",
+          "description": "Light rain shower",
+          "wind_kmph": "7",
+          "wind_dir": "SE",
+          "visibility_km": "10",
+          "pressure_mb": "1005",
+          "uv_index": "4",
+          "cloud_cover": "76",
+          "observation_time": "07:13 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "21",
+              "min_c": "17",
+              "description": "Light rain shower"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "18",
+              "min_c": "16",
+              "description": "Moderate rain"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "17",
+              "min_c": "16",
+              "description": "Light rain shower"
+            }
+          ]
+        },
+        {
+          "city": "South Sikkim",
+          "state": "Sikkim",
+          "region": "",
+          "country": "Nepal",
+          "temperature_c": "12",
+          "feels_like_c": "9",
+          "humidity": "90",
+          "description": "Patchy light drizzle",
+          "wind_kmph": "10",
+          "wind_dir": "SSE",
+          "visibility_km": "5",
+          "pressure_mb": "1013",
+          "uv_index": "6",
+          "cloud_cover": "72",
+          "observation_time": "07:13 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Patchy light drizzle"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "13",
+              "min_c": "5",
+              "description": "Moderate or heavy rain in area with thunder"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Light rain shower"
+            }
+          ]
+        },
+        {
+          "city": "West Sikkim",
+          "state": "Sikkim",
+          "region": "West Bengal",
+          "country": "India",
+          "temperature_c": "12",
+          "feels_like_c": "9",
+          "humidity": "90",
+          "description": "Patchy light drizzle",
+          "wind_kmph": "10",
+          "wind_dir": "SSE",
+          "visibility_km": "5",
+          "pressure_mb": "1013",
+          "uv_index": "6",
+          "cloud_cover": "72",
+          "observation_time": "07:13 AM",
+          "forecast": [
+            {
+              "date": "2026-07-18",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Patchy light drizzle"
+            },
+            {
+              "date": "2026-07-19",
+              "max_c": "13",
+              "min_c": "5",
+              "description": "Moderate or heavy rain in area with thunder"
+            },
+            {
+              "date": "2026-07-20",
+              "max_c": "12",
+              "min_c": "7",
+              "description": "Light rain shower"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

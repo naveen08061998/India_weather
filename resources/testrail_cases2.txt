@@ -1,0 +1,3213 @@
+DUNE TEST CATALOGUE — Section 8505887
+======================================================================
+
+Test Case 1 of 55
+ID      : C73842589
+Title   : Walk-up Copy-Buttons-B/W Copy Button
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    B/W Copy Button press with Firmware default settings.
+    Note : Step applicable for Consumer devices with B/W Copy Button.
+    Expected Result:
+      B/W Copy job with Button press is successful.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 2:
+    B/W Copy Button press with user configured settings + Lighter/Darker - UI options.
+    Note : Step applicable for Consumer devices with B/W Copy Button.
+    Expected Result:
+      B/W Copy job with Button press is successful as per user settings.
+      Number of copies can increase or decrease by button press(B/W Copy Button OR +- button, etc)
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 3:
+    B/W Copy Button press with user configured settings - EWS options.
+    Note : Step applicable for Consumer devices with B/W Copy Button.
+    Expected Result:
+      B/W Copy job with Button press is successful as per user settings.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 4:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 5:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+  Step 6:
+    1. Touch Menu to enter to scale mode 100%.2. Short/Long press [+] and [-] button to increase or decrease the scale value.3. Check the ID Card button.
+    Expected Result:
+      1) ID copy button should not flash. Refer to CR DUNE-276916
+
+  Step 7:
+    1. Remove the paper from the tray. 2. Press color copy button once .3. Check the number counter and the printer's behavior.
+    Expected Result:
+      1) The number counter should increase 1 and start the copy job, then out of paper displays. Refer to CR DUNE-213803
+
+  Step 8:
+    1.Set the number counter to 20.2.Load one sheet of paper on tray.3.Touch Copy button to perform 20 pages copy job -> Out of Paper screen (Er/01) displays.4.Touch cancel button on Out of Paper screen (Er/01).5.Check the number counter on front panel.
+    Expected Result:
+      1) The copy number counter should reset to 1 after the copy job cancelled. Refer to CR DUNE-295136
+
+  Step 9:
+    1. Make sure the wireless button is Off (Connected Ethernet or turn off wireless) and the printer is in idle state.2. Slide your finger across these three buttons: Wireless button, Resume button, Cancel button 1-3 times.3. Check the printer’s control panel.
+    Expected Result:
+      1) The printer's control panel should behave normally without any hang issue.Refer to CR DUNE-294519
+
+  Step 10:
+    1. Load two A4 original target on ADF and load some A4 paper in tray.2. Set the Collate to On from EWS and then perform the copy job from ADF with setting 2 copies.3. Check the number counter on FP.
+    Expected Result:
+      1) The number counter should be decreased after printed two pages (one set of documents). Refer to CR /DUNE-280733
+
+  Step 11:
+    1. Load 15/20 sheets of paper in tray.2. Touch Copy button once to perform a single copy job page by page.3. Check the output of the last copy output.
+    Expected Result:
+      1) The copy output should be completed without any output issue. Refer to CR DUNE-278948
+
+  Step 12:
+    1. Open EWS > Settings > Tray and Paper Management > Set the Medium paper size to A5/Plain.2. Load A5 original target on glass.3. Load a single sheet 5x7in./Plain paper in tray. (key step)4. Press Copy/Resume button once to initiate a single copy job, wait the copy output printed out and then paper size mismatch error displays.5. Press cancel button and then check the behavior of printer.
+    Expected Result:
+      1) Cancel button should work and the error can be dismissed. Refer to CR DUNE-273374
+
+======================================================================
+
+Test Case 2 of 55
+ID      : C73842686
+Title   : Walk-up Copy-Buttons-Color Copy Button
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Color Copy Button press with Firmware default settings.
+    Note: Step applicable for Consumer devices with Color Copy Button.
+    Expected Result:
+      Color Copy job with Button press is successful.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 2:
+    Color Copy Button press with user configured settings + Lighter/Darker - UI options.
+    Note: Step applicable for Consumer devices with Color Copy Button.
+    Expected Result:
+      Color Copy job with Button press is successful as per user settings.
+      Number of copies can increase or decrease by button press(Color Copy Button OR +- button, etc)
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 3:
+    Color Copy Button press with user configured settings - EWS options.
+    Note: Step applicable for Consumer devices with Color Copy Button.
+    Expected Result:
+      Color Copy job with Button press is successful as per user settings.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 4:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 5:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 3 of 55
+ID      : C73905279
+Title   : Walk-up Copy-Apps/Button-Photo Copy (Flatbed only)
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform the photo copy job with default settings via Photo Copy APP.Note: Step applicable for Consumer devices with Photo Copy APP.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and CGD displays correctly.
+
+  Step 2:
+    Perform the photo copy job with user configured settings - FPUI options.
+    Note: Step applicable for Consumer devices with Photo Copy APP.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and CGD displays correctly.
+
+  Step 3:
+    Perform the photo copy job with user configured settings - EWS options.
+    Note: Step applicable for Consumer devices with Photo Copy APP.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and CGD displays correctly.
+
+  Step 4:
+    Perform the photo copy job with user configured settings - EWS options.
+    Note: Step applicable for Consumer devices with 7 Segment UI, 2 Line Display, Class 1 UI.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 6:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+  Step 7:
+    1. Power on test unit.2. Touch Copy > Document Copy > Settings button to initial a copy job as below settings.Original size: A4/Color Mode: Black only/Paper selection: A4, HP advanced Photo Papers or other photo type papers, Tray1.3. Set Tray1 to A4 & HP advanced Photo Papers by pulling out Tray 1 and pushing it back in.4. Load original A4 size target into ADF and touch copy button to perform the copy job.5. Check the output after the copy job completes.
+    Expected Result:
+      The photo copy output should borderless and show the same content as original A4 size target without any more blank pages ejected out. Refer to CR DUNE-302936
+
+  Step 8:
+    1. Make sure the Quiet Mode is turn On from EWS/FP.2. Load 4x6in. original targets on glass and some 4x6in. photo copy job.3. Touch Copy > Document Copy > Copy button to perform the 4x6 photo copy job with other default settings.4. Check the printer UI during copy job.
+    Expected Result:
+      1) The photo copy output should borderless.  2) Cannot Use Quiet Mode Copy (65854) screen or Quiet mode Not Supported should be displayed as photo is not support quiet mode. Refer to CR DUNE-301270
+
+  Step 9:
+    1. Trigger a out of paper error during photo copy job.2. Load some enough paper or cancel the copy job on this error.
+    Expected Result:
+      1) The printer can continue the photo copy job after loading enough photo copy paper.2) The photo copy job can cancel successfully.
+
+======================================================================
+
+Test Case 4 of 55
+ID      : C73921993
+Title   : Walk-up Copy-Apps/Button-ID Copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Check all settings in ID card APP in Front Panel.
+    Expected Result:
+      All settings show correctly without missing.
+
+  Step 2:
+    Perform the ID card copy job with default settings via ID card Copy APP.Note: Step applicable for Consumer devices with ID card Copy APP.
+    Expected Result:
+      The ID card copy job could do successfully.
+      Output should be middle aligned.
+      LED status, Sound and CGD displays correctly.
+
+  Step 3:
+    Perform the ID card copy job with user configured settings - FPUI options.Note: Step applicable for Consumer devices with ID card Copy APP.
+    Expected Result:
+      The ID card copy job could do successfully.
+      Output should be middle aligned.
+      LED status, Sound and CGD displays correctly.
+
+  Step 4:
+    Perform the ID card copy job with user configured settings - EWS options.Note: Step applicable for Consumer devices with ID card Copy APP.
+    Expected Result:
+      The ID card copy job could do successfully.
+      Output should be middle aligned.
+      LED status, Sound and CGD displays correctly.
+
+  Step 5:
+    Perform the ID card copy job with default settings via ID card copy button.
+    Note: Step applicable for Consumer devices with ID card copy button.(7 Segment UI, 2 Line Display, Class 1 UI.)
+    Expected Result:
+      The ID card copy job could do successfully.
+      Output should be middle aligned.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 6:
+    Perform the ID card copy job with user configured settings - EWS options.
+    Note: Step applicable for Consumer devices with ID card copy button.(7 Segment UI, 2 Line Display, Class 1 UI.)
+    Expected Result:
+      The ID card copy job could do successfully.
+      Output should be middle aligned.
+      LED status, Sound and Number of copies displayed correctly.
+
+  Step 7:
+    - Change copy settings to non-default from Front panel/EWS and save it successful.
+    - Check copy settings takes effect.
+    - Perform an ID card job.
+    Expected Result:
+      ID card copy job could do successfully.
+      Check copy settings saved in step 1 take NO effect in ID card copy job.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 8:
+    Place ID Card target placed anywhere(upper right corner, lower right corner, or center) of the flatbed scan.
+    Expected Result:
+      ID card copy job could do successfully.
+      Whether the output image of the ID card copy will be cropped depends on the printer.
+
+  Step 9:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 10:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+  Step 11:
+    ID Card animation check1. Touch Copy > ID Card Copy > eye icon.
+    Expected Result:
+      Animation should be played and matched with DUNE-305031
+
+  Step 12:
+    ID Card copy with setting some copy settings1. Change and save the below copy settings in Document copy flow:2-sided, Page Per Sheet 2, Output Scale 25%-400%, Fit to page
+    Expected Result:
+      Verify the ID card copy job is performed successfully without being impacted in Copy Document flow. Refer to CR DUNE-176894.
+
+  Step 13:
+    ID Card placed outside the white backing1. Place ID Card target placed anywhere but outside the white backing.2. Perform an ID Card copy job with Portrait placed for both side.
+    Expected Result:
+      The ID card copy performed successfully, and the copy output should be cropped.
+
+======================================================================
+
+Test Case 5 of 55
+ID      : C73981454
+Title   : Error Handling - Interrupt scanner initialization
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Send a scan job from EWS/SW/FP.
+    - Press copy button or copy app while scanner is in initializing phase (intentionally or unintentionally).
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Interrupt scanner initialization error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: On
+      Resume: Off
+      Cancel: On
+      Segment Display: Fast blink E#
+      Power LED: On
+
+  Step 2:
+    Press button on Interrupt scanner initialization error to clear this error.
+    Expected Result:
+      Interrupt scanner initialization error disappears and the printer returns to idle state.
+
+  Step 3:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 4:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 6 of 55
+ID      : C73981470
+Title   : Error Handling - Scanner Errors
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Scanner mispick error
+    - Load a original target into ADF.
+    - Press copy/scan button or Copy/Scan App to send a ADF copy/scan job from EWS/SW/FP.
+    - Pull out the original target from ADF when the printer starts sucking the target to trigger Scanner mispick error.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Scanner mispick error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: Off
+      Cancel: On
+      Segment Display: Fast blink paper icon
+      Power LED: On
+
+  Step 2:
+    Touch OK button or cancel button to clear ADF Scanner mispick error.
+    Expected Result:
+      ADF Scanner mispick error disappears and the printer returns to idle state.
+
+  Step 3:
+    ADF Scanner Overfill error
+    - Load original target into ADF until the ADF is full.
+    - Press copy/scan button or Copy/Scan App to send a ADF copy/scan job from EWS/SW/FP to trigger Scanner Overfill error.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "ADF Scanner Overfill error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: On
+      Resume: Off
+      Cancel: On
+      Segment Display: Fast blink paper icon
+      Power LED: On
+
+  Step 4:
+    Touch button on Scanner Overfill error to clear it.
+    Expected Result:
+      Scanner Overfill error disappears.
+
+  Step 5:
+    ADF Scanner Jam error
+    - Load a original target into ADF.
+    - Press copy/scan button or Copy/Scan App to send a ADF copy/scan job from EWS/SW/FP.
+    - Lift up the scanner when it is halfway through scanning the original target.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "ADF Scanner Overfill error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: On
+      Resume: Off
+      Cancel: On
+      Segment Display: Fast blink paper icon
+      Power LED: On
+
+  Step 6:
+    Touch Help and Animation button on CGD/MDG.
+    Expected Result:
+      Animation shows clear path and correctly.
+
+  Step 7:
+    Clear the paper from ADF or press Cancel button.
+    Expected Result:
+      Scanner Jam error disappears.
+
+  Step 8:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 9:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 7 of 55
+ID      : C73981483
+Title   : Error Handling - Input Tray empty/Overfill /OOP inbetween job/Jam
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Input Tray empty error
+    Take out all paper from Tray.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Input Tray empty error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Off
+      Resume: Off
+      Cancel: Off
+      Segment Display: No change
+      Power LED: On
+
+  Step 2:
+    Load some Paper into tray.
+    Expected Result:
+      Tray Empty error disappears and the printer returns to idle state.
+
+  Step 3:
+    Input Tray Overfill error
+    Load the paper into tray until the tray is full.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Input Tray Overfill error " and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: Off
+      Cancel: On
+      Segment Display: Fast blink paper icon
+      Power LED: On
+
+  Step 4:
+    Take out some papers from tray to clear the error.
+    Expected Result:
+      Input Tray Overfill error disappears and the printer returns to idle state.
+
+  Step 5:
+    Input Tray OOP inbetween job error
+    - Load a sheet paper into the input tray.
+    - Press copy button twice or change number of copies to 2 to perform the 2 copies job.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Input Tray OOP inbetween job error " and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: Off
+      Cancel: On
+      Segment Display: Fast blink paper icon
+      Power LED: On
+
+  Step 6:
+    Load some paper into Input Tray.
+    Expected Result:
+      Input Tray OOP inbetween job error disappears.
+      The copy job can continue print.
+
+  Step 7:
+    Input Tray Jam error inbetween job error
+    - Press copy button to perform the copy job.
+    - Open the Input Tray and then hold on the paper during copy.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Input Tray Jam error inbetween job error " and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: On
+      Cancel: On
+      Segment Display: E4
+      Power LED: On
+
+  Step 8:
+    Clear the paper in input tray to clear the Input Tray Jam error.
+    Press cancel button or resume button.
+    Expected Result:
+      Input Tray Jam error message disappears and the printer returns to idle state or continue the copy job.
+
+  Step 9:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.Refer to CR DUNE-281050
+
+  Step 10:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.Refer to CR DUNE-281050
+
+======================================================================
+
+Test Case 8 of 55
+ID      : C73981692
+Title   : Error Handling - Output bin Full
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform copy job by Copy App to perform the max number of copies copy job from FP untill output bin is full.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Output bin Full error" and the string is consistent with copy workflow spec. Button in screen works well.
+
+  Step 2:
+    Take out the output from Output bin to clear this error.
+    Expected Result:
+      Output bin Full error disappears and the printer returns to idle state.
+
+  Step 3:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 4:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 9 of 55
+ID      : C73981694
+Title   : Error Handling - Door Open during copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Press copy button or Copy App to perform a copy job.
+    - Open the door during copy.
+    Expected Result:
+      The Copy job paused.
+      For CGD/MGD/2 Line: UI shows "Door open error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: On
+      Resume: Off
+      Cancel: Off
+      Segment Display: Only respective ink/PHA icons blink
+      Power LED: Fast Blinking
+
+  Step 2:
+    Close the door.
+    Expected Result:
+      Door open error disappears and the printer continue the copy job.
+
+  Step 3:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 4:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 10 of 55
+ID      : C73981703
+Title   : Error Handling - Paper path jam during copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Press copy button or Copy App to perform a copy job.
+    - Hold on the paper when printer starts suck the paper from input tray.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Paper path jam during copy error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: On
+      Cancel: On (only after first door open-close)
+      Segment Display: Fast blink paper icon and E4
+      Power LED: On
+
+  Step 2:
+    Clear the paper from input tray.
+    Expected Result:
+      Jam error disappears and the copy job will be resume or cancel , depending on whether you were performing multiple copies or a single copy.
+
+  Step 3:
+    1. Press copy button or Copy App to perform a copy job.2. Trigger a carriage jam error.3. Touch button to clear the paper from input tray.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Carriage Jam" error and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec. Refer to CR DUNE-298493Alert LED: Fast blinkingResume: On Cancel: On (only after first door open-close)Segment Display: Fast blink paper icon and E4Power LED: OnJam error disappears and the copy job will be resume or cancel , depending on whether you were performing multiple copies or a single copy.
+
+  Step 4:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 5:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 11 of 55
+ID      : C74885342
+Title   : Error handing - Power cycle during Copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Power cycle on scannning phase
+    1. Press copy button or Copy App to perform a copy job.
+    2. Power cycle the printer when copy job is scanning phase.
+    Expected Result:
+      The printer can turn off successfully.
+      LED status, Sound and screen displays correctly.
+
+  Step 2:
+    Power cycle on printing phase
+    1. Press copy button or Copy App to perform a copy job.
+    2. Power cycle the printer when copy job is printing phase.
+    Expected Result:
+      The printer can turn off successfully.
+      LED status, Sound and screen displays correctly.
+
+======================================================================
+
+Test Case 12 of 55
+ID      : C74885343
+Title   : Error handing - Low on ink, very low on ink, out of ink
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Low on ink error
+    Press copy button or Copy App to perform a copy job until Low on ink error.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Low on ink error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Off
+      Resume: On
+      Cancel: Off
+      Segment Display: Only respective ink icon(s) is on and solid
+      Power LED: On
+
+  Step 2:
+    Press resume button or OK button to continue the copy job.
+    Expected Result:
+      Low on ink error disappears.
+      The copy job can continue complete successfull.
+
+  Step 3:
+    Very low on ink error.
+    Press copy button or Copy App to perform a copy job until very low on ink error.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Very low on ink error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: On
+      Resume: On
+      Cancel: if there is an actively blocked job cancel should be on, otherwise it should be off. On pressing cancel alert will be ack'ed and active job will be cancelled and thus, error state will also be removed.
+      Segment Display: Only respective ink icon(s) blink
+      Power LED: On
+
+  Step 4:
+    Press resume button or OK button to continue the copy job.
+    Expected Result:
+      Very low on ink error disappears.
+      The copy job can continue complete successfull.
+
+  Step 5:
+    Out of ink error
+    Press copy button or Copy App to perform a copy job until out of ink error.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Out of ink error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast Blink
+      Resume: Off
+      Cancel: if there is an actively blocked job cancel should be on, otherwise it should be off. On pressing cancel, only the job will be cancelled and cancel LED will go off. Rest of the LEDs and the LED state will be in place as is.
+      Segment Display: Only respective ink icon and E7 fast blink
+      Power LED: On
+
+  Step 6:
+    Press cancel button or OK button to continue the copy job.
+    Expected Result:
+      Out of paper error disappears.
+      The copy job can cancel successfull.
+
+  Step 7:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 8:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 13 of 55
+ID      : C74885369
+Title   : Error handing - Paper mismatch
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Paper size mismatch - Single copy
+    - Load Letter size paper into tray and set Tray size to Letter.
+    - Set copy paper size to 8x10.
+    - Press copy button or Copy App to perform a copy job.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Paper size mismatch error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: On
+      Cancel: On (only after first door open-close)
+      Segment Display: Fast blink paper icon and E2
+      Power LED: On
+
+  Step 2:
+    Load the correct paper size and press cancel button to continue the copy job on error screen.
+    Expected Result:
+      Paper size mismatch error disappears.
+      The copy job can cancel successfull.
+
+  Step 3:
+    Paper size mismatch - Multiple copy
+    Choose random and different copy paper size and tray size to perform multiple copy job by press copy button or Copy App.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "Paper size mismatch error" and the string is consistent with copy workflow spec. Button in screen works well.For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below. Different printer has different LEDs, please see UX design spec.Alert LED: Fast blinking
+      Resume: On
+      Cancel: On (only after first door open-close)
+      Segment Display: Fast blink paper icon and E2
+      Power LED: On
+
+  Step 4:
+    Load the correct paper size and press Resume or touch Continue button to continue the copy job on error screen.
+    Expected Result:
+      Paper size mismatch error disappears.
+      The copy job can continue complete successfull.
+
+  Step 5:
+    Paper Type mismatch
+    - Load Letter/Plain paper into tray and set Tray size to Letter/Plain.
+    - Set copy paper size/type to Letter/Photo.
+    - Press copy button or Copy App to perform a copy job.
+    Expected Result:
+      For CGD/MGD: UI shows "Paper Type mismatch error" and the string is consistent with copy workflow spec. Button in screen works well.
+
+  Step 6:
+    Load the correct paper size and press Resume or touch Continue button to continue the copy job on error screen.
+    Expected Result:
+      Paper type mismatch error disappears.
+      The copy job can continue complete successfull.
+
+  Step 7:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 8:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 14 of 55
+ID      : C75219737
+Title   : Error handling - Copy_ErrorCollate1 & 2
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    a. No need to add original target into ADF during print to trigger collate2 screen
+    1. Load More than max copy collate value original doucment on ADF and place enough paper in input tray.
+    2. Touch Copy > Document icon on Home screen.
+    3. Touch Settings icon->Collate->On.
+    4. Initate the copy job with setting copies to 2.
+    Expected Result:
+      Copy_ErrorCollate1 screen displays after scanning 24 pages, and the remaining documents left in the ADF.
+      UI message should be consistent with workflow spec.
+
+  Step 2:
+    Touch OK button on Copy_ErrorCollate1.
+    Expected Result:
+      The printer continues to print, and Copy_ErrorCollate2 screen displays after printing 48 pages.
+      The copy output comes out in collated order.
+      UI message should be consistent with workflow spec.
+
+  Step 3:
+    Touch Continue button on Copy_ErrorCollate2.
+    Expected Result:
+      The remaining pages are scanned and printed in collated order.
+
+  Step 4:
+    Touch Cancel button on Copy_ErrorCollate2.
+    Expected Result:
+      The copy job can be cancelled successfully.
+
+  Step 5:
+    b. Add original target into ADF during print to trigger collate2 screen
+    1. Load More than max copy collate value original doucment on ADF and place enough paper in input tray.
+    2. Touch Copy > Document icon on Home screen.
+    3. Touch Settings icon->Collate->On.
+    4. Initate the copy job with setting copies to 2.
+    Expected Result:
+      Copy_ErrorCollate1 screen displays after scanning 24 pages, the remaining documents are ejected from ADF.
+      UI message should be consistent with workflow spec.
+
+  Step 6:
+    Touch OK button on Copy_ErrorCollate1 and load some original target into ADF.
+    Expected Result:
+      The printer continues to print.
+      Copy_ErrorCollate2 screen displays after loading target into ADF.
+      The copy output comes out in collated order.
+      UI message should be consistent with workflow spec.
+
+  Step 7:
+    Touch Continue button on Copy_ErrorCollate2.
+    Expected Result:
+      All copy outputs are scanned and printed in collated order.
+
+  Step 8:
+    Touch Cancel button on Copy_ErrorCollate2.
+    Expected Result:
+      The copy job can be cancelled successfully.
+
+======================================================================
+
+Test Case 15 of 55
+ID      : C75227479
+Title   : Error handling - ADFLoaded_Warning
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Perform a preview job with default settings.
+    - Load a original target into ADF during preview job scan.
+    Expected Result:
+      UI shows Global_Preview_ADFLoaded_Warning.
+      UI message should be consistent with copy workflow spec.
+
+  Step 2:
+    Remove the original target from ADF.
+    Expected Result:
+      Global_Preview_ADFLoaded_Warning disappears.
+
+  Step 3:
+    Check this error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 4:
+    Check this error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 16 of 55
+ID      : C73981849
+Title   : Error Handling - Sleep/Wake Events
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Wake up the printer by pressing any button.
+    - Perform a copy job from GLASS with below settings:
+    Original: 4x6
+    Media Size: Letter
+    Resize: 200%
+    Quality: Best
+    Quality: 5
+    - After the copy job completed, perform a scan job.
+    - Wait for 4mins inactivity timeout, the printer return to home screen.
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      The scan job cannot perform as in copy app.
+      The scan job can perform on home screen.
+      LED status and CGD displays correctly.
+      The copy settings take effect on copy output.
+
+  Step 2:
+    - Wake up the printer by pulling out tray.
+    - Perform a copy job from ADF/Glass with below setting:
+    Original: Letter
+    Media Size: 4x6
+    Resize: Custom 50%
+    Quality: Best
+    Copies: 10
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+      The copy settings take effect on copy output.
+
+  Step 3:
+    - Wake up the printer by loading paper.
+    - Perform a copy job from ADF/Glass with below settings:
+    Original: 10 pages of Letter size
+    2-Sided: 2->1
+    Media Size: Letter
+    Collate: On
+    Copies: 2
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+      The copy settings take effect on copy output.
+
+  Step 4:
+    - Wake up the printer by opening cartridge door.
+    - Perform a copy job from ADF/Glass with below settings:
+    Original: 4 pages of Letter size
+    Media Size: Letter
+    2-Sided: 1->2
+    Binding Margin: On
+    Copies: 2
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+      The copy settings take effect on copy output.
+
+  Step 5:
+    - Wake up the printer by launching scan job.
+    - Perform a copy job from GLASS with below settings:
+    Original: Letter
+    Media Size: Letter
+    Resize: 2 Pages/Sheet
+    Expected Result:
+      Tthe device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+      The copy settings take effect on copy output.
+
+  Step 6:
+    - Wake up the printer by launching print job.
+    - Perform an ID Card copy job with below settings:
+    Original: ID Card
+    Media Size: Letter
+    Quality: Best
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+      The copy settings take effect on copy output.
+
+  Step 7:
+    - Wake up the printer from sleep by any button.
+    - Perform a 2-sided copy job from ADF/Glass: Original: 3 pages of Letter size Media Size: Letter 2-Sided: 1->2 Quality: Best
+    3.Cancel the job when copy the 1st page at the middle.
+    Expected Result:
+      The device wake up and the copy job is canceled successfully.
+      LED status and CGD displays correctly.
+
+  Step 8:
+    - Perform a Copy job from ADF.
+    - Trigger a ADF jam during copy.
+    - Let the jam sit un-cleared overnight.
+    - Clear the jam.
+    - Touch on OK button.
+    Expected Result:
+      The device still in ADF Jam status after overnight and jam can be cleared and copy job will be cancelled.
+      LED status and CGD displays correctly.
+
+  Step 9:
+    1.Perform a Copy job from ADF/Glass.
+    2.Trigger a paper jam during copy.
+    3.Let the jam sit un-cleared overnight.
+    4.Clear the jam.
+    5.Touch on OK button.
+    Expected Result:
+      The device still in Paper Jam status after overnight and jam can be cleared and copy job will be cancelled.
+      LED status and CGD displays correctly.
+
+  Step 10:
+    - Perform a Copy job from Glass.
+    - Trigger a out of paper during copy.
+    - Let the error sit un-cleared overnight.
+    - Clear the jam.
+    - Touch on OK button.
+    Expected Result:
+      The device still in Out of Paper status after overnight and the copy job will continue and completed without error.
+      LED status and CGD displays correctly.
+
+  Step 11:
+    - Wake up the printer by button.
+    - Make sure the printer enter sleep mode
+    - Leave the device sitting over night, in the morning wake up the device and quickly to start a fit to page copy.
+    - Observe the status of printer.
+    Expected Result:
+      The fit to page copy is okay with no gross artifacts and matched the other fit to page copies
+      LED status and CGD displays correctly.
+
+  Step 12:
+    - Use a device that's been sitting in sleep more than 24 hours
+    - Without waking the device, insert photo media in the tray
+    - Wake the device by button and immediately perform a photo copy job
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+
+  Step 13:
+    - Let the DUT sit idle for an additional 72 hours (Do not disturb the device).
+    - Wake the device by loading paper and immediately perform a photo copy job from Glass.
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+
+  Step 14:
+    - Let the DUT sit idle for an additional 72 hours (Do not disturb the device).
+    - Load original on ADF to wake the device and immediately perform a plain copy job.
+    Expected Result:
+      The device wake up and completed the copy job successfully.
+      LED status and CGD displays correctly.
+
+  Step 15:
+    1. Load a Letter original target on glass and load some Letter/plain paper in the tray.2. Set the paper size/type to Legal/plain paper from EWS.3. Perform a single copy job from glass.4. After the paper size mismatch error displays on FP and then wait for 5 mins to enter sleep mode.5. Wake up the printer and then check the printer’s behavior.
+    Expected Result:
+      1) The paper size mismatch error should be cleared when the printer enters to sleep mode and the printer should in idle state after waking it up. Refer to CR DUNE-278879
+
+======================================================================
+
+Test Case 17 of 55
+ID      : C74057421
+Title   : Original/Input Settings - Scan Source ADF/Flatbed
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform the flatbed Copy job with device default settings.
+    Expected Result:
+      Printer can regonize Glass and copy job is successful.
+      LED status, Sound and screen displays correctly.
+
+  Step 2:
+    Perform the flatbed Copy job with user configured settings.
+    Expected Result:
+      Printer can regonize Glass and copy job is successful.
+      LED status, Sound and screen displays correctly.
+
+  Step 3:
+    Perform the ADF Copy job with device default settings.
+    Expected Result:
+      Printer can regonize ADF and copy job is successful.
+      LED status, Sound and screen displays correctly.
+
+  Step 4:
+    Perform the ADF Copy job with user configured settings.
+    Expected Result:
+      Printer can regonize ADF and copy job is successful.
+      LED status, Sound and screen displays correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 6:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+  Step 7:
+    Loading papers to ADF.
+    Expected Result:
+      Check Original size list which consistent with Supported Copysize.xlsx.
+
+  Step 8:
+    Remove papers from ADF.
+    Expected Result:
+      Check Original size list which consistent with Supported Copysize.xlsx.
+
+  Step 9:
+    1. Raise the scan bed and load a target into ADF. 2. Lift down the scan bed and then press color copy to perform a ADF copy job.3. Check the printer’s UI.
+    Expected Result:
+      1) The printer should suck the target from ADF, and the ADF copy job should be performed successfully without any error. Refer to CR DUNE-213858
+
+======================================================================
+
+Test Case 18 of 55
+ID      : C74058017
+Title   : Original/Input Settings - Content Type
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Copy job with set Content Type to Text from EWS/FP.
+    Expected Result:
+      Content Type can set and copy job is successful.
+      The output should be text enhancement.
+      LED status, Sound and CGD displays correctly.
+
+  Step 2:
+    Perform Copy job with set Content Type to Photo from EWS/FP.
+    Expected Result:
+      Content Type can set and copy job is successful.
+      The output should be photo enhancement.
+      LED status, Sound and CGD displays correctly.
+
+  Step 3:
+    Perform Copy job with set Content Type to None from EWS/FP.
+    Expected Result:
+      Content Type can set and copy job is successful.
+      The output should be the same as original target without any enhancement.
+      LED status, Sound and CGD displays correctly.
+
+  Step 4:
+    Perform Copy job with set Content Type to Mixed from EWS/FP.
+    Expected Result:
+      Content Type can set and copy job is successful.
+      The output should be same as original target without any enhancement.
+      LED status, Sound and CGD displays correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 6:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 19 of 55
+ID      : C74058018
+Title   : Original/Input Settings - Sides
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform Copy job with Sides set to 1-1 sided from EWS/FP.
+    Expected Result:
+      Sides can set and copy job is successful.
+      The copy output is printed as simplex.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Perform Copy job with Sides set to 2-1 sided from EWS/FP.
+    Expected Result:
+      Sides can set and copy job is successful.
+      The copy output is printed as simplex.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Perform Copy job with Sides set to 1-2 sided from EWS/FP + 2 Sided Format.
+    Expected Result:
+      Sides can set and copy job is successful.
+      The copy output is printed as duplex and is 2-Sided Format is correct.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Perform Copy job with Sides set to 2-2 sided from EWS/FP + 2 Sided Format.
+    Expected Result:
+      Sides can set and copy job is successful.
+      The copy output is printed as duplex and is 2-Sided Format is correct.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 6:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+  Step 7:
+    Select 1-2/2-2 sides, check the Tray paper size/type.
+    Expected Result:
+      The not supported duplex paper size (small/medium) are disabled with info button. Such as 4x6, 5x7...
+      The not supported duplex paper type are also disabled with info button. Please see IMM spec for detailed paper size/type. Such as Photo...
+
+======================================================================
+
+Test Case 20 of 55
+ID      : C74057430
+Title   : Output Settings - Collate - ADF
+----------------------------------------------------------------------
+Steps:
+
+  Step 1:
+    Conflict: Collate & Page Per Sheet
+    Collate is On, change the Page Per Sheet to non-defalut: 2 or others
+    Expected Result:
+      Collate option turn off automatically.
+
+  Step 2:
+    Perform ADF Copy job with collate On set from FP/EWS.
+    Step applicable for Consumer devices with Copy App.
+    Expected Result:
+      Collate can set and ADF Collate copy job is successful.
+      The copy output comes out in collated order.
+      LED status, Sound and screen displays correctly.
+
+  Step 3:
+    Perform ADF Copy job with collate Off set from FP/EWS.
+    Step applicable for Consumer devices with Copy App.
+    Expected Result:
+      Collate can set and ADF Collate copy job is successful.
+      The copy output comes out without in collated order.
+      LED status, Sound and screen displays correctly.
+
+  Step 4:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 5:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 21 of 55
+ID      : C74057730
+Title   : Output Settings - Single cartridge mode
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    1. Take out the color catridge.
+    2. Press Copy Button to perform a copy job with default settings.
+    Note : Step applicable for Consumer devices with support single mode.
+    Expected Result:
+      The copy is successfully when printer in single cartridge mode.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    1. Take out the black catridge.
+    2. Press Copy Button to perform a copy job with default settings.
+    Note : Step applicable for Consumer devices with support single mode.
+    Expected Result:
+      The copy is successfully when printer in single cartridge mode.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 4:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 22 of 55
+ID      : C74058019
+Title   : Output Settings - A4/Letter Override
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Change the country to UK from EWS/FP.
+    Expected Result:
+      The default paper size is updated to A4 automatically.
+
+  Step 2:
+    - Load A4 paper into tray and set the paper size to Letter.
+    - Perform Copy job with set A4/Letter Override to On from EWS/FP.
+    Expected Result:
+      A4/Letter Override can set successful.
+      No Paper size mismatch error pops up when A4/Letter Override is On.
+      LED status, Sound and CGD displays correctly.
+
+  Step 3:
+    Change the country to USA from EWS/FP.
+    Expected Result:
+      The default paper size is updated to Letter automatically.
+
+  Step 4:
+    - Load Letter paper into tray and set the paper size to A4.
+    - Perform Copy job with set A4/Letter Override to Off from EWS/FP.
+    Expected Result:
+      A4/Letter Override can set successful.
+      Paper size mismatch error pops up when A4/Letter Override is Off.
+      LED status, Sound and CGD displays correctly.
+
+  Step 5:
+    1. Power on test unit.2. Go to EWS Paper > Trays > Settings, then turn off the "Override A4/Letter" option. (key step)3. Load one sheet of Letter paper on Tray1 and enough A4 paper in Tray2.4. Touch Copy > ID Card Copy, set the Number of Copies to 3, the Paper Tray is default "Automatic".5. Touch "Copy" > "Continue" > "Done" to perform 3 copies ID card copy jobs.6. The first ID card copy output prints out from Tray1.7. Check the behavior of printer.
+    Expected Result:
+      1) No "Out of Paper in Tray1" error and 2 copies ID Card copy job can be printed from Tray2(A4 size tray) successfully. Refer to DUNE-309508.2) No excess blank paper ejects after completed the multiple ID Card copy. Refer to CR DUNE-309481.
+
+  Step 6:
+    1. Power on test unit.2. Go to EWS Paper > Trays > Settings, then turn off the "Override A4/Letter" option. (key step)3. Load one sheet of Letter paper on Tray1 and enough A4 paper in Tray2.4. Touch Copy > Document Copy, set the Number of Copies to 3, the Paper Tray is default "Automatic".5. Touch "Copy" > "Continue" > "Done" to perform 3 copies ID card copy jobs.6. The first copy output prints out from Tray1.7. Check the behavior of printer.
+    Expected Result:
+      1) No "Out of Paper in Tray1" error and 2 copies ID Card copy job can be printed from Tray2(A4 size tray) successfully. Refer to DUNE-308274.
+
+======================================================================
+
+Test Case 23 of 55
+ID      : C74058024
+Title   : Output Settings - Paper Tray
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Copy job with Firmware default settings + default Automatica tray.
+    Note: Step applicable for Consumer devices with Automatica tray.
+    Expected Result:
+      Copy job is successful.
+      Paper should suck from main tray.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 2:
+    Copy job with Firmware default settings + Main Tray set from EWS/FPUI.
+    Note: Step applicable for Consumer devices with main tray.
+    Expected Result:
+      Copy job is successful.
+      Paper should suck from main tray.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 3:
+    Copy job with user configured settings + Photo Tray + Photo paper type set from EWS/FPUI.
+    Note: Step applicable for Consumer devices with photo trays.
+    Expected Result:
+      Copy job is successful.
+      Paper should suck from photo tray.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 4:
+    Copy job with user configured settings + other Trays set from EWS/FPUI.
+    Note: Step applicable for Consumer devices with photo trays.
+    Expected Result:
+      Copy job is successful.
+      Paper should suck from other trays.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 5:
+    - Go to Copy options list to find the Paper Selection option in Front panel or EWS.
+    - Change the paper type to “Photo”.
+    - Check the “Trays” list in front panel.
+    Note: Step applicable for Consumer devices with tray2 being plain tray only like MMK products. Add this case due to DUNE-172517 which got code change.
+    Expected Result:
+      The “Tray2” should be disabled with info icon displays as it only supports plain paper.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 7:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+  Step 8:
+    Make sure the printer has two trays or multiple trays.1. Set the paper type to Photo type in Copy app.2. Check the paper tray list.
+    Expected Result:
+      1) Tray2 does NOT support photo paper, then it's disabled in Paper Tray list.
+
+  Step 9:
+    Make sure the printer has two trays or multiple trays.1. Set the paper size/type to Non-default size/type in Copy app.2. Set the Tray1 to match with you set in copy app, while set the Tray2 to differ from you set in copy app.3. Perform the copy job to check the printer print from which tray.
+    Expected Result:
+      1) The copy job should be printed from matched tray.
+
+======================================================================
+
+Test Case 24 of 55
+ID      : C74058020
+Title   : Quality & Enhancements - Print Quality/Quality + Paper Type
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform Copy job with different Quality + Paper Type.
+    Normal + Plain
+    Expected Result:
+      Quality and Paper Type can set and copy job is successful.
+      All combinations of media types and qualities complete successfully with "good" output (measured subjectively).
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Perform Copy job with different Quality + Paper Type.
+    Best + Photo
+    Expected Result:
+      Quality and Paper Type can set and copy job is successful.
+      All combinations of media types and qualities complete successfully with "good" output (measured subjectively).
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Perform Copy job with different Quality + Paper Type.
+    Draft + Glossy paper
+    Expected Result:
+      Quality and Paper Type can set and copy job is successful.
+      All combinations of media types and qualities complete successfully with "good" output (measured subjectively).
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Perform Copy job with different Quality + All supported Paper Type (Refer to IMM spec)
+    Expected Result:
+      Quality and Paper Type can set and copy job is successful.
+      All combinations of media types and qualities complete successfully with "good" output (measured subjectively).
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 6:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 25 of 55
+ID      : C74058021
+Title   : Quality & Enhancements - Output Scale or Reduce/Enlarge or Resize
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Conflict test: Output Scale & Page per Sheet
+    Change the Output Scale to non-default value, and then touch Page per Sheet.
+    Such as : Fit to page/Full Page(91%)/Letter to A4/A4 to Letter/Legal to Letter/Custom 25%-400%
+    Expected Result:
+      Page Pet sheet: 2 option is disabled with info button.
+      We should get a message prompt saying "This feature is not available with the currently selected settings."
+
+  Step 2:
+    Copy job by press copy button/Copy APP + Output Scale: Fit to page(FPUI/EWS).
+    Expected Result:
+      Output Scale can set and copy job is successful.
+      verify copy image fit to print on paper.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Copy job by press copy button/Copy APP + Output Scale: Full Page(91%)(FPUI/EWS).
+    Expected Result:
+      Output Scale can set and copy job is successful.
+      verify copy image reduce 91% to print on paper.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Copy job by press copy button/Copy APP + Output Scale: Letter to A4(FPUI/EWS).
+    Expected Result:
+      Output Scale can set and copy job is successful.
+      verify Letter original reduce to print on A4 paper.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Copy job by press copy button/Copy APP with + Output Scale: A4 to Letter(FPUI/EWS).
+    Expected Result:
+      Output Scale can set and copy job is successful.
+      verify A4 original reduce to print on Letter paper.
+      LED status, Sound and CGD display correctly.
+
+  Step 6:
+    Copy job by press copy button/Copy APP with + Output Scale: Legal to Letter(FPUI/EWS).
+    Expected Result:
+      Output Scale can set and copy job is successful.
+      verify Legal original reduce to print on Letter paper.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 7:
+    Copy job by press copy button/Copy APP with + Output Scale: Custom 25%-400%(FPUI/EWS).
+    Expected Result:
+      Output Scale can set and copy job is successful.
+      The setting values of reduce/enlarge successfully change the size of the copy output.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 8:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 9:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 26 of 55
+ID      : C74058022
+Title   : Output Settings - Paper Size Mixed
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Check all suported Paper Size from UI, EWS, CDM
+    Expected Result:
+      All suported Paper Size should be matched with IMM spec.
+
+  Step 2:
+    Perform Copy job with different paper size + paper type
+    4x6 + Photo
+    Expected Result:
+      Paper size and type can set and copy job is successful.
+      Verify the copy job print out with borderless and slightly cropped.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Perform Copy job with different paper size + paper type
+    Letter + Plain
+    Expected Result:
+      Paper size and type can set and copy job is successful.
+      Verify the copy job print out with border and slightly cropped.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Perform Copy job with paper size + paper type
+    Envelope B5 + Envelop
+    Expected Result:
+      Paper size and type can set and copy job is successful.
+      Verify the copy job print out with border and slightly cropped.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Perform Copy job with All supported paper size + Paper Type (Refer to IMM spec)
+    Expected Result:
+      Paper size and type can set and copy job is successful.
+      Verify the copy job print out with border or borderless and slightly cropped.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 7:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 27 of 55
+ID      : C74058023
+Title   : Quality & Enhancements - Orientation/Image rotation
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform Copy job with device default settings + Orientation/Image rotation: Portrait from FPUI.
+    Note: Step applicable for Consumer devices with Copy APP.
+    Expected Result:
+      Orientation/Image rotation can set and copy job is successful.
+      output should be Portrait and middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Perform Copy job with device default settings + Orientation/Image rotation: Portrait from EWS.
+    Note: Step applicable for Consumer devices with Copy APP.
+    Expected Result:
+      Orientation/Image rotation can set and copy job is successful.
+      output should be Portrait and middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Perform Copy job with user configured settings + Orientation/Image rotation: Landscape from FPUI.
+    Note: Step applicable for Consumer devices with Copy APP.
+    Expected Result:
+      Orientation/Image rotation can set and copy job is successful.
+      output should be Landscape and middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Perform Copy job with user configured settings + Orientation/Image rotation: Landscape from EWS.
+    Note: Step applicable for Consumer devices with Copy APP.
+    Expected Result:
+      Orientation/Image rotation can set and copy job is successful.
+      output should be Landscape and middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+======================================================================
+
+Test Case 28 of 55
+ID      : C74058025
+Title   : Quality & Enhancements - Binding Margin
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Copy job with user configured settings + Binding Margin: On from FPUI.
+    Note: Step applicable for Consumer devices with Binding Margin feature.
+    Expected Result:
+      Binding Margin can set and copy job is successful.
+      Output should be Binding Margin: on.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 2:
+    Copy job with user configured settings + Binding Margin: On from EWS.
+    Note: Step applicable for Consumer devices with Binding Margin feature.
+    Expected Result:
+      Binding Margin can set and copy job is successful.
+      Output should be Binding Margin: on.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 3:
+    Copy job with user configured settings + Binding Margin: Off from FPUI.
+    Note: Step applicable for Consumer devices with Binding Margin feature.
+    Expected Result:
+      Binding Margin can set and copy job is successful.
+      Output should be Binding Margin: off.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 4:
+    Copy job with user configured settings + Binding Margin: Off from EWS.
+    Note: Step applicable for Consumer devices with Binding Margin feature.
+    Expected Result:
+      Binding Margin can set and copy job is successful.
+      Output should be Binding Margin: off.
+      LED status, Sound and CGD or Number of copies(LED digit) display correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+======================================================================
+
+Test Case 29 of 55
+ID      : C74058042
+Title   : Walk-up Copy - CombinedSettings - ID Copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform the ID card copy job with user configured settings + all combination settings from FPUI.
+    Expected Result:
+      ID card Copy job is successful.
+      ID card Output should be middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Perform the ID card copy job with user configured settings + all combination settings from EWS.
+    Expected Result:
+      ID card Copy job is successful.
+      ID card Output should be middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+======================================================================
+
+Test Case 30 of 55
+ID      : C74058059
+Title   : Walk-up Copy - CombinedSettings - Document Copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform document copy job with user configured settings + all combination settings from FPUI.
+    Expected Result:
+      Document Copy job is successful.
+      Output should be correct and follow each settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Perform document copy job with user configured settings + all combination settings from EWS.
+    Expected Result:
+      Document Copy job is successful.
+      Output should be correct and follow each settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 4:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 31 of 55
+ID      : C74058075
+Title   : Core: Job Cancellation
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Perform copy job with default settings.
+    - Cancel the copy job by cancel button or cancel Icon via Control Panel.
+    Expected Result:
+      The copy job can be cancelled without error.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    - Perform copy job with user configured settings.
+    - Cancel the copy job by cancel button or cancel icon via Control Panel.
+    Expected Result:
+      The copy job can be cancelled without error.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    - Perform copy job with user configured settings.
+    - Cancel the copy job via Job Logs/Queue in EWS.
+    Expected Result:
+      The copy job can be cancelled without error.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    - Perform copy job with user configured settings.
+    - Cancel the copy job from Dashboard bar in CGD products via Control Panel.
+    Expected Result:
+      The copy job can be cancelled without error.
+      LED status, Sound and CGD display correctly.
+
+  Step 5:
+    - Perform copy job with user configured settings.
+    - Cancel the copy job in different phases, in very beginning, in middle of the job, in the end of job.
+    Expected Result:
+      The copy job should be cancelled all the time without error.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    1. Power on test unit.2. Touch Copy > Document Copy or ID card > Touch eye icon -> Touch Preview button -> Touch cancel button during preview.
+    Expected Result:
+      1) Printer behaves correctly without any issues. Refer to CR DUNE-303870.2) UI behaves correct.
+
+  Step 7:
+    1. Load a Letter size target in glass.2. Go to Copy app -> Document copy -> click the eye button -> Preview button to do the preview job.3. Copy_PreviewRequired_Copy screen shows, wait for 4 minutes and check printer front panel.4. Inactivity Timeout screen displays and then wait for 4 minutes and check printer front panel.
+    Expected Result:
+      1)The printer goes to copy home screen, and then wait for 4mins, it return to Home screen. Refer to DUNE-301156
+
+  Step 8:
+    1. Power on test unit.2. Touch Copy > ID Card Copy > Copy button to perform an ID card copy job.3. Touch "Continue" button on "ID Card (Front)" screen, the printer starts the front scan, "Scanning…" toast displays.4. Check the UI of the printer.
+    Expected Result:
+      1) Cancel button should be enabled and can be touched to cancel the job. Refer to CR DUNE-300654.2) UI behaves correct.
+
+  Step 9:
+    Make sure the printer is support B size. such as A3, 11x17in., B4, 11x17in...1. Perform all supported B size simplex/duplex copy job.2. Cancel the copy job and check the printer's behavior.
+    Expected Result:
+      1) The copy job should be canceled successfully.2) UI behaves correct.
+
+======================================================================
+
+Test Case 32 of 55
+ID      : C74058077
+Title   : Core: Quiet mode
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Default plain copy job with set Quiet mode to On from EWS/FP.
+    Step applicable for Consumer devices with Quiet mode.
+    Expected Result:
+      Quiet mode can turn on and can perform this copy job from FP successful.
+      LED status, Sound and screen displays correctly.
+      Quiet mode = ON will have reduced noise compared to OFF, and reduced speed/PPM.
+
+  Step 2:
+    Default pain copy job with set Quiet mode to Off from EWS/FP.
+    Step applicable for Consumer devices with Quiet mode.
+    Expected Result:
+      Quiet mode can turn on and can perform this copy job from FP successful.
+      LED status, Sound and screen displays correctly.
+      Quiet mode = Off will increase noise compared to On, and increase speed/PPM.
+
+  Step 3:
+    Default photo copy job with Quiet mode to On from EWS/FP.
+    Step applicable for Consumer devices with Quiet mode.
+    Expected Result:
+      Quiet mode can turn on and can perform this copy job from FP successful.
+      LED status, Sound and screen displays correctly.
+      Quiet mode = ON will have reduced noise compared to OFF, and reduced speed/PPM.
+
+======================================================================
+
+Test Case 33 of 55
+ID      : C74186661
+Title   : Core: Special Features - Maximum Document/Photo/ID copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Perform the maximum document copy/photo copy/ID card copy job with Firmware default settings.
+    Expected Result:
+      Copy job can perform successful without any memory assert, hang or abnormal issues.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Perform the maximum document copy job with user configured Settings + Sides(1-1 sided, 2-1 sides).
+    Expected Result:
+      Copy job can perform successful without any memory assert, hang or abnormal issues.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Perform the maximum Photo copy/ID card copy job with user configured Settings.
+    Expected Result:
+      Copy job can perform successful without any memory assert, hang or abnormal issues.
+      ID card copy out should be middle aligned.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Do 30/50/80 copies of single-copy jobs in sequence with Firmware default settings per Epic
+    Expected Result:
+      Copy job can perform successful without any memory assert, hang or abnormal issues.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Check the copy output.
+    Expected Result:
+      Document copy: Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+      Photo copy: borderless.without any black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 6:
+    Check the output margin on document copy jobs.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 34 of 55
+ID      : C74611990
+Title   : Core: Special Features - special targets
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    1. Load a document with QR code content in it.
+    2. Perform the copy job on different paper sizes with different print quality.
+    Expected Result:
+      Verify this copy job could be completed successfully.
+      The QR code shows clearly without abnormal problems.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    1. Load a picture that includes a person wearing a sweater, with machine-finished edges visible on the shoulders or hem of the sweater. Refer to CR DUNE-279732 to get such kind of picture.
+    2. Perform the copy job with different print quality.
+    Expected Result:
+      Verify this copy job could be completed successfully.
+      Verify the output should not have any jagged mosaics or artifacts issues.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Load Thick original (Use a thick ID card that actually lifts the lid slightly)
+    Expected Result:
+      ID card job could do successfully.
+      Output has some shadows which is acceptable.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Do ID card copy or document copy without loading targets.
+    Expected Result:
+      Copy job could do successfully.
+      Output has blank without any content.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+======================================================================
+
+Test Case 35 of 55
+ID      : C74610959
+Title   : NFR - Contention - Document or ID copy + Error Recovery
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Perform a document copy job with default settings.
+    - Trigger below one error each time.
+    1) open and close door
+    2) out of paper
+    3) paper jam
+    4) low on ink
+    5) very low on ink
+    6) hard power down
+    7) soft power down
+    8) ADF mispick
+    9) ADF jam
+    - Clear the error or reboot the printer to perform a copy job.
+    Expected Result:
+      Document copy job and san job can perform successfully.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    - Perform a document copy job with Conbined settings.
+    - Trigger below one error each time.
+    1) open and close door
+    2) out of paper
+    3) paper jam
+    4) low on ink
+    5) very low on ink
+    6) hard power down
+    7) soft power down
+    8) ADF mispick
+    9) ADF jam
+    - Clear the error or reboot the printer to perform a scan job.
+    Expected Result:
+      Document copy job and san job can perform successfully.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    - Perform a ID card copy job with default settings.
+    - Trigger below one error each time.
+    1) open and close door
+    2) out of paper
+    3) paper jam
+    4) low on ink
+    5) very low on ink
+    6) hard power down
+    7) soft power down
+    8) ADF mispick
+    9) ADF jam
+    - Clear the error or reboot the printer to perform a scan job.
+    Expected Result:
+      ID copy copy job and san job can perform successfully.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    - Perform a ID card copy job with Conbined settings.
+    - Trigger below one error each time.
+    1) open and close door
+    2) out of paper
+    3) paper jam
+    4) low on ink
+    5) very low on ink
+    6) hard power down
+    7) soft power down
+    8) ADF mispick
+    9) ADF jam
+    - Clear the error or reboot the printer to perform a scan job.
+    Expected Result:
+      ID copy copy job and san job can perform successfully.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+======================================================================
+
+Test Case 36 of 55
+ID      : C74058078
+Title   : Administration - Setup/Configuration - Access Control- dune only
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Access to EWS -> Security -> Printer Features.
+    - Uncheck the Copy or Color Copy.
+    - Click on Apply button.
+    - Check for the Copy app from control panel.
+    Expected Result:
+      Verify the Copy app has disappeared from the front panel.
+      LED status, Sound and screen displays correctly.
+
+  Step 2:
+    - Access to EWS -> Security -> Printer Features.
+    - check the Copy or Color Copy.
+    - Click on Apply button.
+    - Check for the Copy app from control panel.
+    - Perform a copy job from control panle.
+    Expected Result:
+      Verify the Copy app appears on the front panel.
+      Copy job can be completed without error, and output is correctly.
+      LED status, Sound and screen displays correctly.
+
+  Step 3:
+    - Access to EWS -> Security -> Access Control.
+    - Lock the Copy function.
+    - Click on Apply button.
+    - Check for the Copy app from control panel.
+    Expected Result:
+      Verify the Copy app has locked from the front panel and should enter the password to enter.
+      LED status, Sound and screen displays correctly.
+
+  Step 4:
+    - Access to EWS -> Security -> Access Control.
+    - Unlock the Copy function.
+    - Click on Apply button.
+    - Check for the Copy app from control panel.
+    - Perform a copy job from control panle.
+    Expected Result:
+      Copy app unlock on the front panel.
+      Copy job can be completed without error, and output is correctly.
+      LED status, Sound and screen displays correctly.
+
+======================================================================
+
+Test Case 37 of 55
+ID      : C74058081
+Title   : Administration - Setup/Configuration - EWS & UI Copy settings synchronization
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Check all copy settings in EWS Copy folder.
+    Expected Result:
+      Copy settings show correctly without settings missing per spec EWS IS IS NOT.xlsx.
+
+  Step 2:
+    Check paper size and paper type in EWS Paper folder.
+    Expected Result:
+      The Paper Size and Paper Type lists should display correctly, with the default size for the country/region placed at the top of the list.
+
+  Step 3:
+    Change all supported copy settings with user configured settings from EWS.
+    Expected Result:
+      The Copy settings can apply successful.
+
+  Step 4:
+    Check the FPUI.
+    Expected Result:
+      The Copy Settings changed on EWS can be synchronized to FPUI.
+
+  Step 5:
+    1. Go to EWS to "Copy" > "Default Copy Options" page.2. Change the "Sides" to "1 to 2-Sided" or "2 to 2-Sided".3. Check 2-Sided Pages Flip Up option and paper size/type list.
+    Expected Result:
+      1) 2-Sided Pages Flip Up option should be displayed on EWS. Refer to CR DUNE-3012812) Check the unsupport duplex paper size and paper type are restricted. Refer to DUNE-140117
+
+  Step 6:
+    1. Go to EWS to "Copy" > "Default Copy Options" page.2. Change the different paper size/type.3. Check the "Sides" list.
+    Expected Result:
+      1) For unsupport duplex size/type, the duplex sides should be disabled.2) For support duplex size/type, the duplex sides should not be disabled. Refer to DUNE-140635
+
+  Step 7:
+    1. Go to EWS to "Copy" > "Default Copy Options" page.2. Change the "Pages per Sheet" to "2".3. Change the "Collate" to On and then check the EWS page.4. Change the "Pages per Sheet" to "2" and then check the EWS page.
+    Expected Result:
+      1) Pages per Sheet is changed to "1" from "2" in step3.2) Collate is changed to Off from On in step4.
+
+  Step 8:
+    1. Go to EWS to "Copy" > "Default Copy Options" page.2. Change the "Pages per Sheet" to "2".3. Check the "Output Scale" on EWS page.4. Change the "Pages per Sheet" to "1" and then change the "Output Scale" to random one value expect for "None".5. Check the "Pages per Sheet".
+    Expected Result:
+      1) "Output Scale" option is disabled in step3.2) "Pages per Sheet" option only has "1" value in step5.
+
+  Step 9:
+    1. Loading an original target on ADF.2. Check the original size list on FP/EWS.3. Unload the original target on ADF.4. Check the original size list on FP/EWS.
+    Expected Result:
+      1) Original Size list should be consistent with spec when unload or load the ADF. Refer to DUNE-153945/DUNE-110985
+
+======================================================================
+
+Test Case 38 of 55
+ID      : C74058084
+Title   : Administration - Setup/Configuration - Counters
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Step-1 : Color/Black copy counters at CDM and Usage report.
+    Pre-requisite :
+    Access Dune/ARES cdm link.
+    Record values under "impressions" and "jobUsage".
+    Record values in EWS Usage report.
+    - Dune cdm link: printer's ip address/cdm/deviceUsage/v1/lifetimeCounters
+    - ARES cdm link:
+    printer's ip address/DevMgmt/ProductUsageDyn.xml
+    Step-2 : Perform a color/black copy job from FP.
+    Expected Result:
+      Check the value under "impressions"/"jobUsage" are increased correctly accordingly in cdm link.
+      Check related value increased correctly in EWS Usage report.
+
+  Step 2:
+    Step-1 : Color/Black a4EquivalentImpressions counters at CDM and Usage report.
+    Pre-requisite :
+    Access Dune/ARES cdm link.
+    Record values under "a4EquivalentImpressions".
+    Record values in EWS Usage report.
+    - Dune cdm link: printer's ip address/cdm/deviceUsage/v1/lifetimeCounters
+    - ARES cdm link:
+    printer's ip address/DevMgmt/ProductUsageDyn.xml
+    Step-2 :Perform a color/black copy job from FP.
+    Step-3 :Calculate the actula value under "a4EquivalentImpressions" for "monochrome" and "total" using the method in Description.
+    Expected Result:
+      Check the increment under "a4EquivalentImpressions" are increased correctly accordingly in cdm link.
+      Check related value increased correctly in EWS Usage report.
+
+  Step 3:
+    Step-1 : HardwareEvents counter at CDM and Usage report.
+    Pre-requisite :
+    Access Dune/ARES cdm link.
+    Record values "jamEventCount" and "mispickEventCount" under "HardwareEvents".
+    Record values in EWS Usage report.
+    - Dune cdm link: printer's ip address/cdm/deviceUsage/v1/serviceCounters
+    - ARES cdm link:
+    printer's ip address/DevMgmt/ProductUsageDyn.xml
+    Step-2 : Pull out the input paper to trigger paper jam error from tray during copy.
+    Step-3 : Trigger out of paper during copy.
+    Expected Result:
+      Check the value under "harwareEvents" are increased correctly accordingly in cdm link.
+      Check related value increased correctly in EWS Usage report.
+
+  Step 4:
+    Step-1 : Media type and Size counters at CDM and Usage report.
+    Pre-requisite :
+    Access Dune/ARES cdm link.
+    Record values under "sheetsByMediaTypeAndMediaSize" and "impressionsByMediaSize".
+    Record values in EWS Usage report.
+    - Dune cdm link: printer's ip address/cdm/deviceUsage/v1/lifetimeCounters
+    - ARES cdm link:
+    printer's ip address/DevMgmt/ProductUsageDyn.xml
+    Step-2 : Perform different paper size/type copy job.
+    Expected Result:
+      Check the value under "sheetsByMediaTypeAndMediaSize"/"impressionsByMediaSize" are increased correctly accordingly in cdm link.
+      Check related value increased correctly in EWS Usage report.
+
+  Step 5:
+    Step-1 : Check counters at CDM and Usage report unchanged after reboot.
+    Pre-requisite :
+    Access Dune/ARES cdm link.
+    Record all values.
+    - Dune cdm link: printer's ip address/cdm/deviceUsage/v1/lifetimeCounters
+    - ARES cdm link:
+    printer's ip address/DevMgmt/ProductUsageDyn.xml
+    Step-2 : Restart the printer.
+    Expected Result:
+      Check above values under under "impressions"/"jobUsage"/"a4EquivalentImpressions"/"harwareEvents"/"sheetsByMediaTypeAndMediaSize"/"impressionsByMediaSize" are unchanged in cdm link.
+      Check related value in EWS Usage report are unchanged.
+
+  Step 6:
+    Step-1 : Check counters unchanged at CDM and Usage report after performing Restore Factory.
+    Pre-requisite :
+    Access Dune/ARES cdm link.
+    Record all values.
+    - Dune cdm link: printer's ip address/cdm/deviceUsage/v1/lifetimeCounters
+    - ARES cdm link:
+    printer's ip address/DevMgmt/ProductUsageDyn.xml
+    Step-2 : Do a Factory Resets from FP/EWS.
+    Expected Result:
+      Check above values under under "impressions"/"jobUsage"/"a4EquivalentImpressions"/"harwareEvents"/"sheetsByMediaTypeAndMediaSize"/"impressionsByMediaSize" are unchanged in cdm link.
+      Check related value in EWS Usage report are unchanged.
+
+======================================================================
+
+Test Case 39 of 55
+ID      : C75198637
+Title   : Administration - Setup/Configuration - Resets
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Change all Document and ID copy settings to non-default and save it from EWS/FP.
+    - Perform a RFD (Restore Factory Defaults) from EWS/FP.
+    Expected Result:
+      Copy settings are changed to non-default value successful.
+      Restore Factory Defaults can perform successful.
+      All Copy settings are reset to default value.
+      UI message displayed correctly.
+
+  Step 2:
+    - Change all Document and ID copy settings to non-default and save it from EWS/FP.
+    - Perform a OOBE reset from EWS/FP.
+    Expected Result:
+      Copy settings are changed to non-default value successful.
+      OOBE reset can perform successful.
+      All Copy settings are reset to default value.
+      UI message displayed correctly.
+
+  Step 3:
+    - Change all Document and ID copy settings to non-default and save it from EWS/FP.
+    - Perform a Power Cycle from FP.
+    Expected Result:
+      Copy settings are changed to non-default value successful.
+      Printer can power cycle successful.
+      All Copy settings are unchanged.
+      UI message displayed correctly.
+
+  Step 4:
+    1. Access EWS via IP address -> Copy -> Default Copy Options -> change all copy settings to non-default.2. EWS -> Paper -> Trays -> Change trays to non-default, here change Tray2 size from Letter to A4(key step), Tray1 keeps Letter size.3. EWS > Supported Tools> Back Up and Restore -> Backup settings to save the *bck file in PC.4. EWS -> General -> Restore Default Settings -> Restore All Factory Defaults -> Restore.5. Wait Restore process complete, printer powers cycle to home state, go back to EWS and check copy settings and paper tray settings both restore to default, here tray2 size changes to Letter which is expected.(Compared with step 3)6. EWS > Supported Tools> Back Up and Restore -> Restore -> Drop *bck file saved in step 4 to restore place -> Restore.7. Wait for restore completes then go to EWS -> Paper -> Trays.8. Check Tray2 size in EWS.
+    Expected Result:
+      1) Tray2 size should go back to A4 which set to non-default in step 3 and saved in *bck file. Refer to CR DUNE-3020072) UI behaves correct.
+
+  Step 5:
+    1. Go to Menu > Tools -> Maintenance ->Restore Settings>Reset User Settings.2. Touch Reset button -> Rest User Settings -> Touch Reset button to reset.3. Printer power cycle automatically -> Choose English -> Touch Confirm button then continue button to home menu.4. Go to Copy -> Document Copy -> Options, and check Original Size and Paper selection.5. Go to EWS page by Printer IP access > Copy> Default Copy Options, and check Paper Size and Original Size selection.
+    Expected Result:
+      1) Paper Size and Original Size selection both should have a default option based on country/region set in printer. Refer to CR DUNE-3018482) UI behaves correct.
+
+======================================================================
+
+Test Case 40 of 55
+ID      : C74058203
+Title   : NFR - Contention - Copy + Print + Copy
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Copy - From ADF - From Unit Tests
+    Step 1: Color Copy - 5 number of copies - page filled many colors - Letter sized page to be copied - Letter sized Photo Paper setting - Lighter/Darker set to 4 - Best SettingsStep 2: While step one is executing, Print 3 page Boarder less - Double Sided enabled - LTR sized photo (>3 MB) - Page filled many colors - Best quality settings - Photo paper - From PC Software over Wireless - printing phaseStep 3: B/W Copy - 8 number of copies – A4 sized page to be copied – A4 sized Document setting - Lighter/Darker set to 8 - Normal Settings
+    Expected Result:
+      Step 2 will be delayed until Step 1 completes.
+      Step 3 will be delayed until step 2 completes.
+      Step 1 & 2 & 3  jobs could complete successfully.LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    1. Initial an ID card copy job from FP Copy App-> ID card copy job->Copy.2. Access EWS-> Supported Tools -> Reports and Pages -> choose Printer Status Report -> send Print during the printer is scanning the front side of ID card.3. Check the printer behaviors
+    Expected Result:
+      1) ID card copy job should complete successfully then print status report. Refer to CR DUNE-3082142) UI behaves correct.
+
+  Step 3:
+    SW print and ID Card backside_contention1. Install the SW on test PC and add printer via wireless mode.2. Connect one USB cable to computer from printer.3. Touch Menu >Copy > ID Card Copy on the Home screen.4. Perform a ID Card copy job until to the IDCard_BackSideInstruction screen.5. Click "Done" button on IDCard_BackSideInstruction screen(Here the printer starts scanning the back side), and then immediately send the wireless SW print job "Test file.txt". See atachement (Note: touch Done button and send the job at the same time) 6. Unplug the USB cable from printer.7. Check the behavior of the printer.
+    Expected Result:
+      1) Copy and print job could do successfully. Refer to CR DUNE-125116/DUNE-117077.2) UI behaves correct.
+
+  Step 4:
+    SW print and ID Card first-side_contention1. Initial an ID card copy job from FP Copy App-> ID card copy job->Copy.2. Touch "Continue" button on "ID Card (Front)" screen to perform an ID Card copy and click "Print" button to send a pdf file (attached the lorem.pdf) from the PC. (Touch "Continue" button and "Print" button at the same time, this is key point)3. After scanning the front side, printer reminds user to scan the back side.4. After the back side scans completely and then check the printer behaviors.
+    Expected Result:
+      1) Copy and print job could do successfully. Refer to CR DUNE-3105332) UI behaves correct.
+
+======================================================================
+
+Test Case 41 of 55
+ID      : C74058205
+Title   : NFR - Contention - Copy Mode Switching
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Step 1: B/W Copy - 10 number of copies - Letter - Lighter/Darker set to 8 – Normal quality- ADF
+    Step 2: Color Copy - 4 number of copies - page filled many colors – A4 sized - Photo Paper - Lighter/Darker set to 5 - Best Setting- Flatbed
+    Step 3: B/W Copy - 24 number of copies - Letter - Lighter/Darker set to 2 – Draft quality- ADF
+    Expected Result:
+      Step 1 & 2 & 3 jobs could complete successfully.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+======================================================================
+
+Test Case 42 of 55
+ID      : C74058221
+Title   : NFR - Performance/Speed-PPM
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Current Product vs Similar type product(eg. Leo WL vs Lebi WL)
+    Original: Aliquip Letter 1 page
+    Sided: Simplex
+    Type: ADF
+    Copy Number: 10
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 2:
+    Current Product vs Similar type product(eg. Leo WL vs Lebi WL)
+    Original: Aliquip Letter 10 pages
+    Color Type: Duplex (1 -> 2)
+    Type: ADF
+    Copy Number: 1
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 3:
+    Current Product vs Similar type product(eg. Leo WL vs Lebi WL)
+    Original: Aliquip Letter 3 pages
+    Color Type: Duplex(1->2)
+    Type: ADF
+    Copy Settings: Collate & Best Mode
+    Copy Number: 10
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 4:
+    Current Product vs Similar type product(eg. Leo WL vs Lebi WL)
+    Original: Aliquip Letter 10 pages
+    Color Type: Duplex(1 - > 2)
+    Type: ADF
+    Copy Settings: 2 Pages/Sheet
+    Copy Number: 1
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 5:
+    Current Product vs Similar type product(eg. Limo vs Maverick OR Poseidon vs Kronos Refresh)
+    Original: Fill ADF with Aliquip Letter
+    Color Type: Duplex (1->2)
+    Copy Settings: 2 Pages/Sheet & Best Mode
+    Copy Number: 1
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 6:
+    Current Product vs Similar type product(eg. Limo vs Maverick OR Poseidon vs Kronos Refresh)
+    Original: Aliquip Letter 1 page
+    Copy Type: Simplex
+    Type: Flatbed
+    Copy Number: 1
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 7:
+    Note: Please open glass lid and turn-over original as soon as possible when printer prompts message, and try to keep same speed on anther device.
+    Original: Aliquip Letter 4 pages
+    Color Type: Duplex
+    Copy Settings: 2 Pages/Sheet
+    Copy Number: 1
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+  Step 8:
+    Current Product vs Similar type product(eg. Limo vs Maverick OR Poseidon vs Kronos Refresh)
+    Original: Aliquip Letter 1 page
+    Copy Type: Simplex
+    Type: Flatbed
+    Copy Settings: Fit to Page
+    Combinations: Color mode, number of copies, quality, Paper size, collate etc
+    Expected Result:
+      The speed/PPM should meet the definition of derivative spreadsheet.
+      Record the copy job execution time for two printers, perform three cycle tests for each printer, and record the time for each cycle. Then, take the average value for comparison. Verify current device speed should not be slow too much or faster than predecessor.
+
+======================================================================
+
+Test Case 43 of 55
+ID      : C74058223
+Title   : NFR - Solution Reliability
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Run the case per the table in the description one by one.
+    Run continuously for 3 hours without interruption.
+    Continuous copying from the ADF tray by loading the maximum allowable sheets supported each time till it finishes.
+    Continuously copying from the scanner flatbed till it finishes.
+    80% Mono, 20% Color
+    Expected Result:
+      Continuously copy for 3 hours. The printer should function normally without any abnormal issues such as hang, assert, black screen, white screen, or other errors.
+
+======================================================================
+
+Test Case 44 of 55
+ID      : C75171671
+Title   : NFR - Copy button stress test
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions:
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Black Copy button stress
+    Press Copy Black button 5 times before a 1 second delay in button press feedback.
+    Expected Result:
+      Verify the counter displays correctly and Test completes without errors
+
+  Step 2:
+
+  Step 3:
+    Black Copy button stress
+    Press Copy Black button untill maxmium number before a 1 second delay in button press feedback.
+    Expected Result:
+      Verify Once the maximum number is reached the number stops fast blinking and the copy job starts immediately, without the 2 second delay.
+
+  Step 4:
+    Color Copy button stress
+    Press Copy Color button 5 times before a 1 second delay in button press feedback.
+    Expected Result:
+      Verify the counter displays correctly and Test completes without errors
+
+  Step 5:
+    Color Copy button stress
+    Press Copy Color button untill maxmium number before a 1 second delay in button press feedback.
+    Expected Result:
+      Verify Once the maximum number is reached the number stops fast blinking and the copy job starts immediately, without the 2 second delay.
+
+  Step 6:
+    Color/Black Copy button stress
+    1. Press Copy Black button 5 times before a 1 second delay in button press feedback.
+    2. Press the Start Copy Black and Start Copy Color buttons during copy.
+    Expected Result:
+      Verify the Start Copy Black and Start Copy Color buttons are disabled when copy is progressing.
+      Verify the counter displays the number of copies remaining until it reaches 0
+
+  Step 7:
+    Cancel button stress
+    1. Press Copy Color button 5 times before a 1 second delay in button press feedback.
+    2. Press the Cancel button before the 1 second latency.
+    Expected Result:
+      Verify the counter return 0.
+
+  Step 8:
+    Copy button stress
+    Press Copy Black button 5 times and press Copy Color button 1 time before a 1 second delay in button press feedback.
+    Expected Result:
+      Verify the output generated is 5 black copies.
+      (The output generated by a multiple copy job will be based on the first button pressed. )
+
+  Step 9:
+    Copy button stress
+    1. Press Copy Black button twice before a 1 second delay in button press feedback.
+    2. Press Copy Black/Color button more than 1 second delay.
+    Expected Result:
+      Verify the counter will not increase.
+
+======================================================================
+
+Test Case 45 of 55
+ID      : C75239662
+Title   : NFR - Telemetry
+----------------------------------------------------------------------
+Steps:
+
+  Step 1:
+    Step1 : Lifetime Counters Telemetry check
+    Pre-requisite :
+    Register the printer to PIE.
+    Generate a lifetimeCounterSnapshot event in printer.(duplex copy)
+    Step2 : Go to below URL and verify the event is generated or not. URL : http:///cdm/eventing/v1/events/lifetimeCounterSnapshot
+    Expected Result:
+      New event should be generated and displayed in the page.
+      Sequence Number should start from 1.
+      Verify the same for all supported events.
+
+  Step 2:
+    1.Again create a lifetimeCounterSnapshot event (duplex copy or simplex copy from ADF and Glass).
+    2.Wait for the event to get generated in printer.
+    3.Verify the sequnce number and event Category
+    4.Repeat the step for 5 times
+    5.Verify that all generated events got uploaded to server (using KIBANA url)
+    Expected Result:
+      event Category should display and Sequence number should increase.
+      Eg : If earlier it was 1, now it should
+      increased to 2.
+      On every repetation the sequence number should increase
+      All events generated in printer should get uploaded to server.
+
+  Step 3:
+    Step1 : jobError Telemetry check
+    Pre-requisite :
+    Register the printer to PIE.
+    Step 2 : Generate a jobError event in printer.(ADF Jam)
+    Step 3 : Go to below URL and verify the event is generated or not. URL : http:///cdm/eventing/v1/events/jobError
+    Expected Result:
+      New event should be generated and displayed in the page.
+      Sequence Number should start from 1.
+      Verify the same for all supported events.
+
+  Step 4:
+    1.Again create a jobError event. (ADF Jam)
+    2.Wait for the event to get generated in printer.
+    3.Verify the sequnce number and event Category
+    4.Repeat the step for 5 times
+    5.Verify that all generated events got uploaded to server (using KIBANA url)
+    Expected Result:
+      event Category should displays and Sequence number should increase.
+      Eg : If earlier it was 1, now it should increased to 2.
+      On every repetation the sequence number should increase
+      All events generated in printer should get uploaded to server.
+
+  Step 5:
+    Pre-requisite :
+    Register the printer to PIE.
+    Step1 : Generate a jobError event in printer.(ADF Mispick)
+    Step2 : Go to below URL and verify the event is generated or not. URL : http:///cdm/eventing/v1/events/jobError
+    Expected Result:
+      New event should be generated and displayed in the page.
+      Sequence Number should start from 1.
+      Verify the same for all supported events.
+
+  Step 6:
+    1.Again create a jobError event. (ADF Mispick)
+    2.Wait for the event to get generated in printer.
+    3.Verify the sequnce number and event Category
+    4.Repeat the step for 5 times
+    5.Verify that all generated events got uploaded to server (using KIBANA url)
+    Expected Result:
+      event Category should displays and Sequence number should increase.
+      Eg : If earlier it was 1, now it should increased to 2.
+      On every repetation the sequence number should increase
+      All events generated in printer should get uploaded to server.
+
+  Step 7:
+    Step1 : System Error Telemetry Check
+    Pre-requisite :
+    Register the printer to PIE.
+    Step2 : Generate a systemError event in printer.(Paper Jam)
+    Step3 : Go to below URL and verify the event is generated or not. URL : http:///cdm/eventing/v1/events/systemError
+    Expected Result:
+      New event should be generated and displayed in the page.
+      Sequence Number should start from 1.
+      Verify the same for all supported events.
+
+  Step 8:
+    1.Again create a systemError event. (Paper Jam)
+    2.Wait for the event to get generated in printer.
+    3.Verify the sequnce number
+    4.Repeat the step for 5 times
+    5.Verify that all generated events got uploaded to server (using KIBANA url)
+    Expected Result:
+      event Category should displays and Sequence number should increase.
+      Eg : If earlier it was 1, now it should increased to 2.
+      On every repetation the sequence number should increase
+      All events generated in printer should get uploaded to server.
+
+======================================================================
+
+Test Case 46 of 55
+ID      : C75524024
+Title   : Error handing - Rear Door Open
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    - Press copy button or Copy App to perform a copy job.
+    - Open the door during copy.
+    Note: Step applicable for Consumer devices with Rear Door.
+    Expected Result:
+      For CGD/MDG/2 Line: Rear Door open error displays and button in screen works well.For 7 Segment UI/Class 1: LED status and Sound are displayed correctly.
+
+  Step 2:
+    Close the door.
+    Expected Result:
+      Rear Door open error disappears.
+
+  Step 3:
+    Check Jam error in cdm 1. Access the cdm link:  IP/cdm/scan/v1/alerts2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+  Step 4:
+    Check Jam error in EWS 1. Access the EWS page.2. Check this error I/O Ref.
+    Expected Result:
+      Verify this error is consisten with SMS spec.
+
+======================================================================
+
+Test Case 47 of 55
+ID      : C75524126
+Title   : Navigation - LED panels
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    1. Start Copy Job.
+    2. Observe Color/Black copy button LED during copy.
+    3. Observe Color/Black copy button LED after completion.
+    Note: Step applicable for Consumer devices with LED panels.
+    Expected Result:
+      During copy: Color/Black copy button is Off.
+      After completion: Color/Black copy button returns to idle state. (On or Off)
+      Note: Different printer has different UI design, please see copy spec for details.
+
+  Step 2:
+    1. Start Copy Job.
+    2. Observe ID copy button LED during copy.
+    3. Observe ID copy button LED after completion.
+    Note: Step applicable for Consumer devices with LED panels.
+    Expected Result:
+      During copy: ID copy button is Off.
+      After completion: ID copy button returns to idle state. (On or Off)
+      Note: Different printer has different UI design, please see copy spec for details.
+
+  Step 3:
+    1. Start Copy Job.
+    2. Observe Cancel button LED during copy.
+    3. Observe Cancel button LED after completion.
+    Note: Step applicable for Consumer devices with LED panels.
+    Expected Result:
+      During copy: Cancel is On.
+      After completion: Cancel is Off.
+
+  Step 4:
+    1. Start Copy Job.
+    2. Observe Power button LED during copy.
+    3. Observe Power button LED after completion.
+    Note: Step applicable for Consumer devices with LED panels.
+    Expected Result:
+      During copy: Power LED should fast blink 660ms.
+      After completion: Power LED on solid.
+
+  Step 5:
+    1. Start duplex copy or ID card copy job.
+    2. Observe Open Lid LED
+    Expected Result:
+      Open Lid LED is On during copy and indicate to open the scan lid.
+
+======================================================================
+
+Test Case 48 of 55
+ID      : C75524138
+Title   : Navigation - LCD panels
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Check Number of Copies Icon
+    1. Long/Short press +/- button to change Number of Copies.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      No. of copies can set smoothly for each value.
+
+  Step 2:
+    Check Copy Reduce/Enlarge Icon (ADF Only)
+    1. Long/Short press +/- button to change Reduce/Enlarge.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      Reduce/Enlarge can set smoothly for each value.
+
+  Step 3:
+    Check Copy Reduce/Enlarge Icon (ADF Only)
+    1. Long/Short press +/- button to change Lighter/ Darker.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      Lighter/ Darker can set smoothly for each value.
+
+  Step 4:
+    Check Contrast bars
+    1. Long/Short press +/- button to change Contrast bars.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      Contrast bars can set smoothly for each value.
+
+  Step 5:
+    Check ID Copy Icons.
+    1. Press ID copy button.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      ID Copy Icons displays.
+
+  Step 6:
+    Check Media Error icon (flatbed Only)
+    1. Printer is in idle.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      Media Error icon displays.
+
+  Step 7:
+    Check Document Icon.
+    1. Paper Type is set to Plain paper when printer is in idle.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      Document Icon displays.
+
+  Step 8:
+    Check Photo Icon.
+    1. Paper Type is set to Photo paper when printer is in idle.
+    Note: Step applicable for Consumer devices with LCD panels.
+    Expected Result:
+      Photo Icon displays.
+
+======================================================================
+
+Test Case 49 of 55
+ID      : C75526884
+Title   : Walk-up Copy- Copy & ID Copy job Timeout
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Duplex copy timeout
+    1. Make sure the Sides is set to 1-2 sided or 2-2 sided.
+    2. Perform a duplex copy job from Flatbed.
+    3. After the first side is scanned completed.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "2 Sided copy screen" and the string is consistent with copy workflow spec. Button in screen works well.
+      For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below.
+      Note: Different printer has different LEDs, please see UX design spec.
+      Open Lid LED: On
+      Resume: On
+
+  Step 2:
+    If user doesn't press Resume button for 1 minutes.
+    Note: Different printer has different timeout time, please see UX design spec.
+    Expected Result:
+      Timeout should happen. Job will get cancelled and it will go back to home screen.
+
+  Step 3:
+    Page Per Sheet timeout
+    1. Make sure the Page Per Sheet is set to 2.
+    2. Perform a copy job from Flatbed.
+    3. After the first side is scanned completed.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "2 Sided copy screen" and the string is consistent with copy workflow spec. Button in screen works well.
+
+  Step 4:
+    If user doesn't press Resume button for 1 minutes.
+    Note: Different printer has different timeout time, please see UX design spec.
+    Expected Result:
+      Timeout should happen. Job will get cancelled and it will go back to home screen.
+
+  Step 5:
+    ID copy back side timeout
+    1. Perform a ID copy job from Flatbed.
+    2. After the first side is scanned completed.
+    Expected Result:
+      For CGD/MGD/2 Line: UI shows "ID Card BackSide screen" and the string is consistent with copy workflow spec. Button in screen works well.
+      For 7 Segment UI/Class 1 LCD screen: LED status and Sound are displayed in example below.
+      Note: Different printer has different LEDs, please see UX design spec.
+      Open Lid LED: On
+      Resume: On
+
+  Step 6:
+    If user doesn't press Resume button for 1 minutes.
+    Note: Different printer has different timeout time, please see UX design spec.
+    Expected Result:
+      Timeout should happen. Job will get cancelled and it will go back to home screen.
+
+======================================================================
+
+Test Case 50 of 55
+ID      : C75563745
+Title   : Quality & Enhancements - Borderless photo printing
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    1. Make sure the paper type is set to Photo.
+    2. Perform a photo copy job from Flatbed.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and CGD displays correctly.
+
+  Step 2:
+    1. Make sure the paper type is set to Matte Photo Paper.
+    2. Perform a Matte copy job from Flatbed.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and CGD displays correctly.
+
+  Step 3:
+    1. Make sure the paper type is set to Glossy Photo Paper.
+    2. Perform a Glossy copy job from Flatbed.
+    Expected Result:
+      The photo copy job could do successfully.
+      Output should be border-less.
+      LED status, Sound and CGD displays correctly.
+
+======================================================================
+
+Test Case 51 of 55
+ID      : C75563748
+Title   : NFR - Contention - Concurrent Copy/Scan jobs
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    1. Perform a copy job from FP.
+    2. Perfrom a scan job from SW/EWS during copy.
+    Expected Result:
+      The copy job could perform successfull.
+      The Scan job cannot perform and pops up an blocked message.
+
+  Step 2:
+    1. Perfrom a scan job from SW/EWS.
+    2. Perform a copy job from FP during scan.
+    Expected Result:
+      The scan job could perform successfull.
+      The copy button is disabled and the copy job cannot perform.
+
+  Step 3:
+    1. Perform a copy job from FP.
+    2. Access scan app to perfrom a scan job from FP during copy.
+    Expected Result:
+      The copy job could perform successfull.
+      The scan button is disabled and the scan job cannot perform.
+
+  Step 4:
+    1. Perform a scan job from FP.
+    2. Access copy app to perfrom a copy job from FP during scan.
+    Expected Result:
+      The scan job could perform successfull.
+      The copy button is disabled and the copy job cannot perform.
+
+======================================================================
+
+Test Case 52 of 55
+ID      : C75563754
+Title   : Combined copy settings tests themed around - Jobber
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Focuses on speed and reducing the total cost per copy.
+    Bulk Document Copy: Automatic Document Feeder (ADF) + 100% + Draft Quality + Grayscale.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Focuses on speed and reducing the total cost per copy.
+    Ink-Saver Duplex: ADF + 100% + 2-Sided Copying + EconoMode (Save Toner/Ink).
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Focuses on speed and reducing the total cost per copy.
+    Flyer Production: ADF + 200% Enlargement + Plain Paper + Normal Quality.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Focuses on speed and reducing the total cost per copy.
+    Fast ID Batching: Scanner Glass + ID Copy Mode + 100% + Grayscale.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Focuses on speed and reducing the total cost per copy.
+    Legal to A4 Conversion: ADF + 91% Reduction + Plain Paper + Draft.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 7:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 53 of 55
+ID      : C75563755
+Title   : Combined copy settings tests themed around - Student
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Focuses on Prioritizes fitting the maximum amount of information onto the fewest pages.
+    Cheat Sheet Creator: Scanner Glass + 25%–50% Reduction + Best Quality + Plain Paper.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Focuses on Prioritizes fitting the maximum amount of information onto the fewest pages.
+    N-up Notes: Scanner Glass + 4-Pages-per-Sheet + Portrait Orientation + Standard Quality.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Focuses on Prioritizes fitting the maximum amount of information onto the fewest pages.
+    Textbook Archive: Scanner Glass + Book Mode Scan + 75% Reduction + Fit to Page.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Focuses on Prioritizes fitting the maximum amount of information onto the fewest pages.
+    Diagram Highlight: Scanner Glass + 400% Enlargement + Contrast +2 + Color Mode.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Focuses on Prioritizes fitting the maximum amount of information onto the fewest pages.
+    Study Guide Duplex: ADF + 2-Sided Copying + 94% (A4 to Letter) + Draft.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 7:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 54 of 55
+ID      : C75564779
+Title   : Combined copy settings tests themed around - Professional
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Focuses on document integrity and professional-grade presentation.
+    Official Report Copy: ADF + 100% + Best Quality + Text Optimization.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Focuses on document integrity and professional-grade presentation.
+    ID Card Submission: Scanner Glass + 2-Sided ID Copy + 100% + Best Quality.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Focuses on document integrity and professional-grade presentation.
+    Proposal Resize: Scanner Glass + 150% Enlargement + Professional/Business Paper + Max DPI.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Focuses on document integrity and professional-grade presentation.
+    Contract Duplex: ADF + 2-Sided Copying + Automatic Scaling + Black/Mono Only.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Focuses on document integrity and professional-grade presentation.
+    Border Removal: Scanner Glass + Edge-to-Edge + Actual Size + Sharpness +1.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 7:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
+
+Test Case 55 of 55
+ID      : C75564780
+Title   : Combined copy settings tests themed around - Creative/Hobbyist
+----------------------------------------------------------------------
+Pre-conditions:
+  Pre-conditions :
+  - Device in ready state with latest build
+  - Feature is ready for testing
+
+Steps:
+
+  Step 1:
+    Focuses on Used for artistic projects and high-resolution archival work.
+    Photo Archive: Scanner Glass + 400% Enlargement + Max DPI + Photo Paper.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 2:
+    Focuses on Used for artistic projects and high-resolution archival work.
+    Sticker/Decal Scaling: Scanner Glass + 50% Reduction + Best Quality + Specialty Paper.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 3:
+    Focuses on Used for artistic projects and high-resolution archival work.
+    Art Portfolio Copy: Scanner Glass + 100% + Photograph Enhancement + Color Optimized.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 4:
+    Focuses on Used for artistic projects and high-resolution archival work.
+    Zine Layout: Scanner Glass + Booklet Format + 2-Sided + Mixed Text/Picture.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 5:
+    Focuses on Used for artistic projects and high-resolution archival work.
+    Detail Zoom: Scanner Glass + Custom 300% + Lighter/Darker Adjustment + High Quality.
+    Expected Result:
+      Copy job can do successfully.
+      Output should match the settings.
+      LED status, Sound and CGD or Number of copies: LED digit display correctly.
+
+  Step 6:
+    Check the copy output.
+    Expected Result:
+      Verify the output has no black lines, white lines, truncation, ghosting, or overlapping issue.
+
+  Step 7:
+    Check the output margin.
+    Expected Result:
+      Make sure the margin on each side (top, bottom, left, and right) is controlled within 5mm. Any part exceeding this is considered a defect and should be reported.
+
+======================================================================
