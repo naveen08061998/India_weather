@@ -293,6 +293,16 @@
     .wt-snow .city-icon { animation:snow-spin 5s linear infinite; }
     @keyframes snow-spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
+    /* ── Weather Particle Animations ── */
+    .wx-particles { position:absolute; inset:0; pointer-events:none; z-index:0; overflow:hidden; border-radius:1.1rem; }
+    .wx-p { position:absolute; pointer-events:none; will-change:transform,opacity; }
+    @keyframes wx-rain  { 0%{transform:translateY(-10px) rotate(12deg);opacity:.9} 100%{transform:translateY(220px) rotate(12deg);opacity:0} }
+    @keyframes wx-snow  { 0%{transform:translateY(-12px) translateX(0px) rotate(0deg);opacity:1} 50%{transform:translateY(100px) translateX(12px) rotate(200deg);opacity:.8} 100%{transform:translateY(220px) translateX(-5px) rotate(380deg);opacity:0} }
+    @keyframes wx-heat  { 0%,100%{transform:scaleX(1) translateY(0px);opacity:.5} 50%{transform:scaleX(1.06) translateY(-10px);opacity:.9} }
+    @keyframes wx-bolt  { 0%,85%,100%{opacity:0} 86%{opacity:1} 87%{opacity:0} 88%{opacity:.8} 89%{opacity:0} }
+    @keyframes wx-fog   { 0%{transform:translateX(-25%);opacity:0} 30%{opacity:.18} 70%{opacity:.18} 100%{transform:translateX(25%);opacity:0} }
+    @keyframes wx-orb   { 0%,100%{transform:scale(1);opacity:.35} 50%{transform:scale(1.3);opacity:.6} }
+
     /* Sparkline */
     .sparkline-wrap { margin-top:.6rem; padding-top:.45rem; border-top:1px solid rgba(255,255,255,.06); position:relative; z-index:1; }
     .sparkline-label { font-size:.57rem; color:#334155; margin-bottom:.12rem; }
@@ -1890,6 +1900,110 @@
     if (wt) el.classList.add(wt);
     el.setAttribute("data-clickable","1");
     el.onclick = () => openWeatherModal(d);
+    injectParticles(el, wt, d.temp);
+  }
+
+  // ── Weather Particle Effects ────────────────────────────────────────────────
+  function injectParticles(card, theme, temp) {
+    card.querySelector(".wx-particles")?.remove();
+    const wrap = document.createElement("div");
+    wrap.className = "wx-particles";
+    const t = parseFloat(temp) || 0;
+
+    // ── Rain / Drizzle ──────────────────────────────────────────────────────
+    if (theme === "wt-rain" || theme === "wt-drizzle") {
+      const count = theme === "wt-rain" ? 18 : 10;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement("div"); p.className = "wx-p";
+        const x   = Math.random() * 100;
+        const h   = 7 + Math.random() * 10;
+        const dur = 0.45 + Math.random() * 0.55;
+        const del = Math.random() * 2.5;
+        const op  = 0.45 + Math.random() * 0.45;
+        p.style.cssText = `left:${x}%;top:-12px;width:1.5px;height:${h}px;`
+          + `background:linear-gradient(180deg,transparent,rgba(96,165,250,${op}));`
+          + `border-radius:0 0 2px 2px;`
+          + `animation:wx-rain ${dur}s ${del}s linear infinite;`;
+        wrap.appendChild(p);
+      }
+    }
+
+    // ── Snow / Cold ─────────────────────────────────────────────────────────
+    if (theme === "wt-snow" || card.classList.contains("is-coldest")) {
+      const glyphs = ["❄","❅","✦","·","✧","⋆"];
+      for (let i = 0; i < 11; i++) {
+        const p = document.createElement("div"); p.className = "wx-p";
+        const x   = 2 + Math.random() * 88;
+        const sz  = 8 + Math.random() * 11;
+        const dur = 2.5 + Math.random() * 3;
+        const del = Math.random() * 5;
+        p.style.cssText = `left:${x}%;top:-16px;font-size:${sz}px;line-height:1;`
+          + `color:rgba(186,230,253,0.85);`
+          + `animation:wx-snow ${dur}s ${del}s linear infinite;`;
+        p.textContent = glyphs[i % glyphs.length];
+        wrap.appendChild(p);
+      }
+    }
+
+    // ── Heat / Sunny (≥ 36 °C) ──────────────────────────────────────────────
+    if ((theme === "wt-clear" || card.classList.contains("is-hottest")) && t >= 36) {
+      // Rising shimmer waves
+      for (let i = 0; i < 5; i++) {
+        const p = document.createElement("div"); p.className = "wx-p";
+        const w   = 28 + Math.random() * 46;
+        const x   = Math.random() * (100 - w);
+        const bot = 4 + i * 9;
+        const dur = 1.4 + Math.random() * 1.8;
+        const del = Math.random() * 2.5;
+        p.style.cssText = `left:${x}%;bottom:${bot}px;width:${w}%;height:3px;`
+          + `background:linear-gradient(90deg,transparent,rgba(251,146,60,.3),rgba(253,224,71,.4),rgba(251,146,60,.3),transparent);`
+          + `border-radius:50%;filter:blur(2.5px);`
+          + `animation:wx-heat ${dur}s ${del}s ease-in-out infinite;`;
+        wrap.appendChild(p);
+      }
+      // Glowing heat orb (top-right corner)
+      const orb = document.createElement("div"); orb.className = "wx-p";
+      orb.style.cssText = `right:6px;top:6px;width:52px;height:52px;`
+        + `background:radial-gradient(circle,rgba(251,146,60,.28) 0%,rgba(253,224,71,.14) 50%,transparent 70%);`
+        + `border-radius:50%;filter:blur(5px);`
+        + `animation:wx-orb 2.2s ease-in-out infinite;`;
+      wrap.appendChild(orb);
+    }
+
+    // ── Thunder ─────────────────────────────────────────────────────────────
+    if (theme === "wt-thunder") {
+      for (let i = 0; i < 4; i++) {
+        const p = document.createElement("div"); p.className = "wx-p";
+        const x   = 5 + Math.random() * 80;
+        const y   = 4 + Math.random() * 55;
+        const sz  = 11 + Math.random() * 12;
+        const dur = 3 + Math.random() * 5;
+        const del = Math.random() * 5;
+        p.style.cssText = `left:${x}%;top:${y}%;font-size:${sz}px;line-height:1;`
+          + `color:rgba(167,139,250,.95);filter:drop-shadow(0 0 4px #a78bfa);`
+          + `animation:wx-bolt ${dur}s ${del}s ease-in-out infinite;`;
+        p.textContent = "⚡";
+        wrap.appendChild(p);
+      }
+    }
+
+    // ── Mist / Fog / Haze ───────────────────────────────────────────────────
+    if (theme === "wt-mist") {
+      for (let i = 0; i < 4; i++) {
+        const p = document.createElement("div"); p.className = "wx-p";
+        const y   = 12 + i * 22;
+        const h   = 14 + Math.random() * 18;
+        const dur = 7 + Math.random() * 5;
+        const del = i * 1.8;
+        p.style.cssText = `left:-25%;top:${y}%;width:150%;height:${h}px;`
+          + `background:linear-gradient(90deg,transparent,rgba(148,163,184,.14),rgba(148,163,184,.16),rgba(148,163,184,.14),transparent);`
+          + `border-radius:50%;filter:blur(7px);`
+          + `animation:wx-fog ${dur}s ${del}s ease-in-out infinite;`;
+        wrap.appendChild(p);
+      }
+    }
+
+    if (wrap.children.length > 0) card.insertBefore(wrap, card.firstChild);
   }
 
   function setCardError(el, city, msg) {
