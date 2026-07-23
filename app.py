@@ -165,18 +165,7 @@ def static_files(filename):
     return send_from_directory(str(STATIC_DIR), filename)
 
 
-# ── CLI ─────────────────────────────────────────────────────────────────────
-
-def _parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="India Weather PWA Server")
-    # Railway / cloud platforms inject PORT as an env var; CLI flag is the fallback
-    default_port = int(os.environ.get("PORT", 5000))
-    p.add_argument("--port",    type=int, default=default_port, help=f"Port (default {default_port})")
-    p.add_argument("--host",    default="0.0.0.0",      help="Bind host (default 0.0.0.0)")
-    p.add_argument("--refresh", type=int, default=30,   help="Auto-refresh interval in minutes (default 30)")
-    p.add_argument("--no-refresh", action="store_true", help="Disable auto-refresh scheduler")
-    return p.parse_args()
-
+# ── CLI (local dev only) ──────────────────────────────────────────────────
 
 def _cold_start_generate() -> None:
     """Generate HTML from whatever data exists (may be empty on first deploy)."""
@@ -197,10 +186,31 @@ def _boot_fetch() -> None:
     thread.start()
 
 
+# ── Module-level init (runs under gunicorn AND python app.py) ──────────────
+# Ensure directories exist
+WEATHER_DIR.mkdir(parents=True, exist_ok=True)
+STATIC_DIR.mkdir(exist_ok=True)
+# Generate HTML if missing (cold Railway deploy) and kick off background fetch
+if not HTML_FILE.exists():
+    _boot_fetch()
+# Start periodic auto-refresh scheduler
+start_scheduler(int(os.environ.get("REFRESH_MINUTES", 30)))
+
+
+# ── CLI (local dev only) ──────────────────────────────────────────────────
+
+def _parse_args() -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="India Weather PWA Server")
+    default_port = int(os.environ.get("PORT", 5000))
+    p.add_argument("--port",    type=int, default=default_port)
+    p.add_argument("--host",    default="0.0.0.0")
+    p.add_argument("--refresh", type=int, default=30)
+    p.add_argument("--no-refresh", action="store_true")
+    return p.parse_args()
+
+
 def main() -> None:
     args = _parse_args()
-    STATIC_DIR.mkdir(exist_ok=True)
-    WEATHER_DIR.mkdir(parents=True, exist_ok=True)
 
     print("\n" + "═" * 55)
     print("  India Weather PWA")
@@ -210,12 +220,6 @@ def main() -> None:
     print(f"  Alerts    → http://localhost:{args.port}/api/alerts")
     print(f"  Status    → http://localhost:{args.port}/api/status")
     print("═" * 55 + "\n")
-
-    # Cold-start: generate HTML shell + kick off background data fetch
-    _boot_fetch()
-
-    if not args.no_refresh:
-        start_scheduler(args.refresh)
 
     app.run(host=args.host, port=args.port, debug=False, use_reloader=False)
 
