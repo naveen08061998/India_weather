@@ -93,6 +93,10 @@ def start_scheduler(interval_minutes: int) -> None:
 @app.route("/")
 def index():
     """Serve the main dashboard HTML."""
+    if not HTML_FILE.exists():
+        # Cold start: generate a shell HTML immediately so the page loads,
+        # then fetch live data in the background.
+        _cold_start_generate()
     return send_from_directory(str(WEATHER_DIR), "india_weather_report.html")
 
 
@@ -174,9 +178,29 @@ def _parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+def _cold_start_generate() -> None:
+    """Generate HTML from whatever data exists (may be empty on first deploy)."""
+    try:
+        WEATHER_DIR.mkdir(parents=True, exist_ok=True)
+        from india_weather.weather_report import generate
+        generate()
+        print("[Boot] HTML generated.", flush=True)
+    except Exception as exc:
+        print(f"[Boot] HTML generation failed: {exc}", flush=True)
+
+
+def _boot_fetch() -> None:
+    """On cold start: generate HTML shell, then fetch live data in background."""
+    _cold_start_generate()
+    print("[Boot] Starting initial data fetch in background…", flush=True)
+    thread = threading.Thread(target=run_orchestrator, daemon=True)
+    thread.start()
+
+
 def main() -> None:
     args = _parse_args()
     STATIC_DIR.mkdir(exist_ok=True)
+    WEATHER_DIR.mkdir(parents=True, exist_ok=True)
 
     print("\n" + "═" * 55)
     print("  India Weather PWA")
@@ -186,6 +210,9 @@ def main() -> None:
     print(f"  Alerts    → http://localhost:{args.port}/api/alerts")
     print(f"  Status    → http://localhost:{args.port}/api/status")
     print("═" * 55 + "\n")
+
+    # Cold-start: generate HTML shell + kick off background data fetch
+    _boot_fetch()
 
     if not args.no_refresh:
         start_scheduler(args.refresh)

@@ -8,8 +8,7 @@ __pycache__/
 .venv/
 venv/
 
-# Generated weather outputs (Railway regenerates on startup)
+# Generated weather outputs — regenerated at runtime, but keep the folder
 india_weather/weathers/india_weather_data.json
-india_weather/weathers/india_weather_report.html
 india_weather/weathers/india_alerts.json
 india_weather/weathers/geo_cache.json
