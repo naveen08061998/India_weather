@@ -8,3 +8,5 @@ Faker==25.3.0
 requests==2.32.3
 allure-pytest==2.13.5
 paramiko==3.4.0
+flask>=3.0
+apscheduler>=3.10
