@@ -1,0 +1,59 @@
+name: Refresh Current Affairs Dashboard
+
+# ── Triggers ───────────────────────────────────────────────────────────────
+on:
+  schedule:
+    - cron: '30 */2 * * *'   # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …)
+  workflow_dispatch:   # manual "Run workflow" button in GitHub UI
+
+# ── Permissions needed by actions/deploy-pages ────────────────────────────
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# ── Only one deployment at a time ─────────────────────────────────────────
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      # 1. Checkout code
+      - uses: actions/checkout@v4
+
+      # 2. Set up Python
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      # 3. Install only what the orchestrator needs
+      - name: Install dependencies
+        run: pip install feedparser requests
+
+      # 4. Fetch news and generate HTML
+      - name: Generate current affairs HTML
+        run: python -m current_affairs.orchestrator --workers 8
+        timeout-minutes: 10
+
+      # 5. Make it the index page so the URL is clean (no /current_affairs_report.html)
+      - name: Create index.html
+        run: cp current_affairs/news/current_affairs_report.html current_affairs/news/index.html
+
+      # 6. Upload the news folder as the Pages artifact
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./current_affairs/news
+
+      # 7. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
