@@ -31,172 +31,262 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Current Affairs Daily — {date_label}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
   :root {{
-    --bg: #0f172a; --surface: #1e293b; --card: #263246;
-    --accent: #6366f1; --text: #e2e8f0; --muted: #94a3b8;
-    --border: #334155; --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,.4);
+    --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
+    --accent: #818cf8; --accent2: #f97316; --accent3: #22c55e;
+    --accent-glow: rgba(129,140,248,.18);
+    --text: #e8edf5; --muted: #7b8899; --border: #1a2a45;
+    --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }}
   body.light {{
-    --bg: #f1f5f9; --surface: #ffffff; --card: #f8fafc;
-    --text: #1e293b; --muted: #64748b; --border: #e2e8f0;
+    --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
+    --accent: #4f46e5; --accent-glow: rgba(79,70,229,.1);
+    --text: #0f172a; --muted: #64748b; --border: #dde3f0;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     background: var(--bg); color: var(--text);
     min-height: 100vh; transition: background .3s, color .3s;
+  }}
+
+  /* ── India tricolor accent bar ── */
+  .tricolor {{
+    height: 4px; position: sticky; top: 0; z-index: 200;
+    background: linear-gradient(90deg,
+      #f97316 0% 33.3%, #e2e8f0 33.3% 66.6%, #22c55e 66.6% 100%);
+  }}
+  body.light .tricolor {{
+    background: linear-gradient(90deg,
+      #f97316 0% 33.3%, #94a3b8 33.3% 66.6%, #22c55e 66.6% 100%);
   }}
 
   /* ── Header ── */
   header {{
     background: var(--surface); border-bottom: 1px solid var(--border);
-    padding: 16px 24px; display: flex; align-items: center;
+    padding: 12px 24px; display: flex; align-items: center;
     justify-content: space-between; gap: 12px; flex-wrap: wrap;
-    position: sticky; top: 0; z-index: 100;
+    position: sticky; top: 4px; z-index: 100;
     box-shadow: var(--shadow);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   }}
-  .brand {{ display: flex; align-items: center; gap: 10px; }}
-  .brand h1 {{ font-size: 1.25rem; font-weight: 700; }}
-  .brand span {{ font-size: .8rem; color: var(--muted); }}
-  .header-right {{ display: flex; align-items: center; gap: 10px; }}
-  .badge {{
-    background: var(--accent); color: #fff; border-radius: 999px;
-    padding: 2px 10px; font-size: .75rem; font-weight: 600;
+  .brand {{ display: flex; align-items: center; gap: 12px; }}
+  .brand-icon {{
+    width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(249,115,22,.35);
+  }}
+  .brand-text h1 {{
+    font-size: 1.1rem; font-weight: 800; letter-spacing: -.025em;
+  }}
+  .brand-text p {{ font-size: .7rem; color: var(--muted); margin-top: 1px; }}
+
+  .header-stats {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
+  .stat-chip {{
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 999px; padding: 4px 12px;
+    font-size: .74rem; color: var(--muted);
+    display: inline-flex; align-items: center; gap: 5px;
+  }}
+  .stat-chip b {{ color: var(--text); font-weight: 600; }}
+  #countdown {{ color: var(--accent); font-weight: 700; }}
+
+  .header-right {{ display: flex; align-items: center; gap: 8px; }}
+  .search-wrap {{ position: relative; display: flex; align-items: center; }}
+  .search-wrap svg {{
+    position: absolute; left: 10px; width: 14px; height: 14px;
+    color: var(--muted); pointer-events: none; flex-shrink: 0;
   }}
   #search {{
-    padding: 6px 12px; border-radius: 8px;
+    padding: 7px 12px 7px 32px; border-radius: 10px;
     border: 1px solid var(--border); background: var(--bg);
-    color: var(--text); font-size: .875rem; width: 200px;
-    outline: none; transition: border .2s;
+    color: var(--text); font-size: .8rem; width: 190px; outline: none;
+    transition: border .2s, box-shadow .2s; font-family: inherit;
   }}
-  #search:focus {{ border-color: var(--accent); }}
+  #search:focus {{ border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }}
   #theme-btn {{
-    background: none; border: 1px solid var(--border); border-radius: 8px;
-    color: var(--text); padding: 6px 10px; cursor: pointer; font-size: .85rem;
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); padding: 7px 12px; cursor: pointer; font-size: .8rem;
+    transition: background .2s; white-space: nowrap; font-family: inherit;
   }}
-
-  /* ── Subheader ── */
-  .subheader {{
-    background: var(--surface); padding: 8px 24px;
-    display: flex; align-items: center; gap: 16px;
-    font-size: .78rem; color: var(--muted); flex-wrap: wrap;
-  }}
-  #countdown {{ color: var(--accent); font-weight: 600; }}
+  #theme-btn:hover {{ background: var(--card-h); }}
 
   /* ── Tabs ── */
   .tabs-wrapper {{
     background: var(--surface); border-bottom: 1px solid var(--border);
-    padding: 0 16px; overflow-x: auto; white-space: nowrap;
-    position: sticky; top: 57px; z-index: 90;
+    padding: 0 20px; overflow-x: auto; white-space: nowrap;
+    position: sticky; top: 66px; z-index: 90;
+    scrollbar-width: none;
   }}
-  .tabs {{ display: inline-flex; gap: 2px; padding: 6px 0; }}
+  .tabs-wrapper::-webkit-scrollbar {{ display: none; }}
+  .tabs {{ display: inline-flex; gap: 4px; padding: 8px 0; }}
   .tab-btn {{
     background: none; border: none; color: var(--muted);
-    padding: 8px 14px; border-radius: 8px; cursor: pointer;
-    font-size: .82rem; font-weight: 500; white-space: nowrap;
-    transition: background .15s, color .15s;
+    padding: 6px 14px; border-radius: 999px; cursor: pointer;
+    font-size: .78rem; font-weight: 500; white-space: nowrap;
+    transition: background .15s, color .15s, transform .1s, box-shadow .15s;
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: inherit;
   }}
-  .tab-btn:hover {{ background: var(--card); color: var(--text); }}
-  .tab-btn.active {{ background: var(--accent); color: #fff; }}
+  .tab-btn:hover {{ background: var(--card); color: var(--text); transform: translateY(-1px); }}
+  .tab-btn.active {{ background: var(--accent); color: #fff; box-shadow: 0 2px 14px var(--accent-glow); }}
+  .tab-count {{
+    background: rgba(255,255,255,.25); border-radius: 999px;
+    padding: 1px 6px; font-size: .66rem; font-weight: 700;
+  }}
+  .tab-btn:not(.active) .tab-count {{ background: var(--border); color: var(--muted); }}
   .tab-separator {{
-    display: inline-flex; align-items: center; padding: 0 10px;
-    color: var(--muted); font-size: .72rem; font-weight: 600;
-    letter-spacing: .05em; white-space: nowrap; user-select: none;
+    display: inline-flex; align-items: center; padding: 0 12px;
+    color: var(--muted); font-size: .65rem; font-weight: 800;
+    letter-spacing: .1em; text-transform: uppercase; user-select: none;
   }}
-  .tab-btn.state-tab.active {{ background: #0d9488; }}
+  .tab-btn.state-tab.active {{ background: #0d9488; box-shadow: 0 2px 14px rgba(13,148,136,.35); }}
 
-  /* ── Main layout ── */
-  main {{ padding: 24px; max-width: 1200px; margin: 0 auto; }}
+  /* ── Main ── */
+  main {{ padding: 24px; max-width: 1280px; margin: 0 auto; }}
 
   /* ── Panel ── */
   .panel {{ display: none; }}
-  .panel.active {{ display: block; }}
-  .panel-header {{
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 16px; padding-bottom: 12px;
-    border-bottom: 2px solid var(--border);
-  }}
-  .panel-icon {{ font-size: 1.6rem; }}
-  .panel-title {{ font-size: 1.1rem; font-weight: 700; }}
-  .panel-desc {{ font-size: .8rem; color: var(--muted); margin-top: 2px; }}
+  .panel.active {{ display: block; animation: panelIn .22s ease; }}
+  @keyframes panelIn {{ from {{ opacity: 0; transform: translateY(8px); }} to {{ opacity: 1; transform: none; }} }}
 
-  /* ── Cards grid ── */
+  .panel-header {{
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 20px; padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }}
+  .panel-icon {{
+    font-size: 1.8rem; width: 52px; height: 52px; border-radius: 12px;
+    background: var(--card); display: flex; align-items: center;
+    justify-content: center; flex-shrink: 0;
+  }}
+  .panel-title {{ font-size: 1.05rem; font-weight: 700; }}
+  .panel-desc {{ font-size: .76rem; color: var(--muted); margin-top: 3px; line-height: 1.4; }}
+  .panel-count {{
+    margin-left: auto; background: var(--card); border: 1px solid var(--border);
+    border-radius: 999px; padding: 4px 14px;
+    font-size: .76rem; color: var(--muted); white-space: nowrap; flex-shrink: 0;
+  }}
+  .panel-count b {{ color: var(--text); }}
+
+  /* ── Cards ── */
   .cards {{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
     gap: 16px;
   }}
   .card {{
     background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 16px;
-    display: flex; flex-direction: column; gap: 8px;
-    transition: transform .15s, box-shadow .15s;
-    cursor: pointer; text-decoration: none; color: inherit;
+    border-left: 4px solid var(--cc, #818cf8);
+    border-radius: var(--radius); padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 10px;
+    text-decoration: none; color: inherit;
+    transition: transform .2s, box-shadow .2s;
+    animation: cardIn .3s ease both;
+  }}
+  .card:nth-child(2)  {{ animation-delay: .04s; }}
+  .card:nth-child(3)  {{ animation-delay: .07s; }}
+  .card:nth-child(4)  {{ animation-delay: .10s; }}
+  .card:nth-child(5)  {{ animation-delay: .13s; }}
+  .card:nth-child(6)  {{ animation-delay: .16s; }}
+  .card:nth-child(n+7) {{ animation-delay: .19s; }}
+  @keyframes cardIn {{
+    from {{ opacity: 0; transform: translateY(12px); }}
+    to   {{ opacity: 1; transform: none; }}
   }}
   .card:hover {{
-    transform: translateY(-2px); box-shadow: var(--shadow);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(0,0,0,.35), 0 0 0 1px var(--cc, #818cf8);
   }}
-  .card-meta {{
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: .72rem; color: var(--muted);
+  .card-top {{
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 8px;
   }}
   .source-badge {{
-    padding: 2px 8px; border-radius: 999px; font-size: .68rem;
-    font-weight: 600; color: #fff;
+    padding: 3px 10px; border-radius: 999px;
+    font-size: .66rem; font-weight: 700; color: #fff;
+    letter-spacing: .02em; flex-shrink: 0;
   }}
-  .card-title {{
-    font-size: .95rem; font-weight: 600; line-height: 1.4;
+  .card-date {{ font-size: .68rem; color: var(--muted); text-align: right; line-height: 1.3; }}
+  .card-title {{ font-size: .93rem; font-weight: 650; line-height: 1.45; }}
+  .card-summary {{
+    font-size: .79rem; color: var(--muted); line-height: 1.55;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+    overflow: hidden;
   }}
-  .card-summary {{ font-size: .82rem; color: var(--muted); line-height: 1.5; }}
+  .card-footer {{
+    display: flex; justify-content: flex-end; margin-top: auto; padding-top: 4px;
+  }}
   .read-more {{
-    display: inline-block; margin-top: 4px; font-size: .78rem;
-    color: var(--accent); font-weight: 500;
+    font-size: .74rem; color: var(--accent); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 3px;
+    transition: gap .15s;
   }}
-  .card:hover .read-more {{ text-decoration: underline; }}
+  .card:hover .read-more {{ gap: 7px; }}
   .no-articles {{
-    color: var(--muted); font-size: .9rem; padding: 32px;
-    text-align: center; grid-column: 1/-1;
+    grid-column: 1/-1; text-align: center; padding: 56px 24px;
+    color: var(--muted); font-size: .9rem;
   }}
+  .no-articles-icon {{ font-size: 2.5rem; margin-bottom: 10px; opacity: .4; }}
 
   /* ── Footer ── */
   footer {{
-    text-align: center; padding: 24px;
-    font-size: .75rem; color: var(--muted);
-    border-top: 1px solid var(--border);
+    text-align: center; padding: 28px 24px;
+    font-size: .74rem; color: var(--muted);
+    border-top: 1px solid var(--border); margin-top: 16px;
+    line-height: 1.8;
   }}
 
   /* ── Responsive ── */
-  @media (max-width: 600px) {{
-    header {{ padding: 12px 16px; }}
-    main {{ padding: 16px; }}
-    #search {{ width: 140px; }}
+  @media (max-width: 768px) {{
+    .header-stats {{ display: none; }}
+    main {{ padding: 14px; }}
     .cards {{ grid-template-columns: 1fr; }}
+  }}
+  @media (max-width: 500px) {{
+    header {{ padding: 10px 14px; }}
+    .brand-text p {{ display: none; }}
+    #search {{ width: 130px; }}
+    .panel-count {{ display: none; }}
   }}
 </style>
 </head>
 <body>
 
+<div class="tricolor"></div>
+
 <header>
   <div class="brand">
-    <div>
-      <h1>📰 Current Affairs Daily</h1>
-      <span>For UPSC · SSC · Banking · State PSC · Railways</span>
+    <div class="brand-icon">📰</div>
+    <div class="brand-text">
+      <h1>Current Affairs Daily</h1>
+      <p>UPSC &middot; SSC &middot; Banking &middot; State PSC &middot; Railways</p>
     </div>
   </div>
+  <div class="header-stats">
+    <div class="stat-chip">📅 <b>{date_label}</b></div>
+    <div class="stat-chip">🗞️ <b>{total}</b> articles</div>
+    <div class="stat-chip">🕐 Fetched: <b>{generated_at}</b></div>
+    <div class="stat-chip">⏱ <span id="countdown">—</span></div>
+  </div>
   <div class="header-right">
-    <span class="badge">{total} Articles</span>
-    <input type="text" id="search" placeholder="Search news…" oninput="filterCards(this.value)"/>
+    <div class="search-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input type="text" id="search" placeholder="Search articles…"
+             oninput="filterCards(this.value)" autocomplete="off"/>
+    </div>
     <button id="theme-btn" onclick="toggleTheme()">☀ Light</button>
   </div>
 </header>
-
-<div class="subheader">
-  <span>📅 {date_label}</span>
-  <span>🕐 Fetched: {generated_at}</span>
-  <span id="countdown-wrap">⏳ <span id="countdown">—</span></span>
-</div>
 
 <div class="tabs-wrapper">
   <div class="tabs" id="tabs">
@@ -209,8 +299,8 @@ def build_html(payload: dict) -> str:
 </main>
 
 <footer>
-  Current Affairs Daily — Built for competitive exam aspirants &nbsp;|&nbsp;
-  Sources: PIB · DD News · The Hindu · Indian Express · Business Standard
+  Current Affairs Daily &mdash; Built for competitive exam aspirants<br/>
+  <span style="opacity:.65">Sources: PIB &middot; NDTV &middot; Economic Times &middot; LiveMint &middot; DD News</span>
 </footer>
 
 <script>
@@ -333,13 +423,15 @@ def _build_tabs(categories: dict) -> str:
             continue
         icon  = cat["icon"]
         label = cat["label"]
+        count = len(categories[key].get("articles", []))
         parts.append(
             f'<button class="tab-btn" data-key="{key}" '
-            f'onclick="switchTab(\'{key}\')">{icon} {label}</button>'
+            f'onclick="switchTab(\'{key}\')">{icon} {label}'
+            f'<span class="tab-count">{count}</span></button>'
         )
     # ── Separator ──────────────────────────────────────────────────────────
     if any(c["key"] in categories for c in STATE_CATEGORIES):
-        parts.append('<span class="tab-separator">┃ STATE NEWS</span>')
+        parts.append('<span class="tab-separator">┃ States</span>')
     # ── State tabs ─────────────────────────────────────────────────────────
     for cat in STATE_CATEGORIES:
         key = cat["key"]
@@ -347,9 +439,11 @@ def _build_tabs(categories: dict) -> str:
             continue
         icon  = cat["icon"]
         label = cat["label"]
+        count = len(categories[key].get("articles", []))
         parts.append(
             f'<button class="tab-btn state-tab" data-key="{key}" '
-            f'onclick="switchTab(\'{key}\')">{icon} {label}</button>'
+            f'onclick="switchTab(\'{key}\')">{icon} {label}'
+            f'<span class="tab-count">{count}</span></button>'
         )
     return "\n    ".join(parts)
 
@@ -369,18 +463,21 @@ def _build_panels(categories: dict) -> str:
         articles    = data.get("articles", [])
 
         cards_html = _build_cards(articles, color) if articles else (
-            '<p class="no-articles">No articles fetched for this category. '
-            'Feeds may be temporarily unavailable.</p>'
+            '<div class="no-articles">'
+            '<div class="no-articles-icon">📰</div>'
+            'No articles fetched for this category. Feeds may be temporarily unavailable.</div>'
         )
 
+        count = len(articles)
         parts.append(f"""
   <div class="panel" id="panel-{key}">
     <div class="panel-header">
-      <span class="panel-icon">{icon}</span>
+      <div class="panel-icon">{icon}</div>
       <div>
         <div class="panel-title">{label}</div>
         <div class="panel-desc">{description}</div>
       </div>
+      <div class="panel-count"><b>{count}</b> articles</div>
     </div>
     <div class="cards">
       {cards_html}
@@ -398,14 +495,14 @@ def _build_cards(articles: list[dict], color: str) -> str:
         pub     = _esc(art.get("published", ""))
         source  = _esc(art.get("source", ""))
 
-        parts.append(f"""      <a class="card" href="{link}" rel="noopener noreferrer">
-        <div class="card-meta">
+        parts.append(f"""      <a class="card" href="{link}" target="_blank" rel="noopener noreferrer" style="--cc:{color}">
+        <div class="card-top">
           <span class="source-badge" style="background:{color}">{source}</span>
-          <span>{pub}</span>
+          <span class="card-date">{pub}</span>
         </div>
         <div class="card-title">{title}</div>
         <div class="card-summary">{summary}</div>
-        <span class="read-more">Read more →</span>
+        <div class="card-footer"><span class="read-more">Read more &#8594;</span></div>
       </a>""")
     return "\n".join(parts)
 
