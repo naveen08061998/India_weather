@@ -784,7 +784,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     "Arvalli":"Gandhinagar","Banas Kantha":"Palanpur","Dangs":"Surat","Devbhumi Dwarka":"Jamnagar",
     "Gir Somnath":"Junagadh","Kachchh":"Bhuj","Mahisagar":"Vadodara","Narmada":"Vadodara",
     "Panch Mahals":"Godhra","Sabarkantha":"Idar","Tapi":"Surat",
-    "Kinnaur":"Shimla","Lahaul and Spiti":"Manali",
+    "Kinnaur":"Reckong Peo","Lahaul and Spiti":"Manali",
     "Ganderbal":"Srinagar","Shopian":"Srinagar",
     "East Singhbhum":"Jamshedpur","Koderma":"Hazaribagh","Palamu":"Daltonganj",
     "Sahebganj":"Rajmahal","Saraikela Kharsawan":"Jamshedpur","West Singhbhum":"Chaibasa",
@@ -836,9 +836,23 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     "Uttar Dinajpur":"Raiganj"
   }};
 
+  // Precise lat/lon overrides for districts whose names resolve ambiguously via geocoding.
+  // Keyed by the raw district name (before displayName strips state suffixes).
+  const CITY_COORDS = {{
+    "Banda Uttar Pradesh": {{ lat: 25.474, lon: 80.336, name: "Banda" }},
+    "Kinnaur":             {{ lat: 31.534, lon: 78.274, name: "Reckong Peo" }},
+  }};
+
   // Resolve a district name to its OWM-queryable city (fallback if needed).
+  // Checks the original district name first, then the displayName-stripped version.
   function owmCity(city) {{
     return OWM_FALLBACKS[city] || city;
+  }}
+
+  // Resolve the query string for weather APIs.
+  // Priority: OWM_FALLBACKS[original] > OWM_FALLBACKS[stripped] > stripped name.
+  function resolveQuery(city) {{
+    return OWM_FALLBACKS[city] || owmCity(displayName(city));
   }}
 
   // ── Constants ──────────────────────────────────────────────────────────────
@@ -1065,13 +1079,35 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
   }}
 
-  // Fetch live cyclone data from GDACS RSS via a CORS proxy and refresh ticker
+  // Fetch live alerts — primary: server /api/alerts (no CORS, updated every 30 min by
+  // orchestrator); fallback: GDACS RSS via CORS proxy.
   async function fetchLiveCyclones() {{
+    // ── Primary: server /api/alerts ─────────────────────────────────────────
+    try {{
+      const r = await fetch("/api/alerts", {{ cache: "no-store" }});
+      if (r.ok) {{
+        const data = await r.json();
+        _liveCyclones = (data.cyclones || []).filter(c => !c.error);
+        // Always update district alerts from server — server has all districts,
+        // not just the ones the client has loaded into dataCache.
+        if ((data.district_alerts || []).length > 0) {{
+          _liveDistAlerts = (data.district_alerts || []).map(a => ({{
+            city: a.city, state: a.state, label: a.label,
+            color: a.color, icon: a.icon, temp: a.temp
+          }}));
+          // Also recompute from live dataCache to pick up any newer client data
+          recomputeDistrictAlerts();
+        }}
+        rebuildAlertTicker();
+        return;
+      }}
+    }} catch(_) {{}}
+    // ── Fallback: GDACS RSS via CORS proxy ───────────────────────────────────
     const GDACS_URL = "https://www.gdacs.org/xml/rss.xml";
     const PROXY     = "https://api.allorigins.win/raw?url=" + encodeURIComponent(GDACS_URL);
     try {{
       const r = await fetch(PROXY, {{ cache: "no-store" }});
-      if (!r.ok) return;          // silently keep baked-in data
+      if (!r.ok) return;          // keep existing cyclone data
       const xml = await r.text();
       const doc = new DOMParser().parseFromString(xml, "text/xml");
       const NS  = "http://www.gdacs.org";
@@ -1091,7 +1127,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }}
       _liveCyclones = cyclones;
       rebuildAlertTicker();
-    }} catch(_) {{ /* keep baked-in cyclone data on any error */ }}
+    }} catch(_) {{ /* keep existing cyclone data on any error */ }}
   }}
 
   // Initial render from baked data, then start live cyclone fetch
@@ -1718,15 +1754,19 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   async function fetchCity(city, cardEl, signal) {{
     cardEl.classList.add("refreshing");
     cardEl.innerHTML = skeleton();
-    const queryCity = owmCity(displayName(city));
+    const queryCity = resolveQuery(city);
     try {{
-      // Step 1: coordinates from sessionStorage cache or OM geocoding
+      // Step 1: coordinates from CITY_COORDS override, sessionStorage cache, or OM geocoding
       let lat = null, lon = null, resolvedName = queryCity;
+      const coordOverride = CITY_COORDS[city];
+      if (coordOverride) {{
+        lat = coordOverride.lat; lon = coordOverride.lon; resolvedName = coordOverride.name;
+      }}
       const gcKey = "gc_" + queryCity;
-      const gcHit = sessionStorage.getItem(gcKey);
+      const gcHit = !coordOverride && sessionStorage.getItem(gcKey);
       if (gcHit) {{
         const c = JSON.parse(gcHit); lat = c.lat; lon = c.lon; resolvedName = c.name || queryCity;
-      }} else {{
+      }} else if (!coordOverride) {{
         const gcR = await fetch(
           `https://geocoding-api.open-meteo.com/v1/search?name=${{encodeURIComponent(queryCity)}}&count=5&language=en&format=json`,
           {{ cache:"force-cache", signal }}
@@ -1774,7 +1814,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
   // Fallback fetch using wttr.in (no API key, no rate limit).
   async function fetchCityFromWttr(city, cardEl, signal) {{
-    const queryCity = owmCity(displayName(city));
+    const queryCity = resolveQuery(city);
     try {{
       const url  = `https://wttr.in/${{encodeURIComponent(queryCity)}}?format=j1`;
       const resp = await fetch(url, {{ cache:"no-store", signal }});

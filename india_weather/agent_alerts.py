@@ -11,6 +11,7 @@ Saves results to india_weather/weathers/india_alerts.json
 from __future__ import annotations
 
 import json
+import sys
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
@@ -19,6 +20,12 @@ import requests
 import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+# Ensure Unicode characters don't crash on Windows cp1252 terminals
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 # ── Paths ──────────────────────────────────────────────────────────────────
 BASE_DIR     = Path(__file__).parent
@@ -202,7 +209,7 @@ def run() -> dict:
     ALERTS_JSON.write_text(
         json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8"
     )
-    print(f"  [Alerts] Saved → {ALERTS_JSON.name}")
+    print(f"  [Alerts] Saved -> {ALERTS_JSON.name}")
     return result
 
 

@@ -37,6 +37,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+# Ensure Unicode characters don't crash on Windows cp1252 terminals
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 # ── Paths ──────────────────────────────────────────────────────────────────
 BASE_DIR    = Path(__file__).parent
 OUTPUT_JSON = BASE_DIR / "weathers" / "india_weather_data.json"
@@ -47,7 +53,11 @@ OUTPUT_HTML = BASE_DIR / "weathers" / "india_weather_report.html"
 def _discover_agents() -> dict[str, Any]:
     """Return {state_name: module} for every agent_*.py found."""
     agents = {}
+    # Skip non-state utility modules
+    _SKIP = {"agent_alerts"}
     for path in sorted(BASE_DIR.glob("agent_*.py")):
+        if path.stem in _SKIP:
+            continue
         mod_name = f"india_weather.{path.stem}"
         try:
             mod = importlib.import_module(mod_name)
@@ -98,7 +108,7 @@ def fetch_state(state_name: str, verbose: bool = False) -> dict:
 
 def fetch_states(
     state_names: list[str] | None = None,
-    workers: int = 8,
+    workers: int = 3,
     verbose: bool = False,
 ) -> list[dict]:
     """
@@ -197,7 +207,7 @@ def get_state_weather(state_name: str) -> list[dict]:
     return fetch_state(state_name)["districts"]
 
 
-def get_all_weather(workers: int = 8) -> dict[str, list[dict]]:
+def get_all_weather(workers: int = 3) -> dict[str, list[dict]]:
     """Return {state_name: [district_summary, ...]} for all 28 states."""
     results = fetch_states(workers=workers)
     return {r["state"]: r["districts"] for r in results}
@@ -225,7 +235,7 @@ def _parse_args() -> argparse.Namespace:
     p.add_argument(
         "--workers",
         type=int,
-        default=8,
+        default=3,
         help="Parallel workers for state fetching (default: 8)",
     )
     p.add_argument(
@@ -270,10 +280,18 @@ def main() -> None:
     print_summary(results)
     print(f"  Total time: {elapsed}s")
 
-    # Save outputs
+    # Save outputs first so alerts agent reads fresh data
     if args.output in ("json", "both"):
         path = save_json(results)
         print(f"  JSON  → {path}")
+
+    # Run alerts agent (needs the freshly saved JSON)
+    try:
+        from india_weather.agent_alerts import run as run_alerts
+        print(f"\n{'─'*60}")
+        run_alerts()
+    except Exception as exc:
+        print(f"  [Alerts] Warning: {exc}", file=sys.stderr)
 
     if args.output in ("html", "both"):
         path = regenerate_html()
