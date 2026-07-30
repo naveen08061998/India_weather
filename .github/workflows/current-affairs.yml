@@ -41,22 +41,54 @@ jobs:
       - name: Install dependencies
         run: pip install feedparser requests
 
-      # 4. Fetch news and generate HTML
+      # 4. Restore cached news data (JSON + history JSONs) from previous run
+      #    This lets maybe_archive() detect a date change and save yesterday's
+      #    articles, and lets generate_static_pages() build history HTML.
+      - name: Restore news cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            current_affairs/news/current_affairs_data.json
+            current_affairs/news/history
+          key: current-affairs-news-${{ runner.os }}-${{ github.run_number }}
+          restore-keys: |
+            current-affairs-news-${{ runner.os }}-
+
+      # 5. Fetch today's news and generate the main HTML
       - name: Generate current affairs HTML
         run: python -m current_affairs.orchestrator --workers 8
         timeout-minutes: 10
 
-      # 5. Make it the index page so the URL is clean (no /current_affairs_report.html)
+      # 6. Build static history HTML pages (prev/next/jump links all relative)
+      - name: Generate static history pages
+        run: |
+          python -c "
+          from current_affairs.history_agent import generate_static_pages
+          generate_static_pages()
+          "
+        continue-on-error: true
+
+      # 7. Save the updated cache (JSON + history) for the next run
+      - name: Save news cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            current_affairs/news/current_affairs_data.json
+            current_affairs/news/history
+          key: current-affairs-news-${{ runner.os }}-${{ github.run_number }}
+
+      # 8. Make it the index page so the URL is clean (no /current_affairs_report.html)
       - name: Create index.html
         run: cp current_affairs/news/current_affairs_report.html current_affairs/news/index.html
 
-      # 6. Upload the news folder as the Pages artifact
+      # 9. Upload the news folder as the Pages artifact
+      #    Includes: index.html, current_affairs_report.html, history/*.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./current_affairs/news
 
-      # 7. Deploy to GitHub Pages
+      # 10. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4

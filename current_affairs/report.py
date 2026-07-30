@@ -285,7 +285,7 @@ def build_html(payload: dict) -> str:
              oninput="filterCards(this.value)" autocomplete="off"/>
     </div>
     <button id="theme-btn" onclick="toggleTheme()">☀ Light</button>
-    <a href="/history" style="
+    <a href="./history/" style="
       background:var(--card);border:1px solid var(--border);border-radius:10px;
       color:var(--text);padding:7px 12px;font-size:.8rem;text-decoration:none;
       transition:background .2s;white-space:nowrap;font-family:inherit;"

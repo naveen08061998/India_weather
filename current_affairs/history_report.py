@@ -33,7 +33,18 @@ _CAT_META: dict[str, dict] = {
 _ORDERED_KEYS = list(_CAT_META.keys())
 
 
-def build_history_html(snapshot: dict, available_dates: list[str]) -> str:
+def build_history_html(snapshot: dict, available_dates: list[str],
+                       static_mode: bool = False) -> str:
+    """
+    Build the HTML for a single archived day's digest.
+
+    Parameters
+    ----------
+    snapshot        : dict returned by history_agent.load_snapshot()
+    available_dates : all archived date keys, newest-first
+    static_mode     : when True all links use relative .html paths
+                      (for GitHub Pages); when False uses Flask /history/ routes
+    """
     date_label  = snapshot.get("date", "")
     date_key    = snapshot.get("date_key", "")
     archived_at = snapshot.get("archived_at", "")
@@ -42,20 +53,25 @@ def build_history_html(snapshot: dict, available_dates: list[str]) -> str:
 
     tabs_html   = _build_tabs(categories)
     panels_html = _build_panels(categories)
-    dates_opts  = _build_date_options(available_dates, date_key)
+    dates_opts  = _build_date_options(available_dates, date_key, static_mode)
 
-    # Prev / Next navigation
-    idx       = available_dates.index(date_key) if date_key in available_dates else -1
-    prev_key  = available_dates[idx + 1] if 0 <= idx < len(available_dates) - 1 else None
-    next_key  = available_dates[idx - 1] if idx > 0 else None
+    # Prev / Next navigation — relative paths in static mode, absolute in Flask
+    idx      = available_dates.index(date_key) if date_key in available_dates else -1
+    prev_key = available_dates[idx + 1] if 0 <= idx < len(available_dates) - 1 else None
+    next_key = available_dates[idx - 1] if idx > 0 else None
+
+    def _date_href(dk: str) -> str:
+        return f"./{dk}.html" if static_mode else f"/history/{dk}"
+
+    live_href = "../" if static_mode else "/"
 
     prev_btn = (
-        f'<a class="nav-btn" href="/history/{prev_key}">&#8592; {prev_key}</a>'
+        f'<a class="nav-btn" href="{_date_href(prev_key)}">&#8592; {prev_key}</a>'
         if prev_key else
         '<span class="nav-btn disabled">&#8592; No earlier</span>'
     )
     next_btn = (
-        f'<a class="nav-btn" href="/history/{next_key}">{next_key} &#8594;</a>'
+        f'<a class="nav-btn" href="{_date_href(next_key)}">{next_key} &#8594;</a>'
         if next_key else
         '<span class="nav-btn disabled">Latest &#8594;</span>'
     )
@@ -300,13 +316,13 @@ def build_history_html(snapshot: dict, available_dates: list[str]) -> str:
   {prev_btn}
   <div class="date-select-wrap">
     <label for="date-jump">Jump to:</label>
-    <select id="date-jump" onchange="if(this.value) window.location='/history/'+this.value">
+    <select id="date-jump" onchange="if(this.value) location.href=this.value">
       <option value="">— select date —</option>
       {dates_opts}
     </select>
   </div>
   {next_btn}
-  <a class="nav-btn today" href="/">🏠 Live Report</a>
+  <a class="nav-btn today" href="{live_href}">🏠 Live Report</a>
   <span class="hist-badge">📚 ARCHIVE</span>
 </nav>
 
@@ -428,11 +444,13 @@ def _build_cards(articles: list[dict], color: str) -> str:
     return "\n".join(parts)
 
 
-def _build_date_options(available_dates: list[str], current_key: str) -> str:
+def _build_date_options(available_dates: list[str], current_key: str,
+                        static_mode: bool = False) -> str:
     parts = []
     for d in available_dates:
+        href     = f"./{d}.html" if static_mode else f"/history/{d}"
         selected = 'selected' if d == current_key else ''
-        parts.append(f'<option value="{d}" {selected}>{d}</option>')
+        parts.append(f'<option value="{href}" {selected}>{d}</option>')
     return "\n      ".join(parts)
 
 

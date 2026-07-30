@@ -171,3 +171,48 @@ def list_dates() -> list[str]:
         (p.stem for p in HISTORY_DIR.glob("*.json")),
         reverse=True,
     )
+
+
+def generate_static_pages() -> None:
+    """
+    Generate a static HTML page for every archived snapshot, plus an
+    index.html that redirects to the most recent date.
+
+    Intended for use in GitHub Actions / GitHub Pages deployments where
+    there is no Flask server to serve /history/<date> routes dynamically.
+
+    Output: current_affairs/news/history/<date>.html  (one per archive)
+            current_affairs/news/history/index.html   (redirect → latest)
+    """
+    from current_affairs.history_report import build_history_html
+
+    dates = list_dates()
+    if not dates:
+        print("  [History] No archived dates found — static pages skipped.")
+        return
+
+    for date_key in dates:
+        snapshot = load_snapshot(date_key)
+        if snapshot is None:
+            continue
+        html = build_history_html(snapshot, dates, static_mode=True)
+        dest = HISTORY_DIR / f"{date_key}.html"
+        dest.write_text(html, encoding="utf-8")
+        print(f"  [History] Generated {dest.name}")
+
+    # Index redirects to the most recent date
+    latest = dates[0]
+    index_html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta http-equiv="refresh" content="0;url=./{latest}.html"/>
+<title>History Archive — Redirecting…</title>
+<style>body{{font-family:sans-serif;text-align:center;padding:60px;background:#070c1b;color:#e8edf5}}</style>
+</head>
+<body>
+<p>Redirecting to <a href="./{latest}.html" style="color:#818cf8">{latest}</a>…</p>
+</body>
+</html>"""
+    (HISTORY_DIR / "index.html").write_text(index_html, encoding="utf-8")
+    print(f"  [History] Generated index.html → {latest}")
