@@ -285,6 +285,12 @@ def build_html(payload: dict) -> str:
              oninput="filterCards(this.value)" autocomplete="off"/>
     </div>
     <button id="theme-btn" onclick="toggleTheme()">☀ Light</button>
+    <a href="/history" style="
+      background:var(--card);border:1px solid var(--border);border-radius:10px;
+      color:var(--text);padding:7px 12px;font-size:.8rem;text-decoration:none;
+      transition:background .2s;white-space:nowrap;font-family:inherit;"
+      onmouseover="this.style.background='var(--card-h)'"
+      onmouseout="this.style.background='var(--card)'">📚 History</a>
   </div>
 </header>
 
@@ -367,14 +373,36 @@ function updateCountdown() {{
   const el     = document.getElementById('countdown');
 
   if (_mode === 'static') {{
-    // Static host (GitHub Pages, file://) — just show data age
+    // Static host (GitHub Pages, file://) — show data age AND schedule an
+    // auto-reload to coincide with the next GitHub Actions deployment.
+    // Workflow cron: every 2 hours → CYCLE_MIN = 120.
+    // We reload (CYCLE_MIN - ageMin + CI_BUFFER_MIN) minutes from now so the
+    // browser fetches the freshly deployed HTML after CI finishes.
+    const CYCLE_MIN   = 120;
+    const CI_BUFFER   = 8;   // minutes for CI to complete + CDN propagation
+    const minsLeft    = CYCLE_MIN - ageMin;
+
     if (ageMin < 60) {{
       el.textContent = `Data is ${{ageMin}}m old`;
       el.style.color = ageMin > 30 ? '#f59e0b' : '';
-    }} else {{
+    }} else if (minsLeft > 0) {{
       const h = Math.floor(ageMin / 60), mm = ageMin % 60;
-      el.textContent = `Data is ${{h}}h ${{mm}}m old`;
-      el.style.color = '#ef4444';
+      el.textContent = `Data is ${{h}}h ${{mm}}m old — refresh in ${{minsLeft}}m`;
+      el.style.color = '#f59e0b';
+    }} else {{
+      // Data is at or past the 2-hour mark — reload immediately
+      el.textContent = 'Reloading for latest data…';
+      el.style.color = '#22c55e';
+    }}
+
+    // Schedule ONE reload for when the next CI deployment should be live.
+    // If data is already stale, reload after a 3-second grace period.
+    if (!_refreshTriggered) {{
+      _refreshTriggered = true;
+      const msUntilReload = minsLeft > 0
+        ? (minsLeft + CI_BUFFER) * 60 * 1000
+        : 3000;
+      setTimeout(() => location.reload(), msUntilReload);
     }}
   }} else {{
     // Served via Flask — countdown to next refresh
@@ -387,13 +415,16 @@ function updateCountdown() {{
       _refreshTriggered = true;
       el.textContent = 'Refreshing…';
       fetch('/api/refresh', {{ method: 'POST' }}).catch(() => {{}});
-      // Poll /api/status every 3 s; reload only when the refresh has finished
-      const _poll = setInterval(() => {{
-        fetch('/api/status')
-          .then(r => r.json())
-          .then(s => {{ if (!s.running) {{ clearInterval(_poll); location.reload(); }} }})
-          .catch(() => {{}});
-      }}, 3000);
+      // Wait 4s before first poll so the background thread has time to
+      // acquire the lock and set running=True before we check.
+      setTimeout(() => {{
+        const _poll = setInterval(() => {{
+          fetch('/api/status')
+            .then(r => r.json())
+            .then(s => {{ if (!s.running) {{ clearInterval(_poll); location.reload(); }} }})
+            .catch(() => {{}});
+        }}, 3000);
+      }}, 4000);
     }}
   }}
 }}

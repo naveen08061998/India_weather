@@ -113,6 +113,15 @@ def fetch_all(category_keys: list[str] | None = None,
 
 
 def save_json(payload: dict) -> None:
+    # Archive the previous day's news before overwriting the cache
+    if OUTPUT_JSON.exists():
+        try:
+            from current_affairs.history_agent import maybe_archive
+            existing = json.loads(OUTPUT_JSON.read_text(encoding="utf-8"))
+            maybe_archive(existing, payload)
+        except Exception as exc:
+            print(f"  [History] Archive skipped: {exc}")
+
     OUTPUT_JSON.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2),
         encoding="utf-8",

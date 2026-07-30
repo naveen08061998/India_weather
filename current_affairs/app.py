@@ -48,9 +48,9 @@ _refresh_interval_min: int = 30   # updated by main() from --refresh arg
 
 def _run_orchestrator() -> None:
     """Run orchestrator in a subprocess to fetch fresh news."""
-    if _lock.locked():
-        return
-    with _lock:
+    if not _lock.acquire(blocking=False):
+        return  # another refresh is already in progress
+    try:
         _status["running"]    = True
         _status["last_error"] = None
         now = datetime.now(IST).strftime("%H:%M:%S")
@@ -77,6 +77,8 @@ def _run_orchestrator() -> None:
             _status["last_error"] = str(exc)
         finally:
             _status["running"] = False
+    finally:
+        _lock.release()
 
 
 def _start_scheduler(interval_minutes: int) -> None:
@@ -159,6 +161,73 @@ def api_refresh():
         return jsonify({"status": "already_running"}), 202
     threading.Thread(target=_run_orchestrator, daemon=True).start()
     return jsonify({"status": "started"}), 202
+
+
+# ── History routes ──────────────────────────────────────────────────────────
+
+@app.route("/history")
+def history_index():
+    """Redirect to the most recently archived day, or show an empty state."""
+    from current_affairs.history_agent import list_dates
+    from flask import redirect
+    dates = list_dates()
+    if not dates:
+        return Response(
+            "<html><body style='font-family:sans-serif;text-align:center;"
+            "padding:60px;background:#0f172a;color:#e2e8f0'>"
+            "<h2>📚 History Archive</h2>"
+            "<p>No history yet. Come back after the first day rollover.</p>"
+            "<p><a href='/' style='color:#818cf8'>← Back to Today</a></p>"
+            "</body></html>",
+            mimetype="text/html",
+        )
+    return redirect(f"/history/{dates[0]}")
+
+
+@app.route("/history/<date_key>")
+def history_day(date_key: str):
+    """Render the historical digest for a specific YYYY-MM-DD date."""
+    import re
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_key):
+        return jsonify({"error": "Invalid date format. Use YYYY-MM-DD."}), 400
+    from current_affairs.history_agent import load_snapshot, list_dates
+    from current_affairs.history_report import build_history_html
+    snapshot = load_snapshot(date_key)
+    if snapshot is None:
+        return Response(
+            f"<html><body style='font-family:sans-serif;text-align:center;"
+            f"padding:60px;background:#0f172a;color:#e2e8f0'>"
+            f"<h2>📚 No archive for {date_key}</h2>"
+            f"<p><a href='/history' style='color:#818cf8'>← Browse available dates</a></p>"
+            f"</body></html>",
+            mimetype="text/html",
+        ), 404
+    html = build_history_html(snapshot, list_dates())
+    resp = Response(html, mimetype="text/html")
+    resp.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    resp.headers["Pragma"] = "no-cache"
+    resp.headers["Expires"] = "0"
+    return resp
+
+
+@app.route("/api/history")
+def api_history_list():
+    """List all available archived dates."""
+    from current_affairs.history_agent import list_dates
+    return jsonify({"dates": list_dates()})
+
+
+@app.route("/api/history/<date_key>")
+def api_history_day(date_key: str):
+    """Return the archived news snapshot for a specific YYYY-MM-DD date."""
+    import re
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_key):
+        return jsonify({"error": "Invalid date format. Use YYYY-MM-DD."}), 400
+    from current_affairs.history_agent import load_snapshot
+    snapshot = load_snapshot(date_key)
+    if snapshot is None:
+        return jsonify({"error": f"No archive for {date_key}."}), 404
+    return jsonify(snapshot)
 
 
 @app.route("/api/status")
