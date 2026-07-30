@@ -373,15 +373,15 @@ function updateCountdown() {{
   const el     = document.getElementById('countdown');
 
   if (_mode === 'static') {{
-    // Static host (GitHub Pages, file://) — show data age AND schedule an
-    // auto-reload to coincide with the next GitHub Actions deployment.
-    // Workflow cron: every 2 hours → CYCLE_MIN = 120.
-    // We reload (CYCLE_MIN - ageMin + CI_BUFFER_MIN) minutes from now so the
-    // browser fetches the freshly deployed HTML after CI finishes.
-    const CYCLE_MIN   = 120;
-    const CI_BUFFER   = 8;   // minutes for CI to complete + CDN propagation
-    const minsLeft    = CYCLE_MIN - ageMin;
+    // Static host (GitHub Pages, file://) — show data age and schedule a
+    // single auto-reload timed to the next GitHub Actions deployment.
+    // Workflow cron: every 2 hours  →  CYCLE_MIN = 120.
+    const CYCLE_MIN    = 120;
+    const CI_BUFFER    = 8;    // minutes for CI run + CDN propagation
+    const RELOAD_COOL  = 15;   // minimum minutes between reload attempts
+    const minsLeft     = CYCLE_MIN - ageMin;
 
+    // ── Display ────────────────────────────────────────────────────────
     if (ageMin < 60) {{
       el.textContent = `Data is ${{ageMin}}m old`;
       el.style.color = ageMin > 30 ? '#f59e0b' : '';
@@ -390,19 +390,44 @@ function updateCountdown() {{
       el.textContent = `Data is ${{h}}h ${{mm}}m old — refresh in ${{minsLeft}}m`;
       el.style.color = '#f59e0b';
     }} else {{
-      // Data is at or past the 2-hour mark — reload immediately
-      el.textContent = 'Reloading for latest data…';
-      el.style.color = '#22c55e';
+      const h = Math.floor(ageMin / 60), mm = ageMin % 60;
+      el.textContent = `Data is ${{h}}h ${{mm}}m old`;
+      el.style.color = '#ef4444';
     }}
 
-    // Schedule ONE reload for when the next CI deployment should be live.
-    // If data is already stale, reload after a 3-second grace period.
+    // ── Schedule reload (only once per page load) ───────────────────────
     if (!_refreshTriggered) {{
       _refreshTriggered = true;
-      const msUntilReload = minsLeft > 0
-        ? (minsLeft + CI_BUFFER) * 60 * 1000
-        : 3000;
-      setTimeout(() => location.reload(), msUntilReload);
+
+      if (minsLeft > 0) {{
+        // Data is not yet stale — reload exactly when the next deploy lands
+        setTimeout(() => location.reload(), (minsLeft + CI_BUFFER) * 60 * 1000);
+      }} else {{
+        // Data is already past the cycle boundary.
+        // Use sessionStorage to prevent a rapid reload loop:
+        // if we reloaded within the last RELOAD_COOL minutes and data is
+        // still stale (CDN cached old HTML), wait out the remainder first.
+        let lastReload = 0;
+        try {{ lastReload = parseInt(sessionStorage.getItem('ca_last_reload') || '0'); }} catch(_) {{}}
+        const msSinceReload = Date.now() - lastReload;
+        const coolMs = RELOAD_COOL * 60 * 1000;
+        const waitMs = msSinceReload < coolMs ? coolMs - msSinceReload : 0;
+
+        setTimeout(() => {{
+          try {{ sessionStorage.setItem('ca_last_reload', String(Date.now())); }} catch(_) {{}}
+          location.reload();
+        }}, waitMs);
+
+        // Update display to show when the next reload attempt is
+        if (waitMs > 0) {{
+          const minsWait = Math.ceil(waitMs / 60000);
+          el.textContent = `Stale data — retrying in ${{minsWait}}m`;
+          el.style.color = '#f59e0b';
+        }} else {{
+          el.textContent = 'Checking for latest data…';
+          el.style.color = '#22c55e';
+        }}
+      }}
     }}
   }} else {{
     // Served via Flask — countdown to next refresh
