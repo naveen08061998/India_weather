@@ -176,21 +176,60 @@ def list_dates() -> list[str]:
 def generate_static_pages() -> None:
     """
     Generate a static HTML page for every archived snapshot, plus an
-    index.html that redirects to the most recent date.
+    index.html that redirects to the most recent date (or shows an
+    empty-state page when no archives exist yet).
 
     Intended for use in GitHub Actions / GitHub Pages deployments where
     there is no Flask server to serve /history/<date> routes dynamically.
 
     Output: current_affairs/news/history/<date>.html  (one per archive)
-            current_affairs/news/history/index.html   (redirect → latest)
+            current_affairs/news/history/index.html   (redirect → latest, or empty state)
     """
     from current_affairs.history_report import build_history_html
 
     dates = list_dates()
+
+    # ── Empty state: first run, no previous day archived yet ──────────────
     if not dates:
-        print("  [History] No archived dates found — static pages skipped.")
+        empty_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>History Archive — Current Affairs Daily</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:#070c1b;color:#e8edf5;
+       min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center}
+  .card{background:#0d1528;border:1px solid #1a2a45;border-radius:18px;padding:3rem 2.5rem;max-width:480px;width:100%}
+  .icon{font-size:3.5rem;margin-bottom:1rem}
+  h1{font-size:1.4rem;font-weight:800;margin-bottom:.6rem;letter-spacing:-.025em}
+  p{font-size:.85rem;color:#7b8899;line-height:1.65;margin-bottom:1.5rem}
+  a{display:inline-block;background:#818cf8;color:#fff;border-radius:999px;padding:.5rem 1.4rem;
+    font-size:.82rem;font-weight:600;text-decoration:none;transition:opacity .2s}
+  a:hover{opacity:.85}
+  .note{font-size:.75rem;color:#334155;margin-top:1.2rem}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">📚</div>
+  <h1>Archive Not Available Yet</h1>
+  <p>The history archive builds up automatically over time.<br/>
+     Yesterday's important news will appear here after the first<br/>
+     full day of operation — check back tomorrow!</p>
+  <a href="../">← Back to Today's News</a>
+  <p class="note">Archives are saved daily by GitHub Actions and include<br/>top stories from National, Economy, Science, and more.</p>
+</div>
+</body>
+</html>"""
+        (HISTORY_DIR / "index.html").write_text(empty_html, encoding="utf-8")
+        print("  [History] No archived dates yet — wrote empty-state index.html")
         return
 
+    # ── Generate per-date pages ───────────────────────────────────────────
     for date_key in dates:
         snapshot = load_snapshot(date_key)
         if snapshot is None:
@@ -200,7 +239,7 @@ def generate_static_pages() -> None:
         dest.write_text(html, encoding="utf-8")
         print(f"  [History] Generated {dest.name}")
 
-    # Index redirects to the most recent date
+    # ── Index redirects to the most recent date ───────────────────────────
     latest = dates[0]
     index_html = f"""<!DOCTYPE html>
 <html lang="en">
