@@ -3,12 +3,13 @@
  * ====================================
  * Strategy:
  *   - App shell (HTML/JS/CSS)  → Cache-first, update in background
+ *   - /railways (frequently updated) → Network-first, fall back to cache
  *   - API calls (/api/*)       → Network-first, fall back to cache
  *   - External weather APIs    → Network-only (no stale weather data)
  *   - Push notifications       → Show alert with district name + label
  */
 
-const CACHE_VERSION = "india-wx-v1";
+const CACHE_VERSION = "india-wx-v3";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
@@ -65,6 +66,22 @@ self.addEventListener("fetch", event => {
                     if (response.ok) {
                         const clone = response.clone();
                         caches.open(DATA_CACHE).then(c => c.put(event.request, clone));
+                    }
+                    return response;
+                })
+                .catch(() => caches.match(event.request))
+        );
+        return;
+    }
+
+    // /railways changes frequently during development → network-first
+    if (url.pathname === "/railways") {
+        event.respondWith(
+            fetch(event.request)
+                .then(response => {
+                    if (response.ok) {
+                        const clone = response.clone();
+                        caches.open(SHELL_CACHE).then(c => c.put(event.request, clone));
                     }
                     return response;
                 })

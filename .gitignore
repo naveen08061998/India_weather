@@ -8,6 +8,10 @@ __pycache__/
 .venv/
 venv/
 
+# Raw source downloads for indian_railways/tools/build_*.py — large (~85MB),
+# re-downloaded on demand, not needed at runtime (only the derived JSON is).
+indian_railways/data/raw/
+
 # Generated weather outputs — regenerated at runtime, but keep the folder
 india_weather/weathers/india_weather_data.json
 india_weather/weathers/india_alerts.json
