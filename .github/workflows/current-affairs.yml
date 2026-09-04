@@ -1,10 +1,10 @@
-name: Refresh Current Affairs Dashboard
+name: Refresh Dashboards (Current Affairs + Railways)
 
-# ── Triggers ───────────────────────────────────────────────────────────────
+# ── Triggers ────────────────────────────────────────────────────
 on:
   push:
     branches: [main]
-    paths: ['current_affairs/**', '.github/workflows/current-affairs.yml']
+    paths: ['current_affairs/**', 'indian_railways/**', '.github/workflows/current-affairs.yml']
   schedule:
     - cron: '30 */2 * * *'   # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …)
   workflow_dispatch:   # manual "Run workflow" button in GitHub UI
@@ -81,8 +81,20 @@ jobs:
       - name: Create index.html
         run: cp current_affairs/news/current_affairs_report.html current_affairs/news/index.html
 
+      # 8b. Build the Railways tracker (static mode: curated ~56 trains only —
+      #     the full ~2,400-train search needs the live Flask app, not Pages)
+      #     and nest it under /railways/ in the same Pages site.
+      - name: Generate Railways tracker HTML
+        run: python -m indian_railways.orchestrator
+        timeout-minutes: 5
+
+      - name: Copy Railways tracker into Pages output
+        run: |
+          mkdir -p current_affairs/news/railways
+          cp indian_railways/trains/railways_report.html current_affairs/news/railways/index.html
+
       # 9. Upload the news folder as the Pages artifact
-      #    Includes: index.html, current_affairs_report.html, history/*.html
+      #    Includes: index.html, current_affairs_report.html, history/*.html, railways/index.html
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
