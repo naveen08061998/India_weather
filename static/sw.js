@@ -3,7 +3,6 @@
  * ====================================
  * Strategy:
  *   - App shell (HTML/JS/CSS)  → Cache-first, update in background
- *   - /railways (frequently updated) → Network-first, fall back to cache
  *   - API calls (/api/*)       → Network-first, fall back to cache
  *   - External weather APIs    → Network-only (no stale weather data)
  *   - Push notifications       → Show alert with district name + label
@@ -13,12 +12,16 @@ const CACHE_VERSION = "india-wx-v3";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
+function scopePath() {
+    return new URL(self.registration.scope).pathname;
+}
+
 // App-shell resources to pre-cache on install
 const SHELL_URLS = [
-    "/",
-    "/manifest.json",
-    "/static/icon-192.png",
-    "/static/icon-512.png",
+    "./",
+    "./manifest.json",
+    "./static/icon-192.png",
+    "./static/icon-512.png",
 ];
 
 // ── Install: cache app shell ──────────────────────────────────────────────
@@ -58,30 +61,15 @@ self.addEventListener("fetch", event => {
         return;
     }
 
-    // /api/* → network-first, fall back to cached response
-    if (url.pathname.startsWith("/api/")) {
+    // /api/* (in app root or app sub-path scope) → network-first, fall back to cached response
+    const scopedApiPrefix = `${scopePath()}api/`;
+    if (url.pathname.startsWith("/api/") || url.pathname.startsWith(scopedApiPrefix)) {
         event.respondWith(
             fetch(event.request)
                 .then(response => {
                     if (response.ok) {
                         const clone = response.clone();
                         caches.open(DATA_CACHE).then(c => c.put(event.request, clone));
-                    }
-                    return response;
-                })
-                .catch(() => caches.match(event.request))
-        );
-        return;
-    }
-
-    // /railways changes frequently during development → network-first
-    if (url.pathname === "/railways") {
-        event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    if (response.ok) {
-                        const clone = response.clone();
-                        caches.open(SHELL_CACHE).then(c => c.put(event.request, clone));
                     }
                     return response;
                 })
@@ -107,24 +95,24 @@ self.addEventListener("fetch", event => {
 
 // ── Push notifications ────────────────────────────────────────────────────
 self.addEventListener("push", event => {
-    let data = { title: "India Weather Alert", body: "New weather alert", icon: "/static/icon-192.png" };
+    let data = { title: "India Weather Alert", body: "New weather alert", icon: "./static/icon-192.png" };
     try { data = { ...data, ...event.data.json() }; } catch (_) { }
 
     event.waitUntil(
         self.registration.showNotification(data.title, {
             body: data.body,
-            icon: data.icon || "/static/icon-192.png",
-            badge: "/static/icon-192.png",
+            icon: data.icon || "./static/icon-192.png",
+            badge: "./static/icon-192.png",
             tag: "weather-alert",
             renotify: true,
-            data: { url: data.url || "/" },
+            data: { url: data.url || "./" },
         })
     );
 });
 
 self.addEventListener("notificationclick", event => {
     event.notification.close();
-    const target = event.notification.data?.url || "/";
+    const target = event.notification.data?.url || "./";
     event.waitUntil(
         clients.matchAll({ type: "window", includeUncontrolled: true }).then(list => {
             const existing = list.find(c => c.url.includes(self.location.origin));

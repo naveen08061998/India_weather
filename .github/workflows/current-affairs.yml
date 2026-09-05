@@ -1,10 +1,10 @@
-name: Refresh Dashboards (Current Affairs + Railways)
+name: Refresh Dashboards (Weather + Current Affairs + Railways)
 
 # ── Triggers ────────────────────────────────────────────────────
 on:
   push:
     branches: [main]
-    paths: ['current_affairs/**', 'indian_railways/**', '.github/workflows/current-affairs.yml']
+    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'static/**', '.github/workflows/current-affairs.yml']
   schedule:
     - cron: '30 */2 * * *'   # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …)
   workflow_dispatch:   # manual "Run workflow" button in GitHub UI
@@ -77,30 +77,134 @@ jobs:
             current_affairs/news/history
           key: current-affairs-news-${{ runner.os }}-${{ github.run_number }}
 
-      # 8. Make it the index page so the URL is clean (no /current_affairs_report.html)
-      - name: Create index.html
+      # 8. Build a static weather dashboard page.
+      - name: Generate Weather dashboard HTML
+        # The report generator supports a first deploy without cached weather
+        # JSON; the orchestrator's --output html mode requires that cache.
+        run: python -m india_weather.weather_report
+        timeout-minutes: 5
+
+      # 9. Make Current Affairs report the index for its own section.
+      - name: Create Current Affairs index.html
         run: cp current_affairs/news/current_affairs_report.html current_affairs/news/index.html
 
-      # 8b. Build the Railways tracker (static mode: curated ~56 trains only —
-      #     the full ~2,400-train search needs the live Flask app, not Pages)
-      #     and nest it under /railways/ in the same Pages site.
+      # 10. Build the Railways tracker (static mode: curated list in-page;
+      #     full database search remains available in the standalone Flask app).
       - name: Generate Railways tracker HTML
         run: python -m indian_railways.orchestrator
         timeout-minutes: 5
 
-      - name: Copy Railways tracker into Pages output
+      # 11. Assemble a single Pages artifact with three independent sections.
+      - name: Assemble multi-app Pages artifact
         run: |
-          mkdir -p current_affairs/news/railways
-          cp indian_railways/trains/railways_report.html current_affairs/news/railways/index.html
+          rm -rf site
+          mkdir -p site/weather/static site/current-affairs site/railways
 
-      # 9. Upload the news folder as the Pages artifact
-      #    Includes: index.html, current_affairs_report.html, history/*.html, railways/index.html
+          cp india_weather/weathers/india_weather_report.html site/weather/index.html
+          cp static/manifest.json site/weather/manifest.json
+          cp static/sw.js site/weather/sw.js
+          cp static/icon-192.png site/weather/static/icon-192.png
+          cp static/icon-512.png site/weather/static/icon-512.png
+
+          cp -r current_affairs/news/. site/current-affairs/
+          cp indian_railways/trains/railways_report.html site/railways/index.html
+
+          cat > site/index.html << 'HTML'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>India Agents Hub</title>
+            <style>
+              :root {
+                --bg: #f2efe9;
+                --ink: #1f2937;
+                --muted: #6b7280;
+                --card: #fffdf8;
+                --line: #d6d1c4;
+                --accent1: #0ea5e9;
+                --accent2: #f97316;
+                --accent3: #16a34a;
+              }
+              * { box-sizing: border-box; }
+              body {
+                margin: 0;
+                font-family: Georgia, "Times New Roman", serif;
+                color: var(--ink);
+                background:
+                  radial-gradient(circle at 10% 10%, #fff 0%, transparent 35%),
+                  radial-gradient(circle at 90% 0%, #fff7ed 0%, transparent 30%),
+                  linear-gradient(180deg, #f9f6ee 0%, var(--bg) 100%);
+                min-height: 100vh;
+              }
+              .wrap { max-width: 1000px; margin: 0 auto; padding: 48px 20px 64px; }
+              h1 { margin: 0 0 10px; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: .02em; }
+              p { margin: 0; color: var(--muted); font-size: 1.05rem; }
+              .grid {
+                margin-top: 30px;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+                gap: 16px;
+              }
+              .card {
+                background: var(--card);
+                border: 1px solid var(--line);
+                border-radius: 16px;
+                padding: 18px;
+                text-decoration: none;
+                color: inherit;
+                box-shadow: 0 10px 20px rgba(0,0,0,.05);
+                transition: transform .2s ease, box-shadow .2s ease;
+              }
+              .card:hover { transform: translateY(-4px); box-shadow: 0 14px 26px rgba(0,0,0,.1); }
+              .card h2 { margin: 0 0 6px; font-size: 1.35rem; }
+              .chip {
+                display: inline-block;
+                padding: 3px 10px;
+                border-radius: 999px;
+                color: #fff;
+                font-size: .74rem;
+                margin-bottom: 10px;
+              }
+              .c1 { background: var(--accent1); }
+              .c2 { background: var(--accent2); }
+              .c3 { background: var(--accent3); }
+            </style>
+          </head>
+          <body>
+            <main class="wrap">
+              <h1>India Agent Dashboards</h1>
+              <p>Each dashboard now runs independently.</p>
+              <section class="grid">
+                <a class="card" href="./weather/">
+                  <span class="chip c1">Weather</span>
+                  <h2>India Weather</h2>
+                  <p>State and district weather with alerts and live client refresh.</p>
+                </a>
+                <a class="card" href="./current-affairs/">
+                  <span class="chip c2">Current Affairs</span>
+                  <h2>Daily News Digest</h2>
+                  <p>Category-wise news feed with archived history navigation.</p>
+                </a>
+                <a class="card" href="./railways/">
+                  <span class="chip c3">Railways</span>
+                  <h2>Train Tracker</h2>
+                  <p>Train status dashboard with number, name, and route views.</p>
+                </a>
+              </section>
+            </main>
+          </body>
+          </html>
+          HTML
+
+      # 12. Upload the multi-app static artifact.
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./current_affairs/news
+          path: ./site
 
-      # 10. Deploy to GitHub Pages
+      # 13. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4

@@ -23,11 +23,10 @@ import os
 import subprocess
 import sys
 import threading
-import time
 from datetime import datetime
 from pathlib import Path
 
-from flask import Flask, jsonify, request, send_from_directory, Response
+from flask import Flask, jsonify, send_from_directory
 
 # ── Paths ──────────────────────────────────────────────────────────────────
 BASE_DIR    = Path(__file__).parent
@@ -36,12 +35,6 @@ WEATHER_JSON = WEATHER_DIR / "india_weather_data.json"
 ALERTS_JSON  = WEATHER_DIR / "india_alerts.json"
 HTML_FILE    = WEATHER_DIR / "india_weather_report.html"
 STATIC_DIR   = BASE_DIR / "static"
-
-RAIL_DIR      = BASE_DIR / "indian_railways" / "trains"
-RAIL_HTML     = RAIL_DIR / "railways_report.html"
-
-_rail_cache: dict = {"ts": 0.0, "payload": None}
-_RAIL_CACHE_TTL_S = 30
 
 app = Flask(__name__, static_folder=str(STATIC_DIR))
 
@@ -153,55 +146,6 @@ def api_refresh():
     return jsonify({"status": "started"}), 202
 
 
-# ── Indian Railways train tracker routes ───────────────────────────────────
-
-@app.route("/railways")
-def railways_index():
-    """Serve the train tracker dashboard."""
-    if not RAIL_HTML.exists():
-        _cold_start_generate_railways()
-    return send_from_directory(str(RAIL_DIR), "railways_report.html")
-
-
-@app.route("/api/trains")
-def api_trains():
-    """Return summary counts + curated highlight trains. The full ~2,400-train
-    scan (needed for the counts) takes about a second, so it's cached briefly."""
-    from indian_railways.orchestrator import build_payload
-    now = time.time()
-    if _rail_cache["payload"] is None or now - _rail_cache["ts"] > _RAIL_CACHE_TTL_S:
-        _rail_cache["payload"] = build_payload()
-        _rail_cache["ts"] = now
-    return jsonify(_rail_cache["payload"])
-
-
-@app.route("/api/trains/search")
-def api_trains_search():
-    """Search trains by number or name, e.g. /api/trains/search?q=rajdhani"""
-    from indian_railways.ir_client import search_trains
-    q = request.args.get("q", "")
-    return jsonify({"query": q, "results": search_trains(q)})
-
-
-@app.route("/api/trains/route")
-def api_trains_route():
-    """Find trains between two stations, e.g. /api/trains/route?from=Tirupati&to=Tiruttani"""
-    from indian_railways.ir_client import search_by_route
-    from_q = request.args.get("from", "")
-    to_q = request.args.get("to", "")
-    return jsonify({"from": from_q, "to": to_q, "results": search_by_route(from_q, to_q)})
-
-
-@app.route("/api/trains/<train_number>")
-def api_train_detail(train_number):
-    """Live status for a single train number, e.g. /api/trains/12951"""
-    from indian_railways.ir_client import get_status_for_number
-    result = get_status_for_number(train_number)
-    if result is None:
-        return jsonify({"error": f"Unknown train number '{train_number}'"}), 404
-    return jsonify(result)
-
-
 # ── PWA assets ─────────────────────────────────────────────────────────────
 
 @app.route("/manifest.json")
@@ -236,19 +180,6 @@ def _cold_start_generate() -> None:
         print(f"[Boot] HTML generation failed: {exc}", flush=True)
 
 
-def _cold_start_generate_railways() -> None:
-    """Generate the train tracker dashboard on first request/boot."""
-    try:
-        RAIL_DIR.mkdir(parents=True, exist_ok=True)
-        from indian_railways.orchestrator import build_payload, save_json, generate_html
-        payload = build_payload()
-        save_json(payload)
-        generate_html(payload)
-        print("[Boot] Railways HTML generated.", flush=True)
-    except Exception as exc:
-        print(f"[Boot] Railways HTML generation failed: {exc}", flush=True)
-
-
 def _boot_fetch() -> None:
     """On cold start: generate HTML shell, then fetch live data in background."""
     _cold_start_generate()
@@ -261,12 +192,9 @@ def _boot_fetch() -> None:
 # Ensure directories exist
 WEATHER_DIR.mkdir(parents=True, exist_ok=True)
 STATIC_DIR.mkdir(exist_ok=True)
-RAIL_DIR.mkdir(parents=True, exist_ok=True)
-# Generate HTML if missing (cold Railway deploy) and kick off background fetch
+# Generate HTML if missing and kick off background fetch
 if not HTML_FILE.exists():
     _boot_fetch()
-if not RAIL_HTML.exists():
-    _cold_start_generate_railways()
 # Start periodic auto-refresh scheduler
 start_scheduler(int(os.environ.get("REFRESH_MINUTES", 30)))
 
@@ -293,7 +221,6 @@ def main() -> None:
     print(f"  API       → http://localhost:{args.port}/api/weather")
     print(f"  Alerts    → http://localhost:{args.port}/api/alerts")
     print(f"  Status    → http://localhost:{args.port}/api/status")
-    print(f"  Railways  → http://localhost:{args.port}/railways")
     print("═" * 55 + "\n")
 
     app.run(host=args.host, port=args.port, debug=False, use_reloader=False)

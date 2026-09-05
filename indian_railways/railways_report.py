@@ -345,7 +345,7 @@ async function performSearch(query) {{
     }} catch (_) {{}}
   }}
   TRAINS = CURATED_TRAINS.slice();
-  setNote('Search across the full database requires the Flask app (python app.py) — showing curated trains only.');
+  setNote('Search across the full database requires the Railways Flask app (python -m indian_railways.app) — showing curated trains only.');
   renderCards(q);
 }}
 
@@ -369,7 +369,7 @@ async function applyRouteSearch() {{
     }} catch (_) {{}}
   }}
   TRAINS = CURATED_TRAINS.slice();
-  setNote('Route search across the full database requires the Flask app (python app.py) — searching curated trains only.');
+  setNote('Route search across the full database requires the Railways Flask app (python -m indian_railways.app) — searching curated trains only.');
   renderCards(document.getElementById('search').value);
 }}
 

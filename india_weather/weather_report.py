@@ -269,8 +269,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="IndiaWx"/>
-  <link rel="manifest" href="/manifest.json"/>
-  <link rel="apple-touch-icon" href="/static/icon-192.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="static/icon-192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <style>
@@ -663,6 +663,171 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     /* ── Footer ── */
     footer {{ text-align:center; margin-top:3rem; color:#1e293b; font-size:.72rem; }}
     footer a {{ color:#334155; }}
+
+    /* ── Theme toggle button ── */
+    #theme-toggle {{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 999px; padding: .3rem .9rem;
+      color: #cbd5e1; cursor: pointer; font-size: .75rem;
+      font-weight: 600; letter-spacing: .01em;
+      transition: background .2s, border-color .2s, color .2s;
+      font-family: inherit; white-space: nowrap;
+    }}
+    #theme-toggle:hover {{ background: rgba(255,255,255,.14); }}
+
+    /* ─────────────────────────────────────────────────────────────────────
+       LIGHT MODE — body.light overrides every dark-theme rule
+    ───────────────────────────────────────────────────────────────────── */
+    body.light {{
+      background: #eef2fb;
+      color: #0f172a;
+    }}
+    body.light::before {{
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99,102,241,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 80%, rgba(16,185,129,.05) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 60% 30%, rgba(245,158,11,.04) 0%, transparent 50%),
+        linear-gradient(160deg, #eef2fb 0%, #e0e7ff 40%, #ede9fe 70%, #eef2fb 100%);
+    }}
+    /* Header */
+    body.light header {{
+      background: rgba(255,255,255,.88);
+      border-bottom-color: rgba(0,0,0,.09);
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    }}
+    body.light .header-left h1 {{
+      background: linear-gradient(135deg, #1e293b 0%, #4338ca 50%, #4f46e5 100%);
+      -webkit-background-clip: text; background-clip: text;
+    }}
+    body.light .header-left p {{ color: #475569; }}
+    body.light .status-pill {{
+      background: rgba(0,0,0,.05);
+      border-color: rgba(0,0,0,.1);
+      color: #475569;
+    }}
+    body.light #refresh-btn {{
+      background: linear-gradient(135deg,rgba(99,102,241,.18),rgba(139,92,246,.12));
+      border-color: rgba(99,102,241,.4);
+      color: #4338ca;
+    }}
+    body.light #refresh-btn:hover {{
+      background: linear-gradient(135deg,rgba(99,102,241,.28),rgba(139,92,246,.2));
+      box-shadow: 0 0 12px rgba(99,102,241,.25);
+    }}
+    body.light #theme-toggle {{
+      background: rgba(0,0,0,.06);
+      border-color: rgba(0,0,0,.14);
+      color: #475569;
+    }}
+    body.light #theme-toggle:hover {{ background: rgba(0,0,0,.1); }}
+    body.light #pwa-notif-btn {{
+      border-color: rgba(99,102,241,.35);
+      background: rgba(99,102,241,.09);
+      color: #4338ca;
+    }}
+    body.light #pwa-install-btn {{
+      border-color: rgba(16,185,129,.35);
+      background: rgba(16,185,129,.09);
+      color: #065f46;
+    }}
+    /* Alert ticker */
+    body.light #alert-bar {{
+      background: linear-gradient(90deg,rgba(220,38,38,.07) 0%,rgba(239,68,68,.04) 50%,rgba(220,38,38,.07) 100%);
+      border-top-color: rgba(239,68,68,.18);
+      border-bottom-color: rgba(239,68,68,.12);
+    }}
+    /* State nav */
+    body.light .state-btn {{
+      background: rgba(255,255,255,.75);
+      border-color: rgba(0,0,0,.12);
+      color: #475569;
+    }}
+    body.light .state-btn:hover {{
+      background: rgba(255,255,255,.95);
+      border-color: rgba(0,0,0,.2);
+    }}
+    body.light .state-btn.active {{ color: #fff; }}
+    body.light .state-btn.all-btn {{ color: #4338ca; border-color: rgba(99,102,241,.35); }}
+    body.light .state-btn.all-btn:hover {{ background: rgba(99,102,241,.08); color: #3730a3; }}
+    body.light .state-btn.all-btn.active {{ background: #6366f1; color: #fff; }}
+    body.light .state-btn.ut-separator {{ color: #94a3b8; }}
+    /* State sections */
+    body.light .state-header {{ border-bottom-color: rgba(0,0,0,.08); }}
+    body.light .state-badge {{
+      background: rgba(0,0,0,.05);
+      border-color: rgba(0,0,0,.08);
+      color: #64748b;
+    }}
+    body.light .state-load-status {{ color: #94a3b8; }}
+    /* City cards */
+    body.light .city-card {{
+      background: rgba(255,255,255,.82);
+      border-color: rgba(0,0,0,.09);
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }}
+    body.light .city-card:hover {{
+      background: rgba(255,255,255,.97);
+      border-color: rgba(0,0,0,.13);
+      box-shadow: 0 12px 36px rgba(0,0,0,.13),
+                  0 0 0 1px rgba(0,0,0,.07),
+                  0 0 24px color-mix(in srgb, var(--accent) 14%, transparent);
+    }}
+    body.light .city-name {{ color: #0f172a; }}
+    body.light .city-region {{ color: #64748b; }}
+    body.light .city-obs {{ color: #94a3b8; }}
+    body.light .city-temp {{
+      background: linear-gradient(160deg, #1e293b 30%, #334155 100%);
+      -webkit-background-clip: text; background-clip: text;
+    }}
+    body.light .city-desc {{ color: #64748b; }}
+    body.light .city-metric {{ color: #64748b; }}
+    body.light .city-metric span {{ color: #334155; font-weight: 600; }}
+    /* Forecast strip */
+    body.light .city-forecast {{ border-top-color: rgba(0,0,0,.07); }}
+    body.light .fc-day {{
+      background: rgba(0,0,0,.05);
+      border-color: rgba(0,0,0,.08);
+    }}
+    body.light .fc-day .fc-date {{ color: #64748b; }}
+    /* Hourly strip */
+    body.light .hr-slot {{
+      background: rgba(0,0,0,.04);
+      border-color: rgba(0,0,0,.07);
+    }}
+    body.light .hr-slot.hr-current {{ border-color: rgba(99,102,241,.45); background: rgba(99,102,241,.08); }}
+    body.light .hr-time {{ color: #64748b; }}
+    body.light .hourly-toggle {{ color: #94a3b8; border-top-color: rgba(0,0,0,.07); }}
+    body.light .hourly-toggle:hover {{ color: #64748b; }}
+    /* Sparkline */
+    body.light .sparkline-wrap {{ border-top-color: rgba(0,0,0,.07); }}
+    body.light .sparkline-label {{ color: #94a3b8; }}
+    /* Weather themes on cards (lighter tints for light mode) */
+    body.light .wt-clear   {{ background: linear-gradient(155deg,rgba(251,191,36,.09) 0%,rgba(253,224,71,.04) 100%); }}
+    body.light .wt-cloudy  {{ background: linear-gradient(155deg,rgba(100,116,139,.08) 0%,rgba(71,85,105,.04) 100%); }}
+    body.light .wt-rain    {{ background: linear-gradient(155deg,rgba(59,130,246,.09)  0%,rgba(37,99,235,.04)  100%); }}
+    body.light .wt-drizzle {{ background: linear-gradient(155deg,rgba(96,165,250,.08)  0%,rgba(59,130,246,.04) 100%); }}
+    body.light .wt-thunder {{ background: linear-gradient(155deg,rgba(139,92,246,.1)   0%,rgba(109,40,217,.05) 100%); }}
+    body.light .wt-snow    {{ background: linear-gradient(155deg,rgba(186,230,253,.09) 0%,rgba(224,242,254,.04) 100%); }}
+    body.light .wt-mist    {{ background: linear-gradient(155deg,rgba(148,163,184,.08) 0%,rgba(100,116,139,.04) 100%); }}
+    /* Skeleton */
+    body.light .skeleton-line {{
+      background: linear-gradient(90deg,rgba(0,0,0,.05) 25%,rgba(0,0,0,.09) 50%,rgba(0,0,0,.05) 75%);
+      background-size: 200% 100%;
+    }}
+    body.light .error-msg {{
+      background: rgba(248,113,113,.06);
+      border-color: rgba(248,113,113,.18);
+    }}
+    /* Cyclone panel */
+    body.light .cyc-card {{
+      background: linear-gradient(135deg,rgba(139,92,246,.1),rgba(239,68,68,.07));
+      border-color: rgba(239,68,68,.25);
+    }}
+    /* Footer */
+    body.light footer {{ color: #94a3b8; }}
+    body.light footer a {{ color: #64748b; }}
+    /* Weather detail modal (unchanged — always dark glass) */
   </style>
 </head>
 <body>
@@ -684,6 +849,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
     <button id="pwa-notif-btn" onclick="_requestNotifications()" style="display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(99,102,241,.4);background:rgba(99,102,241,.12);color:#c7d2fe;font-size:.75rem;cursor:pointer">&#128276; Enable Alerts</button>
     <button id="pwa-install-btn" onclick="_installPWA()" style="display:none;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#6ee7b7;font-size:.75rem;cursor:pointer">&#11015; Install App</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode">&#9728; Light</button>
   </div>
 </header>
 
@@ -872,7 +1038,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   let timerID;
   let activeFilter   = "all";
   let abortCtrl      = null;   // current AbortController
-  const dataCache    = {{}};    // city -> parsed object or null (error)
+  const dataCache    = {{}};    // state|city -> parsed object or null (error)
+
+  function cacheKey(stateId, city) {{
+    return `${{stateId}}|${{city}}`;
+  }}
 
   // ── Weather icons ──────────────────────────────────────────────────────────
   const ICONS = {{
@@ -1024,7 +1194,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     _liveDistAlerts = [];
     STATES.forEach(state => {{
       state.cities.forEach(city => {{
-        const d = dataCache[city];
+        const d = dataCache[cacheKey(state.id, city)];
         if (!d) return;
         _liveDistAlerts.push(..._alertsFor(city, state.name, d));
       }});
@@ -1084,20 +1254,20 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   async function fetchLiveCyclones() {{
     // ── Primary: server /api/alerts ─────────────────────────────────────────
     try {{
-      const r = await fetch("/api/alerts", {{ cache: "no-store" }});
+      const r = await fetch("api/alerts", {{ cache: "no-store" }});
       if (r.ok) {{
         const data = await r.json();
         _liveCyclones = (data.cyclones || []).filter(c => !c.error);
         // Always update district alerts from server — server has all districts,
-        // not just the ones the client has loaded into dataCache.
-        if ((data.district_alerts || []).length > 0) {{
-          _liveDistAlerts = (data.district_alerts || []).map(a => ({{
-            city: a.city, state: a.state, label: a.label,
-            color: a.color, icon: a.icon, temp: a.temp
-          }}));
-          // Also recompute from live dataCache to pick up any newer client data
-          recomputeDistrictAlerts();
-        }}
+        // not just the ones the client has loaded into dataCache. Assign even when
+        // empty so cleared/resolved alerts actually disappear instead of sticking around.
+        // NOTE: do not call recomputeDistrictAlerts() here — it rebuilds solely from
+        // dataCache (which may be stale/incomplete) and would overwrite this fresher,
+        // all-districts server payload.
+        _liveDistAlerts = (data.district_alerts || []).map(a => ({{
+          city: a.city, state: a.state, label: a.label,
+          color: a.color, icon: a.icon, temp: a.temp
+        }}));
         rebuildAlertTicker();
         return;
       }}
@@ -1751,7 +1921,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   }}
 
   // Pure Open-Meteo fetch: geocode → weather (no OWM call).
-  async function fetchCity(city, cardEl, signal) {{
+  async function fetchCity(stateId, city, cardEl, signal) {{
+    const key = cacheKey(stateId, city);
     cardEl.classList.add("refreshing");
     cardEl.innerHTML = skeleton();
     const queryCity = resolveQuery(city);
@@ -1784,7 +1955,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }}
       if (lat == null) {{
         // Geocoding failed — try wttr.in directly (no coordinates needed)
-        return fetchCityFromWttr(city, cardEl, signal);
+        return fetchCityFromWttr(stateId, city, cardEl, signal);
       }}
 
       // Step 2: Open-Meteo current + 7-day forecast
@@ -1796,36 +1967,37 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const omR = await fetch(omUrl, {{ cache:"no-store", signal }});
       if (omR.status === 429) {{
         // Open-Meteo rate-limited — fall back to wttr.in (free, no key, no limit)
-        return fetchCityFromWttr(city, cardEl, signal);
+        return fetchCityFromWttr(stateId, city, cardEl, signal);
       }}
       if (!omR.ok) throw new Error(`Open-Meteo HTTP ${{omR.status}}`);
       const omJson = await omR.json();
 
       const data = buildFromOpenMeteo(omJson, city, resolvedName);
-      dataCache[city] = data;
+      dataCache[key] = data;
       renderCard(cardEl, data);
       return true;
     }} catch(e) {{
       if (e.name === "AbortError") {{ cardEl.innerHTML = skeleton(); cardEl.classList.add("refreshing"); return false; }}
       // Any Open-Meteo error → fall back to wttr.in
-      return fetchCityFromWttr(city, cardEl, signal);
+      return fetchCityFromWttr(stateId, city, cardEl, signal);
     }}
   }}
 
   // Fallback fetch using wttr.in (no API key, no rate limit).
-  async function fetchCityFromWttr(city, cardEl, signal) {{
+  async function fetchCityFromWttr(stateId, city, cardEl, signal) {{
+    const key = cacheKey(stateId, city);
     const queryCity = resolveQuery(city);
     try {{
       const url  = `https://wttr.in/${{encodeURIComponent(queryCity)}}?format=j1`;
       const resp = await fetch(url, {{ cache:"no-store", signal }});
       if (!resp.ok) throw new Error(`wttr.in HTTP ${{resp.status}}`);
       const data = parseWttr(await resp.json(), city);
-      dataCache[city] = data;
+      dataCache[key] = data;
       renderCard(cardEl, data);
       return true;
     }} catch(e) {{
       if (e.name === "AbortError") {{ cardEl.innerHTML = skeleton(); cardEl.classList.add("refreshing"); return false; }}
-      dataCache[city] = null;
+      dataCache[key] = null;
       setCardError(cardEl, city, e.message);
       return false;
     }}
@@ -1840,11 +2012,12 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     state.cities.forEach((city, idx) => {{
       const card = grid.querySelectorAll(".city-card")[idx];
       if (!card) return;
-      if (!forceRefresh && dataCache[city]) {{
+      const key = cacheKey(state.id, city);
+      if (!forceRefresh && dataCache[key]) {{
         // Serve from cache immediately
-        renderCard(card, dataCache[city]);
+        renderCard(card, dataCache[key]);
       }} else {{
-        toFetch.push({{ city, card }});
+        toFetch.push({{ stateId: state.id, city, card }});
       }}
     }});
 
@@ -1858,7 +2031,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     for (let i = 0; i < toFetch.length; i += BATCH_SIZE) {{
       if (signal && signal.aborted) return;
       const batch = toFetch.slice(i, i + BATCH_SIZE);
-      await Promise.allSettled(batch.map(t => fetchCity(t.city, t.card, signal)));
+      await Promise.allSettled(batch.map(t => fetchCity(t.stateId, t.city, t.card, signal)));
       updateStateStatus(state.id);
       if (i + BATCH_SIZE < toFetch.length && !(signal && signal.aborted)) {{
         await new Promise(r => setTimeout(r, BATCH_DELAY));
@@ -2016,7 +2189,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       // Clear only current state's cache and reload it
       const state = STATES.find(s => s.id === activeFilter);
       if (state) {{
-        state.cities.forEach(c => delete dataCache[c]);
+        state.cities.forEach(c => delete dataCache[cacheKey(state.id, c)]);
         setGlobalStatus(true);
         loadState(state, signal, true).then(() => {{
           if (!signal.aborted) setGlobalStatus(false);
@@ -2073,7 +2246,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
             rainPct: f.rain_pct || "0", hourly: []
           }}))
         }};
-        dataCache[d.city] = mapped;
+        dataCache[cacheKey(stateObj.id, d.city)] = mapped;
         renderCard(card, mapped);
         loaded++;
       }});
@@ -2120,7 +2293,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   (function initPWA() {{
     // Register service worker
     if ("serviceWorker" in navigator) {{
-      navigator.serviceWorker.register("/sw.js", {{ scope: "/" }})
+      navigator.serviceWorker.register("sw.js", {{ scope: "./" }})
         .then(reg => {{
           console.log("[SW] Registered, scope:", reg.scope);
           // Check for updates every 10 minutes
@@ -2171,6 +2344,24 @@ HTML_TEMPLATE = """<!DOCTYPE html>
         btn.textContent = "\u26d4 Blocked"; btn.style.opacity = ".5";
       }}
     }});
+  }})();
+
+  // ── Light / Dark mode toggle ──────────────────────────────────────────────
+  function toggleTheme() {{
+    const isLight = document.body.classList.toggle('light');
+    const btn = document.getElementById('theme-toggle');
+    if (btn) btn.innerHTML = isLight ? '&#127769; Dark' : '&#9728; Light';
+    try {{ localStorage.setItem('wx_theme', isLight ? 'light' : 'dark'); }} catch(_) {{}}
+  }}
+  // Restore saved preference on load
+  (function applyTheme() {{
+    try {{
+      if (localStorage.getItem('wx_theme') === 'light') {{
+        document.body.classList.add('light');
+        const btn = document.getElementById('theme-toggle');
+        if (btn) btn.innerHTML = '&#127769; Dark';
+      }}
+    }} catch(_) {{}}
   }})();
 </script>
 </body>

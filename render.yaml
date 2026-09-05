@@ -10,3 +10,25 @@ services:
         value: "3.11.0"
       - key: REFRESH_MINUTES
         value: "30"
+
+  - type: web
+    name: current-affairs
+    runtime: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn current_affairs.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: REFRESH_MINUTES
+        value: "30"
+
+  - type: web
+    name: indian-railways
+    runtime: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn indian_railways.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
