@@ -164,7 +164,10 @@ def build_html(payload: dict) -> str:
     background: var(--accent-glow); border: 1px solid var(--accent); border-radius: 8px;
     padding: 6px 10px; font-size: .74rem; color: var(--text); line-height: 1.5;
   }}
-  .stops-detail {{ margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 10px; }}
+  .stops-detail {{
+    margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 10px;
+    max-height: 220px; overflow-y: auto;
+  }}
   .stop-row {{
     display: flex; justify-content: space-between; font-size: .72rem;
     color: var(--muted); padding: 3px 0;
@@ -346,7 +349,7 @@ async function performSearch(query) {{
     }} catch (_) {{}}
   }}
   TRAINS = CURATED_TRAINS.slice();
-  setNote('Search across the full database requires the Railways Flask app (python -m indian_railways.app) — showing curated trains only.');
+  setNote(`Railways Flask app unavailable — searching ${{CURATED_TRAINS.length}} trains embedded in this page.`);
   renderCards(q);
 }}
 
@@ -370,7 +373,7 @@ async function applyRouteSearch() {{
     }} catch (_) {{}}
   }}
   TRAINS = CURATED_TRAINS.slice();
-  setNote('Route search across the full database requires the Railways Flask app (python -m indian_railways.app) — searching curated trains only.');
+  setNote(`Railways Flask app unavailable — searching ${{CURATED_TRAINS.length}} trains embedded in this page.`);
   renderCards(document.getElementById('search').value);
 }}
 

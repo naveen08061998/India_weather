@@ -183,6 +183,32 @@ def get_curated_statuses(now: datetime | None = None) -> list[dict]:
     return [get_status_for_number(n, now) for n in CURATED_TRAIN_NUMBERS]
 
 
+# The imported open dataset (build_dataset.py) has real data-quality issues for
+# a large subset of trains: many entries carry hundreds of raw wayside-halt
+# "stops" per route (real for some slow passenger trains, but far too heavy to
+# ship to a browser — a handful even have an implausible total distance from
+# corrupted/merged source records). Cap both so the embedded set stays a
+# reasonable page-load size while covering far more than the curated ~56.
+_MAX_PLAUSIBLE_ROUTE_KM = 4500
+_MAX_ROUTE_STOPS = 30
+
+
+def get_static_statuses(now: datetime | None = None) -> list[dict]:
+    """Statuses for every train that passes a basic data-quality/size check,
+    for embedding into the no-backend (GitHub Pages) build so From/To and
+    name search work against a much larger set than the hand-curated ~56
+    without shipping a multi-megabyte payload or known-corrupted routes."""
+    curated = set(CURATED_TRAIN_NUMBERS)
+    numbers = list(CURATED_TRAIN_NUMBERS)
+    for t in TRAINS:
+        if t["number"] in curated:
+            continue
+        route = t["route"]
+        if route and route[-1]["dist"] <= _MAX_PLAUSIBLE_ROUTE_KM and len(route) <= _MAX_ROUTE_STOPS:
+            numbers.append(t["number"])
+    return [get_status_for_number(n, now) for n in numbers]
+
+
 def search_trains(query: str, now: datetime | None = None, limit: int = 200) -> list[dict]:
     """Search trains by number or (partial, case-insensitive) name/station."""
     q = query.strip().lower()

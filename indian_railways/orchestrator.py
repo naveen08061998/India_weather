@@ -30,7 +30,7 @@ if hasattr(sys.stderr, "reconfigure"):
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
-from indian_railways.ir_client import get_all_statuses, get_curated_statuses
+from indian_railways.ir_client import get_all_statuses, get_static_statuses
 
 BASE_DIR    = Path(__file__).parent
 TRAINS_DIR  = BASE_DIR / "trains"
@@ -48,7 +48,10 @@ def build_payload() -> dict:
         "date":         now.strftime("%d %B %Y"),
         "total_trains": len(all_statuses),
         "running_now":  sum(1 for t in all_statuses if t["status"] in ("running", "at_station")),
-        "trains":       get_curated_statuses(now),
+        # Embedded set used by the dashboard's default view AND the no-backend
+        # (GitHub Pages) search fallback — a size/quality-filtered ~300+ trains,
+        # not just the ~56 hand-curated highlights.
+        "trains":       get_static_statuses(now),
     }
 
 
