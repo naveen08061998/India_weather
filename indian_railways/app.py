@@ -37,6 +37,15 @@ _cache: dict = {"ts": 0.0, "payload": None}
 app = Flask(__name__)
 
 
+@app.after_request
+def _add_cors_headers(resp):
+    # Allow the static GitHub Pages dashboard (different origin) to call these
+    # read-only endpoints so route/train search always covers the full database.
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    resp.headers["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+    return resp
+
+
 def _rebuild_payload() -> dict:
     payload = build_payload()
     save_json(payload)

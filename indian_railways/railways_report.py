@@ -256,19 +256,34 @@ const ALL_STATION_NAMES = {station_names_json};
 const STATION_ALIASES = {station_aliases_json};
 let TRAINS = CURATED_TRAINS.slice();
 
-// Detect whether we're served by the Flask app (search API available) or
-// opened as a plain file (search falls back to the curated set only).
+// Live backend used whenever this page isn't served by its own Flask app
+// (static file, GitHub Pages, etc.) so search always covers every train,
+// not just the small embedded set baked into the static page.
+const REMOTE_API_BASE = 'https://indian-railways-5qpb.onrender.com';
+
+// Detect where full-database search should come from:
+//   'flask'  - this page is served by its own Flask app (same-origin API)
+//   'remote' - reachable via the public Render backend (static/Pages hosting)
+//   'static' - neither reachable; fall back to the embedded curated set
 // Callers `await _modeReady` so a search triggered before detection
 // finishes doesn't incorrectly fall back to curated-only results.
 const _modeReady = (async () => {{
-  if (window.location.protocol === 'file:') return 'static';
-  try {{
-    const r = await fetch('/api/trains', {{ signal: AbortSignal.timeout(4000) }});
-    return r.ok ? 'flask' : 'static';
-  }} catch (_) {{
-    return 'static';
+  if (window.location.protocol !== 'file:') {{
+    try {{
+      const r = await fetch('/api/trains', {{ signal: AbortSignal.timeout(4000) }});
+      if (r.ok) return 'flask';
+    }} catch (_) {{}}
   }}
+  try {{
+    const r = await fetch(`${{REMOTE_API_BASE}}/api/trains`, {{ signal: AbortSignal.timeout(6000) }});
+    if (r.ok) return 'remote';
+  }} catch (_) {{}}
+  return 'static';
 }})();
+
+function _apiBase(mode) {{
+  return mode === 'remote' ? REMOTE_API_BASE : '';
+}}
 
 const STATUS_CLASS = {{
   running: 'status-running', at_station: 'status-at_station',
@@ -336,9 +351,10 @@ async function performSearch(query) {{
     renderCards('');
     return;
   }}
-  if ((await _modeReady) === 'flask') {{
+  const mode = await _modeReady;
+  if (mode !== 'static') {{
     try {{
-      const r = await fetch(`/api/trains/search?q=${{encodeURIComponent(q)}}`, {{ signal: AbortSignal.timeout(5000) }});
+      const r = await fetch(`${{_apiBase(mode)}}/api/trains/search?q=${{encodeURIComponent(q)}}`, {{ signal: AbortSignal.timeout(6000) }});
       if (r.ok) {{
         const data = await r.json();
         TRAINS = data.results || [];
@@ -349,7 +365,7 @@ async function performSearch(query) {{
     }} catch (_) {{}}
   }}
   TRAINS = CURATED_TRAINS.slice();
-  setNote(`Railways Flask app unavailable — searching ${{CURATED_TRAINS.length}} trains embedded in this page.`);
+  setNote(`Live search unavailable — searching ${{CURATED_TRAINS.length}} trains embedded in this page.`);
   renderCards(q);
 }}
 
@@ -357,12 +373,13 @@ async function applyRouteSearch() {{
   _fromFilter = document.getElementById('from-station').value.trim();
   _toFilter = document.getElementById('to-station').value.trim();
   if (!_fromFilter && !_toFilter) return;
-  if ((await _modeReady) === 'flask') {{
+  const mode = await _modeReady;
+  if (mode !== 'static') {{
     try {{
       const params = new URLSearchParams();
       if (_fromFilter) params.set('from', _fromFilter);
       if (_toFilter) params.set('to', _toFilter);
-      const r = await fetch(`/api/trains/route?${{params.toString()}}`, {{ signal: AbortSignal.timeout(5000) }});
+      const r = await fetch(`${{_apiBase(mode)}}/api/trains/route?${{params.toString()}}`, {{ signal: AbortSignal.timeout(6000) }});
       if (r.ok) {{
         const data = await r.json();
         TRAINS = data.results || [];
@@ -373,7 +390,7 @@ async function applyRouteSearch() {{
     }} catch (_) {{}}
   }}
   TRAINS = CURATED_TRAINS.slice();
-  setNote(`Railways Flask app unavailable — searching ${{CURATED_TRAINS.length}} trains embedded in this page.`);
+  setNote(`Live search unavailable — searching ${{CURATED_TRAINS.length}} trains embedded in this page.`);
   renderCards(document.getElementById('search').value);
 }}
 
