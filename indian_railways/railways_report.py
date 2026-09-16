@@ -323,8 +323,10 @@ function routeMatch(t) {{
     if (aliasCodes) {{
       return route.findIndex(s => aliasCodes.includes(s.code));
     }}
-    const codeInParens = raw.match(/\\(([a-z0-9]+)\\)\\s*$/i);
-    const code = codeInParens ? codeInParens[1] : raw;
+    // Datalist entries are formatted "CODE — Name"; a plain typed code (no
+    // dash) is used as-is.
+    const codeAtStart = raw.match(/^([a-z0-9]+)\\s*[\u2014-]\\s*/i);
+    const code = codeAtStart ? codeAtStart[1] : raw;
     return route.findIndex(s => s.code.toLowerCase() === code || s.name.toLowerCase().includes(raw));
   }};
   const fromIdx = _fromFilter ? findIdx(_fromFilter) : 0;

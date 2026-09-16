@@ -769,8 +769,10 @@ STATION_COORDS: dict[str, tuple[float, float]] = {
     **_CURATED_STATION_COORDS,  # curated coordinates take precedence
 }
 
-# Sorted "Name (CODE)" strings for search autocomplete — showing the code
-# helps disambiguate stations that share a similar name.
+# Sorted "CODE — Name" strings for search autocomplete. Leading with the code
+# (rather than burying it in parentheses at the end) means typing a short code
+# like "MAS" surfaces the exact station first, instead of getting buried among
+# unrelated stations whose *name* happens to contain the same substring.
 _station_code_to_name: dict[str, str] = {}
 for _t in TRAINS:
     for _s in _t["route"]:
@@ -779,6 +781,6 @@ for _code, _info in _imported_stations.items():
     _station_code_to_name.setdefault(_code, _info["name"])
 
 ALL_STATION_NAMES: list[str] = sorted(
-    (f"{name} ({code})" for code, name in _station_code_to_name.items()),
-    key=str.lower,
+    (f"{code} \u2014 {name}" for code, name in _station_code_to_name.items()),
+    key=lambda s: s.split(" \u2014 ", 1)[0].lower(),
 )
