@@ -306,7 +306,8 @@ def build_html(payload: dict) -> str:
 
 <footer>
   Current Affairs Daily &mdash; Built for competitive exam aspirants<br/>
-  <span style="opacity:.65">Sources: PIB &middot; NDTV &middot; Economic Times &middot; LiveMint &middot; DD News</span>
+  <span style="opacity:.65">Sources: PIB &middot; NDTV &middot; Economic Times &middot; LiveMint &middot; DD News</span><br/>
+  <span style="opacity:.65">Built by naveen08061998</span>
 </footer>
 
 <script>

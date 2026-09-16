@@ -899,7 +899,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
 <footer>
   Data from <a href="https://open-meteo.com" target="_blank">Open-Meteo</a> (free, no API key) &bull;
-  28 state agents + 8 UT agents &bull; Auto-refreshes every 10 min &bull; 15-min update cadence
+  28 state agents + 8 UT agents &bull; Auto-refreshes every 10 min &bull; 15-min update cadence<br/>
+  <span style="opacity:.65">Built by naveen08061998</span>
 </footer>
 
 <script>
