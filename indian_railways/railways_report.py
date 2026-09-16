@@ -244,7 +244,7 @@ def build_html(payload: dict) -> str:
   Indian Railways Train Tracker &mdash; demo dashboard<br/>
   <span style="opacity:.65">Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>
   "Use My GPS" reads your device's own location in your browser only (never sent to a server) to show which stop you're nearest &mdash; useful only if you're actually riding that train.</span><br/>
-  <span style="opacity:.65">Built by naveen08061998</span>
+  <span style="opacity:.65">Built by Naveen Alla</span>
 </footer>
 
 <script>
