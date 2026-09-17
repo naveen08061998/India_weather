@@ -5,7 +5,11 @@ There is no free official real-time GPS feed for Indian Railways, so this
 module SIMULATES a train's current position/delay by comparing the current
 time against its public schedule (train_data.py). Delay minutes are derived
 deterministically from the train number + service date, so the same train
-shows a consistent (but not truly live) status throughout a given day.
+shows a consistent (but not truly live) status throughout a given day. The
+odds of a delay (and how large it is) are biased by the train's punctuality
+tier — premium named trains (Rajdhani/Shatabdi/Duronto/Vande Bharat/Tejas)
+run closer to schedule than ordinary Mail/Express services, matching IR's
+well-documented priority order — see _TIER_BY_TYPE below.
 
 This is a DEMO tracker — for official live running status use NTES
 (enquiry.indianrail.gov.in) or IRCTC.
@@ -46,16 +50,39 @@ def _stop_dt(anchor_date: date, stop: dict, clock_field: str) -> datetime | None
     return datetime(d.year, d.month, d.day, h, m, tzinfo=IST)
 
 
-def _simulated_delay_minutes(train_number: str, service_date: date) -> int:
-    """Deterministic pseudo-random delay (mostly 0, occasionally larger)."""
+# Punctuality tiers by train type, reflecting IR's well-documented operating
+# priority order (premium named trains get signal precedence and run closer
+# to schedule; ordinary Mail/Express services absorb more crossings/overtakes
+# and slip more often). These are informed estimates from IR's known priority
+# structure, not figures pulled from a live/official punctuality feed.
+_TIER_BY_TYPE = {
+    "Rajdhani": "premium", "Shatabdi": "premium", "Duronto": "premium",
+    "Vande Bharat": "premium", "Tejas": "premium",
+    "Garib Rath": "mid", "Superfast": "mid", "Sampark Kranti": "mid",
+    "Jan Shatabdi": "mid", "Mail-Express": "mid",
+    "Express": "regular", "Mail": "regular",
+}
+# (on_time_pct, small_delay_pct, medium_delay_pct) cumulative thresholds out of 100.
+_TIER_THRESHOLDS = {
+    "premium": (70, 92, 98),
+    "mid":     (55, 82, 96),
+    "regular": (40, 72, 92),
+}
+
+
+def _simulated_delay_minutes(train_number: str, service_date: date, train_type: str = "") -> int:
+    """Deterministic pseudo-random delay (mostly 0, occasionally larger),
+    biased by the train's punctuality tier (see _TIER_BY_TYPE above)."""
+    tier = _TIER_BY_TYPE.get(train_type, "mid")
+    on_time, small_max, med_max = _TIER_THRESHOLDS[tier]
     key = f"{train_number}:{service_date.isoformat()}"
     digest = hashlib.sha256(key.encode()).hexdigest()
     bucket = int(digest[:4], 16) % 100
-    if bucket < 55:
+    if bucket < on_time:
         return 0
-    if bucket < 80:
+    if bucket < small_max:
         return int(digest[4:6], 16) % 15 + 1     # 1-15 min
-    if bucket < 95:
+    if bucket < med_max:
         return int(digest[4:6], 16) % 30 + 15    # 15-44 min
     return int(digest[4:6], 16) % 60 + 45        # 45-104 min (rare)
 
@@ -70,7 +97,7 @@ def _next_run_date(train: dict, from_date: date) -> date:
 
 
 def _position_within_journey(train: dict, service_date: date, now: datetime) -> dict:
-    delay = _simulated_delay_minutes(train["number"], service_date)
+    delay = _simulated_delay_minutes(train["number"], service_date, train.get("type", ""))
     effective_now = now - timedelta(minutes=delay)
     route = train["route"]
     origin, destination = route[0], route[-1]
