@@ -3,13 +3,16 @@ Indian Railways — Live Status Simulator
 =========================================
 There is no free official real-time GPS feed for Indian Railways, so this
 module SIMULATES a train's current position/delay by comparing the current
-time against its public schedule (train_data.py). Delay minutes are derived
-deterministically from the train number + service date, so the same train
-shows a consistent (but not truly live) status throughout a given day. The
-odds of a delay (and how large it is) are biased by the train's punctuality
-tier — premium named trains (Rajdhani/Shatabdi/Duronto/Vande Bharat/Tejas)
-run closer to schedule than ordinary Mail/Express services, matching IR's
-well-documented priority order — see _TIER_BY_TYPE below.
+time against its public schedule (train_data.py). Delay is modeled as a
+per-stop random walk, deterministically seeded from the train number +
+service date + stop index, so the same train shows a consistent (but not
+truly live) status throughout a given day — delay gradually drifts up and
+down along the route (congestion adds it, timetable padding recovers it)
+rather than being one fixed number for the whole journey. The odds of
+gaining vs. recovering delay at each stop are biased by the train's
+punctuality tier — premium named trains (Rajdhani/Shatabdi/Duronto/Vande
+Bharat/Tejas) run closer to schedule than ordinary Mail/Express services,
+matching IR's well-documented priority order — see _TIER_BY_TYPE below.
 
 This is a DEMO tracker — for official live running status use NTES
 (enquiry.indianrail.gov.in) or IRCTC.
@@ -62,29 +65,40 @@ _TIER_BY_TYPE = {
     "Jan Shatabdi": "mid", "Mail-Express": "mid",
     "Express": "regular", "Mail": "regular",
 }
-# (on_time_pct, small_delay_pct, medium_delay_pct) cumulative thresholds out of 100.
-_TIER_THRESHOLDS = {
-    "premium": (70, 92, 98),
-    "mid":     (55, 82, 96),
-    "regular": (40, 72, 92),
+
+
+# (pct chance delay grows at a given stop, pct chance it shrinks, cap in minutes)
+_TIER_WALK_PARAMS = {
+    "premium": (10, 12, 40),
+    "mid":     (16, 9, 70),
+    "regular": (22, 6, 100),
 }
 
 
-def _simulated_delay_minutes(train_number: str, service_date: date, train_type: str = "") -> int:
-    """Deterministic pseudo-random delay (mostly 0, occasionally larger),
-    biased by the train's punctuality tier (see _TIER_BY_TYPE above)."""
-    tier = _TIER_BY_TYPE.get(train_type, "mid")
-    on_time, small_max, med_max = _TIER_THRESHOLDS[tier]
-    key = f"{train_number}:{service_date.isoformat()}"
-    digest = hashlib.sha256(key.encode()).hexdigest()
-    bucket = int(digest[:4], 16) % 100
-    if bucket < on_time:
-        return 0
-    if bucket < small_max:
-        return int(digest[4:6], 16) % 15 + 1     # 1-15 min
-    if bucket < med_max:
-        return int(digest[4:6], 16) % 30 + 15    # 15-44 min
-    return int(digest[4:6], 16) % 60 + 45        # 45-104 min (rare)
+def _delay_series(train: dict, service_date: date) -> list[int]:
+    """Cumulative simulated delay (minutes) at each stop along the route,
+    modeled as a bounded random walk seeded per train+date+stop-index so
+    delay realistically drifts over the journey — gained at some stops
+    (congestion/signals), recovered at others (timetable padding) — instead
+    of being one fixed number applied to the whole trip. This keeps
+    "between station A and B" transitions from flipping on a hard,
+    unrealistic minute boundary the way a single flat delay would."""
+    tier = _TIER_BY_TYPE.get(train.get("type", ""), "mid")
+    p_gain, p_recover, cap = _TIER_WALK_PARAMS[tier]
+    route = train["route"]
+    number = train["number"]
+    delays = [0]
+    for i in range(1, len(route)):
+        key = f"{number}:{service_date.isoformat()}:{i}"
+        digest = hashlib.sha256(key.encode()).hexdigest()
+        roll = int(digest[:4], 16) % 100
+        step = 0
+        if roll < p_gain:
+            step = int(digest[4:6], 16) % 6 + 1       # +1..+6 min
+        elif roll < p_gain + p_recover:
+            step = -(int(digest[4:6], 16) % 4 + 1)     # -1..-4 min (recovered time)
+        delays.append(max(0, min(cap, delays[-1] + step)))
+    return delays
 
 
 def _next_run_date(train: dict, from_date: date) -> date:
@@ -97,24 +111,25 @@ def _next_run_date(train: dict, from_date: date) -> date:
 
 
 def _position_within_journey(train: dict, service_date: date, now: datetime) -> dict:
-    delay = _simulated_delay_minutes(train["number"], service_date, train.get("type", ""))
-    effective_now = now - timedelta(minutes=delay)
     route = train["route"]
+    delays = _delay_series(train, service_date)
     origin, destination = route[0], route[-1]
     total_dist = destination["dist"] or 1
 
     last_idx = 0
     for i, stop in enumerate(route):
         stop_time = _stop_dt(service_date, stop, "dep") or _stop_dt(service_date, stop, "arr")
-        if stop_time and stop_time <= effective_now:
+        if stop_time and stop_time + timedelta(minutes=delays[i]) <= now:
             last_idx = i
         else:
             break
 
+    delay = delays[last_idx]
     last_stop = route[last_idx]
     arr_dt = _stop_dt(service_date, last_stop, "arr")
     dep_dt = _stop_dt(service_date, last_stop, "dep")
-    at_station = bool(arr_dt and dep_dt and arr_dt <= effective_now < dep_dt)
+    offset = timedelta(minutes=delay)
+    at_station = bool(arr_dt and dep_dt and arr_dt + offset <= now < dep_dt + offset)
 
     if last_idx == len(route) - 1:
         label = f"Arrived at {destination['name']}"
@@ -127,22 +142,24 @@ def _position_within_journey(train: dict, service_date: date, now: datetime) -> 
         }
 
     next_stop = route[last_idx + 1]
+    next_delay = delays[last_idx + 1]
     next_arr_dt = _stop_dt(service_date, next_stop, "arr") or _stop_dt(service_date, next_stop, "dep")
 
     if at_station:
         pct_dist = last_stop["dist"]
         label = f"Halted at {last_stop['name']}"
     else:
-        seg_start = dep_dt or arr_dt
-        seg_end = next_arr_dt
+        seg_start = (dep_dt or arr_dt)
+        seg_start = seg_start + offset if seg_start else None
+        seg_end = next_arr_dt + timedelta(minutes=next_delay) if next_arr_dt else None
         frac = 0.0
         if seg_start and seg_end and seg_end > seg_start:
-            frac = max(0.0, min(1.0, (effective_now - seg_start).total_seconds() / (seg_end - seg_start).total_seconds()))
+            frac = max(0.0, min(1.0, (now - seg_start).total_seconds() / (seg_end - seg_start).total_seconds()))
         pct_dist = last_stop["dist"] + frac * (next_stop["dist"] - last_stop["dist"])
         label = f"Between {last_stop['name']} and {next_stop['name']}"
 
     label += f" — running {delay} min late" if delay else " — running on time"
-    eta = (next_arr_dt + timedelta(minutes=delay)).strftime("%H:%M") if next_arr_dt else None
+    eta = (next_arr_dt + timedelta(minutes=next_delay)).strftime("%H:%M") if next_arr_dt else None
 
     return {
         "status": "at_station" if at_station else "running",
