@@ -435,7 +435,7 @@ function renderCards(query) {{
   }}
   container.innerHTML = filtered.map(({{ train: t, journey }}) => {{
     const color = TYPE_COLOR[t.type] || '#38bdf8';
-    const delayLabel = t.delay_min > 0 ? ` (+${{t.delay_min}}m)` : '';
+    const delayLabel = t.delay_min > 0 ? ` (+${{t.delay_min}}m)` : (t.delay_min < 0 ? ` (${{t.delay_min}}m)` : '');
     const statusClass = STATUS_CLASS[t.status] || '';
     const pct = t.percent_complete || 0;
     const nextInfo = t.next_station

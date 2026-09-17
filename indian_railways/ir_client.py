@@ -67,24 +67,28 @@ _TIER_BY_TYPE = {
 }
 
 
-# (pct chance delay grows at a given stop, pct chance it shrinks, cap in minutes)
+# (pct chance delay grows at a given stop, pct chance it shrinks, max late
+# minutes, max early minutes). Early running is capped much tighter than
+# late running — schedule padding lets a train gain a few minutes back, but
+# it rarely arrives dramatically ahead of the timetable.
 _TIER_WALK_PARAMS = {
-    "premium": (10, 12, 40),
-    "mid":     (16, 9, 70),
-    "regular": (22, 6, 100),
+    "premium": (10, 12, 40, 10),
+    "mid":     (16, 9, 70, 8),
+    "regular": (22, 6, 100, 6),
 }
 
 
 def _delay_series(train: dict, service_date: date) -> list[int]:
-    """Cumulative simulated delay (minutes) at each stop along the route,
-    modeled as a bounded random walk seeded per train+date+stop-index so
-    delay realistically drifts over the journey — gained at some stops
-    (congestion/signals), recovered at others (timetable padding) — instead
-    of being one fixed number applied to the whole trip. This keeps
-    "between station A and B" transitions from flipping on a hard,
-    unrealistic minute boundary the way a single flat delay would."""
+    """Cumulative simulated delay (minutes, may be negative = running early)
+    at each stop along the route, modeled as a bounded random walk seeded
+    per train+date+stop-index so delay realistically drifts over the
+    journey — gained at some stops (congestion/signals), recovered at others
+    (timetable padding), occasionally dipping slightly ahead of schedule —
+    instead of being one fixed, never-negative number applied to the whole
+    trip. This keeps "between station A and B" transitions from flipping on
+    a hard, unrealistic minute boundary the way a single flat delay would."""
     tier = _TIER_BY_TYPE.get(train.get("type", ""), "mid")
-    p_gain, p_recover, cap = _TIER_WALK_PARAMS[tier]
+    p_gain, p_recover, cap, early_cap = _TIER_WALK_PARAMS[tier]
     route = train["route"]
     number = train["number"]
     delays = [0]
@@ -97,7 +101,7 @@ def _delay_series(train: dict, service_date: date) -> list[int]:
             step = int(digest[4:6], 16) % 6 + 1       # +1..+6 min
         elif roll < p_gain + p_recover:
             step = -(int(digest[4:6], 16) % 4 + 1)     # -1..-4 min (recovered time)
-        delays.append(max(0, min(cap, delays[-1] + step)))
+        delays.append(max(-early_cap, min(cap, delays[-1] + step)))
     return delays
 
 
@@ -108,6 +112,15 @@ def _next_run_date(train: dict, from_date: date) -> date:
         if d.strftime("%a") in train["runs_on"]:
             return d
     return from_date  # unreachable — runs_on is always non-empty
+
+
+def _delay_phrase(delay: int) -> str:
+    """Human-readable suffix for a (possibly negative = early) delay value."""
+    if delay > 0:
+        return f"{delay} min late"
+    if delay < 0:
+        return f"{-delay} min early"
+    return "on time"
 
 
 def _position_within_journey(train: dict, service_date: date, now: datetime) -> dict:
@@ -132,8 +145,7 @@ def _position_within_journey(train: dict, service_date: date, now: datetime) -> 
     at_station = bool(arr_dt and dep_dt and arr_dt + offset <= now < dep_dt + offset)
 
     if last_idx == len(route) - 1:
-        label = f"Arrived at {destination['name']}"
-        label += f" — {delay} min late" if delay else " — on time"
+        label = f"Arrived at {destination['name']} — {_delay_phrase(delay)}"
         return {
             "status": "arrived", "status_label": label, "delay_min": delay,
             "last_station": destination["name"], "next_station": None, "eta": None,
@@ -158,7 +170,7 @@ def _position_within_journey(train: dict, service_date: date, now: datetime) -> 
         pct_dist = last_stop["dist"] + frac * (next_stop["dist"] - last_stop["dist"])
         label = f"Between {last_stop['name']} and {next_stop['name']}"
 
-    label += f" — running {delay} min late" if delay else " — running on time"
+    label += f" — running {_delay_phrase(delay)}"
     eta = (next_arr_dt + timedelta(minutes=next_delay)).strftime("%H:%M") if next_arr_dt else None
 
     return {

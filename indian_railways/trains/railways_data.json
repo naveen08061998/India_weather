@@ -1,9 +1,68 @@
 {
-  "generated_at": "2026-09-17 14:24 IST",
+  "generated_at": "2026-09-17 14:30 IST",
   "date": "17 September 2026",
   "total_trains": 2429,
-  "running_now": 822,
+  "running_now": 835,
   "trains": [
+    {
+      "number": "12259",
+      "name": "Sealdah Duronto Express",
+      "type": "Duronto",
+      "zone": "ER",
+      "route": [
+        {
+          "code": "SDAH",
+          "name": "Sealdah",
+          "day": 1,
+          "arr": null,
+          "dep": "20:20",
+          "dist": 0,
+          "lat": 22.5675,
+          "lon": 88.3707
+        },
+        {
+          "code": "PNBE",
+          "name": "Patna Jn",
+          "day": 1,
+          "arr": "01:55",
+          "dep": "02:00",
+          "dist": 536,
+          "lat": 25.6093,
+          "lon": 85.1376
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 1,
+          "arr": "06:10",
+          "dep": "06:12",
+          "dist": 986,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "08:15",
+          "dep": null,
+          "dist": 1525,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Sealdah Thu 17 Sep 20:20",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Sealdah",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Sealdah",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T20:20:00+05:30"
+    },
     {
       "number": "12423",
       "name": "Dibrugarh Rajdhani Express",
@@ -67,500 +126,10 @@
       "last_station": "New Delhi",
       "next_station": "Patna Jn",
       "eta": "22:55",
-      "percent_complete": 12.3,
+      "percent_complete": 12.8,
       "origin": "New Delhi",
       "destination": "Dibrugarh",
       "service_date": "2026-09-17"
-    },
-    {
-      "number": "12842",
-      "name": "Coromandel Express",
-      "type": "Mail-Express",
-      "zone": "ER",
-      "route": [
-        {
-          "code": "MAS",
-          "name": "Chennai Central",
-          "day": 1,
-          "arr": null,
-          "dep": "08:00",
-          "dist": 0,
-          "lat": 13.0827,
-          "lon": 80.2757
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 1,
-          "arr": "13:15",
-          "dep": "13:20",
-          "dist": 550,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "VSKP",
-          "name": "Visakhapatnam Jn",
-          "day": 1,
-          "arr": "18:35",
-          "dep": "18:50",
-          "dist": 787,
-          "lat": 17.7231,
-          "lon": 83.3013
-        },
-        {
-          "code": "BBS",
-          "name": "Bhubaneswar",
-          "day": 2,
-          "arr": "00:20",
-          "dep": "00:30",
-          "dist": 1220,
-          "lat": 20.268,
-          "lon": 85.836
-        },
-        {
-          "code": "KGP",
-          "name": "Kharagpur Jn",
-          "day": 2,
-          "arr": "04:15",
-          "dep": "04:17",
-          "dist": 1543,
-          "lat": 22.3302,
-          "lon": 87.3237
-        },
-        {
-          "code": "HWH",
-          "name": "Howrah Jn",
-          "day": 2,
-          "arr": "05:35",
-          "dep": null,
-          "dist": 1659,
-          "lat": 22.5839,
-          "lon": 88.3425
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Vijayawada Jn and Visakhapatnam Jn — running 4 min late",
-      "delay_min": 4,
-      "last_station": "Vijayawada Jn",
-      "next_station": "Visakhapatnam Jn",
-      "eta": "18:39",
-      "percent_complete": 35.9,
-      "origin": "Chennai Central",
-      "destination": "Howrah Jn",
-      "service_date": "2026-09-17"
-    },
-    {
-      "number": "12019",
-      "name": "New Delhi Dehradun Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "06:50",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "MTC",
-          "name": "Meerut City",
-          "day": 1,
-          "arr": "08:07",
-          "dep": "08:09",
-          "dist": 79,
-          "lat": 28.9767,
-          "lon": 77.7061
-        },
-        {
-          "code": "HW",
-          "name": "Haridwar Jn",
-          "day": 1,
-          "arr": "10:50",
-          "dep": "10:55",
-          "dist": 200,
-          "lat": 29.9457,
-          "lon": 78.1642
-        },
-        {
-          "code": "DDN",
-          "name": "Dehradun",
-          "day": 1,
-          "arr": "12:25",
-          "dep": null,
-          "dist": 230,
-          "lat": 30.3165,
-          "lon": 78.0322
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 06:50",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Dehradun",
-      "service_date": null,
-      "next_departure": "2026-09-18T06:50:00+05:30"
-    },
-    {
-      "number": "12028",
-      "name": "Bengaluru Chennai Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "SR",
-      "route": [
-        {
-          "code": "SBC",
-          "name": "KSR Bengaluru",
-          "day": 1,
-          "arr": null,
-          "dep": "16:25",
-          "dist": 0,
-          "lat": 12.9767,
-          "lon": 77.5713
-        },
-        {
-          "code": "JTJ",
-          "name": "Jolarpettai Jn",
-          "day": 1,
-          "arr": "18:37",
-          "dep": "18:39",
-          "dist": 187,
-          "lat": 12.5765,
-          "lon": 78.5751
-        },
-        {
-          "code": "KPD",
-          "name": "Katpadi Jn",
-          "day": 1,
-          "arr": "19:22",
-          "dep": "19:24",
-          "dist": 232,
-          "lat": 12.9698,
-          "lon": 79.1489
-        },
-        {
-          "code": "MAS",
-          "name": "Chennai Central",
-          "day": 1,
-          "arr": "21:30",
-          "dep": null,
-          "dist": 362,
-          "lat": 13.0827,
-          "lon": 80.2757
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs KSR Bengaluru Thu 17 Sep 16:25",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "KSR Bengaluru",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "KSR Bengaluru",
-      "destination": "Chennai Central",
-      "service_date": null,
-      "next_departure": "2026-09-17T16:25:00+05:30"
-    },
-    {
-      "number": "12002",
-      "name": "Bhopal New Delhi Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "WCR",
-      "route": [
-        {
-          "code": "RKMP",
-          "name": "Rani Kamalapati",
-          "day": 1,
-          "arr": null,
-          "dep": "14:50",
-          "dist": 0,
-          "lat": 23.2141,
-          "lon": 77.416
-        },
-        {
-          "code": "JHS",
-          "name": "Jhansi Jn",
-          "day": 1,
-          "arr": "17:23",
-          "dep": "17:28",
-          "dist": 299,
-          "lat": 25.452,
-          "lon": 78.569
-        },
-        {
-          "code": "GWL",
-          "name": "Gwalior Jn",
-          "day": 1,
-          "arr": "18:23",
-          "dep": "18:25",
-          "dist": 396,
-          "lat": 26.2183,
-          "lon": 78.1828
-        },
-        {
-          "code": "AGC",
-          "name": "Agra Cantt",
-          "day": 1,
-          "arr": "19:33",
-          "dep": "19:35",
-          "dist": 514,
-          "lat": 27.1591,
-          "lon": 78.0092
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": "21:40",
-          "dep": null,
-          "dist": 702,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Rani Kamalapati Thu 17 Sep 14:50",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Rani Kamalapati",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Rani Kamalapati",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-17T14:50:00+05:30"
-    },
-    {
-      "number": "12431",
-      "name": "Trivandrum Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "11:00",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 1,
-          "arr": "22:34",
-          "dep": "22:36",
-          "dist": 971,
-          "lat": 22.3072,
-          "lon": 73.1812
-        },
-        {
-          "code": "MAO",
-          "name": "Madgaon Jn",
-          "day": 2,
-          "arr": "09:05",
-          "dep": "09:10",
-          "dist": 1550,
-          "lat": 15.2734,
-          "lon": 73.9862
-        },
-        {
-          "code": "ERS",
-          "name": "Ernakulam Jn",
-          "day": 2,
-          "arr": "20:35",
-          "dep": "20:45",
-          "dist": 2350,
-          "lat": 9.9686,
-          "lon": 76.2864
-        },
-        {
-          "code": "TVC",
-          "name": "Thiruvananthapuram Central",
-          "day": 3,
-          "arr": "04:25",
-          "dep": null,
-          "dist": 2649,
-          "lat": 8.4875,
-          "lon": 76.9525
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Madgaon Jn and Ernakulam Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Madgaon Jn",
-      "next_station": "Ernakulam Jn",
-      "eta": "20:35",
-      "percent_complete": 72.4,
-      "origin": "New Delhi",
-      "destination": "Thiruvananthapuram Central",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12301",
-      "name": "Howrah Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "ER",
-      "route": [
-        {
-          "code": "HWH",
-          "name": "Howrah Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "16:50",
-          "dist": 0,
-          "lat": 22.5839,
-          "lon": 88.3425
-        },
-        {
-          "code": "DHN",
-          "name": "Dhanbad Jn",
-          "day": 1,
-          "arr": "19:38",
-          "dep": "19:40",
-          "dist": 259,
-          "lat": 23.7957,
-          "lon": 86.4304
-        },
-        {
-          "code": "GAYA",
-          "name": "Gaya Jn",
-          "day": 1,
-          "arr": "21:33",
-          "dep": "21:35",
-          "dist": 422,
-          "lat": 24.7955,
-          "lon": 84.9994
-        },
-        {
-          "code": "DDU",
-          "name": "Pt. Deen Dayal Upadhyaya Jn",
-          "day": 1,
-          "arr": "23:33",
-          "dep": "23:38",
-          "dist": 587,
-          "lat": 25.2822,
-          "lon": 83.2412
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 2,
-          "arr": "03:32",
-          "dep": "03:34",
-          "dist": 1005,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 2,
-          "arr": "10:00",
-          "dep": null,
-          "dist": 1447,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Howrah Jn Thu 17 Sep 16:50",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Howrah Jn",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Howrah Jn",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-17T16:50:00+05:30"
-    },
-    {
-      "number": "12724",
-      "name": "Andhra Pradesh Express",
-      "type": "Mail-Express",
-      "zone": "SCR",
-      "route": [
-        {
-          "code": "HYB",
-          "name": "Hyderabad Deccan",
-          "day": 1,
-          "arr": null,
-          "dep": "19:50",
-          "dist": 0,
-          "lat": 17.3903,
-          "lon": 78.4622
-        },
-        {
-          "code": "SC",
-          "name": "Secunderabad Jn",
-          "day": 1,
-          "arr": "20:25",
-          "dep": "20:35",
-          "dist": 9,
-          "lat": 17.4344,
-          "lon": 78.5025
-        },
-        {
-          "code": "KZJ",
-          "name": "Kazipet Jn",
-          "day": 1,
-          "arr": "22:55",
-          "dep": "23:00",
-          "dist": 146,
-          "lat": 17.9926,
-          "lon": 79.5539
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "04:50",
-          "dep": "05:00",
-          "dist": 471,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 2,
-          "arr": "11:35",
-          "dep": "11:45",
-          "dist": 863,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "NZM",
-          "name": "Hazrat Nizamuddin",
-          "day": 2,
-          "arr": "19:15",
-          "dep": null,
-          "dist": 1571,
-          "lat": 28.5877,
-          "lon": 77.2534
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Bhopal Jn and Hazrat Nizamuddin — running 6 min late",
-      "delay_min": 6,
-      "last_station": "Bhopal Jn",
-      "next_station": "Hazrat Nizamuddin",
-      "eta": "19:24",
-      "percent_complete": 70.2,
-      "origin": "Hyderabad Deccan",
-      "destination": "Hazrat Nizamuddin",
-      "service_date": "2026-09-16"
     },
     {
       "number": "12615",
@@ -630,672 +199,15 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Nagpur and Vijayawada Jn — running on time",
-      "delay_min": 0,
+      "status_label": "Between Nagpur and Vijayawada Jn — running 3 min early",
+      "delay_min": -3,
       "last_station": "Nagpur",
       "next_station": "Vijayawada Jn",
-      "eta": "23:35",
-      "percent_complete": 53.9,
+      "eta": "23:32",
+      "percent_complete": 54.3,
       "origin": "New Delhi",
       "destination": "Chennai Central",
       "service_date": "2026-09-16"
-    },
-    {
-      "number": "12951",
-      "name": "Mumbai Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "WR",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "16:55",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "KOTA",
-          "name": "Kota Jn",
-          "day": 1,
-          "arr": "21:33",
-          "dep": "21:35",
-          "dist": 465,
-          "lat": 25.1804,
-          "lon": 75.8648
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 2,
-          "arr": "04:04",
-          "dep": "04:06",
-          "dist": 971,
-          "lat": 22.3072,
-          "lon": 73.1812
-        },
-        {
-          "code": "ST",
-          "name": "Surat",
-          "day": 2,
-          "arr": "05:23",
-          "dep": "05:25",
-          "dist": 1077,
-          "lat": 21.2049,
-          "lon": 72.8311
-        },
-        {
-          "code": "BCT",
-          "name": "Mumbai Central",
-          "day": 2,
-          "arr": "08:35",
-          "dep": null,
-          "dist": 1384,
-          "lat": 18.9694,
-          "lon": 72.8194
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Thu 17 Sep 16:55",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Mumbai Central",
-      "service_date": null,
-      "next_departure": "2026-09-17T16:55:00+05:30"
-    },
-    {
-      "number": "12650",
-      "name": "Hazrat Nizamuddin KSR Bengaluru Sampark Kranti Express",
-      "type": "Sampark Kranti",
-      "zone": "SWR",
-      "route": [
-        {
-          "code": "NZM",
-          "name": "Hazrat Nizamuddin",
-          "day": 1,
-          "arr": null,
-          "dep": "10:15",
-          "dist": 0,
-          "lat": 28.5877,
-          "lon": 77.2534
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 1,
-          "arr": "20:35",
-          "dep": "20:45",
-          "dist": 707,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "GTL",
-          "name": "Guntakal Jn",
-          "day": 2,
-          "arr": "11:20",
-          "dep": "11:25",
-          "dist": 1772,
-          "lat": 15.167,
-          "lon": 77.3667
-        },
-        {
-          "code": "SBC",
-          "name": "KSR Bengaluru",
-          "day": 2,
-          "arr": "16:30",
-          "dep": null,
-          "dist": 2077,
-          "lat": 12.9767,
-          "lon": 77.5713
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Hazrat Nizamuddin and Bhopal Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Hazrat Nizamuddin",
-      "next_station": "Bhopal Jn",
-      "eta": "20:35",
-      "percent_complete": 13.7,
-      "origin": "Hazrat Nizamuddin",
-      "destination": "KSR Bengaluru",
-      "service_date": "2026-09-17"
-    },
-    {
-      "number": "12259",
-      "name": "Sealdah Duronto Express",
-      "type": "Duronto",
-      "zone": "ER",
-      "route": [
-        {
-          "code": "SDAH",
-          "name": "Sealdah",
-          "day": 1,
-          "arr": null,
-          "dep": "20:20",
-          "dist": 0,
-          "lat": 22.5675,
-          "lon": 88.3707
-        },
-        {
-          "code": "PNBE",
-          "name": "Patna Jn",
-          "day": 1,
-          "arr": "01:55",
-          "dep": "02:00",
-          "dist": 536,
-          "lat": 25.6093,
-          "lon": 85.1376
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 1,
-          "arr": "06:10",
-          "dep": "06:12",
-          "dist": 986,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 2,
-          "arr": "08:15",
-          "dep": null,
-          "dist": 1525,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Sealdah Thu 17 Sep 20:20",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Sealdah",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Sealdah",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-17T20:20:00+05:30"
-    },
-    {
-      "number": "12012",
-      "name": "Kalka New Delhi Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "KLK",
-          "name": "Kalka",
-          "day": 1,
-          "arr": null,
-          "dep": "17:40",
-          "dist": 0,
-          "lat": 30.8395,
-          "lon": 76.9354
-        },
-        {
-          "code": "CDG",
-          "name": "Chandigarh",
-          "day": 1,
-          "arr": "18:25",
-          "dep": "18:30",
-          "dist": 53,
-          "lat": 30.7333,
-          "lon": 76.7794
-        },
-        {
-          "code": "UMB",
-          "name": "Ambala Cant Jn",
-          "day": 1,
-          "arr": "19:10",
-          "dep": "19:13",
-          "dist": 98,
-          "lat": 30.3641,
-          "lon": 76.8016
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": "22:20",
-          "dep": null,
-          "dist": 298,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Kalka Thu 17 Sep 17:40",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Kalka",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Kalka",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-17T17:40:00+05:30"
-    },
-    {
-      "number": "12001",
-      "name": "New Delhi Bhopal Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "WCR",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "06:00",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "AGC",
-          "name": "Agra Cantt",
-          "day": 1,
-          "arr": "07:59",
-          "dep": "08:01",
-          "dist": 188,
-          "lat": 27.1591,
-          "lon": 78.0092
-        },
-        {
-          "code": "GWL",
-          "name": "Gwalior Jn",
-          "day": 1,
-          "arr": "09:07",
-          "dep": "09:09",
-          "dist": 306,
-          "lat": 26.2183,
-          "lon": 78.1828
-        },
-        {
-          "code": "JHS",
-          "name": "Jhansi Jn",
-          "day": 1,
-          "arr": "10:12",
-          "dep": "10:17",
-          "dist": 403,
-          "lat": 25.452,
-          "lon": 78.569
-        },
-        {
-          "code": "RKMP",
-          "name": "Rani Kamalapati",
-          "day": 1,
-          "arr": "12:50",
-          "dep": null,
-          "dist": 702,
-          "lat": 23.2141,
-          "lon": 77.416
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 06:00",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Rani Kamalapati",
-      "service_date": null,
-      "next_departure": "2026-09-18T06:00:00+05:30"
-    },
-    {
-      "number": "12617",
-      "name": "Mangala Lakshadweep Express",
-      "type": "Mail-Express",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "NZM",
-          "name": "Hazrat Nizamuddin",
-          "day": 1,
-          "arr": null,
-          "dep": "11:15",
-          "dist": 0,
-          "lat": 28.5877,
-          "lon": 77.2534
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 1,
-          "arr": "19:40",
-          "dep": "19:50",
-          "dist": 708,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "02:20",
-          "dep": "02:30",
-          "dist": 1100,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "13:15",
-          "dep": "13:20",
-          "dist": 1677,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "ERS",
-          "name": "Ernakulam Jn",
-          "day": 3,
-          "arr": "08:15",
-          "dep": null,
-          "dist": 2565,
-          "lat": 9.9686,
-          "lon": 76.2864
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Vijayawada Jn and Ernakulam Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Vijayawada Jn",
-      "next_station": "Ernakulam Jn",
-      "eta": "08:15",
-      "percent_complete": 67.3,
-      "origin": "Hazrat Nizamuddin",
-      "destination": "Ernakulam Jn",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "22119",
-      "name": "Mumbai Madgaon Tejas Express",
-      "type": "Tejas",
-      "zone": "CR",
-      "route": [
-        {
-          "code": "CSTM",
-          "name": "Mumbai CSMT",
-          "day": 1,
-          "arr": null,
-          "dep": "05:50",
-          "dist": 0,
-          "lat": 18.9401,
-          "lon": 72.8352
-        },
-        {
-          "code": "PNVL",
-          "name": "Panvel",
-          "day": 1,
-          "arr": "06:38",
-          "dep": "06:40",
-          "dist": 50,
-          "lat": 18.9894,
-          "lon": 73.1175
-        },
-        {
-          "code": "RN",
-          "name": "Ratnagiri",
-          "day": 1,
-          "arr": "10:03",
-          "dep": "10:05",
-          "dist": 340,
-          "lat": 16.9902,
-          "lon": 73.312
-        },
-        {
-          "code": "MAO",
-          "name": "Madgaon Jn",
-          "day": 1,
-          "arr": "13:10",
-          "dep": null,
-          "dist": 552,
-          "lat": 15.2734,
-          "lon": 73.9862
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Mumbai CSMT Sat 19 Sep 05:50",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Mumbai CSMT",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Mumbai CSMT",
-      "destination": "Madgaon Jn",
-      "service_date": null,
-      "next_departure": "2026-09-19T05:50:00+05:30"
-    },
-    {
-      "number": "22692",
-      "name": "Hazrat Nizamuddin KSR Bengaluru Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "SWR",
-      "route": [
-        {
-          "code": "NZM",
-          "name": "Hazrat Nizamuddin",
-          "day": 1,
-          "arr": null,
-          "dep": "20:35",
-          "dist": 0,
-          "lat": 28.5877,
-          "lon": 77.2534
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 2,
-          "arr": "05:40",
-          "dep": "05:45",
-          "dist": 709,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "10:55",
-          "dep": "11:05",
-          "dist": 1106,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "20:15",
-          "dep": "20:20",
-          "dist": 1836,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "SBC",
-          "name": "KSR Bengaluru",
-          "day": 3,
-          "arr": "07:40",
-          "dep": null,
-          "dist": 2444,
-          "lat": 12.9767,
-          "lon": 77.5713
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Hazrat Nizamuddin Thu 17 Sep 20:35",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Hazrat Nizamuddin",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Hazrat Nizamuddin",
-      "destination": "KSR Bengaluru",
-      "service_date": null,
-      "next_departure": "2026-09-17T20:35:00+05:30"
-    },
-    {
-      "number": "12626",
-      "name": "Kerala Express",
-      "type": "Mail-Express",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "TVC",
-          "name": "Thiruvananthapuram Central",
-          "day": 1,
-          "arr": null,
-          "dep": "14:00",
-          "dist": 0,
-          "lat": 8.4875,
-          "lon": 76.9525
-        },
-        {
-          "code": "ERS",
-          "name": "Ernakulam Jn",
-          "day": 1,
-          "arr": "21:45",
-          "dep": "21:55",
-          "dist": 242,
-          "lat": 9.9686,
-          "lon": 76.2864
-        },
-        {
-          "code": "MAS",
-          "name": "Chennai Central",
-          "day": 2,
-          "arr": "08:30",
-          "dep": "08:40",
-          "dist": 967,
-          "lat": 13.0827,
-          "lon": 80.2757
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "13:35",
-          "dep": "13:45",
-          "dist": 1478,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 3,
-          "arr": "01:00",
-          "dep": "01:10",
-          "dist": 2055,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 3,
-          "arr": "08:10",
-          "dep": "08:20",
-          "dist": 2447,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 3,
-          "arr": "17:20",
-          "dep": null,
-          "dist": 3149,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Bhopal Jn and New Delhi — running 6 min late",
-      "delay_min": 6,
-      "last_station": "Bhopal Jn",
-      "next_station": "New Delhi",
-      "eta": "17:26",
-      "percent_complete": 92.5,
-      "origin": "Thiruvananthapuram Central",
-      "destination": "New Delhi",
-      "service_date": "2026-09-15"
-    },
-    {
-      "number": "12011",
-      "name": "New Delhi Kalka Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "07:40",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "UMB",
-          "name": "Ambala Cant Jn",
-          "day": 1,
-          "arr": "10:35",
-          "dep": "10:38",
-          "dist": 200,
-          "lat": 30.3641,
-          "lon": 76.8016
-        },
-        {
-          "code": "CDG",
-          "name": "Chandigarh",
-          "day": 1,
-          "arr": "11:20",
-          "dep": "11:25",
-          "dist": 245,
-          "lat": 30.7333,
-          "lon": 76.7794
-        },
-        {
-          "code": "KLK",
-          "name": "Kalka",
-          "day": 1,
-          "arr": "12:10",
-          "dep": null,
-          "dist": 298,
-          "lat": 30.8395,
-          "lon": 76.9354
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 07:40",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Kalka",
-      "service_date": null,
-      "next_departure": "2026-09-18T07:40:00+05:30"
     },
     {
       "number": "12295",
@@ -1380,274 +292,196 @@
       "last_station": "Nagpur",
       "next_station": "Prayagraj Jn",
       "eta": "14:43",
-      "percent_complete": 80.6,
+      "percent_complete": 80.8,
       "origin": "KSR Bengaluru",
       "destination": "Patna Jn",
       "service_date": "2026-09-16"
     },
     {
-      "number": "12345",
-      "name": "Saraighat Express",
+      "number": "12649",
+      "name": "KSR Bengaluru Hazrat Nizamuddin Sampark Kranti Express",
+      "type": "Sampark Kranti",
+      "zone": "SWR",
+      "route": [
+        {
+          "code": "SBC",
+          "name": "KSR Bengaluru",
+          "day": 1,
+          "arr": null,
+          "dep": "19:10",
+          "dist": 0,
+          "lat": 12.9767,
+          "lon": 77.5713
+        },
+        {
+          "code": "GTL",
+          "name": "Guntakal Jn",
+          "day": 1,
+          "arr": "23:45",
+          "dep": "23:50",
+          "dist": 305,
+          "lat": 15.167,
+          "lon": 77.3667
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 2,
+          "arr": "14:20",
+          "dep": "14:30",
+          "dist": 1370,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "NZM",
+          "name": "Hazrat Nizamuddin",
+          "day": 3,
+          "arr": "05:55",
+          "dep": null,
+          "dist": 2077,
+          "lat": 28.5877,
+          "lon": 77.2534
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Bhopal Jn and Hazrat Nizamuddin — running on time",
+      "delay_min": 0,
+      "last_station": "Bhopal Jn",
+      "next_station": "Hazrat Nizamuddin",
+      "eta": "05:53",
+      "percent_complete": 66.0,
+      "origin": "KSR Bengaluru",
+      "destination": "Hazrat Nizamuddin",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "12010",
+      "name": "Ahmedabad Mumbai Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "WR",
+      "route": [
+        {
+          "code": "ADI",
+          "name": "Ahmedabad Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "17:05",
+          "dist": 0,
+          "lat": 23.0225,
+          "lon": 72.5714
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 1,
+          "arr": "18:52",
+          "dep": "18:54",
+          "dist": 101,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "BCT",
+          "name": "Mumbai Central",
+          "day": 1,
+          "arr": "22:30",
+          "dep": null,
+          "dist": 493,
+          "lat": 18.9694,
+          "lon": 72.8194
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Ahmedabad Jn Thu 17 Sep 17:05",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Ahmedabad Jn",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Ahmedabad Jn",
+      "destination": "Mumbai Central",
+      "service_date": null,
+      "next_departure": "2026-09-17T17:05:00+05:30"
+    },
+    {
+      "number": "15905",
+      "name": "Dibrugarh Kanyakumari Vivek Express",
       "type": "Superfast",
       "zone": "NFR",
       "route": [
         {
-          "code": "HWH",
-          "name": "Howrah Jn",
+          "code": "DBRG",
+          "name": "Dibrugarh",
           "day": 1,
           "arr": null,
-          "dep": "15:50",
+          "dep": "21:40",
           "dist": 0,
-          "lat": 22.5839,
-          "lon": 88.3425
-        },
-        {
-          "code": "NJP",
-          "name": "New Jalpaiguri",
-          "day": 2,
-          "arr": "01:35",
-          "dep": "01:45",
-          "dist": 578,
-          "lat": 26.6839,
-          "lon": 88.438
+          "lat": 27.4728,
+          "lon": 94.912
         },
         {
           "code": "GHY",
           "name": "Guwahati",
           "day": 2,
-          "arr": "09:35",
-          "dep": null,
-          "dist": 998,
+          "arr": "09:05",
+          "dep": "09:25",
+          "dist": 510,
           "lat": 26.1858,
           "lon": 91.7086
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Howrah Jn Thu 17 Sep 15:50",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Howrah Jn",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Howrah Jn",
-      "destination": "Guwahati",
-      "service_date": null,
-      "next_departure": "2026-09-17T15:50:00+05:30"
-    },
-    {
-      "number": "12296",
-      "name": "Sanghamitra Express",
-      "type": "Superfast",
-      "zone": "SWR",
-      "route": [
-        {
-          "code": "PNBE",
-          "name": "Patna Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "07:15",
-          "dist": 0,
-          "lat": 25.6093,
-          "lon": 85.1376
         },
         {
-          "code": "GAYA",
-          "name": "Gaya Jn",
-          "day": 1,
-          "arr": "09:55",
-          "dep": "10:00",
-          "dist": 121,
-          "lat": 24.7955,
-          "lon": 84.9994
-        },
-        {
-          "code": "PRYJ",
-          "name": "Prayagraj Jn",
-          "day": 1,
-          "arr": "15:10",
-          "dep": "15:20",
-          "dist": 374,
-          "lat": 25.4484,
-          "lon": 81.8546
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "03:30",
-          "dep": "03:40",
-          "dist": 921,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "SC",
-          "name": "Secunderabad Jn",
-          "day": 2,
-          "arr": "13:05",
-          "dep": "13:15",
-          "dist": 1303,
-          "lat": 17.4344,
-          "lon": 78.5025
-        },
-        {
-          "code": "GTL",
-          "name": "Guntakal Jn",
-          "day": 2,
-          "arr": "17:50",
-          "dep": "17:55",
-          "dist": 1691,
-          "lat": 15.167,
-          "lon": 77.3667
-        },
-        {
-          "code": "SBC",
-          "name": "KSR Bengaluru",
+          "code": "BZA",
+          "name": "Vijayawada Jn",
           "day": 3,
-          "arr": "00:15",
+          "arr": "18:35",
+          "dep": "18:45",
+          "dist": 2450,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "MS",
+          "name": "Chennai Egmore",
+          "day": 4,
+          "arr": "04:15",
+          "dep": "04:25",
+          "dist": 2884,
+          "lat": 13.0732,
+          "lon": 80.2609
+        },
+        {
+          "code": "MDU",
+          "name": "Madurai Jn",
+          "day": 4,
+          "arr": "11:10",
+          "dep": "11:20",
+          "dist": 3312,
+          "lat": 9.9252,
+          "lon": 78.1198
+        },
+        {
+          "code": "CAPE",
+          "name": "Kanyakumari",
+          "day": 4,
+          "arr": "15:30",
           "dep": null,
-          "dist": 1996,
-          "lat": 12.9767,
-          "lon": 77.5713
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Secunderabad Jn and Guntakal Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Secunderabad Jn",
-      "next_station": "Guntakal Jn",
-      "eta": "17:50",
-      "percent_complete": 70.2,
-      "origin": "Patna Jn",
-      "destination": "KSR Bengaluru",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12020",
-      "name": "Dehradun New Delhi Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "DDN",
-          "name": "Dehradun",
-          "day": 1,
-          "arr": null,
-          "dep": "16:50",
-          "dist": 0,
-          "lat": 30.3165,
-          "lon": 78.0322
-        },
-        {
-          "code": "HW",
-          "name": "Haridwar Jn",
-          "day": 1,
-          "arr": "18:15",
-          "dep": "18:20",
-          "dist": 30,
-          "lat": 29.9457,
-          "lon": 78.1642
-        },
-        {
-          "code": "MTC",
-          "name": "Meerut City",
-          "day": 1,
-          "arr": "21:00",
-          "dep": "21:02",
-          "dist": 151,
-          "lat": 28.9767,
-          "lon": 77.7061
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": "22:30",
-          "dep": null,
-          "dist": 230,
-          "lat": 28.6431,
-          "lon": 77.2197
+          "dist": 3532,
+          "lat": 8.079,
+          "lon": 77.541
         }
       ],
       "status": "not_running",
-      "status_label": "Not running now — next departs Dehradun Thu 17 Sep 16:50",
+      "status_label": "Not running now — next departs Dibrugarh Fri 18 Sep 21:40",
       "delay_min": 0,
       "last_station": null,
-      "next_station": "Dehradun",
+      "next_station": "Dibrugarh",
       "eta": null,
       "percent_complete": 0.0,
-      "origin": "Dehradun",
-      "destination": "New Delhi",
+      "origin": "Dibrugarh",
+      "destination": "Kanyakumari",
       "service_date": null,
-      "next_departure": "2026-09-17T16:50:00+05:30"
-    },
-    {
-      "number": "12926",
-      "name": "Paschim Express",
-      "type": "Mail-Express",
-      "zone": "WR",
-      "route": [
-        {
-          "code": "ASR",
-          "name": "Amritsar Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "07:15",
-          "dist": 0,
-          "lat": 31.634,
-          "lon": 74.8723
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": "15:50",
-          "dep": "16:10",
-          "dist": 379,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "KOTA",
-          "name": "Kota Jn",
-          "day": 1,
-          "arr": "22:35",
-          "dep": "22:40",
-          "dist": 915,
-          "lat": 25.1804,
-          "lon": 75.8648
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 2,
-          "arr": "03:55",
-          "dep": "03:57",
-          "dist": 1465,
-          "lat": 22.3072,
-          "lon": 73.1812
-        },
-        {
-          "code": "BDTS",
-          "name": "Bandra Terminus",
-          "day": 2,
-          "arr": "09:05",
-          "dep": null,
-          "dist": 1862,
-          "lat": 19.0648,
-          "lon": 72.8397
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Amritsar Jn and New Delhi — running on time",
-      "delay_min": 0,
-      "last_station": "Amritsar Jn",
-      "next_station": "New Delhi",
-      "eta": "15:50",
-      "percent_complete": 17.0,
-      "origin": "Amritsar Jn",
-      "destination": "Bandra Terminus",
-      "service_date": "2026-09-17"
+      "next_departure": "2026-09-18T21:40:00+05:30"
     },
     {
       "number": "12952",
@@ -1719,9 +553,87 @@
       "next_departure": "2026-09-17T17:00:00+05:30"
     },
     {
-      "number": "22435",
-      "name": "New Delhi Varanasi Vande Bharat Express",
-      "type": "Vande Bharat",
+      "number": "12802",
+      "name": "Purushottam Express",
+      "type": "Mail-Express",
+      "zone": "ECoR",
+      "route": [
+        {
+          "code": "PURI",
+          "name": "Puri",
+          "day": 1,
+          "arr": null,
+          "dep": "10:15",
+          "dist": 0,
+          "lat": 19.8135,
+          "lon": 85.8312
+        },
+        {
+          "code": "BBS",
+          "name": "Bhubaneswar",
+          "day": 1,
+          "arr": "11:50",
+          "dep": "12:00",
+          "dist": 56,
+          "lat": 20.268,
+          "lon": 85.836
+        },
+        {
+          "code": "GAYA",
+          "name": "Gaya Jn",
+          "day": 1,
+          "arr": "22:00",
+          "dep": "22:05",
+          "dist": 786,
+          "lat": 24.7955,
+          "lon": 84.9994
+        },
+        {
+          "code": "PRYJ",
+          "name": "Prayagraj Jn",
+          "day": 2,
+          "arr": "04:00",
+          "dep": "04:05",
+          "dist": 1153,
+          "lat": 25.4484,
+          "lon": 81.8546
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 2,
+          "arr": "06:15",
+          "dep": "06:17",
+          "dist": 1346,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "11:40",
+          "dep": null,
+          "dist": 1786,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Bhubaneswar and Gaya Jn — running on time",
+      "delay_min": 0,
+      "last_station": "Bhubaneswar",
+      "next_station": "Gaya Jn",
+      "eta": "22:00",
+      "percent_complete": 13.4,
+      "origin": "Puri",
+      "destination": "New Delhi",
+      "service_date": "2026-09-17"
+    },
+    {
+      "number": "12431",
+      "name": "Trivandrum Rajdhani Express",
+      "type": "Rajdhani",
       "zone": "NR",
       "route": [
         {
@@ -1729,315 +641,61 @@
           "name": "New Delhi",
           "day": 1,
           "arr": null,
-          "dep": "06:00",
+          "dep": "11:00",
           "dist": 0,
           "lat": 28.6431,
           "lon": 77.2197
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 1,
-          "arr": "10:30",
-          "dep": "10:32",
-          "dist": 440,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "PRYJ",
-          "name": "Prayagraj Jn",
-          "day": 1,
-          "arr": "12:20",
-          "dep": "12:22",
-          "dist": 633,
-          "lat": 25.4484,
-          "lon": 81.8546
-        },
-        {
-          "code": "BSB",
-          "name": "Varanasi Jn",
-          "day": 1,
-          "arr": "14:00",
-          "dep": null,
-          "dist": 759,
-          "lat": 25.3236,
-          "lon": 82.9938
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 06:00",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Varanasi Jn",
-      "service_date": null,
-      "next_departure": "2026-09-18T06:00:00+05:30"
-    },
-    {
-      "number": "12649",
-      "name": "KSR Bengaluru Hazrat Nizamuddin Sampark Kranti Express",
-      "type": "Sampark Kranti",
-      "zone": "SWR",
-      "route": [
-        {
-          "code": "SBC",
-          "name": "KSR Bengaluru",
-          "day": 1,
-          "arr": null,
-          "dep": "19:10",
-          "dist": 0,
-          "lat": 12.9767,
-          "lon": 77.5713
-        },
-        {
-          "code": "GTL",
-          "name": "Guntakal Jn",
-          "day": 1,
-          "arr": "23:45",
-          "dep": "23:50",
-          "dist": 305,
-          "lat": 15.167,
-          "lon": 77.3667
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 2,
-          "arr": "14:20",
-          "dep": "14:30",
-          "dist": 1370,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "NZM",
-          "name": "Hazrat Nizamuddin",
-          "day": 3,
-          "arr": "05:55",
-          "dep": null,
-          "dist": 2077,
-          "lat": 28.5877,
-          "lon": 77.2534
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Guntakal Jn and Bhopal Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Guntakal Jn",
-      "next_station": "Bhopal Jn",
-      "eta": "14:20",
-      "percent_complete": 66.0,
-      "origin": "KSR Bengaluru",
-      "destination": "Hazrat Nizamuddin",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12723",
-      "name": "Andhra Pradesh Express",
-      "type": "Mail-Express",
-      "zone": "SCR",
-      "route": [
-        {
-          "code": "NZM",
-          "name": "Hazrat Nizamuddin",
-          "day": 1,
-          "arr": null,
-          "dep": "06:40",
-          "dist": 0,
-          "lat": 28.5877,
-          "lon": 77.2534
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 1,
-          "arr": "14:05",
-          "dep": "14:15",
-          "dist": 708,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 1,
-          "arr": "20:55",
-          "dep": "21:05",
-          "dist": 1100,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "KZJ",
-          "name": "Kazipet Jn",
-          "day": 2,
-          "arr": "02:50",
-          "dep": "02:55",
-          "dist": 1425,
-          "lat": 17.9926,
-          "lon": 79.5539
-        },
-        {
-          "code": "SC",
-          "name": "Secunderabad Jn",
-          "day": 2,
-          "arr": "05:15",
-          "dep": "05:25",
-          "dist": 1562,
-          "lat": 17.4344,
-          "lon": 78.5025
-        },
-        {
-          "code": "HYB",
-          "name": "Hyderabad Deccan",
-          "day": 2,
-          "arr": "06:00",
-          "dep": null,
-          "dist": 1571,
-          "lat": 17.3903,
-          "lon": 78.4622
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Bhopal Jn and Nagpur — running 1 min late",
-      "delay_min": 1,
-      "last_station": "Bhopal Jn",
-      "next_station": "Nagpur",
-      "eta": "20:56",
-      "percent_complete": 45.6,
-      "origin": "Hazrat Nizamuddin",
-      "destination": "Hyderabad Deccan",
-      "service_date": "2026-09-17"
-    },
-    {
-      "number": "12314",
-      "name": "New Delhi Sealdah Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "ER",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "16:25",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 1,
-          "arr": "22:35",
-          "dep": "22:37",
-          "dist": 509,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "PNBE",
-          "name": "Patna Jn",
-          "day": 2,
-          "arr": "03:55",
-          "dep": "04:00",
-          "dist": 959,
-          "lat": 25.6093,
-          "lon": 85.1376
-        },
-        {
-          "code": "SDAH",
-          "name": "Sealdah",
-          "day": 2,
-          "arr": "09:45",
-          "dep": null,
-          "dist": 1445,
-          "lat": 22.5675,
-          "lon": 88.3707
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Thu 17 Sep 16:25",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Sealdah",
-      "service_date": null,
-      "next_departure": "2026-09-17T16:25:00+05:30"
-    },
-    {
-      "number": "12925",
-      "name": "Paschim Express",
-      "type": "Mail-Express",
-      "zone": "WR",
-      "route": [
-        {
-          "code": "BDTS",
-          "name": "Bandra Terminus",
-          "day": 1,
-          "arr": null,
-          "dep": "11:35",
-          "dist": 0,
-          "lat": 19.0648,
-          "lon": 72.8397
         },
         {
           "code": "BRC",
           "name": "Vadodara Jn",
           "day": 1,
-          "arr": "16:52",
-          "dep": "16:54",
-          "dist": 397,
+          "arr": "22:34",
+          "dep": "22:36",
+          "dist": 971,
           "lat": 22.3072,
           "lon": 73.1812
         },
         {
-          "code": "KOTA",
-          "name": "Kota Jn",
-          "day": 1,
-          "arr": "23:45",
-          "dep": "23:50",
-          "dist": 947,
-          "lat": 25.1804,
-          "lon": 75.8648
+          "code": "MAO",
+          "name": "Madgaon Jn",
+          "day": 2,
+          "arr": "09:05",
+          "dep": "09:10",
+          "dist": 1550,
+          "lat": 15.2734,
+          "lon": 73.9862
         },
         {
-          "code": "NDLS",
-          "name": "New Delhi",
+          "code": "ERS",
+          "name": "Ernakulam Jn",
           "day": 2,
-          "arr": "07:20",
-          "dep": "07:40",
-          "dist": 1483,
-          "lat": 28.6431,
-          "lon": 77.2197
+          "arr": "20:35",
+          "dep": "20:45",
+          "dist": 2350,
+          "lat": 9.9686,
+          "lon": 76.2864
         },
         {
-          "code": "ASR",
-          "name": "Amritsar Jn",
-          "day": 2,
-          "arr": "16:15",
+          "code": "TVC",
+          "name": "Thiruvananthapuram Central",
+          "day": 3,
+          "arr": "04:25",
           "dep": null,
-          "dist": 1862,
-          "lat": 31.634,
-          "lon": 74.8723
+          "dist": 2649,
+          "lat": 8.4875,
+          "lon": 76.9525
         }
       ],
       "status": "running",
-      "status_label": "Between New Delhi and Amritsar Jn — running 6 min late",
-      "delay_min": 6,
-      "last_station": "New Delhi",
-      "next_station": "Amritsar Jn",
-      "eta": "16:23",
-      "percent_complete": 95.3,
-      "origin": "Bandra Terminus",
-      "destination": "Amritsar Jn",
+      "status_label": "Between Madgaon Jn and Ernakulam Jn — running 1 min early",
+      "delay_min": -1,
+      "last_station": "Madgaon Jn",
+      "next_station": "Ernakulam Jn",
+      "eta": "20:34",
+      "percent_complete": 72.7,
+      "origin": "New Delhi",
+      "destination": "Thiruvananthapuram Central",
       "service_date": "2026-09-16"
     },
     {
@@ -2123,324 +781,146 @@
       "last_station": "Chennai Central",
       "next_station": "Ernakulam Jn",
       "eta": "16:15",
-      "percent_complete": 88.4,
+      "percent_complete": 88.6,
       "origin": "New Delhi",
       "destination": "Thiruvananthapuram Central",
       "service_date": "2026-09-15"
     },
     {
-      "number": "22436",
-      "name": "Varanasi New Delhi Vande Bharat Express",
-      "type": "Vande Bharat",
-      "zone": "NR",
+      "number": "16031",
+      "name": "Andaman Express",
+      "type": "Mail-Express",
+      "zone": "SR",
       "route": [
         {
-          "code": "BSB",
-          "name": "Varanasi Jn",
+          "code": "MS",
+          "name": "Chennai Egmore",
           "day": 1,
           "arr": null,
-          "dep": "15:00",
+          "dep": "18:50",
           "dist": 0,
-          "lat": 25.3236,
-          "lon": 82.9938
+          "lat": 13.0732,
+          "lon": 80.2609
         },
         {
-          "code": "PRYJ",
-          "name": "Prayagraj Jn",
-          "day": 1,
-          "arr": "16:35",
-          "dep": "16:37",
-          "dist": 126,
-          "lat": 25.4484,
-          "lon": 81.8546
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 1,
-          "arr": "18:25",
-          "dep": "18:27",
-          "dist": 319,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": "22:30",
-          "dep": null,
-          "dist": 759,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Varanasi Jn Thu 17 Sep 15:00",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Varanasi Jn",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Varanasi Jn",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-17T15:00:00+05:30"
-    },
-    {
-      "number": "12424",
-      "name": "Dibrugarh New Delhi Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "NFR",
-      "route": [
-        {
-          "code": "DBRG",
-          "name": "Dibrugarh",
-          "day": 1,
-          "arr": null,
-          "dep": "07:15",
-          "dist": 0,
-          "lat": 27.4728,
-          "lon": 94.912
-        },
-        {
-          "code": "GHY",
-          "name": "Guwahati",
-          "day": 1,
-          "arr": "14:55",
-          "dep": "15:10",
-          "dist": 352,
-          "lat": 26.1858,
-          "lon": 91.7086
-        },
-        {
-          "code": "NJP",
-          "name": "New Jalpaiguri",
-          "day": 1,
-          "arr": "21:10",
-          "dep": "21:20",
-          "dist": 675,
-          "lat": 26.6839,
-          "lon": 88.438
-        },
-        {
-          "code": "PNBE",
-          "name": "Patna Jn",
+          "code": "BZA",
+          "name": "Vijayawada Jn",
           "day": 2,
-          "arr": "04:35",
-          "dep": "04:45",
-          "dist": 1102,
-          "lat": 25.6093,
-          "lon": 85.1376
+          "arr": "01:35",
+          "dep": "01:45",
+          "dist": 434,
+          "lat": 16.5175,
+          "lon": 80.6252
         },
         {
-          "code": "NDLS",
-          "name": "New Delhi",
+          "code": "NGP",
+          "name": "Nagpur",
           "day": 2,
-          "arr": "15:35",
-          "dep": null,
-          "dist": 2100,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Dibrugarh Fri 18 Sep 07:15",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Dibrugarh",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Dibrugarh",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-18T07:15:00+05:30"
-    },
-    {
-      "number": "22120",
-      "name": "Madgaon Mumbai Tejas Express",
-      "type": "Tejas",
-      "zone": "CR",
-      "route": [
-        {
-          "code": "MAO",
-          "name": "Madgaon Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "14:20",
-          "dist": 0,
-          "lat": 15.2734,
-          "lon": 73.9862
-        },
-        {
-          "code": "RN",
-          "name": "Ratnagiri",
-          "day": 1,
-          "arr": "17:22",
-          "dep": "17:24",
-          "dist": 212,
-          "lat": 16.9902,
-          "lon": 73.312
-        },
-        {
-          "code": "PNVL",
-          "name": "Panvel",
-          "day": 1,
-          "arr": "20:35",
-          "dep": "20:37",
-          "dist": 502,
-          "lat": 18.9894,
-          "lon": 73.1175
-        },
-        {
-          "code": "CSTM",
-          "name": "Mumbai CSMT",
-          "day": 1,
-          "arr": "21:25",
-          "dep": null,
-          "dist": 552,
-          "lat": 18.9401,
-          "lon": 72.8352
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Madgaon Jn and Ratnagiri — running on time",
-      "delay_min": 0,
-      "last_station": "Madgaon Jn",
-      "next_station": "Ratnagiri",
-      "eta": "17:22",
-      "percent_complete": 0.9,
-      "origin": "Madgaon Jn",
-      "destination": "Mumbai CSMT",
-      "service_date": "2026-09-17"
-    },
-    {
-      "number": "12260",
-      "name": "Sealdah Duronto Express",
-      "type": "Duronto",
-      "zone": "ER",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "22:05",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 2,
-          "arr": "00:05",
-          "dep": "00:07",
-          "dist": 439,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "PNBE",
-          "name": "Patna Jn",
-          "day": 2,
-          "arr": "04:20",
-          "dep": "04:25",
-          "dist": 989,
-          "lat": 25.6093,
-          "lon": 85.1376
-        },
-        {
-          "code": "SDAH",
-          "name": "Sealdah",
-          "day": 2,
-          "arr": "10:00",
-          "dep": null,
-          "dist": 1525,
-          "lat": 22.5675,
-          "lon": 88.3707
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 22:05",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "New Delhi",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "New Delhi",
-      "destination": "Sealdah",
-      "service_date": null,
-      "next_departure": "2026-09-18T22:05:00+05:30"
-    },
-    {
-      "number": "12432",
-      "name": "Trivandrum Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "TVC",
-          "name": "Thiruvananthapuram Central",
-          "day": 1,
-          "arr": null,
-          "dep": "19:15",
-          "dist": 0,
-          "lat": 8.4875,
-          "lon": 76.9525
-        },
-        {
-          "code": "ERS",
-          "name": "Ernakulam Jn",
-          "day": 1,
-          "arr": "22:40",
-          "dep": "22:50",
-          "dist": 299,
-          "lat": 9.9686,
-          "lon": 76.2864
-        },
-        {
-          "code": "MAO",
-          "name": "Madgaon Jn",
-          "day": 2,
-          "arr": "10:05",
-          "dep": "10:10",
-          "dist": 1099,
-          "lat": 15.2734,
-          "lon": 73.9862
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 2,
-          "arr": "20:45",
-          "dep": "20:47",
-          "dist": 1678,
-          "lat": 22.3072,
-          "lon": 73.1812
+          "arr": "13:15",
+          "dep": "13:25",
+          "dist": 1011,
+          "lat": 21.1533,
+          "lon": 79.0833
         },
         {
           "code": "NDLS",
           "name": "New Delhi",
           "day": 3,
-          "arr": "08:00",
-          "dep": null,
-          "dist": 2649,
+          "arr": "07:15",
+          "dep": "07:30",
+          "dist": 2005,
           "lat": 28.6431,
           "lon": 77.2197
+        },
+        {
+          "code": "JAT",
+          "name": "Jammu Tawi",
+          "day": 3,
+          "arr": "18:10",
+          "dep": null,
+          "dist": 2429,
+          "lat": 32.6926,
+          "lon": 74.858
         }
       ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Thiruvananthapuram Central Fri 18 Sep 19:15",
+      "status": "running",
+      "status_label": "Between New Delhi and Jammu Tawi — running on time",
       "delay_min": 0,
-      "last_station": null,
-      "next_station": "Thiruvananthapuram Central",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Thiruvananthapuram Central",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-18T19:15:00+05:30"
+      "last_station": "New Delhi",
+      "next_station": "Jammu Tawi",
+      "eta": "18:10",
+      "percent_complete": 94.0,
+      "origin": "Chennai Egmore",
+      "destination": "Jammu Tawi",
+      "service_date": "2026-09-15"
+    },
+    {
+      "number": "16032",
+      "name": "Andaman Express",
+      "type": "Mail-Express",
+      "zone": "SR",
+      "route": [
+        {
+          "code": "JAT",
+          "name": "Jammu Tawi",
+          "day": 1,
+          "arr": null,
+          "dep": "08:40",
+          "dist": 0,
+          "lat": 32.6926,
+          "lon": 74.858
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": "19:40",
+          "dep": "19:55",
+          "dist": 424,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "13:00",
+          "dep": "13:10",
+          "dist": 1418,
+          "lat": 21.1533,
+          "lon": 79.0833
+        },
+        {
+          "code": "BZA",
+          "name": "Vijayawada Jn",
+          "day": 3,
+          "arr": "01:05",
+          "dep": "01:15",
+          "dist": 1995,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "MS",
+          "name": "Chennai Egmore",
+          "day": 3,
+          "arr": "08:15",
+          "dep": null,
+          "dist": 2429,
+          "lat": 13.0732,
+          "lon": 80.2609
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Nagpur and Vijayawada Jn — running on time",
+      "delay_min": 0,
+      "last_station": "Nagpur",
+      "next_station": "Vijayawada Jn",
+      "eta": "01:05",
+      "percent_complete": 61.1,
+      "origin": "Jammu Tawi",
+      "destination": "Chennai Egmore",
+      "service_date": "2026-09-16"
     },
     {
       "number": "12027",
@@ -2502,855 +982,150 @@
       "next_departure": "2026-09-18T06:00:00+05:30"
     },
     {
-      "number": "12313",
-      "name": "Sealdah Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "ER",
+      "number": "12723",
+      "name": "Andhra Pradesh Express",
+      "type": "Mail-Express",
+      "zone": "SCR",
       "route": [
-        {
-          "code": "SDAH",
-          "name": "Sealdah",
-          "day": 1,
-          "arr": null,
-          "dep": "16:35",
-          "dist": 0,
-          "lat": 22.5675,
-          "lon": 88.3707
-        },
-        {
-          "code": "PNBE",
-          "name": "Patna Jn",
-          "day": 1,
-          "arr": "22:20",
-          "dep": "22:25",
-          "dist": 486,
-          "lat": 25.6093,
-          "lon": 85.1376
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 2,
-          "arr": "03:45",
-          "dep": "03:47",
-          "dist": 936,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 2,
-          "arr": "09:55",
-          "dep": null,
-          "dist": 1445,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Sealdah Thu 17 Sep 16:35",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Sealdah",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Sealdah",
-      "destination": "New Delhi",
-      "service_date": null,
-      "next_departure": "2026-09-17T16:35:00+05:30"
-    },
-    {
-      "number": "22691",
-      "name": "KSR Bengaluru Hazrat Nizamuddin Rajdhani Express",
-      "type": "Rajdhani",
-      "zone": "SWR",
-      "route": [
-        {
-          "code": "SBC",
-          "name": "KSR Bengaluru",
-          "day": 1,
-          "arr": null,
-          "dep": "20:00",
-          "dist": 0,
-          "lat": 12.9767,
-          "lon": 77.5713
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "07:15",
-          "dep": "07:20",
-          "dist": 608,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "16:40",
-          "dep": "16:50",
-          "dist": 1338,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 2,
-          "arr": "21:55",
-          "dep": "22:00",
-          "dist": 1735,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
         {
           "code": "NZM",
           "name": "Hazrat Nizamuddin",
-          "day": 3,
-          "arr": "07:00",
-          "dep": null,
-          "dist": 2444,
+          "day": 1,
+          "arr": null,
+          "dep": "06:40",
+          "dist": 0,
           "lat": 28.5877,
           "lon": 77.2534
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Vijayawada Jn and Nagpur — running on time",
-      "delay_min": 0,
-      "last_station": "Vijayawada Jn",
-      "next_station": "Nagpur",
-      "eta": "16:40",
-      "percent_complete": 47.5,
-      "origin": "KSR Bengaluru",
-      "destination": "Hazrat Nizamuddin",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12801",
-      "name": "Purushottam Express",
-      "type": "Mail-Express",
-      "zone": "ECoR",
-      "route": [
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 1,
-          "arr": null,
-          "dep": "10:40",
-          "dist": 0,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 1,
-          "arr": "15:55",
-          "dep": "15:57",
-          "dist": 440,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "PRYJ",
-          "name": "Prayagraj Jn",
-          "day": 1,
-          "arr": "18:10",
-          "dep": "18:15",
-          "dist": 633,
-          "lat": 25.4484,
-          "lon": 81.8546
-        },
-        {
-          "code": "GAYA",
-          "name": "Gaya Jn",
-          "day": 2,
-          "arr": "00:05",
-          "dep": "00:10",
-          "dist": 1000,
-          "lat": 24.7955,
-          "lon": 84.9994
-        },
-        {
-          "code": "BBS",
-          "name": "Bhubaneswar",
-          "day": 2,
-          "arr": "14:15",
-          "dep": "14:25",
-          "dist": 1730,
-          "lat": 20.268,
-          "lon": 85.836
-        },
-        {
-          "code": "PURI",
-          "name": "Puri",
-          "day": 2,
-          "arr": "16:00",
-          "dep": null,
-          "dist": 1786,
-          "lat": 19.8135,
-          "lon": 85.8312
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Gaya Jn and Bhubaneswar — running on time",
-      "delay_min": 0,
-      "last_station": "Gaya Jn",
-      "next_station": "Bhubaneswar",
-      "eta": "14:15",
-      "percent_complete": 96.9,
-      "origin": "New Delhi",
-      "destination": "Puri",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12616",
-      "name": "Grand Trunk Express",
-      "type": "Mail-Express",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "MAS",
-          "name": "Chennai Central",
-          "day": 1,
-          "arr": null,
-          "dep": "19:15",
-          "dist": 0,
-          "lat": 13.0827,
-          "lon": 80.2757
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 1,
-          "arr": "23:35",
-          "dep": "23:45",
-          "dist": 509,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "11:00",
-          "dep": "11:10",
-          "dist": 1086,
-          "lat": 21.1533,
-          "lon": 79.0833
         },
         {
           "code": "BPL",
           "name": "Bhopal Jn",
-          "day": 2,
-          "arr": "18:45",
-          "dep": "18:55",
-          "dist": 1478,
+          "day": 1,
+          "arr": "14:05",
+          "dep": "14:15",
+          "dist": 708,
           "lat": 23.2685,
           "lon": 77.4126
         },
         {
-          "code": "JHS",
-          "name": "Jhansi Jn",
-          "day": 2,
-          "arr": "23:55",
-          "dep": "00:00",
-          "dist": 1777,
-          "lat": 25.452,
-          "lon": 78.569
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 1,
+          "arr": "20:55",
+          "dep": "21:05",
+          "dist": 1100,
+          "lat": 21.1533,
+          "lon": 79.0833
         },
         {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 3,
-          "arr": "06:40",
+          "code": "KZJ",
+          "name": "Kazipet Jn",
+          "day": 2,
+          "arr": "02:50",
+          "dep": "02:55",
+          "dist": 1425,
+          "lat": 17.9926,
+          "lon": 79.5539
+        },
+        {
+          "code": "SC",
+          "name": "Secunderabad Jn",
+          "day": 2,
+          "arr": "05:15",
+          "dep": "05:25",
+          "dist": 1562,
+          "lat": 17.4344,
+          "lon": 78.5025
+        },
+        {
+          "code": "HYB",
+          "name": "Hyderabad Deccan",
+          "day": 2,
+          "arr": "06:00",
           "dep": null,
-          "dist": 2180,
-          "lat": 28.6431,
-          "lon": 77.2197
+          "dist": 1571,
+          "lat": 17.3903,
+          "lon": 78.4622
         }
       ],
       "status": "running",
-      "status_label": "Between Nagpur and Bhopal Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Nagpur",
-      "next_station": "Bhopal Jn",
-      "eta": "18:45",
-      "percent_complete": 57.5,
-      "origin": "Chennai Central",
-      "destination": "New Delhi",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12802",
-      "name": "Purushottam Express",
-      "type": "Mail-Express",
-      "zone": "ECoR",
-      "route": [
-        {
-          "code": "PURI",
-          "name": "Puri",
-          "day": 1,
-          "arr": null,
-          "dep": "10:15",
-          "dist": 0,
-          "lat": 19.8135,
-          "lon": 85.8312
-        },
-        {
-          "code": "BBS",
-          "name": "Bhubaneswar",
-          "day": 1,
-          "arr": "11:50",
-          "dep": "12:00",
-          "dist": 56,
-          "lat": 20.268,
-          "lon": 85.836
-        },
-        {
-          "code": "GAYA",
-          "name": "Gaya Jn",
-          "day": 1,
-          "arr": "22:00",
-          "dep": "22:05",
-          "dist": 786,
-          "lat": 24.7955,
-          "lon": 84.9994
-        },
-        {
-          "code": "PRYJ",
-          "name": "Prayagraj Jn",
-          "day": 2,
-          "arr": "04:00",
-          "dep": "04:05",
-          "dist": 1153,
-          "lat": 25.4484,
-          "lon": 81.8546
-        },
-        {
-          "code": "CNB",
-          "name": "Kanpur Central",
-          "day": 2,
-          "arr": "06:15",
-          "dep": "06:17",
-          "dist": 1346,
-          "lat": 26.4499,
-          "lon": 80.3319
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 2,
-          "arr": "11:40",
-          "dep": null,
-          "dist": 1786,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Bhubaneswar and Gaya Jn — running on time",
-      "delay_min": 0,
-      "last_station": "Bhubaneswar",
-      "next_station": "Gaya Jn",
-      "eta": "22:00",
-      "percent_complete": 12.9,
-      "origin": "Puri",
-      "destination": "New Delhi",
+      "status_label": "Between Bhopal Jn and Nagpur — running 1 min late",
+      "delay_min": 1,
+      "last_station": "Bhopal Jn",
+      "next_station": "Nagpur",
+      "eta": "20:56",
+      "percent_complete": 46.0,
+      "origin": "Hazrat Nizamuddin",
+      "destination": "Hyderabad Deccan",
       "service_date": "2026-09-17"
     },
     {
-      "number": "15906",
-      "name": "Kanyakumari Dibrugarh Vivek Express",
-      "type": "Superfast",
-      "zone": "NFR",
-      "route": [
-        {
-          "code": "CAPE",
-          "name": "Kanyakumari",
-          "day": 1,
-          "arr": null,
-          "dep": "11:00",
-          "dist": 0,
-          "lat": 8.079,
-          "lon": 77.541
-        },
-        {
-          "code": "MDU",
-          "name": "Madurai Jn",
-          "day": 1,
-          "arr": "15:10",
-          "dep": "15:20",
-          "dist": 220,
-          "lat": 9.9252,
-          "lon": 78.1198
-        },
-        {
-          "code": "MS",
-          "name": "Chennai Egmore",
-          "day": 1,
-          "arr": "22:10",
-          "dep": "22:20",
-          "dist": 648,
-          "lat": 13.0732,
-          "lon": 80.2609
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "07:35",
-          "dep": "07:45",
-          "dist": 1082,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "GHY",
-          "name": "Guwahati",
-          "day": 4,
-          "arr": "01:15",
-          "dep": "01:35",
-          "dist": 3022,
-          "lat": 26.1858,
-          "lon": 91.7086
-        },
-        {
-          "code": "DBRG",
-          "name": "Dibrugarh",
-          "day": 4,
-          "arr": "13:00",
-          "dep": null,
-          "dist": 3532,
-          "lat": 27.4728,
-          "lon": 94.912
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Kanyakumari Sun 20 Sep 11:00",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Kanyakumari",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Kanyakumari",
-      "destination": "Dibrugarh",
-      "service_date": null,
-      "next_departure": "2026-09-20T11:00:00+05:30"
-    },
-    {
-      "number": "12622",
-      "name": "Tamil Nadu Express",
+      "number": "12617",
+      "name": "Mangala Lakshadweep Express",
       "type": "Mail-Express",
       "zone": "NR",
       "route": [
-        {
-          "code": "MAS",
-          "name": "Chennai Central",
-          "day": 1,
-          "arr": null,
-          "dep": "22:00",
-          "dist": 0,
-          "lat": 13.0827,
-          "lon": 80.2757
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "02:20",
-          "dep": "02:25",
-          "dist": 509,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "13:35",
-          "dep": "13:45",
-          "dist": 1086,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 2,
-          "arr": "21:20",
-          "dep": "21:30",
-          "dist": 1478,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
-        {
-          "code": "AGC",
-          "name": "Agra Cantt",
-          "day": 3,
-          "arr": "04:35",
-          "dep": "04:37",
-          "dist": 1992,
-          "lat": 27.1591,
-          "lon": 78.0092
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 3,
-          "arr": "06:45",
-          "dep": null,
-          "dist": 2180,
-          "lat": 28.6431,
-          "lon": 77.2197
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Nagpur and Bhopal Jn — running 1 min late",
-      "delay_min": 1,
-      "last_station": "Nagpur",
-      "next_station": "Bhopal Jn",
-      "eta": "21:24",
-      "percent_complete": 51.3,
-      "origin": "Chennai Central",
-      "destination": "New Delhi",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12346",
-      "name": "Saraighat Express",
-      "type": "Superfast",
-      "zone": "NFR",
-      "route": [
-        {
-          "code": "GHY",
-          "name": "Guwahati",
-          "day": 1,
-          "arr": null,
-          "dep": "18:00",
-          "dist": 0,
-          "lat": 26.1858,
-          "lon": 91.7086
-        },
-        {
-          "code": "NJP",
-          "name": "New Jalpaiguri",
-          "day": 1,
-          "arr": "01:55",
-          "dep": "02:05",
-          "dist": 420,
-          "lat": 26.6839,
-          "lon": 88.438
-        },
-        {
-          "code": "HWH",
-          "name": "Howrah Jn",
-          "day": 2,
-          "arr": "11:40",
-          "dep": null,
-          "dist": 998,
-          "lat": 22.5839,
-          "lon": 88.3425
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Guwahati Thu 17 Sep 18:00",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Guwahati",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Guwahati",
-      "destination": "Howrah Jn",
-      "service_date": null,
-      "next_departure": "2026-09-17T18:00:00+05:30"
-    },
-    {
-      "number": "12618",
-      "name": "Lakshadweep Mangala Express",
-      "type": "Mail-Express",
-      "zone": "NR",
-      "route": [
-        {
-          "code": "ERS",
-          "name": "Ernakulam Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "17:30",
-          "dist": 0,
-          "lat": 9.9686,
-          "lon": 76.2864
-        },
-        {
-          "code": "BZA",
-          "name": "Vijayawada Jn",
-          "day": 2,
-          "arr": "12:35",
-          "dep": "12:40",
-          "dist": 888,
-          "lat": 16.5175,
-          "lon": 80.6252
-        },
-        {
-          "code": "NGP",
-          "name": "Nagpur",
-          "day": 2,
-          "arr": "23:30",
-          "dep": "23:40",
-          "dist": 1465,
-          "lat": 21.1533,
-          "lon": 79.0833
-        },
-        {
-          "code": "BPL",
-          "name": "Bhopal Jn",
-          "day": 3,
-          "arr": "06:10",
-          "dep": "06:20",
-          "dist": 1857,
-          "lat": 23.2685,
-          "lon": 77.4126
-        },
         {
           "code": "NZM",
           "name": "Hazrat Nizamuddin",
-          "day": 3,
-          "arr": "14:50",
-          "dep": null,
-          "dist": 2565,
-          "lat": 28.5877,
-          "lon": 77.2534
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Bhopal Jn and Hazrat Nizamuddin — running on time",
-      "delay_min": 0,
-      "last_station": "Bhopal Jn",
-      "next_station": "Hazrat Nizamuddin",
-      "eta": "14:50",
-      "percent_complete": 98.6,
-      "origin": "Ernakulam Jn",
-      "destination": "Hazrat Nizamuddin",
-      "service_date": "2026-09-15"
-    },
-    {
-      "number": "15905",
-      "name": "Dibrugarh Kanyakumari Vivek Express",
-      "type": "Superfast",
-      "zone": "NFR",
-      "route": [
-        {
-          "code": "DBRG",
-          "name": "Dibrugarh",
           "day": 1,
           "arr": null,
-          "dep": "21:40",
+          "dep": "11:15",
           "dist": 0,
-          "lat": 27.4728,
-          "lon": 94.912
+          "lat": 28.5877,
+          "lon": 77.2534
         },
         {
-          "code": "GHY",
-          "name": "Guwahati",
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 1,
+          "arr": "19:40",
+          "dep": "19:50",
+          "dist": 708,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
           "day": 2,
-          "arr": "09:05",
-          "dep": "09:25",
-          "dist": 510,
-          "lat": 26.1858,
-          "lon": 91.7086
+          "arr": "02:20",
+          "dep": "02:30",
+          "dist": 1100,
+          "lat": 21.1533,
+          "lon": 79.0833
         },
         {
           "code": "BZA",
           "name": "Vijayawada Jn",
-          "day": 3,
-          "arr": "18:35",
-          "dep": "18:45",
-          "dist": 2450,
+          "day": 2,
+          "arr": "13:15",
+          "dep": "13:20",
+          "dist": 1677,
           "lat": 16.5175,
           "lon": 80.6252
         },
         {
-          "code": "MS",
-          "name": "Chennai Egmore",
-          "day": 4,
-          "arr": "04:15",
-          "dep": "04:25",
-          "dist": 2884,
-          "lat": 13.0732,
-          "lon": 80.2609
-        },
-        {
-          "code": "MDU",
-          "name": "Madurai Jn",
-          "day": 4,
-          "arr": "11:10",
-          "dep": "11:20",
-          "dist": 3312,
-          "lat": 9.9252,
-          "lon": 78.1198
-        },
-        {
-          "code": "CAPE",
-          "name": "Kanyakumari",
-          "day": 4,
-          "arr": "15:30",
+          "code": "ERS",
+          "name": "Ernakulam Jn",
+          "day": 3,
+          "arr": "08:15",
           "dep": null,
-          "dist": 3532,
-          "lat": 8.079,
-          "lon": 77.541
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Dibrugarh Fri 18 Sep 21:40",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Dibrugarh",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Dibrugarh",
-      "destination": "Kanyakumari",
-      "service_date": null,
-      "next_departure": "2026-09-18T21:40:00+05:30"
-    },
-    {
-      "number": "12904",
-      "name": "Golden Temple Mail",
-      "type": "Mail-Express",
-      "zone": "WR",
-      "route": [
-        {
-          "code": "ASR",
-          "name": "Amritsar Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "19:15",
-          "dist": 0,
-          "lat": 31.634,
-          "lon": 74.8723
-        },
-        {
-          "code": "UMB",
-          "name": "Ambala Cant Jn",
-          "day": 1,
-          "arr": "23:35",
-          "dep": "23:40",
-          "dist": 201,
-          "lat": 30.3641,
-          "lon": 76.8016
-        },
-        {
-          "code": "NDLS",
-          "name": "New Delhi",
-          "day": 2,
-          "arr": "02:45",
-          "dep": "03:05",
-          "dist": 379,
-          "lat": 28.6431,
-          "lon": 77.2197
-        },
-        {
-          "code": "KOTA",
-          "name": "Kota Jn",
-          "day": 2,
-          "arr": "09:00",
-          "dep": "09:05",
-          "dist": 858,
-          "lat": 25.1804,
-          "lon": 75.8648
-        },
-        {
-          "code": "RTM",
-          "name": "Ratlam Jn",
-          "day": 2,
-          "arr": "12:35",
-          "dep": "12:40",
-          "dist": 1121,
-          "lat": 23.3315,
-          "lon": 75.0367
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 2,
-          "arr": "16:10",
-          "dep": "16:12",
-          "dist": 1408,
-          "lat": 22.3072,
-          "lon": 73.1812
-        },
-        {
-          "code": "BCT",
-          "name": "Mumbai Central",
-          "day": 2,
-          "arr": "21:15",
-          "dep": null,
-          "dist": 1857,
-          "lat": 18.9694,
-          "lon": 72.8194
+          "dist": 2565,
+          "lat": 9.9686,
+          "lon": 76.2864
         }
       ],
       "status": "running",
-      "status_label": "Between Ratlam Jn and Vadodara Jn — running 7 min late",
-      "delay_min": 7,
-      "last_station": "Ratlam Jn",
-      "next_station": "Vadodara Jn",
-      "eta": "16:17",
-      "percent_complete": 67.5,
-      "origin": "Amritsar Jn",
-      "destination": "Mumbai Central",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12009",
-      "name": "Mumbai Ahmedabad Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "WR",
-      "route": [
-        {
-          "code": "BCT",
-          "name": "Mumbai Central",
-          "day": 1,
-          "arr": null,
-          "dep": "06:25",
-          "dist": 0,
-          "lat": 18.9694,
-          "lon": 72.8194
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 1,
-          "arr": "09:38",
-          "dep": "09:40",
-          "dist": 392,
-          "lat": 22.3072,
-          "lon": 73.1812
-        },
-        {
-          "code": "ADI",
-          "name": "Ahmedabad Jn",
-          "day": 1,
-          "arr": "11:35",
-          "dep": null,
-          "dist": 493,
-          "lat": 23.0225,
-          "lon": 72.5714
-        }
-      ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Mumbai Central Fri 18 Sep 06:25",
+      "status_label": "Between Vijayawada Jn and Ernakulam Jn — running on time",
       "delay_min": 0,
-      "last_station": null,
-      "next_station": "Mumbai Central",
-      "eta": null,
-      "percent_complete": 0.0,
-      "origin": "Mumbai Central",
-      "destination": "Ahmedabad Jn",
-      "service_date": null,
-      "next_departure": "2026-09-18T06:25:00+05:30"
+      "last_station": "Vijayawada Jn",
+      "next_station": "Ernakulam Jn",
+      "eta": "08:15",
+      "percent_complete": 67.5,
+      "origin": "Hazrat Nizamuddin",
+      "destination": "Ernakulam Jn",
+      "service_date": "2026-09-16"
     },
     {
       "number": "12841",
@@ -3430,6 +1205,74 @@
       "destination": "Chennai Central",
       "service_date": null,
       "next_departure": "2026-09-17T14:50:00+05:30"
+    },
+    {
+      "number": "12926",
+      "name": "Paschim Express",
+      "type": "Mail-Express",
+      "zone": "WR",
+      "route": [
+        {
+          "code": "ASR",
+          "name": "Amritsar Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "07:15",
+          "dist": 0,
+          "lat": 31.634,
+          "lon": 74.8723
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": "15:50",
+          "dep": "16:10",
+          "dist": 379,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "KOTA",
+          "name": "Kota Jn",
+          "day": 1,
+          "arr": "22:35",
+          "dep": "22:40",
+          "dist": 915,
+          "lat": 25.1804,
+          "lon": 75.8648
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 2,
+          "arr": "03:55",
+          "dep": "03:57",
+          "dist": 1465,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "BDTS",
+          "name": "Bandra Terminus",
+          "day": 2,
+          "arr": "09:05",
+          "dep": null,
+          "dist": 1862,
+          "lat": 19.0648,
+          "lon": 72.8397
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Amritsar Jn and New Delhi — running on time",
+      "delay_min": 0,
+      "last_station": "Amritsar Jn",
+      "next_station": "New Delhi",
+      "eta": "15:50",
+      "percent_complete": 17.2,
+      "origin": "Amritsar Jn",
+      "destination": "Bandra Terminus",
+      "service_date": "2026-09-17"
     },
     {
       "number": "12903",
@@ -3521,140 +1364,1327 @@
       "next_departure": "2026-09-17T21:15:00+05:30"
     },
     {
-      "number": "16031",
-      "name": "Andaman Express",
-      "type": "Mail-Express",
-      "zone": "SR",
+      "number": "12020",
+      "name": "Dehradun New Delhi Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "NR",
       "route": [
         {
-          "code": "MS",
-          "name": "Chennai Egmore",
+          "code": "DDN",
+          "name": "Dehradun",
           "day": 1,
           "arr": null,
-          "dep": "18:50",
+          "dep": "16:50",
           "dist": 0,
-          "lat": 13.0732,
-          "lon": 80.2609
+          "lat": 30.3165,
+          "lon": 78.0322
+        },
+        {
+          "code": "HW",
+          "name": "Haridwar Jn",
+          "day": 1,
+          "arr": "18:15",
+          "dep": "18:20",
+          "dist": 30,
+          "lat": 29.9457,
+          "lon": 78.1642
+        },
+        {
+          "code": "MTC",
+          "name": "Meerut City",
+          "day": 1,
+          "arr": "21:00",
+          "dep": "21:02",
+          "dist": 151,
+          "lat": 28.9767,
+          "lon": 77.7061
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": "22:30",
+          "dep": null,
+          "dist": 230,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Dehradun Thu 17 Sep 16:50",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Dehradun",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Dehradun",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T16:50:00+05:30"
+    },
+    {
+      "number": "12724",
+      "name": "Andhra Pradesh Express",
+      "type": "Mail-Express",
+      "zone": "SCR",
+      "route": [
+        {
+          "code": "HYB",
+          "name": "Hyderabad Deccan",
+          "day": 1,
+          "arr": null,
+          "dep": "19:50",
+          "dist": 0,
+          "lat": 17.3903,
+          "lon": 78.4622
+        },
+        {
+          "code": "SC",
+          "name": "Secunderabad Jn",
+          "day": 1,
+          "arr": "20:25",
+          "dep": "20:35",
+          "dist": 9,
+          "lat": 17.4344,
+          "lon": 78.5025
+        },
+        {
+          "code": "KZJ",
+          "name": "Kazipet Jn",
+          "day": 1,
+          "arr": "22:55",
+          "dep": "23:00",
+          "dist": 146,
+          "lat": 17.9926,
+          "lon": 79.5539
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "04:50",
+          "dep": "05:00",
+          "dist": 471,
+          "lat": 21.1533,
+          "lon": 79.0833
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 2,
+          "arr": "11:35",
+          "dep": "11:45",
+          "dist": 863,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "NZM",
+          "name": "Hazrat Nizamuddin",
+          "day": 2,
+          "arr": "19:15",
+          "dep": null,
+          "dist": 1571,
+          "lat": 28.5877,
+          "lon": 77.2534
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Bhopal Jn and Hazrat Nizamuddin — running 6 min late",
+      "delay_min": 6,
+      "last_station": "Bhopal Jn",
+      "next_station": "Hazrat Nizamuddin",
+      "eta": "19:24",
+      "percent_complete": 70.8,
+      "origin": "Hyderabad Deccan",
+      "destination": "Hazrat Nizamuddin",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "12621",
+      "name": "Tamil Nadu Express",
+      "type": "Mail-Express",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "22:30",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "AGC",
+          "name": "Agra Cantt",
+          "day": 1,
+          "arr": "01:12",
+          "dep": "01:14",
+          "dist": 188,
+          "lat": 27.1591,
+          "lon": 78.0092
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 1,
+          "arr": "08:35",
+          "dep": "08:45",
+          "dist": 702,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "16:35",
+          "dep": "16:45",
+          "dist": 1094,
+          "lat": 21.1533,
+          "lon": 79.0833
         },
         {
           "code": "BZA",
           "name": "Vijayawada Jn",
           "day": 2,
-          "arr": "01:35",
-          "dep": "01:45",
-          "dist": 434,
+          "arr": "03:45",
+          "dep": "03:50",
+          "dist": 1671,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "MAS",
+          "name": "Chennai Central",
+          "day": 3,
+          "arr": "07:15",
+          "dep": null,
+          "dist": 2180,
+          "lat": 13.0827,
+          "lon": 80.2757
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Bhopal Jn and Nagpur — running on time",
+      "delay_min": 0,
+      "last_station": "Bhopal Jn",
+      "next_station": "Nagpur",
+      "eta": "16:33",
+      "percent_complete": 49.0,
+      "origin": "New Delhi",
+      "destination": "Chennai Central",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "12314",
+      "name": "New Delhi Sealdah Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "ER",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "16:25",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 1,
+          "arr": "22:35",
+          "dep": "22:37",
+          "dist": 509,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "PNBE",
+          "name": "Patna Jn",
+          "day": 2,
+          "arr": "03:55",
+          "dep": "04:00",
+          "dist": 959,
+          "lat": 25.6093,
+          "lon": 85.1376
+        },
+        {
+          "code": "SDAH",
+          "name": "Sealdah",
+          "day": 2,
+          "arr": "09:45",
+          "dep": null,
+          "dist": 1445,
+          "lat": 22.5675,
+          "lon": 88.3707
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Thu 17 Sep 16:25",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Sealdah",
+      "service_date": null,
+      "next_departure": "2026-09-17T16:25:00+05:30"
+    },
+    {
+      "number": "22435",
+      "name": "New Delhi Varanasi Vande Bharat Express",
+      "type": "Vande Bharat",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "06:00",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 1,
+          "arr": "10:30",
+          "dep": "10:32",
+          "dist": 440,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "PRYJ",
+          "name": "Prayagraj Jn",
+          "day": 1,
+          "arr": "12:20",
+          "dep": "12:22",
+          "dist": 633,
+          "lat": 25.4484,
+          "lon": 81.8546
+        },
+        {
+          "code": "BSB",
+          "name": "Varanasi Jn",
+          "day": 1,
+          "arr": "14:00",
+          "dep": null,
+          "dist": 759,
+          "lat": 25.3236,
+          "lon": 82.9938
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 06:00",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Varanasi Jn",
+      "service_date": null,
+      "next_departure": "2026-09-18T06:00:00+05:30"
+    },
+    {
+      "number": "12925",
+      "name": "Paschim Express",
+      "type": "Mail-Express",
+      "zone": "WR",
+      "route": [
+        {
+          "code": "BDTS",
+          "name": "Bandra Terminus",
+          "day": 1,
+          "arr": null,
+          "dep": "11:35",
+          "dist": 0,
+          "lat": 19.0648,
+          "lon": 72.8397
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 1,
+          "arr": "16:52",
+          "dep": "16:54",
+          "dist": 397,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "KOTA",
+          "name": "Kota Jn",
+          "day": 1,
+          "arr": "23:45",
+          "dep": "23:50",
+          "dist": 947,
+          "lat": 25.1804,
+          "lon": 75.8648
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "07:20",
+          "dep": "07:40",
+          "dist": 1483,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "ASR",
+          "name": "Amritsar Jn",
+          "day": 2,
+          "arr": "16:15",
+          "dep": null,
+          "dist": 1862,
+          "lat": 31.634,
+          "lon": 74.8723
+        }
+      ],
+      "status": "running",
+      "status_label": "Between New Delhi and Amritsar Jn — running 4 min late",
+      "delay_min": 4,
+      "last_station": "New Delhi",
+      "next_station": "Amritsar Jn",
+      "eta": "16:21",
+      "percent_complete": 95.6,
+      "origin": "Bandra Terminus",
+      "destination": "Amritsar Jn",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "12842",
+      "name": "Coromandel Express",
+      "type": "Mail-Express",
+      "zone": "ER",
+      "route": [
+        {
+          "code": "MAS",
+          "name": "Chennai Central",
+          "day": 1,
+          "arr": null,
+          "dep": "08:00",
+          "dist": 0,
+          "lat": 13.0827,
+          "lon": 80.2757
+        },
+        {
+          "code": "BZA",
+          "name": "Vijayawada Jn",
+          "day": 1,
+          "arr": "13:15",
+          "dep": "13:20",
+          "dist": 550,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "VSKP",
+          "name": "Visakhapatnam Jn",
+          "day": 1,
+          "arr": "18:35",
+          "dep": "18:50",
+          "dist": 787,
+          "lat": 17.7231,
+          "lon": 83.3013
+        },
+        {
+          "code": "BBS",
+          "name": "Bhubaneswar",
+          "day": 2,
+          "arr": "00:20",
+          "dep": "00:30",
+          "dist": 1220,
+          "lat": 20.268,
+          "lon": 85.836
+        },
+        {
+          "code": "KGP",
+          "name": "Kharagpur Jn",
+          "day": 2,
+          "arr": "04:15",
+          "dep": "04:17",
+          "dist": 1543,
+          "lat": 22.3302,
+          "lon": 87.3237
+        },
+        {
+          "code": "HWH",
+          "name": "Howrah Jn",
+          "day": 2,
+          "arr": "05:35",
+          "dep": null,
+          "dist": 1659,
+          "lat": 22.5839,
+          "lon": 88.3425
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Vijayawada Jn and Visakhapatnam Jn — running 4 min late",
+      "delay_min": 4,
+      "last_station": "Vijayawada Jn",
+      "next_station": "Visakhapatnam Jn",
+      "eta": "18:39",
+      "percent_complete": 36.2,
+      "origin": "Chennai Central",
+      "destination": "Howrah Jn",
+      "service_date": "2026-09-17"
+    },
+    {
+      "number": "12801",
+      "name": "Purushottam Express",
+      "type": "Mail-Express",
+      "zone": "ECoR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "10:40",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 1,
+          "arr": "15:55",
+          "dep": "15:57",
+          "dist": 440,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "PRYJ",
+          "name": "Prayagraj Jn",
+          "day": 1,
+          "arr": "18:10",
+          "dep": "18:15",
+          "dist": 633,
+          "lat": 25.4484,
+          "lon": 81.8546
+        },
+        {
+          "code": "GAYA",
+          "name": "Gaya Jn",
+          "day": 2,
+          "arr": "00:05",
+          "dep": "00:10",
+          "dist": 1000,
+          "lat": 24.7955,
+          "lon": 84.9994
+        },
+        {
+          "code": "BBS",
+          "name": "Bhubaneswar",
+          "day": 2,
+          "arr": "14:15",
+          "dep": "14:25",
+          "dist": 1730,
+          "lat": 20.268,
+          "lon": 85.836
+        },
+        {
+          "code": "PURI",
+          "name": "Puri",
+          "day": 2,
+          "arr": "16:00",
+          "dep": null,
+          "dist": 1786,
+          "lat": 19.8135,
+          "lon": 85.8312
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Bhubaneswar and Puri — running on time",
+      "delay_min": 0,
+      "last_station": "Bhubaneswar",
+      "next_station": "Puri",
+      "eta": "16:00",
+      "percent_complete": 97.0,
+      "origin": "New Delhi",
+      "destination": "Puri",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "22436",
+      "name": "Varanasi New Delhi Vande Bharat Express",
+      "type": "Vande Bharat",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "BSB",
+          "name": "Varanasi Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "15:00",
+          "dist": 0,
+          "lat": 25.3236,
+          "lon": 82.9938
+        },
+        {
+          "code": "PRYJ",
+          "name": "Prayagraj Jn",
+          "day": 1,
+          "arr": "16:35",
+          "dep": "16:37",
+          "dist": 126,
+          "lat": 25.4484,
+          "lon": 81.8546
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 1,
+          "arr": "18:25",
+          "dep": "18:27",
+          "dist": 319,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": "22:30",
+          "dep": null,
+          "dist": 759,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Varanasi Jn Thu 17 Sep 15:00",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Varanasi Jn",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Varanasi Jn",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T15:00:00+05:30"
+    },
+    {
+      "number": "12001",
+      "name": "New Delhi Bhopal Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "WCR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "06:00",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "AGC",
+          "name": "Agra Cantt",
+          "day": 1,
+          "arr": "07:59",
+          "dep": "08:01",
+          "dist": 188,
+          "lat": 27.1591,
+          "lon": 78.0092
+        },
+        {
+          "code": "GWL",
+          "name": "Gwalior Jn",
+          "day": 1,
+          "arr": "09:07",
+          "dep": "09:09",
+          "dist": 306,
+          "lat": 26.2183,
+          "lon": 78.1828
+        },
+        {
+          "code": "JHS",
+          "name": "Jhansi Jn",
+          "day": 1,
+          "arr": "10:12",
+          "dep": "10:17",
+          "dist": 403,
+          "lat": 25.452,
+          "lon": 78.569
+        },
+        {
+          "code": "RKMP",
+          "name": "Rani Kamalapati",
+          "day": 1,
+          "arr": "12:50",
+          "dep": null,
+          "dist": 702,
+          "lat": 23.2141,
+          "lon": 77.416
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 06:00",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Rani Kamalapati",
+      "service_date": null,
+      "next_departure": "2026-09-18T06:00:00+05:30"
+    },
+    {
+      "number": "22119",
+      "name": "Mumbai Madgaon Tejas Express",
+      "type": "Tejas",
+      "zone": "CR",
+      "route": [
+        {
+          "code": "CSTM",
+          "name": "Mumbai CSMT",
+          "day": 1,
+          "arr": null,
+          "dep": "05:50",
+          "dist": 0,
+          "lat": 18.9401,
+          "lon": 72.8352
+        },
+        {
+          "code": "PNVL",
+          "name": "Panvel",
+          "day": 1,
+          "arr": "06:38",
+          "dep": "06:40",
+          "dist": 50,
+          "lat": 18.9894,
+          "lon": 73.1175
+        },
+        {
+          "code": "RN",
+          "name": "Ratnagiri",
+          "day": 1,
+          "arr": "10:03",
+          "dep": "10:05",
+          "dist": 340,
+          "lat": 16.9902,
+          "lon": 73.312
+        },
+        {
+          "code": "MAO",
+          "name": "Madgaon Jn",
+          "day": 1,
+          "arr": "13:10",
+          "dep": null,
+          "dist": 552,
+          "lat": 15.2734,
+          "lon": 73.9862
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Mumbai CSMT Sat 19 Sep 05:50",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Mumbai CSMT",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Mumbai CSMT",
+      "destination": "Madgaon Jn",
+      "service_date": null,
+      "next_departure": "2026-09-19T05:50:00+05:30"
+    },
+    {
+      "number": "12951",
+      "name": "Mumbai Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "WR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "16:55",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "KOTA",
+          "name": "Kota Jn",
+          "day": 1,
+          "arr": "21:33",
+          "dep": "21:35",
+          "dist": 465,
+          "lat": 25.1804,
+          "lon": 75.8648
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 2,
+          "arr": "04:04",
+          "dep": "04:06",
+          "dist": 971,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "ST",
+          "name": "Surat",
+          "day": 2,
+          "arr": "05:23",
+          "dep": "05:25",
+          "dist": 1077,
+          "lat": 21.2049,
+          "lon": 72.8311
+        },
+        {
+          "code": "BCT",
+          "name": "Mumbai Central",
+          "day": 2,
+          "arr": "08:35",
+          "dep": null,
+          "dist": 1384,
+          "lat": 18.9694,
+          "lon": 72.8194
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Thu 17 Sep 16:55",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Mumbai Central",
+      "service_date": null,
+      "next_departure": "2026-09-17T16:55:00+05:30"
+    },
+    {
+      "number": "12626",
+      "name": "Kerala Express",
+      "type": "Mail-Express",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "TVC",
+          "name": "Thiruvananthapuram Central",
+          "day": 1,
+          "arr": null,
+          "dep": "14:00",
+          "dist": 0,
+          "lat": 8.4875,
+          "lon": 76.9525
+        },
+        {
+          "code": "ERS",
+          "name": "Ernakulam Jn",
+          "day": 1,
+          "arr": "21:45",
+          "dep": "21:55",
+          "dist": 242,
+          "lat": 9.9686,
+          "lon": 76.2864
+        },
+        {
+          "code": "MAS",
+          "name": "Chennai Central",
+          "day": 2,
+          "arr": "08:30",
+          "dep": "08:40",
+          "dist": 967,
+          "lat": 13.0827,
+          "lon": 80.2757
+        },
+        {
+          "code": "BZA",
+          "name": "Vijayawada Jn",
+          "day": 2,
+          "arr": "13:35",
+          "dep": "13:45",
+          "dist": 1478,
           "lat": 16.5175,
           "lon": 80.6252
         },
         {
           "code": "NGP",
           "name": "Nagpur",
-          "day": 2,
-          "arr": "13:15",
-          "dep": "13:25",
-          "dist": 1011,
+          "day": 3,
+          "arr": "01:00",
+          "dep": "01:10",
+          "dist": 2055,
           "lat": 21.1533,
           "lon": 79.0833
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 3,
+          "arr": "08:10",
+          "dep": "08:20",
+          "dist": 2447,
+          "lat": 23.2685,
+          "lon": 77.4126
         },
         {
           "code": "NDLS",
           "name": "New Delhi",
           "day": 3,
-          "arr": "07:15",
-          "dep": "07:30",
-          "dist": 2005,
+          "arr": "17:20",
+          "dep": null,
+          "dist": 3149,
           "lat": 28.6431,
           "lon": 77.2197
-        },
-        {
-          "code": "JAT",
-          "name": "Jammu Tawi",
-          "day": 3,
-          "arr": "18:10",
-          "dep": null,
-          "dist": 2429,
-          "lat": 32.6926,
-          "lon": 74.858
         }
       ],
       "status": "running",
-      "status_label": "Between New Delhi and Jammu Tawi — running on time",
-      "delay_min": 0,
-      "last_station": "New Delhi",
-      "next_station": "Jammu Tawi",
-      "eta": "18:10",
-      "percent_complete": 93.8,
-      "origin": "Chennai Egmore",
-      "destination": "Jammu Tawi",
+      "status_label": "Between Bhopal Jn and New Delhi — running 6 min late",
+      "delay_min": 6,
+      "last_station": "Bhopal Jn",
+      "next_station": "New Delhi",
+      "eta": "17:26",
+      "percent_complete": 92.8,
+      "origin": "Thiruvananthapuram Central",
+      "destination": "New Delhi",
       "service_date": "2026-09-15"
     },
     {
-      "number": "16032",
-      "name": "Andaman Express",
+      "number": "12616",
+      "name": "Grand Trunk Express",
       "type": "Mail-Express",
-      "zone": "SR",
+      "zone": "NR",
       "route": [
         {
-          "code": "JAT",
-          "name": "Jammu Tawi",
+          "code": "MAS",
+          "name": "Chennai Central",
           "day": 1,
           "arr": null,
-          "dep": "08:40",
+          "dep": "19:15",
           "dist": 0,
-          "lat": 32.6926,
-          "lon": 74.858
+          "lat": 13.0827,
+          "lon": 80.2757
         },
         {
-          "code": "NDLS",
-          "name": "New Delhi",
+          "code": "BZA",
+          "name": "Vijayawada Jn",
           "day": 1,
-          "arr": "19:40",
-          "dep": "19:55",
-          "dist": 424,
-          "lat": 28.6431,
-          "lon": 77.2197
+          "arr": "23:35",
+          "dep": "23:45",
+          "dist": 509,
+          "lat": 16.5175,
+          "lon": 80.6252
         },
         {
           "code": "NGP",
           "name": "Nagpur",
           "day": 2,
-          "arr": "13:00",
-          "dep": "13:10",
-          "dist": 1418,
+          "arr": "11:00",
+          "dep": "11:10",
+          "dist": 1086,
           "lat": 21.1533,
           "lon": 79.0833
         },
         {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 2,
+          "arr": "18:45",
+          "dep": "18:55",
+          "dist": 1478,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "JHS",
+          "name": "Jhansi Jn",
+          "day": 2,
+          "arr": "23:55",
+          "dep": "00:00",
+          "dist": 1777,
+          "lat": 25.452,
+          "lon": 78.569
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 3,
+          "arr": "06:40",
+          "dep": null,
+          "dist": 2180,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Nagpur and Bhopal Jn — running on time",
+      "delay_min": 0,
+      "last_station": "Nagpur",
+      "next_station": "Bhopal Jn",
+      "eta": "18:45",
+      "percent_complete": 57.7,
+      "origin": "Chennai Central",
+      "destination": "New Delhi",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "12012",
+      "name": "Kalka New Delhi Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "KLK",
+          "name": "Kalka",
+          "day": 1,
+          "arr": null,
+          "dep": "17:40",
+          "dist": 0,
+          "lat": 30.8395,
+          "lon": 76.9354
+        },
+        {
+          "code": "CDG",
+          "name": "Chandigarh",
+          "day": 1,
+          "arr": "18:25",
+          "dep": "18:30",
+          "dist": 53,
+          "lat": 30.7333,
+          "lon": 76.7794
+        },
+        {
+          "code": "UMB",
+          "name": "Ambala Cant Jn",
+          "day": 1,
+          "arr": "19:10",
+          "dep": "19:13",
+          "dist": 98,
+          "lat": 30.3641,
+          "lon": 76.8016
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": "22:20",
+          "dep": null,
+          "dist": 298,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Kalka Thu 17 Sep 17:40",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Kalka",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Kalka",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T17:40:00+05:30"
+    },
+    {
+      "number": "12622",
+      "name": "Tamil Nadu Express",
+      "type": "Mail-Express",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "MAS",
+          "name": "Chennai Central",
+          "day": 1,
+          "arr": null,
+          "dep": "22:00",
+          "dist": 0,
+          "lat": 13.0827,
+          "lon": 80.2757
+        },
+        {
           "code": "BZA",
           "name": "Vijayawada Jn",
-          "day": 3,
-          "arr": "01:05",
-          "dep": "01:15",
-          "dist": 1995,
+          "day": 2,
+          "arr": "02:20",
+          "dep": "02:25",
+          "dist": 509,
           "lat": 16.5175,
           "lon": 80.6252
         },
         {
-          "code": "MS",
-          "name": "Chennai Egmore",
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "13:35",
+          "dep": "13:45",
+          "dist": 1086,
+          "lat": 21.1533,
+          "lon": 79.0833
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 2,
+          "arr": "21:20",
+          "dep": "21:30",
+          "dist": 1478,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "AGC",
+          "name": "Agra Cantt",
           "day": 3,
-          "arr": "08:15",
+          "arr": "04:35",
+          "dep": "04:37",
+          "dist": 1992,
+          "lat": 27.1591,
+          "lon": 78.0092
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 3,
+          "arr": "06:45",
           "dep": null,
-          "dist": 2429,
-          "lat": 13.0732,
-          "lon": 80.2609
+          "dist": 2180,
+          "lat": 28.6431,
+          "lon": 77.2197
         }
       ],
       "status": "running",
-      "status_label": "Between Nagpur and Vijayawada Jn — running on time",
-      "delay_min": 0,
+      "status_label": "Between Nagpur and Bhopal Jn — running 1 min late",
+      "delay_min": 1,
       "last_station": "Nagpur",
-      "next_station": "Vijayawada Jn",
-      "eta": "01:05",
-      "percent_complete": 60.8,
-      "origin": "Jammu Tawi",
-      "destination": "Chennai Egmore",
+      "next_station": "Bhopal Jn",
+      "eta": "21:24",
+      "percent_complete": 51.6,
+      "origin": "Chennai Central",
+      "destination": "New Delhi",
       "service_date": "2026-09-16"
+    },
+    {
+      "number": "12019",
+      "name": "New Delhi Dehradun Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "06:50",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "MTC",
+          "name": "Meerut City",
+          "day": 1,
+          "arr": "08:07",
+          "dep": "08:09",
+          "dist": 79,
+          "lat": 28.9767,
+          "lon": 77.7061
+        },
+        {
+          "code": "HW",
+          "name": "Haridwar Jn",
+          "day": 1,
+          "arr": "10:50",
+          "dep": "10:55",
+          "dist": 200,
+          "lat": 29.9457,
+          "lon": 78.1642
+        },
+        {
+          "code": "DDN",
+          "name": "Dehradun",
+          "day": 1,
+          "arr": "12:25",
+          "dep": null,
+          "dist": 230,
+          "lat": 30.3165,
+          "lon": 78.0322
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 06:50",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Dehradun",
+      "service_date": null,
+      "next_departure": "2026-09-18T06:50:00+05:30"
+    },
+    {
+      "number": "12424",
+      "name": "Dibrugarh New Delhi Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "NFR",
+      "route": [
+        {
+          "code": "DBRG",
+          "name": "Dibrugarh",
+          "day": 1,
+          "arr": null,
+          "dep": "07:15",
+          "dist": 0,
+          "lat": 27.4728,
+          "lon": 94.912
+        },
+        {
+          "code": "GHY",
+          "name": "Guwahati",
+          "day": 1,
+          "arr": "14:55",
+          "dep": "15:10",
+          "dist": 352,
+          "lat": 26.1858,
+          "lon": 91.7086
+        },
+        {
+          "code": "NJP",
+          "name": "New Jalpaiguri",
+          "day": 1,
+          "arr": "21:10",
+          "dep": "21:20",
+          "dist": 675,
+          "lat": 26.6839,
+          "lon": 88.438
+        },
+        {
+          "code": "PNBE",
+          "name": "Patna Jn",
+          "day": 2,
+          "arr": "04:35",
+          "dep": "04:45",
+          "dist": 1102,
+          "lat": 25.6093,
+          "lon": 85.1376
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "15:35",
+          "dep": null,
+          "dist": 2100,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Dibrugarh Fri 18 Sep 07:15",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Dibrugarh",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Dibrugarh",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-18T07:15:00+05:30"
+    },
+    {
+      "number": "12301",
+      "name": "Howrah Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "ER",
+      "route": [
+        {
+          "code": "HWH",
+          "name": "Howrah Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "16:50",
+          "dist": 0,
+          "lat": 22.5839,
+          "lon": 88.3425
+        },
+        {
+          "code": "DHN",
+          "name": "Dhanbad Jn",
+          "day": 1,
+          "arr": "19:38",
+          "dep": "19:40",
+          "dist": 259,
+          "lat": 23.7957,
+          "lon": 86.4304
+        },
+        {
+          "code": "GAYA",
+          "name": "Gaya Jn",
+          "day": 1,
+          "arr": "21:33",
+          "dep": "21:35",
+          "dist": 422,
+          "lat": 24.7955,
+          "lon": 84.9994
+        },
+        {
+          "code": "DDU",
+          "name": "Pt. Deen Dayal Upadhyaya Jn",
+          "day": 1,
+          "arr": "23:33",
+          "dep": "23:38",
+          "dist": 587,
+          "lat": 25.2822,
+          "lon": 83.2412
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 2,
+          "arr": "03:32",
+          "dep": "03:34",
+          "dist": 1005,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "10:00",
+          "dep": null,
+          "dist": 1447,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Howrah Jn Thu 17 Sep 16:50",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Howrah Jn",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Howrah Jn",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T16:50:00+05:30"
     },
     {
       "number": "12302",
@@ -3736,38 +2766,871 @@
       "next_departure": "2026-09-17T16:55:00+05:30"
     },
     {
-      "number": "12621",
-      "name": "Tamil Nadu Express",
-      "type": "Mail-Express",
-      "zone": "NR",
+      "number": "12345",
+      "name": "Saraighat Express",
+      "type": "Superfast",
+      "zone": "NFR",
+      "route": [
+        {
+          "code": "HWH",
+          "name": "Howrah Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "15:50",
+          "dist": 0,
+          "lat": 22.5839,
+          "lon": 88.3425
+        },
+        {
+          "code": "NJP",
+          "name": "New Jalpaiguri",
+          "day": 2,
+          "arr": "01:35",
+          "dep": "01:45",
+          "dist": 578,
+          "lat": 26.6839,
+          "lon": 88.438
+        },
+        {
+          "code": "GHY",
+          "name": "Guwahati",
+          "day": 2,
+          "arr": "09:35",
+          "dep": null,
+          "dist": 998,
+          "lat": 26.1858,
+          "lon": 91.7086
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Howrah Jn Thu 17 Sep 15:50",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Howrah Jn",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Howrah Jn",
+      "destination": "Guwahati",
+      "service_date": null,
+      "next_departure": "2026-09-17T15:50:00+05:30"
+    },
+    {
+      "number": "12028",
+      "name": "Bengaluru Chennai Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "SR",
+      "route": [
+        {
+          "code": "SBC",
+          "name": "KSR Bengaluru",
+          "day": 1,
+          "arr": null,
+          "dep": "16:25",
+          "dist": 0,
+          "lat": 12.9767,
+          "lon": 77.5713
+        },
+        {
+          "code": "JTJ",
+          "name": "Jolarpettai Jn",
+          "day": 1,
+          "arr": "18:37",
+          "dep": "18:39",
+          "dist": 187,
+          "lat": 12.5765,
+          "lon": 78.5751
+        },
+        {
+          "code": "KPD",
+          "name": "Katpadi Jn",
+          "day": 1,
+          "arr": "19:22",
+          "dep": "19:24",
+          "dist": 232,
+          "lat": 12.9698,
+          "lon": 79.1489
+        },
+        {
+          "code": "MAS",
+          "name": "Chennai Central",
+          "day": 1,
+          "arr": "21:30",
+          "dep": null,
+          "dist": 362,
+          "lat": 13.0827,
+          "lon": 80.2757
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs KSR Bengaluru Thu 17 Sep 16:25",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "KSR Bengaluru",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "KSR Bengaluru",
+      "destination": "Chennai Central",
+      "service_date": null,
+      "next_departure": "2026-09-17T16:25:00+05:30"
+    },
+    {
+      "number": "12346",
+      "name": "Saraighat Express",
+      "type": "Superfast",
+      "zone": "NFR",
+      "route": [
+        {
+          "code": "GHY",
+          "name": "Guwahati",
+          "day": 1,
+          "arr": null,
+          "dep": "18:00",
+          "dist": 0,
+          "lat": 26.1858,
+          "lon": 91.7086
+        },
+        {
+          "code": "NJP",
+          "name": "New Jalpaiguri",
+          "day": 1,
+          "arr": "01:55",
+          "dep": "02:05",
+          "dist": 420,
+          "lat": 26.6839,
+          "lon": 88.438
+        },
+        {
+          "code": "HWH",
+          "name": "Howrah Jn",
+          "day": 2,
+          "arr": "11:40",
+          "dep": null,
+          "dist": 998,
+          "lat": 22.5839,
+          "lon": 88.3425
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Guwahati Thu 17 Sep 18:00",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Guwahati",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Guwahati",
+      "destination": "Howrah Jn",
+      "service_date": null,
+      "next_departure": "2026-09-17T18:00:00+05:30"
+    },
+    {
+      "number": "12009",
+      "name": "Mumbai Ahmedabad Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "WR",
+      "route": [
+        {
+          "code": "BCT",
+          "name": "Mumbai Central",
+          "day": 1,
+          "arr": null,
+          "dep": "06:25",
+          "dist": 0,
+          "lat": 18.9694,
+          "lon": 72.8194
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 1,
+          "arr": "09:38",
+          "dep": "09:40",
+          "dist": 392,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "ADI",
+          "name": "Ahmedabad Jn",
+          "day": 1,
+          "arr": "11:35",
+          "dep": null,
+          "dist": 493,
+          "lat": 23.0225,
+          "lon": 72.5714
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Mumbai Central Fri 18 Sep 06:25",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Mumbai Central",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Mumbai Central",
+      "destination": "Ahmedabad Jn",
+      "service_date": null,
+      "next_departure": "2026-09-18T06:25:00+05:30"
+    },
+    {
+      "number": "12002",
+      "name": "Bhopal New Delhi Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "WCR",
+      "route": [
+        {
+          "code": "RKMP",
+          "name": "Rani Kamalapati",
+          "day": 1,
+          "arr": null,
+          "dep": "14:50",
+          "dist": 0,
+          "lat": 23.2141,
+          "lon": 77.416
+        },
+        {
+          "code": "JHS",
+          "name": "Jhansi Jn",
+          "day": 1,
+          "arr": "17:23",
+          "dep": "17:28",
+          "dist": 299,
+          "lat": 25.452,
+          "lon": 78.569
+        },
+        {
+          "code": "GWL",
+          "name": "Gwalior Jn",
+          "day": 1,
+          "arr": "18:23",
+          "dep": "18:25",
+          "dist": 396,
+          "lat": 26.2183,
+          "lon": 78.1828
+        },
+        {
+          "code": "AGC",
+          "name": "Agra Cantt",
+          "day": 1,
+          "arr": "19:33",
+          "dep": "19:35",
+          "dist": 514,
+          "lat": 27.1591,
+          "lon": 78.0092
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": "21:40",
+          "dep": null,
+          "dist": 702,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Rani Kamalapati Thu 17 Sep 14:50",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Rani Kamalapati",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Rani Kamalapati",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T14:50:00+05:30"
+    },
+    {
+      "number": "15906",
+      "name": "Kanyakumari Dibrugarh Vivek Express",
+      "type": "Superfast",
+      "zone": "NFR",
+      "route": [
+        {
+          "code": "CAPE",
+          "name": "Kanyakumari",
+          "day": 1,
+          "arr": null,
+          "dep": "11:00",
+          "dist": 0,
+          "lat": 8.079,
+          "lon": 77.541
+        },
+        {
+          "code": "MDU",
+          "name": "Madurai Jn",
+          "day": 1,
+          "arr": "15:10",
+          "dep": "15:20",
+          "dist": 220,
+          "lat": 9.9252,
+          "lon": 78.1198
+        },
+        {
+          "code": "MS",
+          "name": "Chennai Egmore",
+          "day": 1,
+          "arr": "22:10",
+          "dep": "22:20",
+          "dist": 648,
+          "lat": 13.0732,
+          "lon": 80.2609
+        },
+        {
+          "code": "BZA",
+          "name": "Vijayawada Jn",
+          "day": 2,
+          "arr": "07:35",
+          "dep": "07:45",
+          "dist": 1082,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "GHY",
+          "name": "Guwahati",
+          "day": 4,
+          "arr": "01:15",
+          "dep": "01:35",
+          "dist": 3022,
+          "lat": 26.1858,
+          "lon": 91.7086
+        },
+        {
+          "code": "DBRG",
+          "name": "Dibrugarh",
+          "day": 4,
+          "arr": "13:00",
+          "dep": null,
+          "dist": 3532,
+          "lat": 27.4728,
+          "lon": 94.912
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Kanyakumari Sun 20 Sep 11:00",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Kanyakumari",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Kanyakumari",
+      "destination": "Dibrugarh",
+      "service_date": null,
+      "next_departure": "2026-09-20T11:00:00+05:30"
+    },
+    {
+      "number": "12313",
+      "name": "Sealdah Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "ER",
+      "route": [
+        {
+          "code": "SDAH",
+          "name": "Sealdah",
+          "day": 1,
+          "arr": null,
+          "dep": "16:35",
+          "dist": 0,
+          "lat": 22.5675,
+          "lon": 88.3707
+        },
+        {
+          "code": "PNBE",
+          "name": "Patna Jn",
+          "day": 1,
+          "arr": "22:20",
+          "dep": "22:25",
+          "dist": 486,
+          "lat": 25.6093,
+          "lon": 85.1376
+        },
+        {
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 2,
+          "arr": "03:45",
+          "dep": "03:47",
+          "dist": 936,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "09:55",
+          "dep": null,
+          "dist": 1445,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Sealdah Thu 17 Sep 16:35",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Sealdah",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Sealdah",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-17T16:35:00+05:30"
+    },
+    {
+      "number": "12296",
+      "name": "Sanghamitra Express",
+      "type": "Superfast",
+      "zone": "SWR",
+      "route": [
+        {
+          "code": "PNBE",
+          "name": "Patna Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "07:15",
+          "dist": 0,
+          "lat": 25.6093,
+          "lon": 85.1376
+        },
+        {
+          "code": "GAYA",
+          "name": "Gaya Jn",
+          "day": 1,
+          "arr": "09:55",
+          "dep": "10:00",
+          "dist": 121,
+          "lat": 24.7955,
+          "lon": 84.9994
+        },
+        {
+          "code": "PRYJ",
+          "name": "Prayagraj Jn",
+          "day": 1,
+          "arr": "15:10",
+          "dep": "15:20",
+          "dist": 374,
+          "lat": 25.4484,
+          "lon": 81.8546
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "03:30",
+          "dep": "03:40",
+          "dist": 921,
+          "lat": 21.1533,
+          "lon": 79.0833
+        },
+        {
+          "code": "SC",
+          "name": "Secunderabad Jn",
+          "day": 2,
+          "arr": "13:05",
+          "dep": "13:15",
+          "dist": 1303,
+          "lat": 17.4344,
+          "lon": 78.5025
+        },
+        {
+          "code": "GTL",
+          "name": "Guntakal Jn",
+          "day": 2,
+          "arr": "17:50",
+          "dep": "17:55",
+          "dist": 1691,
+          "lat": 15.167,
+          "lon": 77.3667
+        },
+        {
+          "code": "SBC",
+          "name": "KSR Bengaluru",
+          "day": 3,
+          "arr": "00:15",
+          "dep": null,
+          "dist": 1996,
+          "lat": 12.9767,
+          "lon": 77.5713
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Secunderabad Jn and Guntakal Jn — running on time",
+      "delay_min": 0,
+      "last_station": "Secunderabad Jn",
+      "next_station": "Guntakal Jn",
+      "eta": "17:50",
+      "percent_complete": 70.6,
+      "origin": "Patna Jn",
+      "destination": "KSR Bengaluru",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "22120",
+      "name": "Madgaon Mumbai Tejas Express",
+      "type": "Tejas",
+      "zone": "CR",
+      "route": [
+        {
+          "code": "MAO",
+          "name": "Madgaon Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "14:20",
+          "dist": 0,
+          "lat": 15.2734,
+          "lon": 73.9862
+        },
+        {
+          "code": "RN",
+          "name": "Ratnagiri",
+          "day": 1,
+          "arr": "17:22",
+          "dep": "17:24",
+          "dist": 212,
+          "lat": 16.9902,
+          "lon": 73.312
+        },
+        {
+          "code": "PNVL",
+          "name": "Panvel",
+          "day": 1,
+          "arr": "20:35",
+          "dep": "20:37",
+          "dist": 502,
+          "lat": 18.9894,
+          "lon": 73.1175
+        },
+        {
+          "code": "CSTM",
+          "name": "Mumbai CSMT",
+          "day": 1,
+          "arr": "21:25",
+          "dep": null,
+          "dist": 552,
+          "lat": 18.9401,
+          "lon": 72.8352
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Madgaon Jn and Ratnagiri — running on time",
+      "delay_min": 0,
+      "last_station": "Madgaon Jn",
+      "next_station": "Ratnagiri",
+      "eta": "17:19",
+      "percent_complete": 2.2,
+      "origin": "Madgaon Jn",
+      "destination": "Mumbai CSMT",
+      "service_date": "2026-09-17"
+    },
+    {
+      "number": "12260",
+      "name": "Sealdah Duronto Express",
+      "type": "Duronto",
+      "zone": "ER",
       "route": [
         {
           "code": "NDLS",
           "name": "New Delhi",
           "day": 1,
           "arr": null,
-          "dep": "22:30",
+          "dep": "22:05",
           "dist": 0,
           "lat": 28.6431,
           "lon": 77.2197
         },
         {
-          "code": "AGC",
-          "name": "Agra Cantt",
+          "code": "CNB",
+          "name": "Kanpur Central",
+          "day": 2,
+          "arr": "00:05",
+          "dep": "00:07",
+          "dist": 439,
+          "lat": 26.4499,
+          "lon": 80.3319
+        },
+        {
+          "code": "PNBE",
+          "name": "Patna Jn",
+          "day": 2,
+          "arr": "04:20",
+          "dep": "04:25",
+          "dist": 989,
+          "lat": 25.6093,
+          "lon": 85.1376
+        },
+        {
+          "code": "SDAH",
+          "name": "Sealdah",
+          "day": 2,
+          "arr": "10:00",
+          "dep": null,
+          "dist": 1525,
+          "lat": 22.5675,
+          "lon": 88.3707
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 22:05",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Sealdah",
+      "service_date": null,
+      "next_departure": "2026-09-18T22:05:00+05:30"
+    },
+    {
+      "number": "12904",
+      "name": "Golden Temple Mail",
+      "type": "Mail-Express",
+      "zone": "WR",
+      "route": [
+        {
+          "code": "ASR",
+          "name": "Amritsar Jn",
           "day": 1,
-          "arr": "01:12",
-          "dep": "01:14",
-          "dist": 188,
-          "lat": 27.1591,
-          "lon": 78.0092
+          "arr": null,
+          "dep": "19:15",
+          "dist": 0,
+          "lat": 31.634,
+          "lon": 74.8723
+        },
+        {
+          "code": "UMB",
+          "name": "Ambala Cant Jn",
+          "day": 1,
+          "arr": "23:35",
+          "dep": "23:40",
+          "dist": 201,
+          "lat": 30.3641,
+          "lon": 76.8016
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 2,
+          "arr": "02:45",
+          "dep": "03:05",
+          "dist": 379,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "KOTA",
+          "name": "Kota Jn",
+          "day": 2,
+          "arr": "09:00",
+          "dep": "09:05",
+          "dist": 858,
+          "lat": 25.1804,
+          "lon": 75.8648
+        },
+        {
+          "code": "RTM",
+          "name": "Ratlam Jn",
+          "day": 2,
+          "arr": "12:35",
+          "dep": "12:40",
+          "dist": 1121,
+          "lat": 23.3315,
+          "lon": 75.0367
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 2,
+          "arr": "16:10",
+          "dep": "16:12",
+          "dist": 1408,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "BCT",
+          "name": "Mumbai Central",
+          "day": 2,
+          "arr": "21:15",
+          "dep": null,
+          "dist": 1857,
+          "lat": 18.9694,
+          "lon": 72.8194
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Ratlam Jn and Vadodara Jn — running 7 min late",
+      "delay_min": 7,
+      "last_station": "Ratlam Jn",
+      "next_station": "Vadodara Jn",
+      "eta": "16:17",
+      "percent_complete": 68.0,
+      "origin": "Amritsar Jn",
+      "destination": "Mumbai Central",
+      "service_date": "2026-09-16"
+    },
+    {
+      "number": "12432",
+      "name": "Trivandrum Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "TVC",
+          "name": "Thiruvananthapuram Central",
+          "day": 1,
+          "arr": null,
+          "dep": "19:15",
+          "dist": 0,
+          "lat": 8.4875,
+          "lon": 76.9525
+        },
+        {
+          "code": "ERS",
+          "name": "Ernakulam Jn",
+          "day": 1,
+          "arr": "22:40",
+          "dep": "22:50",
+          "dist": 299,
+          "lat": 9.9686,
+          "lon": 76.2864
+        },
+        {
+          "code": "MAO",
+          "name": "Madgaon Jn",
+          "day": 2,
+          "arr": "10:05",
+          "dep": "10:10",
+          "dist": 1099,
+          "lat": 15.2734,
+          "lon": 73.9862
+        },
+        {
+          "code": "BRC",
+          "name": "Vadodara Jn",
+          "day": 2,
+          "arr": "20:45",
+          "dep": "20:47",
+          "dist": 1678,
+          "lat": 22.3072,
+          "lon": 73.1812
+        },
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 3,
+          "arr": "08:00",
+          "dep": null,
+          "dist": 2649,
+          "lat": 28.6431,
+          "lon": 77.2197
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs Thiruvananthapuram Central Fri 18 Sep 19:15",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Thiruvananthapuram Central",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "Thiruvananthapuram Central",
+      "destination": "New Delhi",
+      "service_date": null,
+      "next_departure": "2026-09-18T19:15:00+05:30"
+    },
+    {
+      "number": "12618",
+      "name": "Lakshadweep Mangala Express",
+      "type": "Mail-Express",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "ERS",
+          "name": "Ernakulam Jn",
+          "day": 1,
+          "arr": null,
+          "dep": "17:30",
+          "dist": 0,
+          "lat": 9.9686,
+          "lon": 76.2864
+        },
+        {
+          "code": "BZA",
+          "name": "Vijayawada Jn",
+          "day": 2,
+          "arr": "12:35",
+          "dep": "12:40",
+          "dist": 888,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "23:30",
+          "dep": "23:40",
+          "dist": 1465,
+          "lat": 21.1533,
+          "lon": 79.0833
         },
         {
           "code": "BPL",
           "name": "Bhopal Jn",
+          "day": 3,
+          "arr": "06:10",
+          "dep": "06:20",
+          "dist": 1857,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "NZM",
+          "name": "Hazrat Nizamuddin",
+          "day": 3,
+          "arr": "14:50",
+          "dep": null,
+          "dist": 2565,
+          "lat": 28.5877,
+          "lon": 77.2534
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Bhopal Jn and Hazrat Nizamuddin — running on time",
+      "delay_min": 0,
+      "last_station": "Bhopal Jn",
+      "next_station": "Hazrat Nizamuddin",
+      "eta": "14:50",
+      "percent_complete": 98.9,
+      "origin": "Ernakulam Jn",
+      "destination": "Hazrat Nizamuddin",
+      "service_date": "2026-09-15"
+    },
+    {
+      "number": "22692",
+      "name": "Hazrat Nizamuddin KSR Bengaluru Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "SWR",
+      "route": [
+        {
+          "code": "NZM",
+          "name": "Hazrat Nizamuddin",
           "day": 1,
-          "arr": "08:35",
-          "dep": "08:45",
-          "dist": 702,
+          "arr": null,
+          "dep": "20:35",
+          "dist": 0,
+          "lat": 28.5877,
+          "lon": 77.2534
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 2,
+          "arr": "05:40",
+          "dep": "05:45",
+          "dist": 709,
           "lat": 23.2685,
           "lon": 77.4126
         },
@@ -3775,9 +3638,9 @@
           "code": "NGP",
           "name": "Nagpur",
           "day": 2,
-          "arr": "16:35",
-          "dep": "16:45",
-          "dist": 1094,
+          "arr": "10:55",
+          "dep": "11:05",
+          "dist": 1106,
           "lat": 21.1533,
           "lon": 79.0833
         },
@@ -3785,82 +3648,219 @@
           "code": "BZA",
           "name": "Vijayawada Jn",
           "day": 2,
-          "arr": "03:45",
-          "dep": "03:50",
-          "dist": 1671,
+          "arr": "20:15",
+          "dep": "20:20",
+          "dist": 1836,
           "lat": 16.5175,
           "lon": 80.6252
         },
         {
-          "code": "MAS",
-          "name": "Chennai Central",
+          "code": "SBC",
+          "name": "KSR Bengaluru",
           "day": 3,
-          "arr": "07:15",
+          "arr": "07:40",
           "dep": null,
-          "dist": 2180,
-          "lat": 13.0827,
-          "lon": 80.2757
-        }
-      ],
-      "status": "running",
-      "status_label": "Between Bhopal Jn and Nagpur — running on time",
-      "delay_min": 0,
-      "last_station": "Bhopal Jn",
-      "next_station": "Nagpur",
-      "eta": "16:35",
-      "percent_complete": 49.0,
-      "origin": "New Delhi",
-      "destination": "Chennai Central",
-      "service_date": "2026-09-16"
-    },
-    {
-      "number": "12010",
-      "name": "Ahmedabad Mumbai Shatabdi Express",
-      "type": "Shatabdi",
-      "zone": "WR",
-      "route": [
-        {
-          "code": "ADI",
-          "name": "Ahmedabad Jn",
-          "day": 1,
-          "arr": null,
-          "dep": "17:05",
-          "dist": 0,
-          "lat": 23.0225,
-          "lon": 72.5714
-        },
-        {
-          "code": "BRC",
-          "name": "Vadodara Jn",
-          "day": 1,
-          "arr": "18:52",
-          "dep": "18:54",
-          "dist": 101,
-          "lat": 22.3072,
-          "lon": 73.1812
-        },
-        {
-          "code": "BCT",
-          "name": "Mumbai Central",
-          "day": 1,
-          "arr": "22:30",
-          "dep": null,
-          "dist": 493,
-          "lat": 18.9694,
-          "lon": 72.8194
+          "dist": 2444,
+          "lat": 12.9767,
+          "lon": 77.5713
         }
       ],
       "status": "not_running",
-      "status_label": "Not running now — next departs Ahmedabad Jn Thu 17 Sep 17:05",
+      "status_label": "Not running now — next departs Hazrat Nizamuddin Thu 17 Sep 20:35",
       "delay_min": 0,
       "last_station": null,
-      "next_station": "Ahmedabad Jn",
+      "next_station": "Hazrat Nizamuddin",
       "eta": null,
       "percent_complete": 0.0,
-      "origin": "Ahmedabad Jn",
-      "destination": "Mumbai Central",
+      "origin": "Hazrat Nizamuddin",
+      "destination": "KSR Bengaluru",
       "service_date": null,
-      "next_departure": "2026-09-17T17:05:00+05:30"
+      "next_departure": "2026-09-17T20:35:00+05:30"
+    },
+    {
+      "number": "12650",
+      "name": "Hazrat Nizamuddin KSR Bengaluru Sampark Kranti Express",
+      "type": "Sampark Kranti",
+      "zone": "SWR",
+      "route": [
+        {
+          "code": "NZM",
+          "name": "Hazrat Nizamuddin",
+          "day": 1,
+          "arr": null,
+          "dep": "10:15",
+          "dist": 0,
+          "lat": 28.5877,
+          "lon": 77.2534
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 1,
+          "arr": "20:35",
+          "dep": "20:45",
+          "dist": 707,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "GTL",
+          "name": "Guntakal Jn",
+          "day": 2,
+          "arr": "11:20",
+          "dep": "11:25",
+          "dist": 1772,
+          "lat": 15.167,
+          "lon": 77.3667
+        },
+        {
+          "code": "SBC",
+          "name": "KSR Bengaluru",
+          "day": 2,
+          "arr": "16:30",
+          "dep": null,
+          "dist": 2077,
+          "lat": 12.9767,
+          "lon": 77.5713
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Hazrat Nizamuddin and Bhopal Jn — running on time",
+      "delay_min": 0,
+      "last_station": "Hazrat Nizamuddin",
+      "next_station": "Bhopal Jn",
+      "eta": "20:35",
+      "percent_complete": 14.0,
+      "origin": "Hazrat Nizamuddin",
+      "destination": "KSR Bengaluru",
+      "service_date": "2026-09-17"
+    },
+    {
+      "number": "12011",
+      "name": "New Delhi Kalka Shatabdi Express",
+      "type": "Shatabdi",
+      "zone": "NR",
+      "route": [
+        {
+          "code": "NDLS",
+          "name": "New Delhi",
+          "day": 1,
+          "arr": null,
+          "dep": "07:40",
+          "dist": 0,
+          "lat": 28.6431,
+          "lon": 77.2197
+        },
+        {
+          "code": "UMB",
+          "name": "Ambala Cant Jn",
+          "day": 1,
+          "arr": "10:35",
+          "dep": "10:38",
+          "dist": 200,
+          "lat": 30.3641,
+          "lon": 76.8016
+        },
+        {
+          "code": "CDG",
+          "name": "Chandigarh",
+          "day": 1,
+          "arr": "11:20",
+          "dep": "11:25",
+          "dist": 245,
+          "lat": 30.7333,
+          "lon": 76.7794
+        },
+        {
+          "code": "KLK",
+          "name": "Kalka",
+          "day": 1,
+          "arr": "12:10",
+          "dep": null,
+          "dist": 298,
+          "lat": 30.8395,
+          "lon": 76.9354
+        }
+      ],
+      "status": "not_running",
+      "status_label": "Not running now — next departs New Delhi Fri 18 Sep 07:40",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "New Delhi",
+      "eta": null,
+      "percent_complete": 0.0,
+      "origin": "New Delhi",
+      "destination": "Kalka",
+      "service_date": null,
+      "next_departure": "2026-09-18T07:40:00+05:30"
+    },
+    {
+      "number": "22691",
+      "name": "KSR Bengaluru Hazrat Nizamuddin Rajdhani Express",
+      "type": "Rajdhani",
+      "zone": "SWR",
+      "route": [
+        {
+          "code": "SBC",
+          "name": "KSR Bengaluru",
+          "day": 1,
+          "arr": null,
+          "dep": "20:00",
+          "dist": 0,
+          "lat": 12.9767,
+          "lon": 77.5713
+        },
+        {
+          "code": "BZA",
+          "name": "Vijayawada Jn",
+          "day": 2,
+          "arr": "07:15",
+          "dep": "07:20",
+          "dist": 608,
+          "lat": 16.5175,
+          "lon": 80.6252
+        },
+        {
+          "code": "NGP",
+          "name": "Nagpur",
+          "day": 2,
+          "arr": "16:40",
+          "dep": "16:50",
+          "dist": 1338,
+          "lat": 21.1533,
+          "lon": 79.0833
+        },
+        {
+          "code": "BPL",
+          "name": "Bhopal Jn",
+          "day": 2,
+          "arr": "21:55",
+          "dep": "22:00",
+          "dist": 1735,
+          "lat": 23.2685,
+          "lon": 77.4126
+        },
+        {
+          "code": "NZM",
+          "name": "Hazrat Nizamuddin",
+          "day": 3,
+          "arr": "07:00",
+          "dep": null,
+          "dist": 2444,
+          "lat": 28.5877,
+          "lon": 77.2534
+        }
+      ],
+      "status": "running",
+      "status_label": "Between Vijayawada Jn and Nagpur — running 4 min early",
+      "delay_min": -4,
+      "last_station": "Vijayawada Jn",
+      "next_station": "Nagpur",
+      "eta": "16:36",
+      "percent_complete": 48.0,
+      "origin": "KSR Bengaluru",
+      "destination": "Hazrat Nizamuddin",
+      "service_date": "2026-09-16"
     },
     {
       "number": "47154",
@@ -6349,12 +6349,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Sanat Nagar and Bhartnagar — running 10 min late",
-      "delay_min": 10,
-      "last_station": "Sanat Nagar",
-      "next_station": "Bhartnagar",
-      "eta": "14:24",
-      "percent_complete": 63.9,
+      "status_label": "Between Hitech City and Hafizpeta — running 8 min late",
+      "delay_min": 8,
+      "last_station": "Hitech City",
+      "next_station": "Hafizpeta",
+      "eta": "14:32",
+      "percent_complete": 81.8,
       "origin": "Kacheguda Falaknuma",
       "destination": "Lingampalli",
       "service_date": "2026-09-17"
@@ -6577,12 +6577,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Bettiah and Majhowlia — running 1 min late",
-      "delay_min": 1,
-      "last_station": "Bettiah",
-      "next_station": "Majhowlia",
-      "eta": "14:27",
-      "percent_complete": 27.1,
+      "status_label": "Between Majhowlia and Sagauli Jn — running 3 min late",
+      "delay_min": 3,
+      "last_station": "Majhowlia",
+      "next_station": "Sagauli Jn",
+      "eta": "14:43",
+      "percent_complete": 30.4,
       "origin": "Narkatiaganj Jn",
       "destination": "Muzaffarpur Jn",
       "service_date": "2026-09-17"
@@ -6973,12 +6973,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Naugarh and Uska Bazar — running on time",
+      "status_label": "Between Uska Bazar and Bridgemanganj — running on time",
       "delay_min": 0,
-      "last_station": "Naugarh",
-      "next_station": "Uska Bazar",
-      "eta": "14:27",
-      "percent_complete": 87.7,
+      "last_station": "Uska Bazar",
+      "next_station": "Bridgemanganj",
+      "eta": "14:46",
+      "percent_complete": 89.0,
       "origin": "Gonda Jn",
       "destination": "Anand Nagar",
       "service_date": "2026-09-17"
@@ -8177,12 +8177,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Arts College and Kacheguda Jamia Osmania — running 13 min late",
-      "delay_min": 13,
-      "last_station": "Arts College",
-      "next_station": "Kacheguda Jamia Osmania",
-      "eta": "14:24",
-      "percent_complete": 72.2,
+      "status_label": "Between Vidyanagar and Kacheguda — running 14 min late",
+      "delay_min": 14,
+      "last_station": "Vidyanagar",
+      "next_station": "Kacheguda",
+      "eta": "14:37",
+      "percent_complete": 76.9,
       "origin": "Lingampalli",
       "destination": "Kacheguda Falaknuma",
       "service_date": "2026-09-17"
@@ -10067,12 +10067,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Baheri and Kichha — running 28 min late",
-      "delay_min": 28,
+      "status_label": "Between Baheri and Kichha — running 25 min late",
+      "delay_min": 25,
       "last_station": "Baheri",
       "next_station": "Kichha",
-      "eta": "14:43",
-      "percent_complete": 87.8,
+      "eta": "14:40",
+      "percent_complete": 91.3,
       "origin": "Kasganj Mg",
       "destination": "Pantnagar",
       "service_date": "2026-09-17"
@@ -10803,12 +10803,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Bharat Kup and Shivrampur — running 5 min late",
-      "delay_min": 5,
-      "last_station": "Bharat Kup",
-      "next_station": "Shivrampur",
-      "eta": "14:26",
-      "percent_complete": 94.6,
+      "status_label": "Between Shivrampur and Chitrakutdham Karwi — running 2 min late",
+      "delay_min": 2,
+      "last_station": "Shivrampur",
+      "next_station": "Chitrakutdham Karwi",
+      "eta": "14:41",
+      "percent_complete": 97.1,
       "origin": "Kanpur Central",
       "destination": "Chitrakutdham Karwi",
       "service_date": "2026-09-17"
@@ -11548,17 +11548,16 @@
           "lon": 78.31677400000001
         }
       ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Kacheguda Falaknuma Thu 17 Sep 14:30",
+      "status": "running",
+      "status_label": "Between Kacheguda Falaknuma and Huppuguda — running on time",
       "delay_min": 0,
-      "last_station": null,
-      "next_station": "Kacheguda Falaknuma",
-      "eta": null,
-      "percent_complete": 0.0,
+      "last_station": "Kacheguda Falaknuma",
+      "next_station": "Huppuguda",
+      "eta": "14:31",
+      "percent_complete": 1.2,
       "origin": "Kacheguda Falaknuma",
       "destination": "Lingampalli",
-      "service_date": null,
-      "next_departure": "2026-09-17T14:30:00+05:30"
+      "service_date": "2026-09-17"
     },
     {
       "number": "47205",
@@ -17256,7 +17255,7 @@
       "last_station": "Mahur",
       "next_station": "Daotuhaja",
       "eta": "14:42",
-      "percent_complete": 2.7,
+      "percent_complete": 4.8,
       "origin": "Mahur",
       "destination": "Lumding Jn",
       "service_date": "2026-09-17"
@@ -19629,12 +19628,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Kharawar and Ismaila Haryana — running on time",
-      "delay_min": 0,
-      "last_station": "Kharawar",
-      "next_station": "Ismaila Haryana",
-      "eta": "14:28",
-      "percent_complete": 19.0,
+      "status_label": "Between Sampla and Rohednagar Halt — running 4 min early",
+      "delay_min": -4,
+      "last_station": "Sampla",
+      "next_station": "Rohednagar Halt",
+      "eta": "14:36",
+      "percent_complete": 34.1,
       "origin": "Rohtak Jn",
       "destination": "New Delhi",
       "service_date": "2026-09-17"
@@ -21630,12 +21629,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between James Street and Sanjeevaiah Park — running on time",
-      "delay_min": 0,
-      "last_station": "James Street",
-      "next_station": "Sanjeevaiah Park",
-      "eta": "14:25",
-      "percent_complete": 68.8,
+      "status_label": "Between Begampet and Necklace Road — running 2 min late",
+      "delay_min": 2,
+      "last_station": "Begampet",
+      "next_station": "Necklace Road",
+      "eta": "14:31",
+      "percent_complete": 82.8,
       "origin": "Kacheguda Falaknuma",
       "destination": "Hyderabad Deccan",
       "service_date": "2026-09-17"
@@ -25294,12 +25293,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Bandarkhal and Damchara — running on time",
-      "delay_min": 0,
-      "last_station": "Bandarkhal",
-      "next_station": "Damchara",
-      "eta": "14:27",
-      "percent_complete": 59.9,
+      "status_label": "Between Damchara and Chandranathpur — running 2 min early",
+      "delay_min": -2,
+      "last_station": "Damchara",
+      "next_station": "Chandranathpur",
+      "eta": "14:52",
+      "percent_complete": 60.9,
       "origin": "Lumding Jn",
       "destination": "Silchar",
       "service_date": "2026-09-17"
@@ -26427,16 +26426,17 @@
           "lon": 81.699909
         }
       ],
-      "status": "running",
-      "status_label": "Between Lankalakoderu and Palakollu — running 20 min late",
-      "delay_min": 20,
-      "last_station": "Lankalakoderu",
-      "next_station": "Palakollu",
-      "eta": "14:25",
-      "percent_complete": 87.8,
+      "status": "not_running",
+      "status_label": "Not running now — next departs Nidadavolu Jn Fri 18 Sep 12:30",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Nidadavolu Jn",
+      "eta": null,
+      "percent_complete": 0.0,
       "origin": "Nidadavolu Jn",
       "destination": "Narasapur",
-      "service_date": "2026-09-17"
+      "service_date": null,
+      "next_departure": "2026-09-18T12:30:00+05:30"
     },
     {
       "number": "17241",
@@ -32674,7 +32674,7 @@
       "last_station": "Jatinga",
       "next_station": "Migrendisa",
       "eta": "15:48",
-      "percent_complete": 57.2,
+      "percent_complete": 57.4,
       "origin": "Silchar",
       "destination": "Lumding Jn",
       "service_date": "2026-09-17"
@@ -32847,12 +32847,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Sarna and Jakolari — running on time",
-      "delay_min": 0,
-      "last_station": "Sarna",
-      "next_station": "Jakolari",
-      "eta": "14:29",
-      "percent_complete": 7.4,
+      "status_label": "Between Jakolari and Parna Nand — running 1 min early",
+      "delay_min": -1,
+      "last_station": "Jakolari",
+      "next_station": "Parna Nand",
+      "eta": "14:37",
+      "percent_complete": 13.1,
       "origin": "Pathankot",
       "destination": "Amritsar Jn",
       "service_date": "2026-09-17"
@@ -35213,12 +35213,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Yeliyur and Mandya — running 6 min late",
-      "delay_min": 6,
-      "last_station": "Yeliyur",
-      "next_station": "Mandya",
-      "eta": "14:23",
-      "percent_complete": 30.7,
+      "status_label": "Between Mandya and Hanakere — running 9 min late",
+      "delay_min": 9,
+      "last_station": "Mandya",
+      "next_station": "Hanakere",
+      "eta": "14:34",
+      "percent_complete": 35.4,
       "origin": "Mysore Jn",
       "destination": "Yesvantpur Jn",
       "service_date": "2026-09-17"
@@ -35979,12 +35979,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Loharwara and Govindgarh Malikpur — running 6 min late",
+      "status_label": "Between Govindgarh Malikpur and Chhota Gudha — running 6 min late",
       "delay_min": 6,
-      "last_station": "Loharwara",
-      "next_station": "Govindgarh Malikpur",
-      "eta": "14:28",
-      "percent_complete": 14.3,
+      "last_station": "Govindgarh Malikpur",
+      "next_station": "Chhota Gudha",
+      "eta": "14:42",
+      "percent_complete": 15.8,
       "origin": "Jaipur",
       "destination": "Loharu",
       "service_date": "2026-09-17"
@@ -37451,12 +37451,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Nagarwara and Nainpur Junction — running on time",
-      "delay_min": 0,
+      "status_label": "Between Nagarwara and Nainpur Junction — running 2 min early",
+      "delay_min": -2,
       "last_station": "Nagarwara",
       "next_station": "Nainpur Junction",
-      "eta": "15:15",
-      "percent_complete": 26.3,
+      "eta": "15:13",
+      "percent_complete": 28.0,
       "origin": "Balaghat Junction",
       "destination": "Jabalpur",
       "service_date": "2026-09-17"
@@ -39062,12 +39062,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Jaipur and Kanakpura — running on time",
-      "delay_min": 0,
-      "last_station": "Jaipur",
-      "next_station": "Kanakpura",
-      "eta": "14:28",
-      "percent_complete": 4.2,
+      "status_label": "Between Kanakpura and Dhanakya — running 6 min late",
+      "delay_min": 6,
+      "last_station": "Kanakpura",
+      "next_station": "Dhanakya",
+      "eta": "14:35",
+      "percent_complete": 8.7,
       "origin": "Jaipur",
       "destination": "Ajmer Jn",
       "service_date": "2026-09-17"
@@ -40286,12 +40286,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Bogri Road and Garhbeta — running 6 min late",
+      "status_label": "Between Garhbeta and Chandrakona Rd — running 6 min late",
       "delay_min": 6,
-      "last_station": "Bogri Road",
-      "next_station": "Garhbeta",
-      "eta": "14:27",
-      "percent_complete": 68.7,
+      "last_station": "Garhbeta",
+      "next_station": "Chandrakona Rd",
+      "eta": "14:37",
+      "percent_complete": 72.5,
       "origin": "Purulia Jn",
       "destination": "Kharagpur Jn",
       "service_date": "2026-09-17"
@@ -41201,12 +41201,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Ketohalli and Bidadi — running 14 min late",
-      "delay_min": 14,
-      "last_station": "Ketohalli",
-      "next_station": "Bidadi",
-      "eta": "14:24",
-      "percent_complete": 75.9,
+      "status_label": "Between Bidadi and Hejjala — running 15 min late",
+      "delay_min": 15,
+      "last_station": "Bidadi",
+      "next_station": "Hejjala",
+      "eta": "14:34",
+      "percent_complete": 78.6,
       "origin": "Mysore Jn",
       "destination": "Yesvantpur Jn",
       "service_date": "2026-09-17"
@@ -42980,17 +42980,16 @@
           "lon": 78.31677400000001
         }
       ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Hyderabad Deccan Thu 17 Sep 14:30",
-      "delay_min": 0,
-      "last_station": null,
-      "next_station": "Hyderabad Deccan",
-      "eta": null,
-      "percent_complete": 0.0,
+      "status": "running",
+      "status_label": "Between Lakdikapul and Khairatabad Dcn — running 3 min early",
+      "delay_min": -3,
+      "last_station": "Lakdikapul",
+      "next_station": "Khairatabad Dcn",
+      "eta": "14:32",
+      "percent_complete": 5.5,
       "origin": "Hyderabad Deccan",
       "destination": "Lingampalli",
-      "service_date": null,
-      "next_departure": "2026-09-17T14:30:00+05:30"
+      "service_date": "2026-09-17"
     },
     {
       "number": "47130",
@@ -43547,17 +43546,16 @@
           "lon": 78.474481
         }
       ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Lingampalli Thu 17 Sep 14:30",
+      "status": "running",
+      "status_label": "Between Lingampalli and Chandanagar — running on time",
       "delay_min": 0,
-      "last_station": null,
-      "next_station": "Lingampalli",
-      "eta": null,
-      "percent_complete": 0.0,
+      "last_station": "Lingampalli",
+      "next_station": "Chandanagar",
+      "eta": "14:33",
+      "percent_complete": 0.8,
       "origin": "Lingampalli",
       "destination": "Kacheguda Falaknuma",
-      "service_date": null,
-      "next_departure": "2026-09-17T14:30:00+05:30"
+      "service_date": "2026-09-17"
     },
     {
       "number": "47163",
@@ -47370,17 +47368,16 @@
           "lon": 83.9603252667
         }
       ],
-      "status": "not_running",
-      "status_label": "Not running now — next departs Rayagada Thu 17 Sep 14:30",
+      "status": "running",
+      "status_label": "Between Rayagada and Singapuram Road — running on time",
       "delay_min": 0,
-      "last_station": null,
-      "next_station": "Rayagada",
-      "eta": null,
-      "percent_complete": 0.0,
+      "last_station": "Rayagada",
+      "next_station": "Singapuram Road",
+      "eta": "14:44",
+      "percent_complete": 0.1,
       "origin": "Rayagada",
       "destination": "Sambalpur",
-      "service_date": null,
-      "next_departure": "2026-09-17T14:30:00+05:30"
+      "service_date": "2026-09-17"
     },
     {
       "number": "15719",
@@ -55441,12 +55438,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Yakutpura Kacheguda and Kacheguda Dbr — running 2 min late",
-      "delay_min": 2,
-      "last_station": "Yakutpura Kacheguda",
-      "next_station": "Kacheguda Dbr",
-      "eta": "14:28",
-      "percent_complete": 16.7,
+      "status_label": "Between Kacheguda Dbr and Malakpet Kacheguda — running 7 min late",
+      "delay_min": 7,
+      "last_station": "Kacheguda Dbr",
+      "next_station": "Malakpet Kacheguda",
+      "eta": "14:35",
+      "percent_complete": 17.7,
       "origin": "Kacheguda Falaknuma",
       "destination": "Hyderabad Deccan",
       "service_date": "2026-09-17"
@@ -55719,12 +55716,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Pasupatikovil and Ayyampet — running 16 min late",
+      "status_label": "Between Pandaravadai and Papanasam — running 16 min late",
       "delay_min": 16,
-      "last_station": "Pasupatikovil",
-      "next_station": "Ayyampet",
-      "eta": "14:26",
-      "percent_complete": 53.9,
+      "last_station": "Pandaravadai",
+      "next_station": "Papanasam",
+      "eta": "14:32",
+      "percent_complete": 60.2,
       "origin": "Tiruchirappalli",
       "destination": "Mayiladuturai Jn",
       "service_date": "2026-09-17"
@@ -56190,7 +56187,7 @@
       "last_station": "Atari",
       "next_station": "Khasa",
       "eta": "14:39",
-      "percent_complete": 8.9,
+      "percent_complete": 22.9,
       "origin": "Atari",
       "destination": "Amritsar Jn",
       "service_date": "2026-09-17"
@@ -56691,12 +56688,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Yeliyur and Byadarahalli — running 21 min late",
+      "status_label": "Between Byadarahalli and Chandagirikopal — running 21 min late",
       "delay_min": 21,
-      "last_station": "Yeliyur",
-      "next_station": "Byadarahalli",
-      "eta": "14:28",
-      "percent_complete": 78.7,
+      "last_station": "Byadarahalli",
+      "next_station": "Chandagirikopal",
+      "eta": "14:32",
+      "percent_complete": 82.4,
       "origin": "Yesvantpur Jn",
       "destination": "Mysore Jn",
       "service_date": "2026-09-17"
@@ -57705,16 +57702,17 @@
           "lon": 78.5025
         }
       ],
-      "status": "running",
-      "status_label": "Between Ghatkesar and Charlapalli — running 15 min late",
-      "delay_min": 15,
-      "last_station": "Ghatkesar",
-      "next_station": "Charlapalli",
-      "eta": "14:30",
-      "percent_complete": 92.8,
+      "status": "not_running",
+      "status_label": "Not running now — next departs Manchiryal Fri 18 Sep 10:30",
+      "delay_min": 0,
+      "last_station": null,
+      "next_station": "Manchiryal",
+      "eta": null,
+      "percent_complete": 0.0,
       "origin": "Manchiryal",
       "destination": "Secunderabad Jn",
-      "service_date": "2026-09-17"
+      "service_date": null,
+      "next_departure": "2026-09-18T10:30:00+05:30"
     },
     {
       "number": "09741",
@@ -57904,12 +57902,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Khalilpur and Inchhapuri — running on time",
+      "status_label": "Between Inchhapuri and Pataudi Road — running on time",
       "delay_min": 0,
-      "last_station": "Khalilpur",
-      "next_station": "Inchhapuri",
-      "eta": "14:26",
-      "percent_complete": 18.9,
+      "last_station": "Inchhapuri",
+      "next_station": "Pataudi Road",
+      "eta": "14:32",
+      "percent_complete": 26.5,
       "origin": "Rewari",
       "destination": "Delhi Sarai Rohilla",
       "service_date": "2026-09-17"
@@ -61335,12 +61333,12 @@
         }
       ],
       "status": "running",
-      "status_label": "Between Malhar and Bap — running 6 min late",
+      "status_label": "Between Bap and Sird — running 6 min late",
       "delay_min": 6,
-      "last_station": "Malhar",
-      "next_station": "Bap",
-      "eta": "14:25",
-      "percent_complete": 57.1,
+      "last_station": "Bap",
+      "next_station": "Sird",
+      "eta": "14:41",
+      "percent_complete": 60.5,
       "origin": "Jaisalmer",
       "destination": "Lalgarh Jn",
       "service_date": "2026-09-17"
