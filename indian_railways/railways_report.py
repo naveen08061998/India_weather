@@ -164,6 +164,10 @@ def build_html(payload: dict) -> str:
     background: var(--accent-glow); border: 1px solid var(--accent); border-radius: 8px;
     padding: 6px 10px; font-size: .74rem; color: var(--text); line-height: 1.5;
   }}
+  .route-note {{
+    background: rgba(245,158,11,.12); border: 1px solid var(--warn); border-radius: 8px;
+    padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
+  }}
   .stops-detail {{
     margin-top: 6px; border-top: 1px dashed var(--border); padding-top: 10px;
     max-height: 220px; overflow-y: auto;
@@ -446,6 +450,9 @@ function renderCards(query) {{
           &#8594; Alight <b>${{journey.alight.name}} (${{journey.alight.code}})</b> (arr ${{journey.alight.arr || '—'}})
           &bull; ${{Math.abs(journey.alight.dist - journey.board.dist)}} km</div>`
       : '';
+    const routeNote = t.route_note
+      ? `<div class="route-note">&#8505; ${{t.route_note}}</div>`
+      : '';
     return `
     <div class="card" style="--cc:${{color}}">
       <div class="card-top">
@@ -458,6 +465,7 @@ function renderCards(query) {{
       <div class="status-label ${{statusClass}}">${{t.status_label}}${{delayLabel}}</div>
       <div class="progress-track"><div class="progress-fill" style="width:${{pct}}%"></div></div>
       <div class="route-line">${{nextInfo}}</div>
+      ${{routeNote}}
       <button class="gps-btn" onclick="locateOnTrain('${{t.number}}', this)">&#128205; Use My GPS (I'm on this train)</button>
       <div class="stops-detail">
         ${{(t.route || []).map(s => `

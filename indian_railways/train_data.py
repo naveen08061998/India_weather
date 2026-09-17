@@ -712,9 +712,57 @@ def _load_imported_stations() -> dict:
         return {}
 
 
+# The imported open dataset has a documented data-quality issue for many
+# entries: routes list every wayside/block-section passing point as if it
+# were an official halt, producing implausibly dense stop lists (e.g. a
+# Superfast train "stopping" every 3-8 km — real Superfast services space
+# halts far wider). Flag routes that are both long AND unusually dense
+# (average gap under _MIN_HALT_GAP_KM) and thin them down to more plausible
+# halts: keep the origin/destination, any junction station, and any stop at
+# least _MIN_HALT_GAP_KM from the last kept one. The train is marked with a
+# `route_note` so API responses can disclose the approximation rather than
+# presenting the thinned list as an authoritative official halt list.
+_MIN_HALT_GAP_KM = 10
+_OVER_DETAIL_MIN_STOPS = 15
+_ROUTE_NOTE = (
+    "Some closely-spaced wayside points from the source dataset were collapsed — "
+    "this stop list is an approximation, not the train's official halt list."
+)
+
+
+def _thin_route(route: list[dict]) -> list[dict]:
+    kept = [route[0]]
+    last_dist = route[0]["dist"]
+    for stop in route[1:-1]:
+        is_junction = "Jn" in stop["name"] or "Junction" in stop["name"]
+        if is_junction or (stop["dist"] - last_dist) >= _MIN_HALT_GAP_KM:
+            kept.append(stop)
+            last_dist = stop["dist"]
+    kept.append(route[-1])
+    return kept
+
+
+def _clean_imported_route(train: dict) -> dict:
+    route = train["route"]
+    if len(route) < _OVER_DETAIL_MIN_STOPS:
+        return train
+    span = (route[-1]["dist"] - route[0]["dist"]) or 1
+    avg_gap_km = span / (len(route) - 1)
+    if avg_gap_km >= _MIN_HALT_GAP_KM:
+        return train
+    thinned = _thin_route(route)
+    if len(thinned) == len(route):
+        return train
+    return {**train, "route": thinned, "route_note": _ROUTE_NOTE}
+
+
 _curated_numbers = {t["number"] for t in CURATED_TRAINS}
 CURATED_TRAIN_NUMBERS: frozenset[str] = frozenset(_curated_numbers)
-_imported_trains = [t for t in _load_imported_trains() if t["number"] not in _curated_numbers]
+_imported_trains = [
+    _clean_imported_route(t)
+    for t in _load_imported_trains()
+    if t["number"] not in _curated_numbers
+]
 
 TRAINS: list[dict] = CURATED_TRAINS + _imported_trains
 
