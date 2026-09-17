@@ -271,8 +271,10 @@ const TYPE_COLOR = {
 
 function matches(t, q) {
   if (!q) return true;
-  const hay = `${t.number} ${t.name} ${t.origin} ${t.destination}`.toLowerCase();
-  return hay.includes(q.toLowerCase().trim());
+  const needle = q.toLowerCase().trim();
+  const stops = (t.route || []).map(s => `${s.code} ${s.name}`).join(' ');
+  const hay = `${t.number} ${t.name} ${t.origin} ${t.destination} ${stops}`.toLowerCase();
+  return hay.includes(needle);
 }
 
 let _fromFilter = '';

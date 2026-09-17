@@ -210,13 +210,17 @@ def get_static_statuses(now: datetime | None = None) -> list[dict]:
 
 
 def search_trains(query: str, now: datetime | None = None, limit: int = 200) -> list[dict]:
-    """Search trains by number or (partial, case-insensitive) name/station."""
+    """Search trains by number, (partial, case-insensitive) name, or any
+    station code/name along the route — not just the origin/destination —
+    so typing an intermediate station's code (e.g. "MAS") finds trains that
+    merely pass through it."""
     q = query.strip().lower()
     if not q:
         return []
     matches = []
     for t in TRAINS:
-        haystack = f"{t['number']} {t['name']} {t['route'][0]['name']} {t['route'][-1]['name']}".lower()
+        stops = " ".join(f"{s['code']} {s['name']}" for s in t["route"])
+        haystack = f"{t['number']} {t['name']} {stops}".lower()
         if q in haystack:
             matches.append(get_status_for_number(t["number"], now))
             if len(matches) >= limit:
