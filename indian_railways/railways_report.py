@@ -274,10 +274,15 @@ const _modeReady = (async () => {{
       if (r.ok) return 'flask';
     }} catch (_) {{}}
   }}
-  try {{
-    const r = await fetch(`${{REMOTE_API_BASE}}/api/trains`, {{ signal: AbortSignal.timeout(6000) }});
-    if (r.ok) return 'remote';
-  }} catch (_) {{}}
+  // Render's free tier spins the backend down after inactivity — a cold
+  // start can take 30-50s to respond, so give it a generous timeout (and
+  // one retry) before giving up and falling back to the embedded set.
+  for (let attempt = 0; attempt < 2; attempt++) {{
+    try {{
+      const r = await fetch(`${{REMOTE_API_BASE}}/api/trains`, {{ signal: AbortSignal.timeout(45000) }});
+      if (r.ok) return 'remote';
+    }} catch (_) {{}}
+  }}
   return 'static';
 }})();
 
@@ -360,7 +365,7 @@ async function performSearch(query) {{
   const mode = await _modeReady;
   if (mode !== 'static') {{
     try {{
-      const r = await fetch(`${{_apiBase(mode)}}/api/trains/search?q=${{encodeURIComponent(q)}}`, {{ signal: AbortSignal.timeout(6000) }});
+      const r = await fetch(`${{_apiBase(mode)}}/api/trains/search?q=${{encodeURIComponent(q)}}`, {{ signal: AbortSignal.timeout(45000) }});
       if (r.ok) {{
         const data = await r.json();
         TRAINS = data.results || [];
@@ -385,7 +390,7 @@ async function applyRouteSearch() {{
       const params = new URLSearchParams();
       if (_fromFilter) params.set('from', _fromFilter);
       if (_toFilter) params.set('to', _toFilter);
-      const r = await fetch(`${{_apiBase(mode)}}/api/trains/route?${{params.toString()}}`, {{ signal: AbortSignal.timeout(6000) }});
+      const r = await fetch(`${{_apiBase(mode)}}/api/trains/route?${{params.toString()}}`, {{ signal: AbortSignal.timeout(45000) }});
       if (r.ok) {{
         const data = await r.json();
         TRAINS = data.results || [];
@@ -533,9 +538,13 @@ if (localStorage.getItem('ir_theme') === 'light') toggleTheme();
 populateStationList();
 renderCards('');
 
-// If served via Flask, periodically refresh the header stats and (only when
-// no search/filter is active) the default curated view.
-setInterval(() => {{
+// If served via Flask (same-origin API reachable), periodically refresh the
+// header stats and (only when no search/filter is active) the default
+// curated view. Skipped in 'remote'/'static' mode so a plain file:// open
+// doesn't spam the console with 403s from a relative-path fetch.
+setInterval(async () => {{
+  const mode = await _modeReady;
+  if (mode !== 'flask') return;
   fetch('/api/trains', {{ signal: AbortSignal.timeout(4000) }})
     .then(r => r.ok ? r.json() : null)
     .then(data => {{
