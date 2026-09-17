@@ -239,14 +239,15 @@ def search_by_route(from_query: str, to_query: str, now: datetime | None = None,
         alias_codes = STATION_ALIASES.get(needle)
         if alias_codes:
             return next((i for i, s in enumerate(route) if s["code"] in alias_codes), -1)
-        # Accepts a plain name, a station code, or the datalist's "Name (CODE)" format.
-        code_match = re.search(r"\(([a-z0-9]+)\)\s*$", needle)
+        # Accepts a plain name, a station code, or the datalist's "CODE — Name" format.
+        code_match = re.match(r"^([a-z0-9]+)\s*[\u2014-]\s*", needle)
         code = code_match.group(1) if code_match else needle
-        return next(
-            (i for i, s in enumerate(route)
-             if s["code"].lower() == code or needle in s["name"].lower()),
-            -1,
-        )
+        # Exact code match always wins first — otherwise a short code like "mas"
+        # would spuriously substring-match unrelated names (e.g. "Masaipet").
+        code_idx = next((i for i, s in enumerate(route) if s["code"].lower() == code), -1)
+        if code_idx != -1:
+            return code_idx
+        return next((i for i, s in enumerate(route) if needle in s["name"].lower()), -1)
 
     matches = []
     for t in TRAINS:

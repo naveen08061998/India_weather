@@ -327,7 +327,11 @@ function routeMatch(t) {{
     // dash) is used as-is.
     const codeAtStart = raw.match(/^([a-z0-9]+)\\s*[\u2014-]\\s*/i);
     const code = codeAtStart ? codeAtStart[1] : raw;
-    return route.findIndex(s => s.code.toLowerCase() === code || s.name.toLowerCase().includes(raw));
+    // Exact code match always wins first — otherwise a short code like "mas"
+    // would spuriously substring-match unrelated names (e.g. "Masaipet").
+    const codeIdx = route.findIndex(s => s.code.toLowerCase() === code);
+    if (codeIdx !== -1) return codeIdx;
+    return route.findIndex(s => s.name.toLowerCase().includes(raw));
   }};
   const fromIdx = _fromFilter ? findIdx(_fromFilter) : 0;
   const toIdx = _toFilter ? findIdx(_toFilter) : route.length - 1;
