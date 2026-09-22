@@ -327,6 +327,7 @@ const I18N = {{
     story_show: '📰 Train Story', story_hide: '📰 Hide Train Story',
     story_loading: 'Loading train history…', story_not_found: 'No published history found for this train.',
     story_source: 'Source: Wikipedia',
+    story_learn_more: '🔎 Search more on Wikipedia',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
   }},
   hi: {{
@@ -345,6 +346,7 @@ const I18N = {{
     story_show: '📰 ट्रेन की कहानी', story_hide: '📰 ट्रेन की कहानी छुपाएँ',
     story_loading: 'ट्रेन का इतिहास लोड हो रहा है…', story_not_found: 'इस ट्रेन के लिए कोई प्रकाशित इतिहास नहीं मिला।',
     story_source: 'स्रोत: विकिपीडिया',
+    story_learn_more: '🔎 विकिपीडिया पर और खोजें',
     footer_disclaimer: 'स्थिति सार्वजनिक समय-सारणी से अनुकरण (SIMULATED) की गई है (आधिकारिक लाइव GPS फ़ीड नहीं)। आधिकारिक वास्तविक-समय स्थिति के लिए NTES / IRCTC का उपयोग करें।<br/>"मेरा GPS उपयोग करें" केवल आपके ब्राउज़र में आपके डिवाइस का स्थान पढ़ता है (कभी सर्वर पर नहीं भेजा जाता) ताकि यह दिखाया जा सके कि आप किस स्टेशन के सबसे नज़दीक हैं — यह तभी उपयोगी है जब आप वास्तव में उस ट्रेन में यात्रा कर रहे हों।',
   }},
   ta: {{
@@ -363,6 +365,7 @@ const I18N = {{
     story_show: '📰 ரயில் கதை', story_hide: '📰 ரயில் கதையை மறை',
     story_loading: 'ரயில் வரலாறு ஏற்றப்படுகிறது…', story_not_found: 'இந்த ரயிலுக்கு வெளியிடப்பட்ட வரலாறு எதுவும் இல்லை.',
     story_source: 'மூலம்: விக்கிபீடியா',
+    story_learn_more: '🔎 விக்கிபீடியாவில் மேலும் தேடு',
     footer_disclaimer: 'நிலை பொது கால அட்டவணையிலிருந்து உருவகப்படுத்தப்பட்டது (SIMULATED) (அதிகாரப்பூர்வ நேரடி GPS ஃபீட் அல்ல). அதிகாரப்பூர்வ நேரடி நிலைக்கு NTES / IRCTC-ஐ பயன்படுத்தவும்.<br/>"எனது GPS-ஐ பயன்படுத்து" உங்கள் சாதனத்தின் இருப்பிடத்தை உங்கள் உலாவியில் மட்டுமே படிக்கிறது (சேவையகத்திற்கு அனுப்பப்படாது) — நீங்கள் உண்மையில் அந்த ரயிலில் பயணிக்கும்போது மட்டுமே பயனுள்ளது.',
   }},
   te: {{
@@ -381,6 +384,7 @@ const I18N = {{
     story_show: '📰 రైలు కథ', story_hide: '📰 రైలు కథను దాచండి',
     story_loading: 'రైలు చరిత్ర లోడ్ అవుతోంది…', story_not_found: 'ఈ రైలుకు ప్రచురించిన చరిత్ర కనుగొనబడలేదు.',
     story_source: 'మూలం: వికీపీడియా',
+    story_learn_more: '🔎 వికీపీడియాలో ఇంకా వెతకండి',
     footer_disclaimer: 'స్థితి బహిరంగ టైమ్‌టేబుల్ నుండి అనుకరించబడింది (SIMULATED) (అధికారిక లైవ్ GPS ఫీడ్ కాదు). అధికారిక రియల్-టైమ్ స్థితి కోసం NTES / IRCTC ఉపయోగించండి.<br/>"నా GPS ఉపయోగించండి" మీ పరికర స్థానాన్ని మీ బ్రౌజర్‌లో మాత్రమే చదువుతుంది (సర్వర్‌కు పంపబడదు) — మీరు నిజంగా ఆ రైలులో ప్రయాణిస్తున్నప్పుడు మాత్రమే ఉపయోగకరం.',
   }},
   kn: {{
@@ -399,6 +403,7 @@ const I18N = {{
     story_show: '📰 ರೈಲು ಕಥೆ', story_hide: '📰 ರೈಲು ಕಥೆ ಮರೆಮಾಡಿ',
     story_loading: 'ರೈಲಿನ ಇತಿಹಾಸ ಲೋಡ್ ಆಗುತ್ತಿದೆ…', story_not_found: 'ಈ ರೈಲಿಗೆ ಪ್ರಕಟಿತ ಇತಿಹಾಸ ಕಂಡುಬಂದಿಲ್ಲ.',
     story_source: 'ಮೂಲ: ವಿಕಿಪೀಡಿಯಾ',
+    story_learn_more: '🔎 ವಿಕಿಪೀಡಿಯಾದಲ್ಲಿ ಹೆಚ್ಚಿನ ಹುಡುಕಿ',
     footer_disclaimer: 'ಸ್ಥಿತಿಯನ್ನು ಸಾರ್ವಜನಿಕ ವೇಳಾಪಟ್ಟಿಯಿಂದ ಅನುಕರಿಸಲಾಗಿದೆ (SIMULATED) (ಅಧಿಕೃತ ಲೈವ್ GPS ಫೀಡ್ ಅಲ್ಲ). ಅಧಿಕೃತ ನೈಜ-ಸಮಯದ ಸ್ಥಿತಿಗಾಗಿ NTES / IRCTC ಬಳಸಿ.<br/>"ನನ್ನ GPS ಬಳಸಿ" ನಿಮ್ಮ ಸಾಧನದ ಸ್ಥಳವನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮಾತ್ರ ಓದುತ್ತದೆ (ಸರ್ವರ್‌ಗೆ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ) — ನೀವು ನಿಜವಾಗಿಯೂ ಆ ರೈಲಿನಲ್ಲಿ ಪ್ರಯಾಣಿಸುತ್ತಿರುವಾಗ ಮಾತ್ರ ಉಪಯುಕ್ತ.',
   }},
   bn: {{
@@ -417,6 +422,7 @@ const I18N = {{
     story_show: '📰 ট্রেনের গল্প', story_hide: '📰 ট্রেনের গল্প লুকান',
     story_loading: 'ট্রেনের ইতিহাস লোড হচ্ছে…', story_not_found: 'এই ট্রেনের জন্য কোনো প্রকাশিত ইতিহাস পাওয়া যায়নি।',
     story_source: 'উৎস: উইকিপিডিয়া',
+    story_learn_more: '🔎 উইকিপিডিয়ায় আরও খুঁজুন',
     footer_disclaimer: 'অবস্থা পাবলিক সময়সূচী থেকে সিমুলেটেড (অফিসিয়াল লাইভ GPS ফিড নয়)। অফিসিয়াল রিয়েল-টাইম অবস্থার জন্য NTES / IRCTC ব্যবহার করুন।<br/>"আমার GPS ব্যবহার করুন" শুধুমাত্র আপনার ব্রাউজারে আপনার ডিভাইসের অবস্থান পড়ে (সার্ভারে পাঠানো হয় না) — শুধুমাত্র আপনি সত্যিই সেই ট্রেনে ভ্রমণ করলে উপযোগী।',
   }},
   ml: {{
@@ -435,6 +441,7 @@ const I18N = {{
     story_show: '📰 ട്രെയിൻ കഥ', story_hide: '📰 ട്രെയിൻ കഥ മറയ്ക്കുക',
     story_loading: 'ട്രെയിൻ ചരിത്രം ലോഡ് ചെയ്യുന്നു…', story_not_found: 'ഈ ട്രെയിനിന് പ്രസിദ്ധീകരിച്ച ചരിത്രം കണ്ടെത്തിയില്ല.',
     story_source: 'ഉറവിടം: വിക്കിപീഡിയ',
+    story_learn_more: '🔎 വിക്കിപീഡിയയിൽ കൂടുതൽ തിരയുക',
     footer_disclaimer: 'സ്ഥിതി പൊതു സമയക്രമത്തിൽ നിന്ന് അനുകരിച്ചതാണ് (SIMULATED) (ഔദ്യോഗിക തത്സമയ GPS ഫീഡ് അല്ല). ഔദ്യോഗിക തത്സമയ നിലയ്ക്കായി NTES / IRCTC ഉപയോഗിക്കുക.<br/>"എന്റെ GPS ഉപയോഗിക്കുക" നിങ്ങളുടെ ഉപകരണത്തിന്റെ സ്ഥാനം നിങ്ങളുടെ ബ്രൗസറിൽ മാത്രം വായിക്കുന്നു (സെർവറിലേക്ക് ഒരിക്കലും അയയ്ക്കില്ല) — നിങ്ങൾ ശരിക്കും ആ ട്രെയിനിൽ യാത്ര ചെയ്യുമ്പോൾ മാത്രം ഉപയോഗപ്രദമാണ്.',
   }},
 }};
@@ -806,7 +813,7 @@ function renderCards(query) {{
         <button class="gps-btn" onclick="locateOnTrain('${{t.number}}', this)">${{tr('gps_start')}}</button>
         <button class="map-btn" onclick="toggleRouteMap('${{t.number}}', this)">${{tr('map_show')}}</button>
         <button class="fare-btn" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
-        <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', '${{t.name.replace(/'/g, "\\'")}}', this)">${{tr('story_show')}}</button>
+        <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', this)">${{tr('story_show')}}</button>
       </div>
       <div class="route-map" id="map-${{t.number}}" style="display:none"></div>
       ${{fareBox}}
@@ -823,42 +830,62 @@ function renderCards(query) {{
 }}
 
 // ── Train Story ──────────────────────────────────────────────────────────
-// Pulls a real, live summary from Wikipedia's public REST API (free, no key)
-// keyed by the train's name — e.g. "Rajdhani Express" has a genuine article
-// with real history (introduced 1969, etc). Most of the ~2,400 imported
-// trains have no dedicated article; that's shown honestly as "no history
-// found" rather than inventing facts. Cached per train name for the session.
+// Two parts, both honest about what they are:
+//  1. "About this train" — always shown, built only from data we actually
+//     have (type/origin/destination/distance/stops/zone). Not a history.
+//  2. A genuine live summary from Wikipedia's public REST API (free, no
+//     key) keyed by train name, when a dedicated article exists (mostly
+//     named premium trains — Rajdhani, Shatabdi, etc). Most of the ~2,400
+//     imported trains have no article; rather than invent a "why/when it
+//     started" story for those, we say so honestly and give a real search
+//     link so the user can look further themselves.
 const _storyCache = {{}};
-async function toggleStoryBox(number, name, btnEl) {{
+function _aboutThisTrain(train) {{
+  const route = train.route || [];
+  const distKm = route.length ? Math.abs(route[route.length - 1].dist - route[0].dist) : 0;
+  return `#${{train.number}} ${{train.name}} is a ${{train.type}} service connecting `
+    + `${{train.origin}} and ${{train.destination}}, covering ${{distKm}} km via ${{route.length}} stops, `
+    + `operated by the ${{train.zone}} zone.`;
+}}
+async function toggleStoryBox(number, btnEl) {{
   const box = document.getElementById(`story-${{number}}`);
-  if (!box) return;
+  const train = TRAINS.find(x => x.number === number);
+  if (!box || !train) return;
   const show = box.style.display === 'none';
   box.style.display = show ? 'flex' : 'none';
   btnEl.textContent = show ? tr('story_hide') : tr('story_show');
   if (!show || box.dataset.loaded) return;
   box.dataset.loaded = '1';
-  box.innerHTML = `<div class="story-muted">${{tr('story_loading')}}</div>`;
+  const searchLink = `https://en.wikipedia.org/w/index.php?search=${{encodeURIComponent(train.name)}}`;
+  const learnMore = `<div class="story-muted" style="margin-top:6px"><a href="${{searchLink}}" target="_blank" rel="noopener">${{tr('story_learn_more')}} ↗</a></div>`;
+  box.innerHTML = `<div><div>${{_aboutThisTrain(train)}}</div>
+    <div class="story-muted" style="margin-top:6px">${{tr('story_loading')}}</div></div>`;
   try {{
-    let story = _storyCache[name];
+    let story = _storyCache[train.name];
     if (!story) {{
-      const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${{encodeURIComponent(name.replace(/ /g, '_'))}}`;
+      const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${{encodeURIComponent(train.name.replace(/ /g, '_'))}}`;
       const r = await fetch(url, {{ signal: AbortSignal.timeout(8000) }});
       if (!r.ok) throw new Error('not found');
       const data = await r.json();
       if (data.type === 'disambiguation' || !data.extract) throw new Error('no extract');
       story = data;
-      _storyCache[name] = story;
+      _storyCache[train.name] = story;
     }}
     const thumb = story.thumbnail?.source ? `<img src="${{story.thumbnail.source}}" alt=""/>` : '';
-    const link = story.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${{encodeURIComponent(name.replace(/ /g, '_'))}}`;
+    const link = story.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${{encodeURIComponent(train.name.replace(/ /g, '_'))}}`;
     box.innerHTML = `
       ${{thumb}}
       <div>
-        <div>${{story.extract}}</div>
+        <div>${{_aboutThisTrain(train)}}</div>
+        <div style="margin-top:8px">${{story.extract}}</div>
         <div class="story-muted" style="margin-top:6px">${{tr('story_source')}} &bull; <a href="${{link}}" target="_blank" rel="noopener">${{story.title}} ↗</a></div>
       </div>`;
   }} catch (_) {{
-    box.innerHTML = `<div class="story-muted">${{tr('story_not_found')}}</div>`;
+    box.innerHTML = `<div>
+      <div>${{_aboutThisTrain(train)}}</div>
+      <div class="story-muted" style="margin-top:8px">${{tr('story_not_found')}}</div>
+      ${{learnMore}}
+    </div>`;
   }}
 }}
 
