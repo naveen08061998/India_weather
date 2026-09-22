@@ -649,7 +649,16 @@ function toggleFareBox(number, btnEl) {{
 }}
 
 // ── Route map (Leaflet / OpenStreetMap — free, no API key) ─────────────────
-const _mapInstances = {{}};
+let _mapInstances = {{}};
+// renderCards() replaces the #cards DOM (including every map-<number> div) on
+// every search/sort/language change, which would otherwise leave this cache
+// pointing at detached, dead Leaflet instances — silently breaking any map
+// that's reopened after a re-render (a blank box, since toggleRouteMap saw a
+// cached entry and skipped re-creating the map in the new container).
+function _destroyAllMaps() {{
+  Object.values(_mapInstances).forEach(map => {{ try {{ map.remove(); }} catch (_) {{}} }});
+  _mapInstances = {{}};
+}}
 function toggleRouteMap(number, btnEl) {{
   const container = document.getElementById(`map-${{number}}`);
   if (!container) return;
@@ -676,11 +685,19 @@ function toggleRouteMap(number, btnEl) {{
     stops.forEach(s => L.circleMarker([s.lat, s.lon], {{ radius: 4, color: '#38bdf8', fillOpacity: 1 }})
       .bindTooltip(`${{s.name}} (${{s.code}})`).addTo(map));
     map.fitBounds(latlngs, {{ padding: [20, 20] }});
+    // Guard against the container's real size not being settled yet at
+    // creation time (a common Leaflet gotcha) by re-fitting one more time
+    // on the next frame.
+    requestAnimationFrame(() => {{
+      map.invalidateSize();
+      map.fitBounds(latlngs, {{ padding: [20, 20] }});
+    }});
     _mapInstances[number] = map;
   }}, 50);
 }}
 
 function renderCards(query) {{
+  _destroyAllMaps();
   const container = document.getElementById('cards');
   let filtered = TRAINS
     .map(tn => ({{ train: tn, journey: routeMatch(tn) }}))
