@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 
-from indian_railways.train_data import ALL_STATION_NAMES, STATION_ALIASES
+from indian_railways.train_data import ALL_STATION_NAMES, STATION_ALIASES, STATION_COORDS
 
 
 def build_html(payload: dict) -> str:
@@ -27,6 +27,16 @@ def build_html(payload: dict) -> str:
     trains        = payload.get("trains", [])
     station_names_json = json.dumps(ALL_STATION_NAMES, ensure_ascii=False)
     station_aliases_json = json.dumps({k: sorted(v) for k, v in STATION_ALIASES.items()}, ensure_ascii=False)
+
+    # Code -> {name, lat, lon} for "Find trains near me" (nearest-station lookup
+    # from the rider's own device location, matched client-side).
+    station_info: dict[str, dict] = {}
+    for entry in ALL_STATION_NAMES:
+        code, name = entry.split(" \u2014 ", 1)
+        coords = STATION_COORDS.get(code)
+        if coords:
+            station_info[code] = {"name": name, "lat": coords[0], "lon": coords[1]}
+    station_info_json = json.dumps(station_info, ensure_ascii=False)
 
     trains_json = json.dumps(trains, ensure_ascii=False)
 
@@ -125,6 +135,15 @@ def build_html(payload: dict) -> str:
   }}
   #route-search-btn {{ background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }}
   #route-clear-btn:hover, #route-search-btn:hover {{ opacity: .85; }}
+  #near-me-btn {{
+    border-radius: 8px; padding: 6px 14px; font-size: .8rem; cursor: pointer;
+    font-family: inherit; border: 1px solid var(--border); background: var(--card); color: var(--text);
+  }}
+  #near-me-btn:hover {{ border-color: var(--accent); }}
+  .near-me-note {{
+    padding: 6px 24px; font-size: .78rem; color: var(--muted); background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }}
   main {{ padding: 24px; max-width: 1280px; margin: 0 auto; }}
   .cards-note {{ font-size: .78rem; color: var(--muted); margin-bottom: 14px; }}
   .cards {{
@@ -187,6 +206,7 @@ def build_html(payload: dict) -> str:
   .fare-box b {{ color: var(--text); }}
   .fare-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px 12px; margin-top: 4px; }}
   .fare-disclaimer {{ margin-top: 6px; font-style: italic; opacity: .8; }}
+  .eco-row {{ margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }}
   .story-box {{
     border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: .78rem;
     color: var(--text); line-height: 1.6; display: flex; gap: 10px;
@@ -194,6 +214,45 @@ def build_html(payload: dict) -> str:
   .story-box img {{ width: 84px; height: 84px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }}
   .story-box .story-muted {{ color: var(--muted); font-size: .72rem; }}
   .story-box a {{ color: var(--accent); }}
+  .compare-btn {{
+    align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
+    cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
+  }}
+  .compare-btn:hover {{ border-color: var(--accent); }}
+  .compare-btn.active {{ background: var(--accent); color: #fff; border-color: var(--accent); }}
+  .compare-bar {{
+    display: none; position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    box-shadow: var(--shadow); padding: 10px 18px; gap: 12px; align-items: center;
+    z-index: 300; font-size: .82rem; color: var(--text);
+  }}
+  .compare-bar button {{
+    background: var(--accent); color: #fff; border: none; border-radius: 999px;
+    padding: 6px 14px; font-size: .78rem; cursor: pointer; font-family: inherit;
+  }}
+  .compare-bar button:last-child {{ background: var(--card-h); color: var(--text); border: 1px solid var(--border); }}
+  .compare-overlay {{
+    position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 400;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }}
+  .compare-modal {{
+    background: var(--surface); border-radius: var(--radius); max-width: 700px; width: 100%;
+    max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow);
+  }}
+  .compare-modal-head {{
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--text);
+    position: sticky; top: 0; background: var(--surface);
+  }}
+  .compare-modal-head button {{
+    background: none; border: none; color: var(--muted); font-size: 1rem; cursor: pointer;
+  }}
+  .compare-table {{ width: 100%; border-collapse: collapse; font-size: .78rem; color: var(--text); }}
+  .compare-table td, .compare-table th {{
+    padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top;
+  }}
+  .compare-table td:first-child {{ color: var(--muted); font-weight: 600; white-space: nowrap; }}
   #lang-select, #sort-select {{
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     color: var(--text); padding: 6px 10px; font-size: .8rem; font-family: inherit; cursor: pointer;
@@ -285,7 +344,9 @@ def build_html(payload: dict) -> str:
     <option value="duration" data-i18n="sort_duration">Sort: Fastest (shortest duration)</option>
     <option value="stops" data-i18n="sort_stops">Sort: Fewest stops</option>
   </select>
+  <button id="near-me-btn" onclick="findTrainsNearMe()" data-i18n="near_me_btn">&#128205; Find Trains Near Me</button>
 </div>
+<div class="near-me-note" id="near-me-note" style="display:none"></div>
 
 <main>
   <div class="cards-note" id="cards-note">Showing {len(trains)} popular trains &mdash; type a train number/name above, or use From/To, to search the full database of {total_trains} trains.</div>
@@ -303,6 +364,7 @@ def build_html(payload: dict) -> str:
 const CURATED_TRAINS = {trains_json};
 const ALL_STATION_NAMES = {station_names_json};
 const STATION_ALIASES = {station_aliases_json};
+const STATION_INFO = {station_info_json};
 let TRAINS = CURATED_TRAINS.slice();
 
 // ── i18n ─────────────────────────────────────────────────────────────────
@@ -328,6 +390,11 @@ const I18N = {{
     story_loading: 'Loading train history…', story_not_found: 'No published history found for this train.',
     story_source: 'Source: Wikipedia',
     story_learn_more: '🔎 Search more on Wikipedia',
+    compare_add: '➕ Compare', compare_added: '✓ Comparing', compare_max: 'You can compare up to 3 trains at a time.',
+    compare_selected: 'selected', compare_view: 'View Comparison', compare_clear: 'Clear', compare_title: 'Compare Trains',
+    compare_type: 'Type', compare_route: 'Route', compare_distance: 'Distance', compare_duration: 'Duration',
+    compare_stops: 'Stops', compare_status: 'Status', compare_fare: 'Fare (approx.)',
+    near_me_btn: '📍 Find Trains Near Me', near_me_locating: 'Finding your location…', near_me_result: 'Nearest station:', near_me_error: 'Could not determine your location.',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
   }},
   hi: {{
@@ -347,6 +414,11 @@ const I18N = {{
     story_loading: 'ट्रेन का इतिहास लोड हो रहा है…', story_not_found: 'इस ट्रेन के लिए कोई प्रकाशित इतिहास नहीं मिला।',
     story_source: 'स्रोत: विकिपीडिया',
     story_learn_more: '🔎 विकिपीडिया पर और खोजें',
+    compare_add: '➕ तुलना करें', compare_added: '✓ तुलना में', compare_max: 'आप एक बार में अधिकतम 3 ट्रेनों की तुलना कर सकते हैं।',
+    compare_selected: 'चयनित', compare_view: 'तुलना देखें', compare_clear: 'साफ़ करें', compare_title: 'ट्रेनों की तुलना करें',
+    compare_type: 'प्रकार', compare_route: 'मार्ग', compare_distance: 'दूरी', compare_duration: 'अवधि',
+    compare_stops: 'पड़ाव', compare_status: 'स्थिति', compare_fare: 'किराया (लगभग)',
+    near_me_btn: '📍 मेरे पास ट्रेनें खोजें', near_me_locating: 'आपका स्थान ढूंढा जा रहा है…', near_me_result: 'निकटतम स्टेशन:', near_me_error: 'आपका स्थान निर्धारित नहीं किया जा सका।',
     footer_disclaimer: 'स्थिति सार्वजनिक समय-सारणी से अनुकरण (SIMULATED) की गई है (आधिकारिक लाइव GPS फ़ीड नहीं)। आधिकारिक वास्तविक-समय स्थिति के लिए NTES / IRCTC का उपयोग करें।<br/>"मेरा GPS उपयोग करें" केवल आपके ब्राउज़र में आपके डिवाइस का स्थान पढ़ता है (कभी सर्वर पर नहीं भेजा जाता) ताकि यह दिखाया जा सके कि आप किस स्टेशन के सबसे नज़दीक हैं — यह तभी उपयोगी है जब आप वास्तव में उस ट्रेन में यात्रा कर रहे हों।',
   }},
   ta: {{
@@ -366,6 +438,11 @@ const I18N = {{
     story_loading: 'ரயில் வரலாறு ஏற்றப்படுகிறது…', story_not_found: 'இந்த ரயிலுக்கு வெளியிடப்பட்ட வரலாறு எதுவும் இல்லை.',
     story_source: 'மூலம்: விக்கிபீடியா',
     story_learn_more: '🔎 விக்கிபீடியாவில் மேலும் தேடு',
+    compare_add: '➕ ஒப்பிடு', compare_added: '✓ ஒப்பிடப்படுகிறது', compare_max: 'ஒரே நேரத்தில் அதிகபட்சம் 3 ரயில்களை ஒப்பிடலாம்.',
+    compare_selected: 'தேர்ந்தெடுக்கப்பட்டது', compare_view: 'ஒப்பீட்டைக் காண்க', compare_clear: 'அழி', compare_title: 'ரயில்களை ஒப்பிடு',
+    compare_type: 'வகை', compare_route: 'பாதை', compare_distance: 'தூரம்', compare_duration: 'கால அளவு',
+    compare_stops: 'நிறுத்தங்கள்', compare_status: 'நிலை', compare_fare: 'கட்டணம் (தோராயமாக)',
+    near_me_btn: '📍 அருகிலுள்ள ரயில்களைக் கண்டறியவும்', near_me_locating: 'உங்கள் இருப்பிடத்தைக் கண்டறிகிறது…', near_me_result: 'அருகிலுள்ள நிலையம்:', near_me_error: 'உங்கள் இருப்பிடத்தைக் கண்டறிய முடியவில்லை.',
     footer_disclaimer: 'நிலை பொது கால அட்டவணையிலிருந்து உருவகப்படுத்தப்பட்டது (SIMULATED) (அதிகாரப்பூர்வ நேரடி GPS ஃபீட் அல்ல). அதிகாரப்பூர்வ நேரடி நிலைக்கு NTES / IRCTC-ஐ பயன்படுத்தவும்.<br/>"எனது GPS-ஐ பயன்படுத்து" உங்கள் சாதனத்தின் இருப்பிடத்தை உங்கள் உலாவியில் மட்டுமே படிக்கிறது (சேவையகத்திற்கு அனுப்பப்படாது) — நீங்கள் உண்மையில் அந்த ரயிலில் பயணிக்கும்போது மட்டுமே பயனுள்ளது.',
   }},
   te: {{
@@ -385,6 +462,11 @@ const I18N = {{
     story_loading: 'రైలు చరిత్ర లోడ్ అవుతోంది…', story_not_found: 'ఈ రైలుకు ప్రచురించిన చరిత్ర కనుగొనబడలేదు.',
     story_source: 'మూలం: వికీపీడియా',
     story_learn_more: '🔎 వికీపీడియాలో ఇంకా వెతకండి',
+    compare_add: '➕ పోల్చండి', compare_added: '✓ పోల్చబడుతోంది', compare_max: 'మీరు ఒకేసారి గరిష్టంగా 3 రైళ్లను పోల్చవచ్చు.',
+    compare_selected: 'ఎంపిక చేయబడింది', compare_view: 'పోలికను చూడండి', compare_clear: 'తొలగించు', compare_title: 'రైళ్లను పోల్చండి',
+    compare_type: 'రకం', compare_route: 'మార్గం', compare_distance: 'దూరం', compare_duration: 'వ్యవధి',
+    compare_stops: 'ఆగే స్టేషన్లు', compare_status: 'స్థితి', compare_fare: 'చార్జీ (సుమారు)',
+    near_me_btn: '📍 నా దగ్గర రైళ్లను కనుగొనండి', near_me_locating: 'మీ స్థానాన్ని కనుగొంటోంది…', near_me_result: 'సమీప స్టేషన్:', near_me_error: 'మీ స్థానాన్ని గుర్తించలేకపోయాము.',
     footer_disclaimer: 'స్థితి బహిరంగ టైమ్‌టేబుల్ నుండి అనుకరించబడింది (SIMULATED) (అధికారిక లైవ్ GPS ఫీడ్ కాదు). అధికారిక రియల్-టైమ్ స్థితి కోసం NTES / IRCTC ఉపయోగించండి.<br/>"నా GPS ఉపయోగించండి" మీ పరికర స్థానాన్ని మీ బ్రౌజర్‌లో మాత్రమే చదువుతుంది (సర్వర్‌కు పంపబడదు) — మీరు నిజంగా ఆ రైలులో ప్రయాణిస్తున్నప్పుడు మాత్రమే ఉపయోగకరం.',
   }},
   kn: {{
@@ -404,6 +486,11 @@ const I18N = {{
     story_loading: 'ರೈಲಿನ ಇತಿಹಾಸ ಲೋಡ್ ಆಗುತ್ತಿದೆ…', story_not_found: 'ಈ ರೈಲಿಗೆ ಪ್ರಕಟಿತ ಇತಿಹಾಸ ಕಂಡುಬಂದಿಲ್ಲ.',
     story_source: 'ಮೂಲ: ವಿಕಿಪೀಡಿಯಾ',
     story_learn_more: '🔎 ವಿಕಿಪೀಡಿಯಾದಲ್ಲಿ ಹೆಚ್ಚಿನ ಹುಡುಕಿ',
+    compare_add: '➕ ಹೋಲಿಸಿ', compare_added: '✓ ಹೋಲಿಸಲಾಗುತ್ತಿದೆ', compare_max: 'ನೀವು ಒಂದೇ ಬಾರಿಗೆ ಗರಿಷ್ಠ 3 ರೈಲುಗಳನ್ನು ಹೋಲಿಸಬಹುದು.',
+    compare_selected: 'ಆಯ್ಕೆಮಾಡಲಾಗಿದೆ', compare_view: 'ಹೋಲಿಕೆ ವೀಕ್ಷಿಸಿ', compare_clear: 'ಅಳಿಸಿ', compare_title: 'ರೈಲುಗಳನ್ನು ಹೋಲಿಸಿ',
+    compare_type: 'ಪ್ರಕಾರ', compare_route: 'ಮಾರ್ಗ', compare_distance: 'ದೂರ', compare_duration: 'ಅವಧಿ',
+    compare_stops: 'ನಿಲುಗಡೆಗಳು', compare_status: 'ಸ್ಥಿತಿ', compare_fare: 'ದರ (ಅಂದಾಜು)',
+    near_me_btn: '📍 ನನ್ನ ಬಳಿ ರೈಲುಗಳನ್ನು ತೋರಿಸಿ', near_me_locating: 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ…', near_me_result: 'ಹತ್ತಿರದ ನಿಲ್ದಾಣ:', near_me_error: 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ನಿರ್ಧರಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.',
     footer_disclaimer: 'ಸ್ಥಿತಿಯನ್ನು ಸಾರ್ವಜನಿಕ ವೇಳಾಪಟ್ಟಿಯಿಂದ ಅನುಕರಿಸಲಾಗಿದೆ (SIMULATED) (ಅಧಿಕೃತ ಲೈವ್ GPS ಫೀಡ್ ಅಲ್ಲ). ಅಧಿಕೃತ ನೈಜ-ಸಮಯದ ಸ್ಥಿತಿಗಾಗಿ NTES / IRCTC ಬಳಸಿ.<br/>"ನನ್ನ GPS ಬಳಸಿ" ನಿಮ್ಮ ಸಾಧನದ ಸ್ಥಳವನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮಾತ್ರ ಓದುತ್ತದೆ (ಸರ್ವರ್‌ಗೆ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ) — ನೀವು ನಿಜವಾಗಿಯೂ ಆ ರೈಲಿನಲ್ಲಿ ಪ್ರಯಾಣಿಸುತ್ತಿರುವಾಗ ಮಾತ್ರ ಉಪಯುಕ್ತ.',
   }},
   bn: {{
@@ -423,6 +510,11 @@ const I18N = {{
     story_loading: 'ট্রেনের ইতিহাস লোড হচ্ছে…', story_not_found: 'এই ট্রেনের জন্য কোনো প্রকাশিত ইতিহাস পাওয়া যায়নি।',
     story_source: 'উৎস: উইকিপিডিয়া',
     story_learn_more: '🔎 উইকিপিডিয়ায় আরও খুঁজুন',
+    compare_add: '➕ তুলনা করুন', compare_added: '✓ তুলনায়', compare_max: 'আপনি একবারে সর্বোচ্চ ৩টি ট্রেন তুলনা করতে পারেন।',
+    compare_selected: 'নির্বাচিত', compare_view: 'তুলনা দেখুন', compare_clear: 'পরিষ্কার', compare_title: 'ট্রেন তুলনা করুন',
+    compare_type: 'ধরন', compare_route: 'রুট', compare_distance: 'দূরত্ব', compare_duration: 'সময়কাল',
+    compare_stops: 'স্টপ', compare_status: 'অবস্থা', compare_fare: 'ভাড়া (আনুমানিক)',
+    near_me_btn: '📍 আমার কাছের ট্রেন খুঁজুন', near_me_locating: 'আপনার অবস্থান খুঁজছে…', near_me_result: 'নিকটতম স্টেশন:', near_me_error: 'আপনার অবস্থান নির্ধারণ করা যায়নি।',
     footer_disclaimer: 'অবস্থা পাবলিক সময়সূচী থেকে সিমুলেটেড (অফিসিয়াল লাইভ GPS ফিড নয়)। অফিসিয়াল রিয়েল-টাইম অবস্থার জন্য NTES / IRCTC ব্যবহার করুন।<br/>"আমার GPS ব্যবহার করুন" শুধুমাত্র আপনার ব্রাউজারে আপনার ডিভাইসের অবস্থান পড়ে (সার্ভারে পাঠানো হয় না) — শুধুমাত্র আপনি সত্যিই সেই ট্রেনে ভ্রমণ করলে উপযোগী।',
   }},
   ml: {{
@@ -442,6 +534,11 @@ const I18N = {{
     story_loading: 'ട്രെയിൻ ചരിത്രം ലോഡ് ചെയ്യുന്നു…', story_not_found: 'ഈ ട്രെയിനിന് പ്രസിദ്ധീകരിച്ച ചരിത്രം കണ്ടെത്തിയില്ല.',
     story_source: 'ഉറവിടം: വിക്കിപീഡിയ',
     story_learn_more: '🔎 വിക്കിപീഡിയയിൽ കൂടുതൽ തിരയുക',
+    compare_add: '➕ താരതമ്യം ചെയ്യുക', compare_added: '✓ താരതമ്യത്തിൽ', compare_max: 'ഒരേസമയം പരമാവധി 3 ട്രെയിനുകൾ താരതമ്യം ചെയ്യാം.',
+    compare_selected: 'തിരഞ്ഞെടുത്തു', compare_view: 'താരതമ്യം കാണുക', compare_clear: 'മായ്ക്കുക', compare_title: 'ട്രെയിനുകൾ താരതമ്യം ചെയ്യുക',
+    compare_type: 'തരം', compare_route: 'റൂട്ട്', compare_distance: 'ദൂരം', compare_duration: 'ദൈർഘ്യം',
+    compare_stops: 'സ്റ്റോപ്പുകൾ', compare_status: 'നില', compare_fare: 'നിരക്ക് (ഏകദേശം)',
+    near_me_btn: '📍 എനിക്ക് സമീപമുള്ള ട്രെയിനുകൾ കണ്ടെത്തുക', near_me_locating: 'നിങ്ങളുടെ സ്ഥാനം കണ്ടെത്തുന്നു…', near_me_result: 'ഏറ്റവും അടുത്ത സ്റ്റേഷൻ:', near_me_error: 'നിങ്ങളുടെ സ്ഥാനം കണ്ടെത്താൻ കഴിഞ്ഞില്ല.',
     footer_disclaimer: 'സ്ഥിതി പൊതു സമയക്രമത്തിൽ നിന്ന് അനുകരിച്ചതാണ് (SIMULATED) (ഔദ്യോഗിക തത്സമയ GPS ഫീഡ് അല്ല). ഔദ്യോഗിക തത്സമയ നിലയ്ക്കായി NTES / IRCTC ഉപയോഗിക്കുക.<br/>"എന്റെ GPS ഉപയോഗിക്കുക" നിങ്ങളുടെ ഉപകരണത്തിന്റെ സ്ഥാനം നിങ്ങളുടെ ബ്രൗസറിൽ മാത്രം വായിക്കുന്നു (സെർവറിലേക്ക് ഒരിക്കലും അയയ്ക്കില്ല) — നിങ്ങൾ ശരിക്കും ആ ട്രെയിനിൽ യാത്ര ചെയ്യുമ്പോൾ മാത്രം ഉപയോഗപ്രദമാണ്.',
   }},
 }};
@@ -592,6 +689,10 @@ async function applyRouteSearch() {{
   _fromFilter = document.getElementById('from-station').value.trim();
   _toFilter = document.getElementById('to-station').value.trim();
   if (!_fromFilter && !_toFilter) return;
+  // A From/To search replaces whatever free-text query was previously typed —
+  // otherwise leftover text (e.g. a train number searched earlier) silently
+  // filters out every route result and the page looks empty.
+  document.getElementById('search').value = '';
   const mode = await _modeReady;
   if (mode !== 'static') {{
     try {{
@@ -673,6 +774,18 @@ function estimateFares(train, distKm) {{
     fares[cls] = Math.max(30, Math.round(withGst));
   }});
   return fares;
+}}
+
+// Illustrative CO2e-per-passenger-km factors (grams) — commonly cited rough
+// averages for train/flight/car trip comparisons. Not a precise carbon
+// accounting tool; actual figures vary by vehicle, load factor and fuel mix.
+const CO2_G_PER_KM = {{ train: 28, flight: 255, car: 192 }};
+function estimateCO2Kg(distKm) {{
+  return {{
+    train: (distKm * CO2_G_PER_KM.train / 1000).toFixed(1),
+    flight: (distKm * CO2_G_PER_KM.flight / 1000).toFixed(1),
+    car: (distKm * CO2_G_PER_KM.car / 1000).toFixed(1),
+  }};
 }}
 
 function toggleFareBox(number, btnEl) {{
@@ -788,6 +901,7 @@ function renderCards(query) {{
     const legDist = leg ? Math.abs(leg.alight.dist - leg.board.dist) : 0;
     const legDuration = leg ? journeyDurationMin(leg.board, leg.alight) : null;
     const fares = leg ? estimateFares(t, legDist) : {{}};
+    const eco = leg ? estimateCO2Kg(legDist) : null;
     const fareBox = leg ? `
       <div class="fare-box" id="fare-${{t.number}}" style="display:none">
         <div>Distance: <b>${{legDist}} km</b> &bull; Duration: <b>${{formatDuration(legDuration)}}</b></div>
@@ -795,6 +909,8 @@ function renderCards(query) {{
           ${{Object.entries(fares).map(([cls, amt]) => `<span>${{cls}}: <b>&#8377;${{amt}}</b></span>`).join('')}}
         </div>
         <div class="fare-disclaimer">Rough estimate only — not an official IRCTC fare quote.</div>
+        <div class="eco-row">&#127793; Est. CO&#8322;: train <b>${{eco.train}} kg</b> vs flight <b>${{eco.flight}} kg</b> vs car <b>${{eco.car}} kg</b> (per passenger)</div>
+        <div class="fare-disclaimer">Illustrative only, based on commonly cited average emission factors — actual figures vary by vehicle/occupancy/fuel mix.</div>
       </div>` : '';
     return `
     <div class="card" style="--cc:${{color}}">
@@ -814,6 +930,7 @@ function renderCards(query) {{
         <button class="map-btn" onclick="toggleRouteMap('${{t.number}}', this)">${{tr('map_show')}}</button>
         <button class="fare-btn" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
         <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', this)">${{tr('story_show')}}</button>
+        <button class="compare-btn ${{_compareTrains.has(t.number) ? 'active' : ''}}" onclick="toggleCompare('${{t.number}}', this)">${{_compareTrains.has(t.number) ? tr('compare_added') : tr('compare_add')}}</button>
       </div>
       <div class="route-map" id="map-${{t.number}}" style="display:none"></div>
       ${{fareBox}}
@@ -889,6 +1006,98 @@ async function toggleStoryBox(number, btnEl) {{
   }}
 }}
 
+// ── Compare trains side-by-side ─────────────────────────────────────────────
+// Session-only selection (not persisted) of up to 3 trains, compared on
+// distance/duration/fare/stops using each train's full origin→destination
+// journey (ignores any active From/To filter, since the comparison is about
+// the trains themselves, not a specific searched leg). The train object is
+// cached at selection time (not re-looked-up from the live TRAINS list),
+// since TRAINS is replaced by every subsequent search/sort and would
+// otherwise silently drop earlier picks from the comparison.
+const _compareTrains = new Map();
+const COMPARE_MAX = 3;
+
+function toggleCompare(number, btnEl) {{
+  if (_compareTrains.has(number)) {{
+    _compareTrains.delete(number);
+  }} else {{
+    if (_compareTrains.size >= COMPARE_MAX) {{
+      alert(tr('compare_max'));
+      return;
+    }}
+    const train = TRAINS.find(t => t.number === number);
+    if (train) _compareTrains.set(number, train);
+  }}
+  btnEl.classList.toggle('active', _compareTrains.has(number));
+  btnEl.textContent = _compareTrains.has(number) ? tr('compare_added') : tr('compare_add');
+  updateCompareBar();
+}}
+
+function updateCompareBar() {{
+  let bar = document.getElementById('compare-bar');
+  if (!bar) {{
+    bar = document.createElement('div');
+    bar.id = 'compare-bar';
+    bar.className = 'compare-bar';
+    document.body.appendChild(bar);
+  }}
+  if (_compareTrains.size === 0) {{
+    bar.style.display = 'none';
+    return;
+  }}
+  bar.style.display = 'flex';
+  bar.innerHTML = `
+    <span>${{_compareTrains.size}} ${{tr('compare_selected')}}</span>
+    <button onclick="openCompareModal()">${{tr('compare_view')}}</button>
+    <button onclick="clearCompare()">${{tr('compare_clear')}}</button>`;
+}}
+
+function clearCompare() {{
+  _compareTrains.clear();
+  updateCompareBar();
+  closeCompareModal();
+  renderCards(document.getElementById('search').value);
+}}
+
+function openCompareModal() {{
+  const trains = [..._compareTrains.values()];
+  const rows = trains.map(t => {{
+    const route = t.route || [];
+    const dist = route.length ? Math.abs(route[route.length - 1].dist - route[0].dist) : 0;
+    const board = route[0], alight = route[route.length - 1];
+    const duration = (board && alight) ? journeyDurationMin(board, alight) : null;
+    const fares = estimateFares(t, dist);
+    return {{ t, dist, duration, stops: route.length, fares }};
+  }});
+  const overlay = document.createElement('div');
+  overlay.className = 'compare-overlay';
+  overlay.id = 'compare-overlay';
+  overlay.onclick = (e) => {{ if (e.target === overlay) closeCompareModal(); }};
+  overlay.innerHTML = `
+    <div class="compare-modal">
+      <div class="compare-modal-head">
+        <b>${{tr('compare_title')}}</b>
+        <button onclick="closeCompareModal()">&#10005;</button>
+      </div>
+      <table class="compare-table">
+        <tr><th></th>${{rows.map(r => `<th>#${{r.t.number}}<br/>${{r.t.name}}</th>`).join('')}}</tr>
+        <tr><td>${{tr('compare_type')}}</td>${{rows.map(r => `<td>${{r.t.type}}</td>`).join('')}}</tr>
+        <tr><td>${{tr('compare_route')}}</td>${{rows.map(r => `<td>${{r.t.origin}} → ${{r.t.destination}}</td>`).join('')}}</tr>
+        <tr><td>${{tr('compare_distance')}}</td>${{rows.map(r => `<td>${{r.dist}} km</td>`).join('')}}</tr>
+        <tr><td>${{tr('compare_duration')}}</td>${{rows.map(r => `<td>${{formatDuration(r.duration)}}</td>`).join('')}}</tr>
+        <tr><td>${{tr('compare_stops')}}</td>${{rows.map(r => `<td>${{r.stops}}</td>`).join('')}}</tr>
+        <tr><td>${{tr('compare_status')}}</td>${{rows.map(r => `<td>${{r.t.status_label}}</td>`).join('')}}</tr>
+        <tr><td>${{tr('compare_fare')}}</td>${{rows.map(r => `<td>${{Object.entries(r.fares).map(([c, a]) => `${{c}}: &#8377;${{a}}`).join('<br/>')}}</td>`).join('')}}</tr>
+      </table>
+      <div class="fare-disclaimer" style="padding:0 16px 12px">Fare figures are rough estimates only — not an official IRCTC quote.</div>
+    </div>`;
+  document.body.appendChild(overlay);
+}}
+
+function closeCompareModal() {{
+  document.getElementById('compare-overlay')?.remove();
+}}
+
 // ── GPS Trip Mode ──────────────────────────────────────────────────────────
 // Reads the rider's own device location in the browser only — never sent to
 // a server. Matches it against the train's station coordinates to show the
@@ -902,6 +1111,42 @@ function haversineKm(lat1, lon1, lat2, lon2) {{
   const a = Math.sin(dLat / 2) ** 2 +
             Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}}
+
+// ── Find Trains Near Me ─────────────────────────────────────────────────────
+// Reads the device's own location in the browser only (never sent to a
+// server) and matches it against the ~8,700-station coordinate set to find
+// the nearest railway station, then runs a normal From/To search departing
+// from there — reusing the existing route-search plumbing.
+function findTrainsNearMe() {{
+  if (!navigator.geolocation) {{
+    alert('Geolocation is not supported by this browser.');
+    return;
+  }}
+  const note = document.getElementById('near-me-note');
+  note.style.display = 'block';
+  note.textContent = tr('near_me_locating');
+  navigator.geolocation.getCurrentPosition(
+    pos => {{
+      const {{ latitude: lat, longitude: lon }} = pos.coords;
+      let nearestCode = null, nearestDist = Infinity;
+      for (const [code, info] of Object.entries(STATION_INFO)) {{
+        const d = haversineKm(lat, lon, info.lat, info.lon);
+        if (d < nearestDist) {{ nearestDist = d; nearestCode = code; }}
+      }}
+      if (!nearestCode) {{
+        note.textContent = tr('near_me_error');
+        return;
+      }}
+      const info = STATION_INFO[nearestCode];
+      note.textContent = `${{tr('near_me_result')}} ${{info.name}} (${{nearestCode}}) — ~${{nearestDist.toFixed(1)}} km`;
+      document.getElementById('from-station').value = `${{nearestCode}} — ${{info.name}}`;
+      document.getElementById('to-station').value = '';
+      applyRouteSearch();
+    }},
+    err => {{ note.textContent = tr('near_me_error'); }},
+    {{ enableHighAccuracy: true, timeout: 15000 }}
+  );
 }}
 
 function locateOnTrain(trainNumber, btnEl) {{
