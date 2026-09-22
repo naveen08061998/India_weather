@@ -171,12 +171,12 @@ def build_html(payload: dict) -> str:
     padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
   }}
   .card-actions {{ display: flex; gap: 8px; flex-wrap: wrap; }}
-  .map-btn, .fare-btn {{
+  .map-btn, .fare-btn, .story-btn {{
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
     cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
   }}
-  .map-btn:hover, .fare-btn:hover {{ border-color: var(--accent); }}
+  .map-btn:hover, .fare-btn:hover, .story-btn:hover {{ border-color: var(--accent); }}
   .route-map {{
     height: 220px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;
   }}
@@ -187,6 +187,13 @@ def build_html(payload: dict) -> str:
   .fare-box b {{ color: var(--text); }}
   .fare-grid {{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px 12px; margin-top: 4px; }}
   .fare-disclaimer {{ margin-top: 6px; font-style: italic; opacity: .8; }}
+  .story-box {{
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: .78rem;
+    color: var(--text); line-height: 1.6; display: flex; gap: 10px;
+  }}
+  .story-box img {{ width: 84px; height: 84px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }}
+  .story-box .story-muted {{ color: var(--muted); font-size: .72rem; }}
+  .story-box a {{ color: var(--accent); }}
   #lang-select, #sort-select {{
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     color: var(--text); padding: 6px 10px; font-size: .8rem; font-family: inherit; cursor: pointer;
@@ -317,6 +324,9 @@ const I18N = {{
     gps_start: "📍 Use My GPS (I'm on this train)", gps_stop: '⏹ Stop GPS Tracking',
     map_show: '🗺️ View Route Map', map_hide: '🗺️ Hide Route Map',
     fare_show: '💰 Estimate Fare', fare_hide: '💰 Hide Fare Estimate',
+    story_show: '📰 Train Story', story_hide: '📰 Hide Train Story',
+    story_loading: 'Loading train history…', story_not_found: 'No published history found for this train.',
+    story_source: 'Source: Wikipedia',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
   }},
   hi: {{
@@ -332,6 +342,9 @@ const I18N = {{
     gps_start: '📍 मेरा GPS उपयोग करें (मैं इस ट्रेन में हूँ)', gps_stop: '⏹ GPS ट्रैकिंग बंद करें',
     map_show: '🗺️ मार्ग मानचित्र देखें', map_hide: '🗺️ मार्ग मानचित्र छुपाएँ',
     fare_show: '💰 किराया अनुमान', fare_hide: '💰 किराया अनुमान छुपाएँ',
+    story_show: '📰 ट्रेन की कहानी', story_hide: '📰 ट्रेन की कहानी छुपाएँ',
+    story_loading: 'ट्रेन का इतिहास लोड हो रहा है…', story_not_found: 'इस ट्रेन के लिए कोई प्रकाशित इतिहास नहीं मिला।',
+    story_source: 'स्रोत: विकिपीडिया',
     footer_disclaimer: 'स्थिति सार्वजनिक समय-सारणी से अनुकरण (SIMULATED) की गई है (आधिकारिक लाइव GPS फ़ीड नहीं)। आधिकारिक वास्तविक-समय स्थिति के लिए NTES / IRCTC का उपयोग करें।<br/>"मेरा GPS उपयोग करें" केवल आपके ब्राउज़र में आपके डिवाइस का स्थान पढ़ता है (कभी सर्वर पर नहीं भेजा जाता) ताकि यह दिखाया जा सके कि आप किस स्टेशन के सबसे नज़दीक हैं — यह तभी उपयोगी है जब आप वास्तव में उस ट्रेन में यात्रा कर रहे हों।',
   }},
   ta: {{
@@ -347,6 +360,9 @@ const I18N = {{
     gps_start: '📍 எனது GPS-ஐ பயன்படுத்து (நான் இந்த ரயிலில் இருக்கிறேன்)', gps_stop: '⏹ GPS கண்காணிப்பை நிறுத்து',
     map_show: '🗺️ பாதை வரைபடத்தை காட்டு', map_hide: '🗺️ பாதை வரைபடத்தை மறை',
     fare_show: '💰 கட்டண மதிப்பீடு', fare_hide: '💰 கட்டண மதிப்பீட்டை மறை',
+    story_show: '📰 ரயில் கதை', story_hide: '📰 ரயில் கதையை மறை',
+    story_loading: 'ரயில் வரலாறு ஏற்றப்படுகிறது…', story_not_found: 'இந்த ரயிலுக்கு வெளியிடப்பட்ட வரலாறு எதுவும் இல்லை.',
+    story_source: 'மூலம்: விக்கிபீடியா',
     footer_disclaimer: 'நிலை பொது கால அட்டவணையிலிருந்து உருவகப்படுத்தப்பட்டது (SIMULATED) (அதிகாரப்பூர்வ நேரடி GPS ஃபீட் அல்ல). அதிகாரப்பூர்வ நேரடி நிலைக்கு NTES / IRCTC-ஐ பயன்படுத்தவும்.<br/>"எனது GPS-ஐ பயன்படுத்து" உங்கள் சாதனத்தின் இருப்பிடத்தை உங்கள் உலாவியில் மட்டுமே படிக்கிறது (சேவையகத்திற்கு அனுப்பப்படாது) — நீங்கள் உண்மையில் அந்த ரயிலில் பயணிக்கும்போது மட்டுமே பயனுள்ளது.',
   }},
   te: {{
@@ -362,6 +378,9 @@ const I18N = {{
     gps_start: '📍 నా GPS ఉపయోగించండి (నేను ఈ రైలులో ఉన్నాను)', gps_stop: '⏹ GPS ట్రాకింగ్ ఆపండి',
     map_show: '🗺️ మార్గం మ్యాప్ చూడండి', map_hide: '🗺️ మార్గం మ్యాప్ దాచండి',
     fare_show: '💰 చార్జీ అంచనా', fare_hide: '💰 చార్జీ అంచనా దాచండి',
+    story_show: '📰 రైలు కథ', story_hide: '📰 రైలు కథను దాచండి',
+    story_loading: 'రైలు చరిత్ర లోడ్ అవుతోంది…', story_not_found: 'ఈ రైలుకు ప్రచురించిన చరిత్ర కనుగొనబడలేదు.',
+    story_source: 'మూలం: వికీపీడియా',
     footer_disclaimer: 'స్థితి బహిరంగ టైమ్‌టేబుల్ నుండి అనుకరించబడింది (SIMULATED) (అధికారిక లైవ్ GPS ఫీడ్ కాదు). అధికారిక రియల్-టైమ్ స్థితి కోసం NTES / IRCTC ఉపయోగించండి.<br/>"నా GPS ఉపయోగించండి" మీ పరికర స్థానాన్ని మీ బ్రౌజర్‌లో మాత్రమే చదువుతుంది (సర్వర్‌కు పంపబడదు) — మీరు నిజంగా ఆ రైలులో ప్రయాణిస్తున్నప్పుడు మాత్రమే ఉపయోగకరం.',
   }},
   kn: {{
@@ -377,6 +396,9 @@ const I18N = {{
     gps_start: '📍 ನನ್ನ GPS ಬಳಸಿ (ನಾನು ಈ ರೈಲಿನಲ್ಲಿದ್ದೇನೆ)', gps_stop: '⏹ GPS ಟ್ರ್ಯಾಕಿಂಗ್ ನಿಲ್ಲಿಸಿ',
     map_show: '🗺️ ಮಾರ್ಗ ನಕ್ಷೆ ನೋಡಿ', map_hide: '🗺️ ಮಾರ್ಗ ನಕ್ಷೆ ಮರೆಮಾಡಿ',
     fare_show: '💰 ದರ ಅಂದಾಜು', fare_hide: '💰 ದರ ಅಂದಾಜು ಮರೆಮಾಡಿ',
+    story_show: '📰 ರೈಲು ಕಥೆ', story_hide: '📰 ರೈಲು ಕಥೆ ಮರೆಮಾಡಿ',
+    story_loading: 'ರೈಲಿನ ಇತಿಹಾಸ ಲೋಡ್ ಆಗುತ್ತಿದೆ…', story_not_found: 'ಈ ರೈಲಿಗೆ ಪ್ರಕಟಿತ ಇತಿಹಾಸ ಕಂಡುಬಂದಿಲ್ಲ.',
+    story_source: 'ಮೂಲ: ವಿಕಿಪೀಡಿಯಾ',
     footer_disclaimer: 'ಸ್ಥಿತಿಯನ್ನು ಸಾರ್ವಜನಿಕ ವೇಳಾಪಟ್ಟಿಯಿಂದ ಅನುಕರಿಸಲಾಗಿದೆ (SIMULATED) (ಅಧಿಕೃತ ಲೈವ್ GPS ಫೀಡ್ ಅಲ್ಲ). ಅಧಿಕೃತ ನೈಜ-ಸಮಯದ ಸ್ಥಿತಿಗಾಗಿ NTES / IRCTC ಬಳಸಿ.<br/>"ನನ್ನ GPS ಬಳಸಿ" ನಿಮ್ಮ ಸಾಧನದ ಸ್ಥಳವನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮಾತ್ರ ಓದುತ್ತದೆ (ಸರ್ವರ್‌ಗೆ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ) — ನೀವು ನಿಜವಾಗಿಯೂ ಆ ರೈಲಿನಲ್ಲಿ ಪ್ರಯಾಣಿಸುತ್ತಿರುವಾಗ ಮಾತ್ರ ಉಪಯುಕ್ತ.',
   }},
   bn: {{
@@ -392,6 +414,9 @@ const I18N = {{
     gps_start: '📍 আমার GPS ব্যবহার করুন (আমি এই ট্রেনে আছি)', gps_stop: '⏹ GPS ট্র্যাকিং বন্ধ করুন',
     map_show: '🗺️ রুট ম্যাপ দেখুন', map_hide: '🗺️ রুট ম্যাপ লুকান',
     fare_show: '💰 ভাড়া অনুমান', fare_hide: '💰 ভাড়া অনুমান লুকান',
+    story_show: '📰 ট্রেনের গল্প', story_hide: '📰 ট্রেনের গল্প লুকান',
+    story_loading: 'ট্রেনের ইতিহাস লোড হচ্ছে…', story_not_found: 'এই ট্রেনের জন্য কোনো প্রকাশিত ইতিহাস পাওয়া যায়নি।',
+    story_source: 'উৎস: উইকিপিডিয়া',
     footer_disclaimer: 'অবস্থা পাবলিক সময়সূচী থেকে সিমুলেটেড (অফিসিয়াল লাইভ GPS ফিড নয়)। অফিসিয়াল রিয়েল-টাইম অবস্থার জন্য NTES / IRCTC ব্যবহার করুন।<br/>"আমার GPS ব্যবহার করুন" শুধুমাত্র আপনার ব্রাউজারে আপনার ডিভাইসের অবস্থান পড়ে (সার্ভারে পাঠানো হয় না) — শুধুমাত্র আপনি সত্যিই সেই ট্রেনে ভ্রমণ করলে উপযোগী।',
   }},
   ml: {{
@@ -407,6 +432,9 @@ const I18N = {{
     gps_start: '📍 എന്റെ GPS ഉപയോഗിക്കുക (ഞാൻ ഈ ട്രെയിനിലാണ്)', gps_stop: '⏹ GPS ട്രാക്കിംഗ് നിർത്തുക',
     map_show: '🗺️ റൂട്ട് മാപ്പ് കാണുക', map_hide: '🗺️ റൂട്ട് മാപ്പ് മറയ്ക്കുക',
     fare_show: '💰 നിരക്ക് കണക്കാക്കുക', fare_hide: '💰 നിരക്ക് കണക്ക് മറയ്ക്കുക',
+    story_show: '📰 ട്രെയിൻ കഥ', story_hide: '📰 ട്രെയിൻ കഥ മറയ്ക്കുക',
+    story_loading: 'ട്രെയിൻ ചരിത്രം ലോഡ് ചെയ്യുന്നു…', story_not_found: 'ഈ ട്രെയിനിന് പ്രസിദ്ധീകരിച്ച ചരിത്രം കണ്ടെത്തിയില്ല.',
+    story_source: 'ഉറവിടം: വിക്കിപീഡിയ',
     footer_disclaimer: 'സ്ഥിതി പൊതു സമയക്രമത്തിൽ നിന്ന് അനുകരിച്ചതാണ് (SIMULATED) (ഔദ്യോഗിക തത്സമയ GPS ഫീഡ് അല്ല). ഔദ്യോഗിക തത്സമയ നിലയ്ക്കായി NTES / IRCTC ഉപയോഗിക്കുക.<br/>"എന്റെ GPS ഉപയോഗിക്കുക" നിങ്ങളുടെ ഉപകരണത്തിന്റെ സ്ഥാനം നിങ്ങളുടെ ബ്രൗസറിൽ മാത്രം വായിക്കുന്നു (സെർവറിലേക്ക് ഒരിക്കലും അയയ്ക്കില്ല) — നിങ്ങൾ ശരിക്കും ആ ട്രെയിനിൽ യാത്ര ചെയ്യുമ്പോൾ മാത്രം ഉപയോഗപ്രദമാണ്.',
   }},
 }};
@@ -778,9 +806,11 @@ function renderCards(query) {{
         <button class="gps-btn" onclick="locateOnTrain('${{t.number}}', this)">${{tr('gps_start')}}</button>
         <button class="map-btn" onclick="toggleRouteMap('${{t.number}}', this)">${{tr('map_show')}}</button>
         <button class="fare-btn" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
+        <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', '${{t.name.replace(/'/g, "\\'")}}', this)">${{tr('story_show')}}</button>
       </div>
       <div class="route-map" id="map-${{t.number}}" style="display:none"></div>
       ${{fareBox}}
+      <div class="story-box" id="story-${{t.number}}" style="display:none"></div>
       <div class="stops-detail">
         ${{(t.route || []).map(s => `
           <div class="stop-row ${{s.name === t.last_station ? 'current' : ''}}">
@@ -792,13 +822,52 @@ function renderCards(query) {{
   }}).join('');
 }}
 
+// ── Train Story ──────────────────────────────────────────────────────────
+// Pulls a real, live summary from Wikipedia's public REST API (free, no key)
+// keyed by the train's name — e.g. "Rajdhani Express" has a genuine article
+// with real history (introduced 1969, etc). Most of the ~2,400 imported
+// trains have no dedicated article; that's shown honestly as "no history
+// found" rather than inventing facts. Cached per train name for the session.
+const _storyCache = {{}};
+async function toggleStoryBox(number, name, btnEl) {{
+  const box = document.getElementById(`story-${{number}}`);
+  if (!box) return;
+  const show = box.style.display === 'none';
+  box.style.display = show ? 'flex' : 'none';
+  btnEl.textContent = show ? tr('story_hide') : tr('story_show');
+  if (!show || box.dataset.loaded) return;
+  box.dataset.loaded = '1';
+  box.innerHTML = `<div class="story-muted">${{tr('story_loading')}}</div>`;
+  try {{
+    let story = _storyCache[name];
+    if (!story) {{
+      const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${{encodeURIComponent(name.replace(/ /g, '_'))}}`;
+      const r = await fetch(url, {{ signal: AbortSignal.timeout(8000) }});
+      if (!r.ok) throw new Error('not found');
+      const data = await r.json();
+      if (data.type === 'disambiguation' || !data.extract) throw new Error('no extract');
+      story = data;
+      _storyCache[name] = story;
+    }}
+    const thumb = story.thumbnail?.source ? `<img src="${{story.thumbnail.source}}" alt=""/>` : '';
+    const link = story.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${{encodeURIComponent(name.replace(/ /g, '_'))}}`;
+    box.innerHTML = `
+      ${{thumb}}
+      <div>
+        <div>${{story.extract}}</div>
+        <div class="story-muted" style="margin-top:6px">${{tr('story_source')}} &bull; <a href="${{link}}" target="_blank" rel="noopener">${{story.title}} ↗</a></div>
+      </div>`;
+  }} catch (_) {{
+    box.innerHTML = `<div class="story-muted">${{tr('story_not_found')}}</div>`;
+  }}
+}}
+
 // ── GPS Trip Mode ──────────────────────────────────────────────────────────
 // Reads the rider's own device location in the browser only — never sent to
 // a server. Matches it against the train's station coordinates to show the
 // nearest stop. Only meaningful if you're actually on that train.
 let _gpsWatchId = null;
 let _gpsTrainNumber = null;
-
 function haversineKm(lat1, lon1, lat2, lon2) {{
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
