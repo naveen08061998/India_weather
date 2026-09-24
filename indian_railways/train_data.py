@@ -720,14 +720,11 @@ def _load_imported_stations() -> dict:
 # (average gap under _MIN_HALT_GAP_KM) and thin them down to more plausible
 # halts: keep the origin/destination, any junction station, and any stop at
 # least _MIN_HALT_GAP_KM from the last kept one. The train is marked with a
-# `route_note` so API responses can disclose the approximation rather than
-# presenting the thinned list as an authoritative official halt list.
+# `route_note` (naming how many stops were collapsed) so API responses can
+# disclose the approximation rather than presenting the thinned list as an
+# authoritative official halt list.
 _MIN_HALT_GAP_KM = 10
 _OVER_DETAIL_MIN_STOPS = 15
-_ROUTE_NOTE = (
-    "Some closely-spaced wayside points from the source dataset were collapsed — "
-    "this stop list is an approximation, not the train's official halt list."
-)
 
 
 def _thin_route(route: list[dict]) -> list[dict]:
@@ -753,7 +750,13 @@ def _clean_imported_route(train: dict) -> dict:
     thinned = _thin_route(route)
     if len(thinned) == len(route):
         return train
-    return {**train, "route": thinned, "route_note": _ROUTE_NOTE}
+    hidden = len(route) - len(thinned)
+    stop_word = "stop" if hidden == 1 else "stops"
+    note = (
+        f"{hidden} closely-spaced wayside {stop_word} from the source dataset were collapsed — "
+        "this stop list is an approximation, not the train's official halt list."
+    )
+    return {**train, "route": thinned, "route_note": note}
 
 
 _curated_numbers = {t["number"] for t in CURATED_TRAINS}

@@ -225,7 +225,7 @@ def get_status_for_number(train_number: str, now: datetime | None = None) -> dic
     return {
         "number": train["number"], "name": train["name"], "type": train["type"],
         "zone": train["zone"], "route": _enrich_route(train["route"]),
-        "route_note": train.get("route_note"),
+        "route_note": train.get("route_note"), "runs_on": train.get("runs_on"),
         **compute_status(train, now),
     }
 
