@@ -190,12 +190,12 @@ def build_html(payload: dict) -> str:
     padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
   }}
   .card-actions {{ display: flex; gap: 8px; flex-wrap: wrap; }}
-  .map-btn, .fare-btn, .story-btn, .weather-btn {{
+  .map-btn, .fare-btn, .story-btn, .weather-btn, .places-btn {{
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
     cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
   }}
-  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover {{ border-color: var(--accent); }}
+  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .places-btn:hover {{ border-color: var(--accent); }}
   .route-map {{
     height: 220px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;
   }}
@@ -220,6 +220,13 @@ def build_html(payload: dict) -> str:
   }}
   .weather-box b {{ color: var(--text); }}
   .weather-icon {{ font-size: 1.05rem; margin-right: 2px; }}
+  .places-box {{
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: .72rem;
+    color: var(--muted); line-height: 1.7;
+  }}
+  .place-row {{ display: flex; justify-content: space-between; gap: 8px; }}
+  .place-row a {{ color: var(--text); }}
+  .place-dist {{ color: var(--muted); white-space: nowrap; }}
   .runs-badge {{
     align-self: flex-start; display: inline-block; font-size: .68rem; color: var(--muted);
     background: var(--card-h); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px;
@@ -414,6 +421,9 @@ const I18N = {{
     weather_show: '🌦️ Destination Weather', weather_hide: '🌦️ Hide Destination Weather',
     weather_loading: 'Loading weather…', weather_error: 'Could not load weather for this station.',
     weather_source: 'Source: Open-Meteo (free, no API key)',
+    places_show: '🏞️ Places to See', places_hide: '🏞️ Hide Places to See',
+    places_loading: 'Finding places nearby…', places_error: 'Could not load nearby places.',
+    places_empty: 'No notable places found nearby.', places_source: 'Source: Wikipedia (nearby articles)',
     route_note_show: 'ℹ️ Route simplified — tap for details', route_note_hide: 'ℹ️ Hide details',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
   }},
@@ -443,6 +453,9 @@ const I18N = {{
     weather_show: '🌦️ गंतव्य मौसम', weather_hide: '🌦️ गंतव्य मौसम छुपाएँ',
     weather_loading: 'मौसम लोड हो रहा है…', weather_error: 'इस स्टेशन के लिए मौसम लोड नहीं हो सका।',
     weather_source: 'स्रोत: Open-Meteo (निःशुल्क, बिना API कुंजी)',
+    places_show: '🏞️ देखने योग्य स्थान', places_hide: '🏞️ देखने योग्य स्थान छुपाएँ',
+    places_loading: 'आस-पास के स्थान खोजे जा रहे हैं…', places_error: 'आस-पास के स्थान लोड नहीं हो सके।',
+    places_empty: 'आस-पास कोई उल्लेखनीय स्थान नहीं मिला।', places_source: 'स्रोत: विकिपीडिया (आस-पास के लेख)',
     route_note_show: 'ℹ️ मार्ग सरल किया गया — विवरण के लिए टैप करें', route_note_hide: 'ℹ️ विवरण छुपाएँ',
     footer_disclaimer: 'स्थिति सार्वजनिक समय-सारणी से अनुकरण (SIMULATED) की गई है (आधिकारिक लाइव GPS फ़ीड नहीं)। आधिकारिक वास्तविक-समय स्थिति के लिए NTES / IRCTC का उपयोग करें।<br/>"मेरा GPS उपयोग करें" केवल आपके ब्राउज़र में आपके डिवाइस का स्थान पढ़ता है (कभी सर्वर पर नहीं भेजा जाता) ताकि यह दिखाया जा सके कि आप किस स्टेशन के सबसे नज़दीक हैं — यह तभी उपयोगी है जब आप वास्तव में उस ट्रेन में यात्रा कर रहे हों।',
   }},
@@ -472,6 +485,9 @@ const I18N = {{
     weather_show: '🌦️ சேரும் இட வானிலை', weather_hide: '🌦️ சேரும் இட வானிலையை மறை',
     weather_loading: 'வானிலை ஏற்றப்படுகிறது…', weather_error: 'இந்த நிலையத்திற்கான வானிலையை ஏற்ற முடியவில்லை.',
     weather_source: 'மூலம்: Open-Meteo (இலவசம், API கீ தேவையில்லை)',
+    places_show: '🏞️ பார்க்க வேண்டிய இடங்கள்', places_hide: '🏞️ பார்க்க வேண்டிய இடங்களை மறை',
+    places_loading: 'அருகிலுள்ள இடங்களைத் தேடுகிறது…', places_error: 'அருகிலுள்ள இடங்களை ஏற்ற முடியவில்லை.',
+    places_empty: 'அருகில் குறிப்பிடத்தக்க இடங்கள் எதுவும் இல்லை.', places_source: 'மூலம்: விக்கிபீடியா (அருகிலுள்ள கட்டுரைகள்)',
     route_note_show: 'ℹ️ பாதை எளிமையாக்கப்பட்டது — விவரங்களுக்கு தட்டவும்', route_note_hide: 'ℹ️ விவரங்களை மறை',
     footer_disclaimer: 'நிலை பொது கால அட்டவணையிலிருந்து உருவகப்படுத்தப்பட்டது (SIMULATED) (அதிகாரப்பூர்வ நேரடி GPS ஃபீட் அல்ல). அதிகாரப்பூர்வ நேரடி நிலைக்கு NTES / IRCTC-ஐ பயன்படுத்தவும்.<br/>"எனது GPS-ஐ பயன்படுத்து" உங்கள் சாதனத்தின் இருப்பிடத்தை உங்கள் உலாவியில் மட்டுமே படிக்கிறது (சேவையகத்திற்கு அனுப்பப்படாது) — நீங்கள் உண்மையில் அந்த ரயிலில் பயணிக்கும்போது மட்டுமே பயனுள்ளது.',
   }},
@@ -501,6 +517,9 @@ const I18N = {{
     weather_show: '🌦️ గమ్యస్థాన వాతావరణం', weather_hide: '🌦️ గమ్యస్థాన వాతావరణం దాచండి',
     weather_loading: 'వాతావరణం లోడ్ అవుతోంది…', weather_error: 'ఈ స్టేషన్ కోసం వాతావరణం లోడ్ చేయలేకపోయాము.',
     weather_source: 'మూలం: Open-Meteo (ఉచితం, API కీ అవసరం లేదు)',
+    places_show: '🏞️ చూడవలసిన ప్రదేశాలు', places_hide: '🏞️ చూడవలసిన ప్రదేశాలు దాచండి',
+    places_loading: 'సమీప ప్రదేశాలను వెతుకుతోంది…', places_error: 'సమీప ప్రదేశాలను లోడ్ చేయలేకపోయాము.',
+    places_empty: 'సమీపంలో ముఖ్యమైన ప్రదేశాలు కనుగొనబడలేదు.', places_source: 'మూలం: వికీపీడియా (సమీప వ్యాసాలు)',
     route_note_show: 'ℹ️ మార్గం సరళీకరించబడింది — వివరాల కోసం నొక్కండి', route_note_hide: 'ℹ️ వివరాలు దాచండి',
     footer_disclaimer: 'స్థితి బహిరంగ టైమ్‌టేబుల్ నుండి అనుకరించబడింది (SIMULATED) (అధికారిక లైవ్ GPS ఫీడ్ కాదు). అధికారిక రియల్-టైమ్ స్థితి కోసం NTES / IRCTC ఉపయోగించండి.<br/>"నా GPS ఉపయోగించండి" మీ పరికర స్థానాన్ని మీ బ్రౌజర్‌లో మాత్రమే చదువుతుంది (సర్వర్‌కు పంపబడదు) — మీరు నిజంగా ఆ రైలులో ప్రయాణిస్తున్నప్పుడు మాత్రమే ఉపయోగకరం.',
   }},
@@ -530,6 +549,9 @@ const I18N = {{
     weather_show: '🌦️ ಗಮ್ಯಸ್ಥಾನ ಹವಾಮಾನ', weather_hide: '🌦️ ಗಮ್ಯಸ್ಥಾನ ಹವಾಮಾನ ಮರೆಮಾಡಿ',
     weather_loading: 'ಹವಾಮಾನ ಲೋಡ್ ಆಗುತ್ತಿದೆ…', weather_error: 'ಈ ನಿಲ್ದಾಣಕ್ಕೆ ಹವಾಮಾನ ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.',
     weather_source: 'ಮೂಲ: Open-Meteo (ಉಚಿತ, API ಕೀ ಅಗತ್ಯವಿಲ್ಲ)',
+    places_show: '🏞️ ನೋಡಬೇಕಾದ ಸ್ಥಳಗಳು', places_hide: '🏞️ ನೋಡಬೇಕಾದ ಸ್ಥಳಗಳನ್ನು ಮರೆಮಾಡಿ',
+    places_loading: 'ಹತ್ತಿರದ ಸ್ಥಳಗಳನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ…', places_error: 'ಹತ್ತಿರದ ಸ್ಥಳಗಳನ್ನು ಲೋಡ್ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ.',
+    places_empty: 'ಹತ್ತಿರದಲ್ಲಿ ಗಮನಾರ್ಹ ಸ್ಥಳಗಳು ಕಂಡುಬಂದಿಲ್ಲ.', places_source: 'ಮೂಲ: ವಿಕಿಪೀಡಿಯಾ (ಹತ್ತಿರದ ಲೇಖನಗಳು)',
     route_note_show: 'ℹ️ ಮಾರ್ಗ ಸರಳೀಕರಿಸಲಾಗಿದೆ — ವಿವರಗಳಿಗಾಗಿ ಟ್ಯಾಪ್ ಮಾಡಿ', route_note_hide: 'ℹ️ ವಿವರಗಳನ್ನು ಮರೆಮಾಡಿ',
     footer_disclaimer: 'ಸ್ಥಿತಿಯನ್ನು ಸಾರ್ವಜನಿಕ ವೇಳಾಪಟ್ಟಿಯಿಂದ ಅನುಕರಿಸಲಾಗಿದೆ (SIMULATED) (ಅಧಿಕೃತ ಲೈವ್ GPS ಫೀಡ್ ಅಲ್ಲ). ಅಧಿಕೃತ ನೈಜ-ಸಮಯದ ಸ್ಥಿತಿಗಾಗಿ NTES / IRCTC ಬಳಸಿ.<br/>"ನನ್ನ GPS ಬಳಸಿ" ನಿಮ್ಮ ಸಾಧನದ ಸ್ಥಳವನ್ನು ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಮಾತ್ರ ಓದುತ್ತದೆ (ಸರ್ವರ್‌ಗೆ ಎಂದಿಗೂ ಕಳುಹಿಸುವುದಿಲ್ಲ) — ನೀವು ನಿಜವಾಗಿಯೂ ಆ ರೈಲಿನಲ್ಲಿ ಪ್ರಯಾಣಿಸುತ್ತಿರುವಾಗ ಮಾತ್ರ ಉಪಯುಕ್ತ.',
   }},
@@ -559,6 +581,9 @@ const I18N = {{
     weather_show: '🌦️ গন্তব্যের আবহাওয়া', weather_hide: '🌦️ গন্তব্যের আবহাওয়া লুকান',
     weather_loading: 'আবহাওয়া লোড হচ্ছে…', weather_error: 'এই স্টেশনের জন্য আবহাওয়া লোড করা যায়নি।',
     weather_source: 'উৎস: Open-Meteo (বিনামূল্যে, API কী প্রয়োজন নেই)',
+    places_show: '🏞️ দেখার জায়গা', places_hide: '🏞️ দেখার জায়গা লুকান',
+    places_loading: 'কাছাকাছি জায়গা খুঁজছে…', places_error: 'কাছাকাছি জায়গা লোড করা যায়নি।',
+    places_empty: 'কাছাকাছি উল্লেখযোগ্য কোনো জায়গা পাওয়া যায়নি।', places_source: 'উৎস: উইকিপিডিয়া (কাছাকাছি নিবন্ধ)',
     route_note_show: 'ℹ️ রুট সরলীকৃত — বিস্তারিত জানতে ট্যাপ করুন', route_note_hide: 'ℹ️ বিস্তারিত লুকান',
     footer_disclaimer: 'অবস্থা পাবলিক সময়সূচী থেকে সিমুলেটেড (অফিসিয়াল লাইভ GPS ফিড নয়)। অফিসিয়াল রিয়েল-টাইম অবস্থার জন্য NTES / IRCTC ব্যবহার করুন।<br/>"আমার GPS ব্যবহার করুন" শুধুমাত্র আপনার ব্রাউজারে আপনার ডিভাইসের অবস্থান পড়ে (সার্ভারে পাঠানো হয় না) — শুধুমাত্র আপনি সত্যিই সেই ট্রেনে ভ্রমণ করলে উপযোগী।',
   }},
@@ -588,6 +613,9 @@ const I18N = {{
     weather_show: '🌦️ ലക്ഷ്യസ്ഥാന കാലാവസ്ഥ', weather_hide: '🌦️ ലക്ഷ്യസ്ഥാന കാലാവസ്ഥ മറയ്ക്കുക',
     weather_loading: 'കാലാവസ്ഥ ലോഡ് ചെയ്യുന്നു…', weather_error: 'ഈ സ്റ്റേഷനുള്ള കാലാവസ്ഥ ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല.',
     weather_source: 'ഉറവിടം: Open-Meteo (സൗജന്യം, API കീ ആവശ്യമില്ല)',
+    places_show: '🏞️ കാണേണ്ട സ്ഥലങ്ങൾ', places_hide: '🏞️ കാണേണ്ട സ്ഥലങ്ങൾ മറയ്ക്കുക',
+    places_loading: 'സമീപത്തുള്ള സ്ഥലങ്ങൾ കണ്ടെത്തുന്നു…', places_error: 'സമീപത്തുള്ള സ്ഥലങ്ങൾ ലോഡ് ചെയ്യാൻ കഴിഞ്ഞില്ല.',
+    places_empty: 'സമീപത്ത് ശ്രദ്ധേയമായ സ്ഥലങ്ങളൊന്നും കണ്ടെത്തിയില്ല.', places_source: 'ഉറവിടം: വിക്കിപീഡിയ (സമീപ ലേഖനങ്ങൾ)',
     route_note_show: 'ℹ️ റൂട്ട് ലളിതമാക്കി — വിശദാംശങ്ങൾക്ക് ടാപ്പ് ചെയ്യുക', route_note_hide: 'ℹ️ വിശദാംശങ്ങൾ മറയ്ക്കുക',
     footer_disclaimer: 'സ്ഥിതി പൊതു സമയക്രമത്തിൽ നിന്ന് അനുകരിച്ചതാണ് (SIMULATED) (ഔദ്യോഗിക തത്സമയ GPS ഫീഡ് അല്ല). ഔദ്യോഗിക തത്സമയ നിലയ്ക്കായി NTES / IRCTC ഉപയോഗിക്കുക.<br/>"എന്റെ GPS ഉപയോഗിക്കുക" നിങ്ങളുടെ ഉപകരണത്തിന്റെ സ്ഥാനം നിങ്ങളുടെ ബ്രൗസറിൽ മാത്രം വായിക്കുന്നു (സെർവറിലേക്ക് ഒരിക്കലും അയയ്ക്കില്ല) — നിങ്ങൾ ശരിക്കും ആ ട്രെയിനിൽ യാത്ര ചെയ്യുമ്പോൾ മാത്രം ഉപയോഗപ്രദമാണ്.',
   }},
@@ -909,6 +937,51 @@ function _renderWeather(box, data, info) {{
     <div class="fare-disclaimer">${{tr('weather_source')}}</div>`;
 }}
 
+// ── Places to see near the destination (Wikipedia geosearch — free, no key) ─
+// Lists nearby Wikipedia articles (landmarks/attractions/notable places)
+// within 10km of the destination station's coordinates. Not a curated or
+// verified travel guide — just what has a Wikipedia article near that point.
+const _placesCache = {{}};
+async function togglePlacesBox(number, btnEl) {{
+  const box = document.getElementById(`places-${{number}}`);
+  if (!box) return;
+  const show = box.style.display === 'none';
+  box.style.display = show ? 'block' : 'none';
+  btnEl.textContent = show ? tr('places_hide') : tr('places_show');
+  if (!show || box.dataset.loaded === '1') return;
+  box.dataset.loaded = '1';
+  const code = btnEl.dataset.code;
+  const info = STATION_INFO[code];
+  if (!info) {{ box.innerHTML = `<div>${{tr('places_error')}}</div>`; return; }}
+  box.innerHTML = `<div>${{tr('places_loading')}}</div>`;
+  if (_placesCache[code]) {{ _renderPlaces(box, _placesCache[code], info); return; }}
+  try {{
+    const url = `https://en.wikipedia.org/w/api.php?action=query&list=geosearch`
+      + `&gscoord=${{info.lat}}%7C${{info.lon}}&gsradius=10000&gslimit=8&format=json&origin=*`;
+    const r = await fetch(url, {{ signal: AbortSignal.timeout(10000) }});
+    if (!r.ok) throw new Error('bad response');
+    const data = await r.json();
+    const places = (data.query && data.query.geosearch) || [];
+    _placesCache[code] = places;
+    _renderPlaces(box, places, info);
+  }} catch (_) {{
+    box.innerHTML = `<div>${{tr('places_error')}}</div>`;
+  }}
+}}
+
+function _renderPlaces(box, places, info) {{
+  if (!places.length) {{
+    box.innerHTML = `<div>${{tr('places_empty')}}</div>`;
+    return;
+  }}
+  const rows = places.map(p => {{
+    const distLabel = p.dist >= 1000 ? `${{(p.dist / 1000).toFixed(1)}} km` : `${{Math.round(p.dist)}} m`;
+    const href = `https://en.wikipedia.org/wiki/${{encodeURIComponent(p.title.replace(/ /g, '_'))}}`;
+    return `<div class="place-row"><a href="${{href}}" target="_blank" rel="noopener">${{p.title}}</a> <span class="place-dist">${{distLabel}}</span></div>`;
+  }}).join('');
+  box.innerHTML = `${{rows}}<div class="fare-disclaimer">${{tr('places_source')}}</div>`;
+}}
+
 // ── Route map (Leaflet / OpenStreetMap — free, no API key) ─────────────────
 let _mapInstances = {{}};
 // renderCards() replaces the #cards DOM (including every map-<number> div) on
@@ -1035,6 +1108,10 @@ function renderCards(query) {{
       ? `<button class="weather-btn" data-code="${{leg.alight.code}}" onclick="toggleWeatherBox('${{t.number}}', this)">${{tr('weather_show')}}</button>`
       : '';
     const weatherBox = leg ? `<div class="weather-box" id="weather-${{t.number}}" style="display:none"></div>` : '';
+    const placesBtn = leg
+      ? `<button class="places-btn" data-code="${{leg.alight.code}}" onclick="togglePlacesBox('${{t.number}}', this)">${{tr('places_show')}}</button>`
+      : '';
+    const placesBox = leg ? `<div class="places-box" id="places-${{t.number}}" style="display:none"></div>` : '';
     return `
     <div class="card" style="--cc:${{color}}">
       <div class="card-top">
@@ -1055,12 +1132,14 @@ function renderCards(query) {{
         <button class="fare-btn" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
         <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', this)">${{tr('story_show')}}</button>
         ${{weatherBtn}}
+        ${{placesBtn}}
         <button class="compare-btn ${{_compareTrains.has(t.number) ? 'active' : ''}}" onclick="toggleCompare('${{t.number}}', this)">${{_compareTrains.has(t.number) ? tr('compare_added') : tr('compare_add')}}</button>
       </div>
       <div class="route-map" id="map-${{t.number}}" style="display:none"></div>
       ${{fareBox}}
       <div class="story-box" id="story-${{t.number}}" style="display:none"></div>
       ${{weatherBox}}
+      ${{placesBox}}
       <div class="stops-detail">
         ${{(t.route || []).map(s => `
           <div class="stop-row ${{s.name === t.last_station ? 'current' : ''}}">
