@@ -1581,23 +1581,45 @@ function initFactBar() {
 }
 
 // ── Railway news ticker — rotates recent headlines fetched server-side
-// (Google News RSS, cached ~15 min). Hidden entirely in static mode since
-// there's no backend to proxy the feed (browsers can't fetch cross-origin
-// RSS/XML without CORS headers, which Google News doesn't send).
+// (Google News RSS, cached ~15 min). Hidden entirely when neither the local
+// Flask app nor the Render backend is reachable (e.g. opened as a plain file
+// with no network) since there's no way to proxy the feed otherwise.
+//
+// Deliberately does NOT await the shared `_modeReady` promise: that one does
+// up to 2×45s retries against the Render backend's /api/trains (needed so a
+// cold free-tier instance gets a fair chance for train search), and chaining
+// the news fetch behind it could make the ticker take 90+ seconds to appear,
+// looking broken/"missing" even though it's just queued. Instead this probes
+// same-origin first (fast, only succeeds when Flask-served) then falls back
+// to the Render backend directly with its own single, shorter-timeout try.
 let _newsArticles = [];
 let _newsIdx = 0;
-async function initNewsTicker() {
-  const mode = await _modeReady;
-  if (mode === 'static') return;
+async function _newsApiBase() {
+  if (window.location.protocol !== 'file:') {
+    try {
+      const r = await fetch('/api/news', { signal: AbortSignal.timeout(4000) });
+      if (r.ok) return { base: '', resp: r };
+    } catch (_) {}
+  }
   try {
-    const r = await fetch(`${_apiBase(mode)}/api/news`, { signal: AbortSignal.timeout(15000) });
-    if (!r.ok) return;
-    const data = await r.json();
-    _newsArticles = data.articles || [];
-  } catch (_) { return; }
-  if (!_newsArticles.length) return;
+    const r = await fetch(`${REMOTE_API_BASE}/api/news`, { signal: AbortSignal.timeout(45000) });
+    if (r.ok) return { base: REMOTE_API_BASE, resp: r };
+  } catch (_) {}
+  return null;
+}
+async function initNewsTicker() {
   const ticker = document.getElementById('news-ticker');
   const textEl = document.getElementById('news-ticker-text');
+  textEl.textContent = '📰 Loading railway news…';
+  textEl.removeAttribute('href');
+  ticker.style.display = 'flex';
+  const hit = await _newsApiBase();
+  if (!hit) { ticker.style.display = 'none'; return; }
+  try {
+    const data = await hit.resp.json();
+    _newsArticles = data.articles || [];
+  } catch (_) { _newsArticles = []; }
+  if (!_newsArticles.length) { ticker.style.display = 'none'; return; }
   const showArticle = () => {
     const a = _newsArticles[_newsIdx % _newsArticles.length];
     textEl.textContent = a.source ? `${a.title} — ${a.source}` : a.title;
@@ -1605,7 +1627,6 @@ async function initNewsTicker() {
     _newsIdx++;
   };
   showArticle();
-  ticker.style.display = 'flex';
   if (_newsArticles.length > 1) setInterval(showArticle, 7000);
 }
 
