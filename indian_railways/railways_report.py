@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import json
 
+from indian_railways.history_content import TIMELINE
+from indian_railways.station_amenities import STATION_AMENITIES
 from indian_railways.train_data import ALL_STATION_NAMES, STATION_ALIASES, STATION_COORDS
 
 
@@ -39,6 +41,16 @@ def build_html(payload: dict) -> str:
     station_info_json = json.dumps(station_info, ensure_ascii=False)
 
     trains_json = json.dumps(trains, ensure_ascii=False)
+
+    # Compact fields only (year_label/title/text/icon/tag/month_day) — client-side
+    # picks "on this day" using the browser's own clock, so the banner stays fresh
+    # between HTML regenerations instead of being baked in at build time.
+    timeline_json = json.dumps(
+        [{k: e[k] for k in ("year_label", "title", "text", "icon", "tag", "month_day")
+          if k in e} for e in TIMELINE],
+        ensure_ascii=False,
+    )
+    station_amenities_json = json.dumps(STATION_AMENITIES, ensure_ascii=False)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -116,6 +128,36 @@ def build_html(payload: dict) -> str:
     transition: background .2s; white-space: nowrap; font-family: inherit;
   }}
   #theme-btn:hover {{ background: var(--card-h); }}
+  .history-link {{
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    color: var(--text); padding: 7px 12px; font-size: .8rem; white-space: nowrap;
+    text-decoration: none; transition: background .2s;
+  }}
+  .history-link:hover {{ background: var(--card-h); }}
+  .fact-bar {{
+    background: var(--accent-glow); border-bottom: 1px solid var(--border);
+    padding: 8px 24px; display: flex; align-items: center; gap: 10px;
+    font-size: .78rem; color: var(--text);
+  }}
+  .fact-bar-icon {{ flex-shrink: 0; }}
+  .fact-bar-text {{ flex: 1; line-height: 1.5; }}
+  .fact-bar-link {{ color: var(--accent); font-weight: 600; text-decoration: none; white-space: nowrap; }}
+  .fact-bar-link:hover {{ text-decoration: underline; }}
+  .fact-bar-close {{
+    background: none; border: none; color: var(--muted); cursor: pointer;
+    font-size: .85rem; padding: 0 2px; flex-shrink: 0;
+  }}
+  .news-ticker {{
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 7px 24px; display: flex; align-items: center; gap: 10px;
+    font-size: .78rem; color: var(--muted); overflow: hidden;
+  }}
+  .news-ticker-icon {{ flex-shrink: 0; }}
+  .news-ticker-text {{
+    color: var(--text); text-decoration: none; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }}
+  .news-ticker-text:hover {{ text-decoration: underline; }}
   .route-search-bar {{
     background: var(--surface); border-bottom: 1px solid var(--border);
     padding: 10px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -190,12 +232,13 @@ def build_html(payload: dict) -> str:
     padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
   }}
   .card-actions {{ display: flex; gap: 8px; flex-wrap: wrap; }}
-  .map-btn, .fare-btn, .story-btn, .weather-btn, .places-btn {{
+  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .amenities-btn {{
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
     cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
   }}
-  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .places-btn:hover {{ border-color: var(--accent); }}
+  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .amenities-btn:hover {{ border-color: var(--accent); }}
+  .route-weather-btn:disabled {{ opacity: .6; cursor: wait; }}
   .route-map {{
     height: 220px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;
   }}
@@ -227,6 +270,17 @@ def build_html(payload: dict) -> str:
   .place-row {{ display: flex; justify-content: space-between; gap: 8px; }}
   .place-row a {{ color: var(--text); }}
   .place-dist {{ color: var(--muted); white-space: nowrap; }}
+  .amenities-box {{
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: .72rem;
+    color: var(--muted); line-height: 1.7;
+  }}
+  .amenity-station {{ margin-bottom: 8px; }}
+  .amenity-station:last-child {{ margin-bottom: 0; }}
+  .amenity-station b {{ color: var(--text); }}
+  .amenity-tags span {{
+    display: inline-block; background: var(--card-h); border-radius: 999px;
+    padding: 1px 8px; margin: 2px 4px 0 0; font-size: .68rem;
+  }}
   .runs-badge {{
     align-self: flex-start; display: inline-block; font-size: .68rem; color: var(--muted);
     background: var(--card-h); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px;
@@ -289,6 +343,11 @@ def build_html(payload: dict) -> str:
   }}
   .stop-row.current {{ color: var(--accent); font-weight: 700; }}
   .stop-row b {{ color: var(--text); }}
+  .stop-weather {{ color: var(--accent); }}
+  .stop-weather.severe {{ color: var(--bad); font-weight: 700; }}
+  .severe-alert {{
+    align-self: flex-start; font-size: .72rem; color: var(--bad); font-weight: 600;
+  }}
   .gps-btn {{
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
@@ -345,8 +404,20 @@ def build_html(payload: dict) -> str:
       <option value="ml">മലയാളം</option>
     </select>
     <button id="theme-btn" onclick="toggleTheme()">&#9728; Light</button>
+    <a class="history-link" href="history.html" data-i18n="nav_history">&#128220; History</a>
   </div>
 </header>
+
+<div class="fact-bar" id="fact-bar" style="display:none">
+  <span class="fact-bar-icon">&#128197;</span>
+  <span class="fact-bar-text" id="fact-bar-text"></span>
+  <a class="fact-bar-link" href="history.html">More history &#8594;</a>
+  <button class="fact-bar-close" onclick="document.getElementById('fact-bar').style.display='none'">&#10005;</button>
+</div>
+<div class="news-ticker" id="news-ticker" style="display:none">
+  <span class="news-ticker-icon">&#128240;</span>
+  <a class="news-ticker-text" id="news-ticker-text" href="#" target="_blank" rel="noopener"></a>
+</div>
 
 <div class="route-search-bar">
   <div class="rs-field">
@@ -387,6 +458,8 @@ const CURATED_TRAINS = {trains_json};
 const ALL_STATION_NAMES = {station_names_json};
 const STATION_ALIASES = {station_aliases_json};
 const STATION_INFO = {station_info_json};
+const HISTORY_TIMELINE = {timeline_json};
+const STATION_AMENITIES = {station_amenities_json};
 let TRAINS = CURATED_TRAINS.slice();
 
 // ── i18n ─────────────────────────────────────────────────────────────────
@@ -421,9 +494,15 @@ const I18N = {{
     weather_show: '🌦️ Destination Weather', weather_hide: '🌦️ Hide Destination Weather',
     weather_loading: 'Loading weather…', weather_error: 'Could not load weather for this station.',
     weather_source: 'Source: Open-Meteo (free, no API key)',
+    route_weather_show: '🌦️ Weather at Every Halt', route_weather_hide: '🌦️ Hide Halt Weather',
+    route_weather_loading: '🌦️ Loading…', route_weather_error: '🌦️ Could not load weather',
+    nav_history: '📜 History',
     places_show: '🏞️ Places to See', places_hide: '🏞️ Hide Places to See',
     places_loading: 'Finding places nearby…', places_error: 'Could not load nearby places.',
     places_empty: 'No notable places found nearby.', places_source: 'Source: Wikipedia (nearby articles)',
+    amenities_show: '🏢 Station Facilities', amenities_hide: '🏢 Hide Station Facilities',
+    amenities_empty: 'No curated facility info for this route\\'s stations.',
+    amenities_source: 'General-knowledge overview, not an official facilities directory',
     route_note_show: 'ℹ️ Route simplified — tap for details', route_note_hide: 'ℹ️ Hide details',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
   }},
@@ -914,18 +993,23 @@ async function toggleWeatherBox(number, btnEl) {{
   const info = STATION_INFO[code];
   if (!info) {{ box.innerHTML = `<div>${{tr('weather_error')}}</div>`; return; }}
   box.innerHTML = `<div>${{tr('weather_loading')}}</div>`;
-  if (_weatherCache[code]) {{ _renderWeather(box, _weatherCache[code], info); return; }}
   try {{
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${{info.lat}}&longitude=${{info.lon}}`
-      + `&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m&timezone=Asia%2FKolkata`;
-    const r = await fetch(url, {{ signal: AbortSignal.timeout(10000) }});
-    if (!r.ok) throw new Error('bad response');
-    const data = await r.json();
-    _weatherCache[code] = data;
+    const data = await _fetchStationCurrent(code, info.lat, info.lon);
     _renderWeather(box, data, info);
   }} catch (_) {{
     box.innerHTML = `<div>${{tr('weather_error')}}</div>`;
   }}
+}}
+
+async function _fetchStationCurrent(code, lat, lon) {{
+  if (_weatherCache[code]) return _weatherCache[code];
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${{lat}}&longitude=${{lon}}`
+    + `&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m&timezone=Asia%2FKolkata`;
+  const r = await fetch(url, {{ signal: AbortSignal.timeout(10000) }});
+  if (!r.ok) throw new Error('bad response');
+  const data = await r.json();
+  _weatherCache[code] = data;
+  return data;
 }}
 
 function _renderWeather(box, data, info) {{
@@ -936,6 +1020,86 @@ function _renderWeather(box, data, info) {{
     <div>Humidity ${{cur.relative_humidity_2m ?? '—'}}% &bull; Wind ${{cur.wind_speed_10m ?? '—'}} km/h</div>
     <div class="fare-disclaimer">${{tr('weather_source')}}</div>`;
 }}
+
+// ── Weather at every halt (backed by the india_weather agent server-side,
+// falling back to direct client-side Open-Meteo calls when no backend is
+// reachable, e.g. the static GitHub Pages build) ───────────────────────────
+// WMO codes considered severe enough to warn travellers about (heavy rain/
+// snow, heavy showers, thunderstorms) — mirrors owm_client.SEVERE_WEATHER_CODES.
+const _SEVERE_CODES = new Set([65, 75, 82, 86, 95, 96, 99]);
+function _injectStopWeather(number, code, tempC, description, weatherCode, severe) {{
+  const el = document.getElementById(`stopwx-${{number}}-${{code}}`);
+  if (!el || tempC == null) return;
+  const warn = severe ? ' &#9888;&#65039;' : '';
+  el.innerHTML = ` &bull; ${{WMO_ICON[weatherCode] || '🌡️'}} ${{tempC}}&deg;C, ${{description}}${{warn}}`;
+  el.classList.toggle('severe', !!severe);
+  el.style.display = 'inline';
+}}
+
+async function toggleRouteWeather(number, btnEl) {{
+  if (btnEl.dataset.loaded === '1') {{
+    const showing = btnEl.dataset.showing !== '0';
+    btnEl.dataset.showing = showing ? '0' : '1';
+    document.querySelectorAll(`#stops-${{number}} .stop-weather`).forEach(el => {{
+      if (el.innerHTML) el.style.display = showing ? 'none' : 'inline';
+    }});
+    const alertEl = document.getElementById(`severewx-${{number}}`);
+    if (alertEl) alertEl.style.display = showing ? 'none' : (alertEl.dataset.hasAlert === '1' ? 'block' : 'none');
+    btnEl.textContent = showing ? tr('route_weather_show') : tr('route_weather_hide');
+    return;
+  }}
+  const originalText = btnEl.textContent;
+  btnEl.textContent = tr('route_weather_loading');
+  btnEl.disabled = true;
+  const train = TRAINS.find(x => x.number === number);
+  const route = (train && train.route) || [];
+  let severeStops = [];
+  try {{
+    const mode = await _modeReady;
+    let stops = null;
+    if (mode !== 'static') {{
+      try {{
+        const r = await fetch(`${{_apiBase(mode)}}/api/trains/${{number}}/weather`, {{ signal: AbortSignal.timeout(45000) }});
+        if (r.ok) stops = (await r.json()).stops || [];
+      }} catch (_) {{}}
+    }}
+    if (stops) {{
+      stops.forEach(s => {{
+        if (s.weather && !s.weather.error) {{
+          _injectStopWeather(number, s.code, s.weather.temperature_c, s.weather.description, s.weather.weather_code, s.weather.severe);
+          if (s.weather.severe) severeStops.push(s.name);
+        }}
+      }});
+    }} else {{
+      // Offline/static fallback — fetch each halt directly from Open-Meteo
+      // using the lat/lon already embedded in this train's route.
+      const withCoords = route.filter(s => s.lat != null && s.lon != null);
+      await Promise.allSettled(withCoords.map(async s => {{
+        const data = await _fetchStationCurrent(s.code, s.lat, s.lon);
+        const cur = data.current || {{}};
+        const code = cur.weather_code ?? 0;
+        const severe = _SEVERE_CODES.has(code);
+        _injectStopWeather(number, s.code, cur.temperature_2m, WMO_DESC[code] || 'Unknown', code, severe);
+        if (severe) severeStops.push(s.name);
+      }}));
+    }}
+    const alertEl = document.getElementById(`severewx-${{number}}`);
+    if (alertEl && severeStops.length) {{
+      alertEl.textContent = `⚠️ Severe weather at ${{severeStops.length}} halt(s): ${{severeStops.join(', ')}}`;
+      alertEl.style.display = 'block';
+      alertEl.dataset.hasAlert = '1';
+    }}
+    btnEl.dataset.loaded = '1';
+    btnEl.dataset.showing = '1';
+    btnEl.textContent = tr('route_weather_hide');
+  }} catch (_) {{
+    btnEl.textContent = tr('route_weather_error');
+    setTimeout(() => {{ btnEl.textContent = originalText; }}, 2500);
+  }} finally {{
+    btnEl.disabled = false;
+  }}
+}}
+
 
 // ── Places to see near the destination (Wikipedia geosearch — free, no key) ─
 // Lists nearby Wikipedia articles (landmarks/attractions/notable places)
@@ -980,6 +1144,31 @@ function _renderPlaces(box, places, info) {{
     return `<div class="place-row"><a href="${{href}}" target="_blank" rel="noopener">${{p.title}}</a> <span class="place-dist">${{distLabel}}</span></div>`;
   }}).join('');
   box.innerHTML = `${{rows}}<div class="fare-disclaimer">${{tr('places_source')}}</div>`;
+}}
+
+// ── Station facilities — curated, static data embedded in the page (no
+// backend call needed, so it works in static/GitHub Pages mode too).
+function toggleAmenitiesBox(number, btnEl) {{
+  const box = document.getElementById(`amenities-${{number}}`);
+  if (!box) return;
+  const show = box.style.display === 'none';
+  box.style.display = show ? 'block' : 'none';
+  btnEl.textContent = show ? tr('amenities_hide') : tr('amenities_show');
+  if (!show || box.dataset.loaded === '1') return;
+  box.dataset.loaded = '1';
+  const train = TRAINS.find(x => x.number === number);
+  const stops = (train?.route || []).filter(s => STATION_AMENITIES[s.code]);
+  if (!stops.length) {{ box.innerHTML = `<div>${{tr('amenities_empty')}}</div>`; return; }}
+  const rows = stops.map(s => {{
+    const a = STATION_AMENITIES[s.code];
+    const tags = a.facilities.map(f => `<span>${{f}}</span>`).join('');
+    return `<div class="amenity-station">
+      <b>${{a.name}}</b> (${{s.code}}, ${{a.category}}-category)<br/>
+      <div class="amenity-tags">${{tags}}</div>
+      <div style="margin-top:4px">${{a.highlight}}</div>
+    </div>`;
+  }}).join('');
+  box.innerHTML = `${{rows}}<div class="fare-disclaimer">${{tr('amenities_source')}}</div>`;
 }}
 
 // ── Route map (Leaflet / OpenStreetMap — free, no API key) ─────────────────
@@ -1108,10 +1297,16 @@ function renderCards(query) {{
       ? `<button class="weather-btn" data-code="${{leg.alight.code}}" onclick="toggleWeatherBox('${{t.number}}', this)">${{tr('weather_show')}}</button>`
       : '';
     const weatherBox = leg ? `<div class="weather-box" id="weather-${{t.number}}" style="display:none"></div>` : '';
+    const routeWeatherBtn = `<button class="route-weather-btn" onclick="toggleRouteWeather('${{t.number}}', this)">${{tr('route_weather_show')}}</button>`;
     const placesBtn = leg
       ? `<button class="places-btn" data-code="${{leg.alight.code}}" onclick="togglePlacesBox('${{t.number}}', this)">${{tr('places_show')}}</button>`
       : '';
     const placesBox = leg ? `<div class="places-box" id="places-${{t.number}}" style="display:none"></div>` : '';
+    const hasAmenityStop = (t.route || []).some(s => STATION_AMENITIES[s.code]);
+    const amenitiesBtn = hasAmenityStop
+      ? `<button class="amenities-btn" onclick="toggleAmenitiesBox('${{t.number}}', this)">${{tr('amenities_show')}}</button>`
+      : '';
+    const amenitiesBox = hasAmenityStop ? `<div class="amenities-box" id="amenities-${{t.number}}" style="display:none"></div>` : '';
     return `
     <div class="card" style="--cc:${{color}}">
       <div class="card-top">
@@ -1132,7 +1327,9 @@ function renderCards(query) {{
         <button class="fare-btn" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
         <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', this)">${{tr('story_show')}}</button>
         ${{weatherBtn}}
+        ${{routeWeatherBtn}}
         ${{placesBtn}}
+        ${{amenitiesBtn}}
         <button class="compare-btn ${{_compareTrains.has(t.number) ? 'active' : ''}}" onclick="toggleCompare('${{t.number}}', this)">${{_compareTrains.has(t.number) ? tr('compare_added') : tr('compare_add')}}</button>
       </div>
       <div class="route-map" id="map-${{t.number}}" style="display:none"></div>
@@ -1140,11 +1337,13 @@ function renderCards(query) {{
       <div class="story-box" id="story-${{t.number}}" style="display:none"></div>
       ${{weatherBox}}
       ${{placesBox}}
-      <div class="stops-detail">
+      ${{amenitiesBox}}
+      <div class="severe-alert" id="severewx-${{t.number}}" style="display:none"></div>
+      <div class="stops-detail" id="stops-${{t.number}}">
         ${{(t.route || []).map(s => `
-          <div class="stop-row ${{s.name === t.last_station ? 'current' : ''}}">
+          <div class="stop-row ${{s.name === t.last_station ? 'current' : ''}}" data-code="${{s.code}}">
             <span><b>${{s.name}}</b> (${{s.code}})</span>
-            <span>${{s.arr || '—'}} / ${{s.dep || '—'}}</span>
+            <span>${{s.arr || '—'}} / ${{s.dep || '—'}}<span class="stop-weather" id="stopwx-${{t.number}}-${{s.code}}" style="display:none"></span></span>
           </div>`).join('')}}
       </div>
     </div>`;
@@ -1412,6 +1611,57 @@ if (localStorage.getItem('ir_theme') === 'light') document.body.classList.add('l
 populateStationList();
 applyLanguage(CURRENT_LANG);
 renderCards('');
+initFactBar();
+initNewsTicker();
+
+// ── "On this day" fact banner — computed client-side (IST-shifted) so it
+// stays accurate without needing the HTML to be regenerated every day.
+function initFactBar() {{
+  if (!HISTORY_TIMELINE.length) return;
+  const istNow = new Date(Date.now() + 5.5 * 3600 * 1000);
+  const monthDay = `${{String(istNow.getUTCMonth() + 1).padStart(2, '0')}}-${{String(istNow.getUTCDate()).padStart(2, '0')}}`;
+  const exact = HISTORY_TIMELINE.find(e => e.month_day === monthDay);
+  let entry = exact;
+  let label = "On This Day in Railway History";
+  if (!entry) {{
+    // No exact date match — deterministic "featured fact" that rotates daily.
+    const dayOfYear = Math.floor((istNow - new Date(Date.UTC(istNow.getUTCFullYear(), 0, 0))) / 86400000);
+    entry = HISTORY_TIMELINE[dayOfYear % HISTORY_TIMELINE.length];
+    label = "Featured Railway Fact";
+  }}
+  document.getElementById('fact-bar-text').innerHTML =
+    `<b>${{label}}:</b> ${{entry.icon}} ${{entry.title}} (${{entry.year_label}}) — ${{entry.text}}`;
+  document.getElementById('fact-bar').style.display = 'flex';
+}}
+
+// ── Railway news ticker — rotates recent headlines fetched server-side
+// (Google News RSS, cached ~15 min). Hidden entirely in static mode since
+// there's no backend to proxy the feed (browsers can't fetch cross-origin
+// RSS/XML without CORS headers, which Google News doesn't send).
+let _newsArticles = [];
+let _newsIdx = 0;
+async function initNewsTicker() {{
+  const mode = await _modeReady;
+  if (mode === 'static') return;
+  try {{
+    const r = await fetch(`${{_apiBase(mode)}}/api/news`, {{ signal: AbortSignal.timeout(15000) }});
+    if (!r.ok) return;
+    const data = await r.json();
+    _newsArticles = data.articles || [];
+  }} catch (_) {{ return; }}
+  if (!_newsArticles.length) return;
+  const ticker = document.getElementById('news-ticker');
+  const textEl = document.getElementById('news-ticker-text');
+  const showArticle = () => {{
+    const a = _newsArticles[_newsIdx % _newsArticles.length];
+    textEl.textContent = a.source ? `${{a.title}} — ${{a.source}}` : a.title;
+    textEl.href = a.link || '#';
+    _newsIdx++;
+  }};
+  showArticle();
+  ticker.style.display = 'flex';
+  if (_newsArticles.length > 1) setInterval(showArticle, 7000);
+}}
 
 // If served via Flask (same-origin API reachable), periodically refresh the
 // header stats and (only when no search/filter is active) the default

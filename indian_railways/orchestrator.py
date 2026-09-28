@@ -36,6 +36,7 @@ BASE_DIR    = Path(__file__).parent
 TRAINS_DIR  = BASE_DIR / "trains"
 OUTPUT_JSON = TRAINS_DIR / "railways_data.json"
 OUTPUT_HTML = TRAINS_DIR / "railways_report.html"
+OUTPUT_HISTORY_HTML = TRAINS_DIR / "railway_history.html"
 
 TRAINS_DIR.mkdir(exist_ok=True)
 
@@ -67,6 +68,14 @@ def generate_html(payload: dict) -> None:
     print(f"  HTML → {OUTPUT_HTML}")
 
 
+def generate_history_html() -> None:
+    """Static content page (trains/technology timeline) — no payload needed."""
+    from indian_railways.history_report import build_history_html
+    html = build_history_html()
+    OUTPUT_HISTORY_HTML.write_text(html, encoding="utf-8")
+    print(f"  HTML → {OUTPUT_HISTORY_HTML}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Indian Railways Train Tracker Orchestrator")
     parser.add_argument("--output", choices=["all", "json", "html"], default="all")
@@ -78,6 +87,7 @@ def main() -> None:
             sys.exit(1)
         payload = json.loads(OUTPUT_JSON.read_text(encoding="utf-8"))
         generate_html(payload)
+        generate_history_html()
         return
 
     print(f"\n[Indian Railways] Computing live status for all registered trains…")
@@ -88,6 +98,8 @@ def main() -> None:
         save_json(payload)
     if args.output in ("all", "html"):
         generate_html(payload)
+        generate_history_html()
+
 
 
 if __name__ == "__main__":

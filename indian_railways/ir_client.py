@@ -24,9 +24,17 @@ import hashlib
 import re
 from datetime import date, datetime, timedelta, timezone
 
+from india_weather.owm_client import fetch_current_for_points
 from indian_railways.train_data import CURATED_TRAIN_NUMBERS, STATION_ALIASES, STATION_COORDS, TRAINS, TRAINS_BY_NUMBER
 
 IST = timezone(timedelta(hours=5, minutes=30))
+
+# Cap on how many halts get a live weather fetch per request — a few very
+# long-haul trains (e.g. Vivek Express routes) have 50+ stops, and firing
+# that many Open-Meteo requests per page view isn't worth the latency/rate-
+# limit risk. Origin + destination are always kept; the rest are sampled
+# evenly along the route so coverage still spans the whole journey.
+_MAX_WEATHER_STOPS = 25
 
 
 def _enrich_route(route: list[dict]) -> list[dict]:
@@ -227,6 +235,45 @@ def get_status_for_number(train_number: str, now: datetime | None = None) -> dic
         "zone": train["zone"], "route": _enrich_route(train["route"]),
         "route_note": train.get("route_note"), "runs_on": train.get("runs_on"),
         **compute_status(train, now),
+    }
+
+
+def get_route_weather(train_number: str) -> dict | None:
+    """Current weather for every halt on `train_number`'s route, via the
+    india_weather agent (Open-Meteo) — reuses each station's already-known
+    lat/lon (STATION_COORDS) so no geocoding is needed per stop."""
+    train = TRAINS_BY_NUMBER.get(train_number.strip())
+    if not train:
+        return None
+    stops = [s for s in train["route"] if STATION_COORDS.get(s["code"])]
+    if len(stops) > _MAX_WEATHER_STOPS:
+        step = (len(stops) - 1) / (_MAX_WEATHER_STOPS - 1)
+        keep_idx = sorted({round(i * step) for i in range(_MAX_WEATHER_STOPS)})
+        stops = [stops[i] for i in keep_idx]
+    points = [
+        {"lat": STATION_COORDS[s["code"]][0], "lon": STATION_COORDS[s["code"]][1], "label": s["code"]}
+        for s in stops
+    ]
+    weather_by_code = {w.get("label"): w for w in fetch_current_for_points(points)}
+    stop_entries = [
+        {
+            "code": s["code"], "name": s["name"], "arr": s.get("arr"), "dep": s.get("dep"),
+            "weather": weather_by_code.get(s["code"]),
+        }
+        for s in stops
+    ]
+    # Halts currently showing severe weather (heavy rain/snow, thunderstorms) —
+    # surfaced separately so the frontend can show a route-level alert banner.
+    severe_stops = [
+        {"code": e["code"], "name": e["name"]}
+        for e in stop_entries
+        if e["weather"] and e["weather"].get("severe")
+    ]
+    return {
+        "number": train["number"],
+        "name": train["name"],
+        "stops": stop_entries,
+        "severe_stops": severe_stops,
     }
 
 

@@ -108,6 +108,7 @@ jobs:
 
           cp -r current_affairs/news/. site/current-affairs/
           cp indian_railways/trains/railways_report.html site/railways/index.html
+          cp indian_railways/trains/railway_history.html site/railways/history.html
 
           cat > site/index.html << 'HTML'
           <!DOCTYPE html>

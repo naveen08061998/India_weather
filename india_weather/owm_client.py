@@ -108,7 +108,7 @@ _FALLBACKS: dict[str, str] = {
     "Gir Somnath": "Junagadh", "Kachchh": "Bhuj", "Mahisagar": "Vadodara",
     "Narmada": "Vadodara", "Panch Mahals": "Godhra",
     "Sabarkantha": "Idar", "Tapi": "Surat",
-    "Kinnaur": "Shimla", "Lahaul and Spiti": "Manali",
+    "Kinnaur": "Reckong Peo", "Lahaul and Spiti": "Manali",
     "Ganderbal": "Srinagar", "Shopian": "Srinagar",
     "Bandipora": "Srinagar", "Baramulla": "Srinagar", "Budgam": "Srinagar",
     "East Singhbhum": "Jamshedpur", "Koderma": "Hazaribagh",
@@ -199,6 +199,16 @@ def _deg_to_dir(deg: float | None) -> str:
     return _COMPASS[round(float(deg) / 22.5) % 16]
 
 
+# ── Coordinate overrides (bypass geocoding for known-ambiguous districts) ──
+# Geocoding APIs sometimes resolve district names to mountains/peaks/wrong
+# cities of the same name. Hardcoded lat/lon guarantees the right location.
+_COORD_OVERRIDES: dict[str, dict] = {
+    "Kinnaur":         {"lat": 31.534, "lon": 78.274, "name": "Reckong Peo"},
+    "Lahaul and Spiti":{"lat": 32.562, "lon": 77.035, "name": "Keylong"},
+    "Reckong Peo":     {"lat": 31.534, "lon": 78.274, "name": "Reckong Peo"},
+}
+
+
 WMO_DESCRIPTIONS: dict[int, str] = {
     0:  "Clear sky",
     1:  "Mainly clear",        2:  "Partly cloudy",     3:  "Overcast",
@@ -214,16 +224,26 @@ WMO_DESCRIPTIONS: dict[int, str] = {
 }
 
 
+# Weather codes severe enough to warn travellers about (heavy rain/snow,
+# heavy showers, thunderstorms) — used for route-weather alert badges.
+SEVERE_WEATHER_CODES: frozenset[int] = frozenset({65, 75, 82, 86, 95, 96, 99})
+
+
 # ── Geocoding ──────────────────────────────────────────────────────────────
 
 def _geocode(city: str) -> dict[str, Any] | None:
     """Return {lat, lon, name} for a city, cached to disk.
 
     Tries in order:
+      0. Hard-coded _COORD_OVERRIDES (for districts that geocode ambiguously)
       1. The city name as-is
       2. The fallback name from _FALLBACKS (if present)
       3. The city name suffixed with ", India" (for ambiguous/short names)
     """
+    # Step 0: use override coords directly — skips cache and geocoding API
+    override = _COORD_OVERRIDES.get(city)
+    if override:
+        return override
     fallback = _FALLBACKS.get(city)
     names: list[str] = [city]
     if fallback and fallback != city:
@@ -479,5 +499,61 @@ def fetch_all(cities: list[str], state: str, workers: int = 8) -> list[dict]:
                 results[i] = future.result()
             except Exception as exc:
                 results[i] = {"city": cities[i], "state": state, "error": str(exc)}
+    return results  # type: ignore[return-value]
+
+
+# ── Coordinate-based current conditions (skips geocoding entirely) ────────
+# Used by callers that already have a trusted lat/lon (e.g. indian_railways'
+# station coordinate table) — current conditions only, no 7-day forecast,
+# to keep per-point payloads small when fetching many points at once.
+
+def get_current_by_coords(lat: float, lon: float, label: str = "") -> dict[str, Any]:
+    """Current weather conditions for a raw lat/lon, bypassing geocoding."""
+    data = _fetch_weather(lat, lon)
+    cur = data.get("current", {})
+    code = int(cur.get("weathercode") or 0)
+    obs_raw = cur.get("time", "")
+    obs_time = (datetime.fromisoformat(obs_raw).strftime("%d %b %Y %I:%M %p IST")
+                if obs_raw else datetime.now(_IST).strftime("%d %b %Y %I:%M %p IST"))
+    return {
+        "label":            label,
+        "lat":              lat,
+        "lon":              lon,
+        "temperature_c":    str(round(cur.get("temperature_2m") or 0)),
+        "feels_like_c":     str(round(cur.get("apparent_temperature") or 0)),
+        "humidity":         str(int(cur.get("relative_humidity_2m") or 0)),
+        "description":      WMO_DESCRIPTIONS.get(code, "Unknown"),
+        "weather_code":     code,
+        "severe":           code in SEVERE_WEATHER_CODES,
+        "wind_kmph":        str(round(cur.get("wind_speed_10m") or 0)),
+        "wind_dir":         _deg_to_dir(cur.get("wind_direction_10m")),
+        "cloud_cover":      str(int(cur.get("cloud_cover") or 0)),
+        "observation_time": obs_time,
+    }
+
+
+def fetch_current_for_points(points: list[dict], workers: int = 8) -> list[dict]:
+    """Current conditions for many (lat, lon, label) points in parallel.
+
+    Args:
+        points:  list of dicts each with "lat", "lon" and optional "label".
+        workers: max simultaneous HTTP requests.
+
+    Returns:
+        List of dicts in the same order as *points*. Failed points get a
+        dict with an "error" key instead of weather fields.
+    """
+    results: list[dict | None] = [None] * len(points)
+    with ThreadPoolExecutor(max_workers=workers) as executor:
+        future_to_idx = {
+            executor.submit(get_current_by_coords, p["lat"], p["lon"], p.get("label", "")): i
+            for i, p in enumerate(points)
+        }
+        for future in as_completed(future_to_idx):
+            i = future_to_idx[future]
+            try:
+                results[i] = future.result()
+            except Exception as exc:
+                results[i] = {"label": points[i].get("label", ""), "error": str(exc)}
     return results  # type: ignore[return-value]
 

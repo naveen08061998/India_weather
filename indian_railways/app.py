@@ -9,10 +9,13 @@ Run:
 
 Endpoints:
     GET  /                   -> Railways dashboard HTML
+    GET  /history.html       -> History & technology timeline HTML
     GET  /api/trains         -> Summary + curated trains payload
     GET  /api/trains/search  -> Search by train number/name
     GET  /api/trains/route   -> Search by source/destination
     GET  /api/trains/<no>    -> Live status for one train
+    GET  /api/trains/<no>/weather -> Weather at every halt on that train's route
+    GET  /api/news           -> Recent Indian Railways-related headlines
     POST /api/refresh        -> Rebuild cached payload and HTML
 """
 
@@ -24,15 +27,20 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request, send_from_directory
 
-from indian_railways.ir_client import get_status_for_number, search_by_route, search_trains
-from indian_railways.orchestrator import build_payload, generate_html, save_json
+from indian_railways.ir_client import get_route_weather, get_status_for_number, search_by_route, search_trains
+from indian_railways.news_client import fetch_railway_news
+from indian_railways.orchestrator import build_payload, generate_history_html, generate_html, save_json
 
 BASE_DIR = Path(__file__).parent
 TRAINS_DIR = BASE_DIR / "trains"
 HTML_FILE = TRAINS_DIR / "railways_report.html"
+HISTORY_HTML_FILE = TRAINS_DIR / "railway_history.html"
 
 _CACHE_TTL_S = 30
 _cache: dict = {"ts": 0.0, "payload": None}
+
+_NEWS_CACHE_TTL_S = 900  # news changes far less often than train status
+_news_cache: dict = {"ts": 0.0, "articles": None}
 
 app = Flask(__name__)
 
@@ -61,10 +69,23 @@ def _ensure_dashboard() -> None:
         _rebuild_payload()
 
 
+def _ensure_history() -> None:
+    TRAINS_DIR.mkdir(parents=True, exist_ok=True)
+    if not HISTORY_HTML_FILE.exists():
+        generate_history_html()
+
+
 @app.route("/")
+@app.route("/index.html")
 def index():
     _ensure_dashboard()
     return send_from_directory(str(TRAINS_DIR), "railways_report.html")
+
+
+@app.route("/history.html")
+def history_page():
+    _ensure_history()
+    return send_from_directory(str(TRAINS_DIR), "railway_history.html")
 
 
 @app.route("/api/trains")
@@ -95,6 +116,23 @@ def api_train_detail(train_number: str):
     if result is None:
         return jsonify({"error": f"Unknown train number '{train_number}'"}), 404
     return jsonify(result)
+
+
+@app.route("/api/trains/<train_number>/weather")
+def api_train_route_weather(train_number: str):
+    result = get_route_weather(train_number)
+    if result is None:
+        return jsonify({"error": f"Unknown train number '{train_number}'"}), 404
+    return jsonify(result)
+
+
+@app.route("/api/news")
+def api_news():
+    now = time.time()
+    if _news_cache["articles"] is None or now - _news_cache["ts"] > _NEWS_CACHE_TTL_S:
+        _news_cache["articles"] = fetch_railway_news()
+        _news_cache["ts"] = now
+    return jsonify({"articles": _news_cache["articles"]})
 
 
 @app.route("/api/refresh", methods=["POST"])
