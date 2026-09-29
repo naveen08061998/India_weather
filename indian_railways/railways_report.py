@@ -383,10 +383,10 @@ def build_html(payload: dict) -> str:
     </div>
   </div>
   <div class="header-stats">
-    <div class="stat-chip">&#128197; <b>{date_label}</b></div>
-    <div class="stat-chip">&#128646; <b>{total_trains}</b> trains in database</div>
+    <div class="stat-chip">&#128197; <b id="date-label">{date_label}</b></div>
+    <div class="stat-chip">&#128646; <b id="total-trains">{total_trains}</b> trains in database</div>
     <div class="stat-chip">&#128504; <b id="running-now">{running_now}</b> en route</div>
-    <div class="stat-chip">&#128336; Updated: <b>{generated_at}</b></div>
+    <div class="stat-chip">&#128336; Updated: <b id="generated-at">{generated_at}</b></div>
   </div>
   <div class="header-right">
     <div class="search-wrap">
@@ -1750,28 +1750,36 @@ async function initNewsTicker() {{
   if (_newsArticles.length > 1) setInterval(showArticle, 7000);
 }}
 
-// If served via Flask (same-origin API reachable), periodically refresh the
-// header stats and (only when no search/filter is active) the default
-// curated view. Skipped in 'remote'/'static' mode so a plain file:// open
-// doesn't spam the console with 403s from a relative-path fetch.
-setInterval(async () => {{
+// Periodically refresh the header stats and (only when no search/filter is
+// active) the default curated view, from whichever backend is reachable —
+// same-origin Flask, or the public Render backend when this is the static
+// GitHub Pages build. Skipped only in 'static' mode (no backend at all),
+// where a plain file:// open would otherwise spam the console with failed
+// fetches. Without this, a GH-Pages visit only ever showed data as of the
+// last scheduled rebuild (up to ~2h stale) with no way to catch up live.
+async function _refreshHeaderStats() {{
   const mode = await _modeReady;
-  if (mode !== 'flask') return;
-  fetch('/api/trains', {{ signal: AbortSignal.timeout(4000) }})
-    .then(r => r.ok ? r.json() : null)
-    .then(data => {{
-      if (!data || !data.trains) return;
-      document.getElementById('running-now').textContent = data.running_now;
-      const q = document.getElementById('search').value.trim();
-      if (!q && !_fromFilter && !_toFilter) {{
-        CURATED_TRAINS.length = 0;
-        CURATED_TRAINS.push(...data.trains);
-        TRAINS = CURATED_TRAINS.slice();
-        renderCards('');
-      }}
-    }})
-    .catch(() => {{}});
-}}, 60000);
+  if (mode === 'static') return;
+  try {{
+    const r = await fetch(`${{_apiBase(mode)}}/api/trains`, {{ signal: AbortSignal.timeout(45000) }});
+    if (!r.ok) return;
+    const data = await r.json();
+    if (!data || !data.trains) return;
+    document.getElementById('running-now').textContent = data.running_now;
+    if (data.date) document.getElementById('date-label').textContent = data.date;
+    if (data.generated_at) document.getElementById('generated-at').textContent = data.generated_at;
+    if (data.total_trains) document.getElementById('total-trains').textContent = data.total_trains;
+    const q = document.getElementById('search').value.trim();
+    if (!q && !_fromFilter && !_toFilter) {{
+      CURATED_TRAINS.length = 0;
+      CURATED_TRAINS.push(...data.trains);
+      TRAINS = CURATED_TRAINS.slice();
+      renderCards('');
+    }}
+  }} catch (_) {{}}
+}}
+_refreshHeaderStats();
+setInterval(_refreshHeaderStats, 60000);
 </script>
 </body>
 </html>"""
