@@ -11,13 +11,13 @@
   :root {
     --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
     --accent: #38bdf8; --accent-glow: rgba(56,189,248,.18);
-    --text: #e8edf5; --muted: #7b8899; --border: #1a2a45;
+    --text: #e8edf5; --muted: #7b8899; --muted2: #4b5768; --bad: #ef4444; --border: #1a2a45;
     --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }
   body.light {
     --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
     --accent: #0284c7; --accent-glow: rgba(2,132,199,.1);
-    --text: #0f172a; --muted: #64748b; --border: #dde3f0;
+    --text: #0f172a; --muted: #64748b; --muted2: #94a3b8; --bad: #dc2626; --border: #dde3f0;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -119,6 +119,17 @@
   }
   .gl-card h3 { font-size: .85rem; margin-bottom: 4px; color: var(--accent); }
   .gl-card p { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+  .safety-list { display: flex; flex-direction: column; gap: 12px; }
+  .safety-card {
+    display: flex; gap: 16px; background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--muted2); border-radius: var(--radius); padding: 14px 18px;
+    box-shadow: var(--shadow);
+  }
+  .safety-year { flex-shrink: 0; width: 60px; font-weight: 800; color: var(--muted); font-size: .95rem; }
+  .safety-body h3 { font-size: .92rem; margin-bottom: 4px; }
+  .safety-toll { font-size: .74rem; color: var(--bad); font-weight: 600; margin-bottom: 6px; }
+  .safety-body p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+  .safety-note { margin-top: 6px; font-style: italic; }
   footer { text-align: center; padding: 20px; font-size: .72rem; color: var(--muted); }
 </style>
 </head>
@@ -455,6 +466,93 @@
         <p>Solar panels at stations, bio-toilets on coaches to eliminate direct track discharge, and a near-complete broad-gauge electrification push to cut diesel dependence and emissions.</p>
         <p class="detail-text" style="display:none">Bio-toilets, developed with DRDO and installed across the coach fleet from the early 2010s, replaced the older design that discharged waste directly onto the tracks. Solar panels have been installed on station roofs and some coaches to offset electricity use, and Indian Railways has set a target of net-zero carbon emissions, with electrification of nearly all broad-gauge routes — rather than continued diesel use — forming the largest single piece of that plan.</p>
         <button class="read-more-btn" onclick="toggleDetail(this)">Read more &#8595;</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>&#128367; Safety History — Learning from Tragedy</h2>
+    <div class="disclaimer">&#8505;&#65039; Presented factually and respectfully for historical and public-safety awareness, not for sensationalism — these events are part of why safety technology like KAVACH exists today. Death tolls, especially for older disasters, vary across sources and official inquiries; figures shown are commonly cited approximate ranges from public reporting, not a verified official record.</div>
+    <div class="safety-list">
+      
+      <div class="safety-card">
+        <div class="safety-year">1981</div>
+        <div class="safety-body">
+          <h3>Bihar Train Disaster (Bagmati River)</h3>
+          <p class="safety-toll">Reported deaths: estimates vary widely, from the low hundreds officially counted to over 800 by some accounts</p>
+          <p>A passenger train crossing a bridge over the Bagmati river near Mansi, Bihar derailed and several coaches plunged into the water — believed to be one of the deadliest rail disasters in world history. A sudden brake application, possibly triggered by a cyclonic storm or an animal on the track, was suspected, but the exact cause was never conclusively established, and many victims were never recovered from the river.</p>
+          
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">1995</div>
+        <div class="safety-body">
+          <h3>Firozabad Train Collision (Uttar Pradesh)</h3>
+          <p class="safety-toll">Reported deaths: over 300</p>
+          <p>The Kalindi Express ploughed into the derailed wreckage of the Purushottam Express near Firozabad, Uttar Pradesh, after the first train had already derailed on the same stretch of track.</p>
+          
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">1998</div>
+        <div class="safety-body">
+          <h3>Khanna Rail Disaster (Punjab)</h3>
+          <p class="safety-toll">Reported deaths: around 212</p>
+          <p>The Frontier Mail collided with the derailed wreckage of the Golden Temple Mail at Khanna, Punjab, in dense winter fog that had already caused the first derailment.</p>
+          
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">1999</div>
+        <div class="safety-body">
+          <h3>Gaisal Train Disaster (Assam)</h3>
+          <p class="safety-toll">Reported deaths: close to 290</p>
+          <p>The Brahmaputra Mail and the Awadh-Assam Express collided head-on near Gaisal, Assam, after a signalling error routed both trains onto the same track.</p>
+          <p class="safety-note">&#128161; The disaster accelerated trials of India's first Anti-Collision Device (ACD) — an early precursor to today's KAVACH system.</p>
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">2010</div>
+        <div class="safety-body">
+          <h3>Sainthia Rail Disaster (West Bengal)</h3>
+          <p class="safety-toll">Reported deaths: around 66</p>
+          <p>The Uttar Banga Express rear-ended the stationary Vananchal Express at Sainthia station, West Bengal, in early morning fog.</p>
+          
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">2010</div>
+        <div class="safety-body">
+          <h3>Jnaneswari Express Derailment (West Bengal)</h3>
+          <p class="safety-toll">Reported deaths: around 150</p>
+          <p>Sabotage — attributed to Maoist rebels tampering with the track — caused the Jnaneswari Super Deluxe Express to derail, after which some of its coaches were struck by an oncoming goods train.</p>
+          
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">2016</div>
+        <div class="safety-body">
+          <h3>Indore-Patna Express Derailment (Pukhrayan, UP)</h3>
+          <p class="safety-toll">Reported deaths: around 150</p>
+          <p>Multiple coaches of the Indore-Patna Express derailed near Pukhrayan, Kanpur Dehat district; a fractured rail was identified as the likely cause.</p>
+          
+        </div>
+      </div>
+
+      <div class="safety-card">
+        <div class="safety-year">2023</div>
+        <div class="safety-body">
+          <h3>Odisha Train Collision (Bahanaga Bazar, Balasore)</h3>
+          <p class="safety-toll">Reported deaths: close to 290</p>
+          <p>A signalling error routed the Coromandel Express onto a loop line where it collided with a stationary goods train; derailed coaches then struck the passing Yesvantpur-Howrah Superfast Express — a three-train collision and one of India's deadliest rail disasters in decades.</p>
+          <p class="safety-note">&#128161; Renewed national urgency around accelerating KAVACH's rollout across the full network.</p>
+        </div>
       </div>
     </div>
   </section>

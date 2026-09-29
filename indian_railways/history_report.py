@@ -10,7 +10,9 @@ localStorage key) so switching themes on one page carries over to the other.
 
 from __future__ import annotations
 
-from indian_railways.history_content import DISCLAIMER, GLOSSARY, TECHNOLOGY, TIMELINE
+from indian_railways.history_content import (
+    DISCLAIMER, GLOSSARY, SAFETY_DISCLAIMER, SAFETY_HISTORY, TECHNOLOGY, TIMELINE,
+)
 
 _TAG_LABEL = {"milestone": "Milestone", "train": "Train", "technology": "Technology"}
 _TAG_COLOR = {"milestone": "#f97316", "train": "#38bdf8", "technology": "#a855f7"}
@@ -51,10 +53,27 @@ def _glossary_card(entry: dict) -> str:
       </div>"""
 
 
+def _safety_card(entry: dict) -> str:
+    note_html = (
+        f'<p class="safety-note">&#128161; {entry["note"]}</p>' if entry.get("note") else ""
+    )
+    return f"""
+      <div class="safety-card">
+        <div class="safety-year">{entry['year_label']}</div>
+        <div class="safety-body">
+          <h3>{entry['title']}</h3>
+          <p class="safety-toll">Reported deaths: {entry['deaths_approx']}</p>
+          <p>{entry['text']}</p>
+          {note_html}
+        </div>
+      </div>"""
+
+
 def build_history_html() -> str:
     timeline_html = "\n".join(_timeline_card(e, i) for i, e in enumerate(TIMELINE))
     tech_html = "\n".join(_tech_card(e) for e in TECHNOLOGY)
     glossary_html = "\n".join(_glossary_card(e) for e in sorted(GLOSSARY, key=lambda e: e["term"].lower()))
+    safety_html = "\n".join(_safety_card(e) for e in SAFETY_HISTORY)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -69,13 +88,13 @@ def build_history_html() -> str:
   :root {{
     --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
     --accent: #38bdf8; --accent-glow: rgba(56,189,248,.18);
-    --text: #e8edf5; --muted: #7b8899; --border: #1a2a45;
+    --text: #e8edf5; --muted: #7b8899; --muted2: #4b5768; --bad: #ef4444; --border: #1a2a45;
     --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }}
   body.light {{
     --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
     --accent: #0284c7; --accent-glow: rgba(2,132,199,.1);
-    --text: #0f172a; --muted: #64748b; --border: #dde3f0;
+    --text: #0f172a; --muted: #64748b; --muted2: #94a3b8; --bad: #dc2626; --border: #dde3f0;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -177,6 +196,17 @@ def build_history_html() -> str:
   }}
   .gl-card h3 {{ font-size: .85rem; margin-bottom: 4px; color: var(--accent); }}
   .gl-card p {{ font-size: .78rem; color: var(--muted); line-height: 1.5; }}
+  .safety-list {{ display: flex; flex-direction: column; gap: 12px; }}
+  .safety-card {{
+    display: flex; gap: 16px; background: var(--card); border: 1px solid var(--border);
+    border-left: 3px solid var(--muted2); border-radius: var(--radius); padding: 14px 18px;
+    box-shadow: var(--shadow);
+  }}
+  .safety-year {{ flex-shrink: 0; width: 60px; font-weight: 800; color: var(--muted); font-size: .95rem; }}
+  .safety-body h3 {{ font-size: .92rem; margin-bottom: 4px; }}
+  .safety-toll {{ font-size: .74rem; color: var(--bad); font-weight: 600; margin-bottom: 6px; }}
+  .safety-body p {{ font-size: .8rem; color: var(--muted); line-height: 1.6; }}
+  .safety-note {{ margin-top: 6px; font-style: italic; }}
   footer {{ text-align: center; padding: 20px; font-size: .72rem; color: var(--muted); }}
 </style>
 </head>
@@ -226,6 +256,14 @@ def build_history_html() -> str:
     <h2>&#9881;&#65039; Technology Behind the Network</h2>
     <div class="tech-grid">
       {tech_html}
+    </div>
+  </section>
+
+  <section>
+    <h2>&#128367; Safety History — Learning from Tragedy</h2>
+    <div class="disclaimer">&#8505;&#65039; {SAFETY_DISCLAIMER}</div>
+    <div class="safety-list">
+      {safety_html}
     </div>
   </section>
 

@@ -509,3 +509,67 @@ GLOSSARY: list[dict] = [
                    "trains change routes — shown as \"Jn\" in station names."},
 ]
 
+# Major rail disasters, presented factually and respectfully for historical
+# and public-safety context — not for sensationalism. These events are why
+# safety technology like KAVACH, ACDs and modern signalling matter; several
+# entries note the safety response that followed. Death tolls for older
+# disasters vary across sources/inquiries; figures here are the commonly
+# cited approximate ranges from public reporting, not an official verified
+# record. See SAFETY_DISCLAIMER, also shown on the page itself.
+SAFETY_DISCLAIMER = (
+    "Presented factually and respectfully for historical and public-safety awareness, "
+    "not for sensationalism — these events are part of why safety technology like KAVACH "
+    "exists today. Death tolls, especially for older disasters, vary across sources and "
+    "official inquiries; figures shown are commonly cited approximate ranges from public "
+    "reporting, not a verified official record."
+)
+
+SAFETY_HISTORY: list[dict] = [
+    {"year": 1981, "year_label": "1981", "title": "Bihar Train Disaster (Bagmati River)",
+     "deaths_approx": "estimates vary widely, from the low hundreds officially counted to over 800 by some accounts",
+     "text": "A passenger train crossing a bridge over the Bagmati river near Mansi, Bihar "
+             "derailed and several coaches plunged into the water — believed to be one of "
+             "the deadliest rail disasters in world history. A sudden brake application, "
+             "possibly triggered by a cyclonic storm or an animal on the track, was "
+             "suspected, but the exact cause was never conclusively established, and many "
+             "victims were never recovered from the river."},
+    {"year": 1995, "year_label": "1995", "title": "Firozabad Train Collision (Uttar Pradesh)",
+     "deaths_approx": "over 300",
+     "text": "The Kalindi Express ploughed into the derailed wreckage of the Purushottam "
+             "Express near Firozabad, Uttar Pradesh, after the first train had already "
+             "derailed on the same stretch of track."},
+    {"year": 1998, "year_label": "1998", "title": "Khanna Rail Disaster (Punjab)",
+     "deaths_approx": "around 212",
+     "text": "The Frontier Mail collided with the derailed wreckage of the Golden Temple "
+             "Mail at Khanna, Punjab, in dense winter fog that had already caused the "
+             "first derailment."},
+    {"year": 1999, "year_label": "1999", "title": "Gaisal Train Disaster (Assam)",
+     "deaths_approx": "close to 290",
+     "text": "The Brahmaputra Mail and the Awadh-Assam Express collided head-on near "
+             "Gaisal, Assam, after a signalling error routed both trains onto the same "
+             "track.",
+     "note": "The disaster accelerated trials of India's first Anti-Collision Device "
+             "(ACD) — an early precursor to today's KAVACH system."},
+    {"year": 2010, "year_label": "2010", "title": "Sainthia Rail Disaster (West Bengal)",
+     "deaths_approx": "around 66",
+     "text": "The Uttar Banga Express rear-ended the stationary Vananchal Express at "
+             "Sainthia station, West Bengal, in early morning fog."},
+    {"year": 2010, "year_label": "2010", "title": "Jnaneswari Express Derailment (West Bengal)",
+     "deaths_approx": "around 150",
+     "text": "Sabotage — attributed to Maoist rebels tampering with the track — caused the "
+             "Jnaneswari Super Deluxe Express to derail, after which some of its coaches "
+             "were struck by an oncoming goods train."},
+    {"year": 2016, "year_label": "2016", "title": "Indore-Patna Express Derailment (Pukhrayan, UP)",
+     "deaths_approx": "around 150",
+     "text": "Multiple coaches of the Indore-Patna Express derailed near Pukhrayan, Kanpur "
+             "Dehat district; a fractured rail was identified as the likely cause."},
+    {"year": 2023, "year_label": "2023", "title": "Odisha Train Collision (Bahanaga Bazar, Balasore)",
+     "deaths_approx": "close to 290",
+     "text": "A signalling error routed the Coromandel Express onto a loop line where it "
+             "collided with a stationary goods train; derailed coaches then struck the "
+             "passing Yesvantpur-Howrah Superfast Express — a three-train collision and "
+             "one of India's deadliest rail disasters in decades.",
+     "note": "Renewed national urgency around accelerating KAVACH's rollout across the "
+             "full network."},
+]
+
