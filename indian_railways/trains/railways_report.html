@@ -178,13 +178,13 @@
     padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
   }
   .card-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .amenities-btn {
+  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .route-places-btn, .amenities-btn {
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
     cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
   }
-  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .amenities-btn:hover { border-color: var(--accent); }
-  .route-weather-btn:disabled { opacity: .6; cursor: wait; }
+  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .route-places-btn:hover, .amenities-btn:hover { border-color: var(--accent); }
+  .route-weather-btn:disabled, .route-places-btn:disabled { opacity: .6; cursor: wait; }
   .route-map {
     height: 220px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;
   }
@@ -291,6 +291,8 @@
   .stop-row b { color: var(--text); }
   .stop-weather { color: var(--accent); }
   .stop-weather.severe { color: var(--bad); font-weight: 700; }
+  .stop-places { color: var(--ok); }
+  .stop-places a { color: inherit; }
   .severe-alert {
     align-self: flex-start; font-size: .72rem; color: var(--bad); font-weight: 600;
   }
@@ -446,6 +448,8 @@ const I18N = {
     places_show: '🏞️ Places to See', places_hide: '🏞️ Hide Places to See',
     places_loading: 'Finding places nearby…', places_error: 'Could not load nearby places.',
     places_empty: 'No notable places found nearby.', places_source: 'Source: Wikipedia (nearby articles)',
+    route_places_show: '🏞️ Places at Every Halt', route_places_hide: '🏞️ Hide Halt Places',
+    route_places_loading: '🏞️ Loading…', route_places_error: '🏞️ Could not load places',
     amenities_show: '🏢 Station Facilities', amenities_hide: '🏢 Hide Station Facilities',
     amenities_empty: 'No curated facility info for this route\'s stations.',
     amenities_source: 'General-knowledge overview, not an official facilities directory',
@@ -1052,6 +1056,17 @@ async function toggleRouteWeather(number, btnEl) {
 // within 10km of the destination station's coordinates. Not a curated or
 // verified travel guide — just what has a Wikipedia article near that point.
 const _placesCache = {};
+async function _fetchPlacesForStation(code, lat, lon) {
+  if (_placesCache[code]) return _placesCache[code];
+  const url = `https://en.wikipedia.org/w/api.php?action=query&list=geosearch`
+    + `&gscoord=${lat}%7C${lon}&gsradius=10000&gslimit=8&format=json&origin=*`;
+  const r = await fetch(url, { signal: AbortSignal.timeout(10000) });
+  if (!r.ok) throw new Error('bad response');
+  const data = await r.json();
+  const places = (data.query && data.query.geosearch) || [];
+  _placesCache[code] = places;
+  return places;
+}
 async function togglePlacesBox(number, btnEl) {
   const box = document.getElementById(`places-${number}`);
   if (!box) return;
@@ -1064,15 +1079,8 @@ async function togglePlacesBox(number, btnEl) {
   const info = STATION_INFO[code];
   if (!info) { box.innerHTML = `<div>${tr('places_error')}</div>`; return; }
   box.innerHTML = `<div>${tr('places_loading')}</div>`;
-  if (_placesCache[code]) { _renderPlaces(box, _placesCache[code], info); return; }
   try {
-    const url = `https://en.wikipedia.org/w/api.php?action=query&list=geosearch`
-      + `&gscoord=${info.lat}%7C${info.lon}&gsradius=10000&gslimit=8&format=json&origin=*`;
-    const r = await fetch(url, { signal: AbortSignal.timeout(10000) });
-    if (!r.ok) throw new Error('bad response');
-    const data = await r.json();
-    const places = (data.query && data.query.geosearch) || [];
-    _placesCache[code] = places;
+    const places = await _fetchPlacesForStation(code, info.lat, info.lon);
     _renderPlaces(box, places, info);
   } catch (_) {
     box.innerHTML = `<div>${tr('places_error')}</div>`;
@@ -1090,6 +1098,62 @@ function _renderPlaces(box, places, info) {
     return `<div class="place-row"><a href="${href}" target="_blank" rel="noopener">${p.title}</a> <span class="place-dist">${distLabel}</span></div>`;
   }).join('');
   box.innerHTML = `${rows}<div class="fare-disclaimer">${tr('places_source')}</div>`;
+}
+
+// ── Places to see at every halt (Wikipedia geosearch, same free API as the
+// single-destination feature above — reuses _placesCache so a station
+// already looked up isn't fetched twice) ───────────────────────────────────
+const _MAX_PLACES_STOPS = 25;
+function _sampleStops(stops, max) {
+  if (stops.length <= max) return stops;
+  const step = (stops.length - 1) / (max - 1);
+  const idx = new Set();
+  for (let i = 0; i < max; i++) idx.add(Math.round(i * step));
+  return [...idx].sort((a, b) => a - b).map(i => stops[i]);
+}
+function _injectStopPlaces(number, code, places) {
+  const el = document.getElementById(`stopplaces-${number}-${code}`);
+  if (!el) return;
+  if (!places.length) {
+    el.innerHTML = ` &bull; ${tr('places_empty')}`;
+  } else {
+    const top = places[0];
+    const href = `https://en.wikipedia.org/wiki/${encodeURIComponent(top.title.replace(/ /g, '_'))}`;
+    const more = places.length > 1 ? ` +${places.length - 1} more` : '';
+    el.innerHTML = ` &bull; &#127966;&#65039; <a href="${href}" target="_blank" rel="noopener">${top.title}</a>${more}`;
+  }
+  el.style.display = 'inline';
+}
+async function toggleRoutePlaces(number, btnEl) {
+  if (btnEl.dataset.loaded === '1') {
+    const showing = btnEl.dataset.showing !== '0';
+    btnEl.dataset.showing = showing ? '0' : '1';
+    document.querySelectorAll(`#stops-${number} .stop-places`).forEach(el => {
+      if (el.innerHTML) el.style.display = showing ? 'none' : 'inline';
+    });
+    btnEl.textContent = showing ? tr('route_places_show') : tr('route_places_hide');
+    return;
+  }
+  const originalText = btnEl.textContent;
+  btnEl.textContent = tr('route_places_loading');
+  btnEl.disabled = true;
+  const train = TRAINS.find(x => x.number === number);
+  const route = (train && train.route) || [];
+  const stops = _sampleStops(route.filter(s => s.lat != null && s.lon != null), _MAX_PLACES_STOPS);
+  try {
+    await Promise.allSettled(stops.map(async s => {
+      const places = await _fetchPlacesForStation(s.code, s.lat, s.lon);
+      _injectStopPlaces(number, s.code, places);
+    }));
+    btnEl.dataset.loaded = '1';
+    btnEl.dataset.showing = '1';
+    btnEl.textContent = tr('route_places_hide');
+  } catch (_) {
+    btnEl.textContent = tr('route_places_error');
+    setTimeout(() => { btnEl.textContent = originalText; }, 2500);
+  } finally {
+    btnEl.disabled = false;
+  }
 }
 
 // ── Station facilities — curated, static data embedded in the page (no
@@ -1248,6 +1312,7 @@ function renderCards(query) {
       ? `<button class="places-btn" data-code="${leg.alight.code}" onclick="togglePlacesBox('${t.number}', this)">${tr('places_show')}</button>`
       : '';
     const placesBox = leg ? `<div class="places-box" id="places-${t.number}" style="display:none"></div>` : '';
+    const routePlacesBtn = `<button class="route-places-btn" onclick="toggleRoutePlaces('${t.number}', this)">${tr('route_places_show')}</button>`;
     const hasAmenityStop = (t.route || []).some(s => STATION_AMENITIES[s.code]);
     const amenitiesBtn = hasAmenityStop
       ? `<button class="amenities-btn" onclick="toggleAmenitiesBox('${t.number}', this)">${tr('amenities_show')}</button>`
@@ -1275,6 +1340,7 @@ function renderCards(query) {
         ${weatherBtn}
         ${routeWeatherBtn}
         ${placesBtn}
+        ${routePlacesBtn}
         ${amenitiesBtn}
         <button class="compare-btn ${_compareTrains.has(t.number) ? 'active' : ''}" onclick="toggleCompare('${t.number}', this)">${_compareTrains.has(t.number) ? tr('compare_added') : tr('compare_add')}</button>
       </div>
@@ -1289,7 +1355,7 @@ function renderCards(query) {
         ${(t.route || []).map(s => `
           <div class="stop-row ${s.name === t.last_station ? 'current' : ''}" data-code="${s.code}">
             <span><b>${s.name}</b> (${s.code})</span>
-            <span>${s.arr || '—'} / ${s.dep || '—'}<span class="stop-weather" id="stopwx-${t.number}-${s.code}" style="display:none"></span></span>
+            <span>${s.arr || '—'} / ${s.dep || '—'}<span class="stop-weather" id="stopwx-${t.number}-${s.code}" style="display:none"></span><span class="stop-places" id="stopplaces-${t.number}-${s.code}" style="display:none"></span></span>
           </div>`).join('')}
       </div>
     </div>`;
