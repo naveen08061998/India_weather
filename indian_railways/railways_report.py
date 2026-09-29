@@ -232,13 +232,24 @@ def build_html(payload: dict) -> str:
     padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
   }}
   .card-actions {{ display: flex; gap: 8px; flex-wrap: wrap; }}
-  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .route-places-btn, .amenities-btn {{
+  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .route-places-btn, .amenities-btn, .itinerary-btn {{
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
     cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
   }}
-  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .route-places-btn:hover, .amenities-btn:hover {{ border-color: var(--accent); }}
+  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .route-places-btn:hover, .amenities-btn:hover, .itinerary-btn:hover {{ border-color: var(--accent); }}
   .route-weather-btn:disabled, .route-places-btn:disabled {{ opacity: .6; cursor: wait; }}
+  #itinerary-print {{ display: none; }}
+  @media print {{
+    body * {{ visibility: hidden; }}
+    #itinerary-print, #itinerary-print * {{ visibility: visible; }}
+    #itinerary-print {{
+      display: block; position: absolute; top: 0; left: 0; width: 100%;
+      padding: 24px; color: #000; background: #fff;
+    }}
+    #itinerary-print h2 {{ font-size: 1.2rem; margin-bottom: 10px; }}
+    #itinerary-print pre {{ white-space: pre-wrap; font-family: inherit; font-size: .95rem; line-height: 1.7; }}
+  }}
   .route-map {{
     height: 220px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden;
   }}
@@ -507,6 +518,7 @@ const I18N = {{
     amenities_show: '🏢 Station Facilities', amenities_hide: '🏢 Hide Station Facilities',
     amenities_empty: 'No curated facility info for this route\\'s stations.',
     amenities_source: 'General-knowledge overview, not an official facilities directory',
+    itinerary_show: '🖨️ Print / Share Itinerary',
     route_note_show: 'ℹ️ Route simplified — tap for details', route_note_hide: 'ℹ️ Hide details',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
   }},
@@ -1235,6 +1247,55 @@ function toggleAmenitiesBox(number, btnEl) {{
   box.innerHTML = `${{rows}}<div class="fare-disclaimer">${{tr('amenities_source')}}</div>`;
 }}
 
+// ── Print / share itinerary ─────────────────────────────────────────────────
+// Uses the Web Share API where available (mobile browsers, some desktop);
+// otherwise falls back to a print-only summary view (window.print(), styled
+// via the @media print rule above) plus a best-effort clipboard copy.
+async function shareItinerary(number) {{
+  const train = TRAINS.find(x => x.number === number);
+  if (!train) return;
+  const journey = routeMatch(train);
+  if (journey === false) return;
+  const leg = journeyLeg(train, journey);
+  if (!leg) return;
+  const distKm = Math.abs(leg.alight.dist - leg.board.dist);
+  const duration = journeyDurationMin(leg.board, leg.alight);
+  const fares = estimateFares(train, distKm);
+  const fareLine = Object.entries(fares).map(([cls, amt]) => `${{cls}}: \u20b9${{amt}}`).join(', ');
+  const lines = [
+    `${{train.number}} ${{train.name}}`,
+    `${{leg.board.name}} (${{leg.board.code}}) \u2192 ${{leg.alight.name}} (${{leg.alight.code}})`,
+    `Departure: ${{leg.board.dep || leg.board.arr || '\u2014'}}  \u2022  Arrival: ${{leg.alight.arr || leg.alight.dep || '\u2014'}}`,
+    `Distance: ${{distKm}} km  \u2022  Duration: ${{formatDuration(duration)}}`,
+    `Estimated fare: ${{fareLine}}`,
+    `Fares are rough estimates only, not an official IRCTC quote.`,
+    `\u2014 via Indian Railways Train Tracker`,
+  ];
+  const text = lines.join('\\n');
+  const title = `${{train.number}} ${{train.name}} itinerary`;
+  if (navigator.share) {{
+    try {{
+      await navigator.share({{ title, text, url: window.location.href }});
+      return;
+    }} catch (_) {{ /* cancelled or unsupported — fall through to print */ }}
+  }}
+  _printItinerary(title, text);
+}}
+function _printItinerary(title, text) {{
+  let panel = document.getElementById('itinerary-print');
+  if (!panel) {{
+    panel = document.createElement('div');
+    panel.id = 'itinerary-print';
+    document.body.appendChild(panel);
+  }}
+  const safeText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  panel.innerHTML = `<h2>${{title}}</h2><pre>${{safeText}}</pre>`;
+  if (navigator.clipboard) {{
+    navigator.clipboard.writeText(text).catch(() => {{}});
+  }}
+  window.print();
+}}
+
 // ── Route map (Leaflet / OpenStreetMap — free, no API key) ─────────────────
 let _mapInstances = {{}};
 // renderCards() replaces the #cards DOM (including every map-<number> div) on
@@ -1372,6 +1433,9 @@ function renderCards(query) {{
       ? `<button class="amenities-btn" onclick="toggleAmenitiesBox('${{t.number}}', this)">${{tr('amenities_show')}}</button>`
       : '';
     const amenitiesBox = hasAmenityStop ? `<div class="amenities-box" id="amenities-${{t.number}}" style="display:none"></div>` : '';
+    const itineraryBtn = leg
+      ? `<button class="itinerary-btn" onclick="shareItinerary('${{t.number}}')">${{tr('itinerary_show')}}</button>`
+      : '';
     return `
     <div class="card" style="--cc:${{color}}">
       <div class="card-top">
@@ -1396,6 +1460,7 @@ function renderCards(query) {{
         ${{placesBtn}}
         ${{routePlacesBtn}}
         ${{amenitiesBtn}}
+        ${{itineraryBtn}}
         <button class="compare-btn ${{_compareTrains.has(t.number) ? 'active' : ''}}" onclick="toggleCompare('${{t.number}}', this)">${{_compareTrains.has(t.number) ? tr('compare_added') : tr('compare_add')}}</button>
       </div>
       <div class="route-map" id="map-${{t.number}}" style="display:none"></div>

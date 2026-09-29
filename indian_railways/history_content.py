@@ -398,3 +398,114 @@ TECHNOLOGY: list[dict] = [
                "forming the largest single piece of that plan."},
 ]
 
+# Reference glossary of terms/abbreviations used across this app (train
+# "type" values shown on cards, and general railway/technology terms).
+# category: "train_type" | "term" — used for the filter chips on the page.
+GLOSSARY: list[dict] = [
+    {"term": "Rajdhani Express", "category": "train_type",
+     "definition": "A fully air-conditioned, superfast overnight train connecting New "
+                   "Delhi directly with a state capital."},
+    {"term": "Shatabdi Express", "category": "train_type",
+     "definition": "A same-day, fully air-conditioned chair-car intercity service — "
+                   "out and back within a single day rather than overnight."},
+    {"term": "Duronto Express", "category": "train_type",
+     "definition": "A point-to-point long-distance train that runs non-stop between "
+                   "origin and destination, with no scheduled passenger halts."},
+    {"term": "Vande Bharat Express", "category": "train_type",
+     "definition": "India's indigenously designed, self-propelled semi-high-speed "
+                   "train (distributed traction, no separate locomotive)."},
+    {"term": "Garib Rath", "category": "train_type",
+     "definition": "A budget fully air-conditioned (3-tier) service aimed at making AC "
+                   "travel affordable."},
+    {"term": "Superfast", "category": "train_type",
+     "definition": "Any train classified as running above a minimum average speed "
+                   "threshold — attracts a small superfast surcharge on the fare."},
+    {"term": "Sampark Kranti Express", "category": "train_type",
+     "definition": "An express service linking a state capital directly with New Delhi, "
+                   "similar in spirit to Rajdhani but without full-AC-only classes."},
+    {"term": "Jan Shatabdi Express", "category": "train_type",
+     "definition": "A budget counterpart to the Shatabdi, offering both AC chair-car "
+                   "and ordinary non-AC classes on the same day-trip concept."},
+    {"term": "Mail / Mail-Express", "category": "train_type",
+     "definition": "Long-distance services historically carrying mail alongside "
+                   "passengers; 'Mail-Express' covers trains with both mail and express "
+                   "stop patterns."},
+    {"term": "Tejas Express", "category": "train_type",
+     "definition": "A premium chair-car service with onboard infotainment, better "
+                   "catering and private-style amenities."},
+    {"term": "Amrit Bharat Express", "category": "train_type",
+     "definition": "A push-pull (locomotive at both ends) long-distance express aimed "
+                   "at affordable non-AC sleeper/general classes."},
+    {"term": "Gatimaan Express", "category": "train_type",
+     "definition": "A high-speed conventional intercity service running at up to "
+                   "160 km/h — India's fastest conventional train at launch."},
+    {"term": "Humsafar Express", "category": "train_type",
+     "definition": "A fully 3AC-only long-distance service with modern amenities like "
+                   "reading lights, charging points and CCTV."},
+    {"term": "Antyodaya Express", "category": "train_type",
+     "definition": "A fully unreserved, long-distance service aimed at budget travellers "
+                   "on high-demand routes."},
+    {"term": "Namo Bharat (RRTS)", "category": "train_type",
+     "definition": "Regional Rapid Transit System service — faster and less frequent-stop "
+                   "than a metro, for longer inter-city commuter distances (e.g. "
+                   "Delhi–Meerut)."},
+    {"term": "LHB Coach", "category": "term",
+     "definition": "Linke-Hofmann-Busch — a German-designed coach, lighter and safer at "
+                   "higher speed than older ICF coaches, now standard on new trains."},
+    {"term": "ICF Coach", "category": "term",
+     "definition": "Integral Coach Factory (Chennai) — designed the conventional steel "
+                   "coach that equipped most Indian trains for decades, now being "
+                   "phased out in favour of LHB."},
+    {"term": "KAVACH", "category": "term",
+     "definition": "India's indigenous Automatic Train Protection system — automatically "
+                   "applies brakes to prevent signal-overshoot collisions."},
+    {"term": "DFC / DFCCIL", "category": "term",
+     "definition": "Dedicated Freight Corridor (Corporation of India) — separate "
+                   "high-capacity tracks built exclusively for freight trains."},
+    {"term": "PRS", "category": "term",
+     "definition": "Passenger Reservation System — the 1986 computerised system that "
+                   "replaced manual ledger-based ticket booking."},
+    {"term": "UTS", "category": "term",
+     "definition": "Unreserved Ticketing System — lets passengers buy unreserved "
+                   "(general-class) tickets via a mobile app instead of a counter queue."},
+    {"term": "IRCTC", "category": "term",
+     "definition": "Indian Railway Catering and Tourism Corporation — runs online "
+                   "ticket booking, e-catering and tourism packages."},
+    {"term": "NTES", "category": "term",
+     "definition": "National Train Enquiry System — the official source for a train's "
+                   "real running status, sourced from signalling/control-office updates."},
+    {"term": "CRIS", "category": "term",
+     "definition": "Centre for Railway Information Systems — builds and runs IR's core "
+                   "IT systems, including PRS and freight information systems."},
+    {"term": "PNR", "category": "term",
+     "definition": "Passenger Name Record — the unique 10-digit number identifying a "
+                   "reserved ticket booking."},
+    {"term": "RAC", "category": "term",
+     "definition": "Reservation Against Cancellation — a shared-berth status one step "
+                   "above waitlisted, confirmed to travel but sharing a berth."},
+    {"term": "Tatkal", "category": "term",
+     "definition": "A premium last-minute booking scheme that opens a small quota of "
+                   "seats one day before departure, at a higher fare."},
+    {"term": "Waitlist (WL)", "category": "term",
+     "definition": "A booking status meaning all confirmed/RAC berths are full — "
+                   "confirmed only if enough passengers ahead cancel."},
+    {"term": "Zone / Zonal Railway", "category": "term",
+     "definition": "Indian Railways is organised into operating zones (e.g. Northern, "
+                   "Southern, Western), each responsible for a region's day-to-day "
+                   "operations."},
+    {"term": "EMU / MEMU / DEMU", "category": "term",
+     "definition": "Electric/Mainline-Electric/Diesel Multiple Unit — self-propelled "
+                   "commuter train sets (no separate locomotive), used for suburban and "
+                   "short-distance services."},
+    {"term": "Gauge (Broad / Metre / Narrow)", "category": "term",
+     "definition": "The distance between rails. India standardised mostly on broad "
+                   "gauge (1,676 mm) via Project Unigauge; a few narrow-gauge heritage "
+                   "lines remain."},
+    {"term": "OHE", "category": "term",
+     "definition": "Overhead Equipment — the overhead wiring that supplies power to "
+                   "electric locomotives and EMUs via a pantograph."},
+    {"term": "Junction (Jn)", "category": "term",
+     "definition": "A station where two or more different railway lines meet, letting "
+                   "trains change routes — shown as \"Jn\" in station names."},
+]
+

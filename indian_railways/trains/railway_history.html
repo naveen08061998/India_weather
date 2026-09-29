@@ -106,6 +106,19 @@
   .tech-icon { font-size: 1.6rem; margin-bottom: 8px; }
   .tech-card h3 { font-size: .92rem; margin-bottom: 6px; }
   .tech-card p { font-size: .8rem; color: var(--muted); line-height: 1.6; }
+  .gl-search {
+    width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: .82rem; font-family: inherit;
+    outline: none; margin-bottom: 16px; transition: border .2s;
+  }
+  .gl-search:focus { border-color: var(--accent); }
+  .gl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+  .gl-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 12px 16px; box-shadow: var(--shadow);
+  }
+  .gl-card h3 { font-size: .85rem; margin-bottom: 4px; color: var(--accent); }
+  .gl-card p { font-size: .78rem; color: var(--muted); line-height: 1.5; }
   footer { text-align: center; padding: 20px; font-size: .72rem; color: var(--muted); }
 </style>
 </head>
@@ -445,16 +458,208 @@
       </div>
     </div>
   </section>
+
+  <section>
+    <h2>&#128214; Railway Glossary</h2>
+    <input type="text" class="gl-search" id="gl-search" placeholder="Search terms (e.g. LHB, Tatkal, RAC)…" oninput="filterGlossary()"/>
+    <div class="filters">
+      <button class="filter-chip active" data-filter="all" onclick="applyGlossaryFilter('all', this)">All</button>
+      <button class="filter-chip" data-filter="train_type" onclick="applyGlossaryFilter('train_type', this)">&#128646; Train Types</button>
+      <button class="filter-chip" data-filter="term" onclick="applyGlossaryFilter('term', this)">&#128214; Terms</button>
+    </div>
+    <div class="gl-grid" id="glossary">
+      
+      <div class="gl-card" data-cat="train_type" data-term="amrit bharat express">
+        <h3>Amrit Bharat Express</h3>
+        <p>A push-pull (locomotive at both ends) long-distance express aimed at affordable non-AC sleeper/general classes.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="antyodaya express">
+        <h3>Antyodaya Express</h3>
+        <p>A fully unreserved, long-distance service aimed at budget travellers on high-demand routes.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="cris">
+        <h3>CRIS</h3>
+        <p>Centre for Railway Information Systems — builds and runs IR's core IT systems, including PRS and freight information systems.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="dfc / dfccil">
+        <h3>DFC / DFCCIL</h3>
+        <p>Dedicated Freight Corridor (Corporation of India) — separate high-capacity tracks built exclusively for freight trains.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="duronto express">
+        <h3>Duronto Express</h3>
+        <p>A point-to-point long-distance train that runs non-stop between origin and destination, with no scheduled passenger halts.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="emu / memu / demu">
+        <h3>EMU / MEMU / DEMU</h3>
+        <p>Electric/Mainline-Electric/Diesel Multiple Unit — self-propelled commuter train sets (no separate locomotive), used for suburban and short-distance services.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="garib rath">
+        <h3>Garib Rath</h3>
+        <p>A budget fully air-conditioned (3-tier) service aimed at making AC travel affordable.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="gatimaan express">
+        <h3>Gatimaan Express</h3>
+        <p>A high-speed conventional intercity service running at up to 160 km/h — India's fastest conventional train at launch.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="gauge (broad / metre / narrow)">
+        <h3>Gauge (Broad / Metre / Narrow)</h3>
+        <p>The distance between rails. India standardised mostly on broad gauge (1,676 mm) via Project Unigauge; a few narrow-gauge heritage lines remain.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="humsafar express">
+        <h3>Humsafar Express</h3>
+        <p>A fully 3AC-only long-distance service with modern amenities like reading lights, charging points and CCTV.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="icf coach">
+        <h3>ICF Coach</h3>
+        <p>Integral Coach Factory (Chennai) — designed the conventional steel coach that equipped most Indian trains for decades, now being phased out in favour of LHB.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="irctc">
+        <h3>IRCTC</h3>
+        <p>Indian Railway Catering and Tourism Corporation — runs online ticket booking, e-catering and tourism packages.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="jan shatabdi express">
+        <h3>Jan Shatabdi Express</h3>
+        <p>A budget counterpart to the Shatabdi, offering both AC chair-car and ordinary non-AC classes on the same day-trip concept.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="junction (jn)">
+        <h3>Junction (Jn)</h3>
+        <p>A station where two or more different railway lines meet, letting trains change routes — shown as "Jn" in station names.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="kavach">
+        <h3>KAVACH</h3>
+        <p>India's indigenous Automatic Train Protection system — automatically applies brakes to prevent signal-overshoot collisions.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="lhb coach">
+        <h3>LHB Coach</h3>
+        <p>Linke-Hofmann-Busch — a German-designed coach, lighter and safer at higher speed than older ICF coaches, now standard on new trains.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="mail / mail-express">
+        <h3>Mail / Mail-Express</h3>
+        <p>Long-distance services historically carrying mail alongside passengers; 'Mail-Express' covers trains with both mail and express stop patterns.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="namo bharat (rrts)">
+        <h3>Namo Bharat (RRTS)</h3>
+        <p>Regional Rapid Transit System service — faster and less frequent-stop than a metro, for longer inter-city commuter distances (e.g. Delhi–Meerut).</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="ntes">
+        <h3>NTES</h3>
+        <p>National Train Enquiry System — the official source for a train's real running status, sourced from signalling/control-office updates.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="ohe">
+        <h3>OHE</h3>
+        <p>Overhead Equipment — the overhead wiring that supplies power to electric locomotives and EMUs via a pantograph.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="pnr">
+        <h3>PNR</h3>
+        <p>Passenger Name Record — the unique 10-digit number identifying a reserved ticket booking.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="prs">
+        <h3>PRS</h3>
+        <p>Passenger Reservation System — the 1986 computerised system that replaced manual ledger-based ticket booking.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="rac">
+        <h3>RAC</h3>
+        <p>Reservation Against Cancellation — a shared-berth status one step above waitlisted, confirmed to travel but sharing a berth.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="rajdhani express">
+        <h3>Rajdhani Express</h3>
+        <p>A fully air-conditioned, superfast overnight train connecting New Delhi directly with a state capital.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="sampark kranti express">
+        <h3>Sampark Kranti Express</h3>
+        <p>An express service linking a state capital directly with New Delhi, similar in spirit to Rajdhani but without full-AC-only classes.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="shatabdi express">
+        <h3>Shatabdi Express</h3>
+        <p>A same-day, fully air-conditioned chair-car intercity service — out and back within a single day rather than overnight.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="superfast">
+        <h3>Superfast</h3>
+        <p>Any train classified as running above a minimum average speed threshold — attracts a small superfast surcharge on the fare.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="tatkal">
+        <h3>Tatkal</h3>
+        <p>A premium last-minute booking scheme that opens a small quota of seats one day before departure, at a higher fare.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="tejas express">
+        <h3>Tejas Express</h3>
+        <p>A premium chair-car service with onboard infotainment, better catering and private-style amenities.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="uts">
+        <h3>UTS</h3>
+        <p>Unreserved Ticketing System — lets passengers buy unreserved (general-class) tickets via a mobile app instead of a counter queue.</p>
+      </div>
+
+      <div class="gl-card" data-cat="train_type" data-term="vande bharat express">
+        <h3>Vande Bharat Express</h3>
+        <p>India's indigenously designed, self-propelled semi-high-speed train (distributed traction, no separate locomotive).</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="waitlist (wl)">
+        <h3>Waitlist (WL)</h3>
+        <p>A booking status meaning all confirmed/RAC berths are full — confirmed only if enough passengers ahead cancel.</p>
+      </div>
+
+      <div class="gl-card" data-cat="term" data-term="zone / zonal railway">
+        <h3>Zone / Zonal Railway</h3>
+        <p>Indian Railways is organised into operating zones (e.g. Northern, Southern, Western), each responsible for a region's day-to-day operations.</p>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>Compiled from publicly available Indian Railways history — not an official IR publication.</footer>
 
 <script>
 function applyFilter(tag, btnEl) {
-  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
   btnEl.classList.add('active');
   document.querySelectorAll('#timeline .tl-card').forEach(card => {
     card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'flex' : 'none';
+  });
+}
+let _glossaryFilter = 'all';
+function applyGlossaryFilter(cat, btnEl) {
+  _glossaryFilter = cat;
+  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  filterGlossary();
+}
+function filterGlossary() {
+  const q = document.getElementById('gl-search').value.trim().toLowerCase();
+  document.querySelectorAll('#glossary .gl-card').forEach(card => {
+    const matchesCat = _glossaryFilter === 'all' || card.dataset.cat === _glossaryFilter;
+    const matchesQ = !q || card.dataset.term.includes(q) || card.textContent.toLowerCase().includes(q);
+    card.style.display = (matchesCat && matchesQ) ? 'block' : 'none';
   });
 }
 function toggleDetail(btnEl) {

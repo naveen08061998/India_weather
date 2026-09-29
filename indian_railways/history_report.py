@@ -10,7 +10,7 @@ localStorage key) so switching themes on one page carries over to the other.
 
 from __future__ import annotations
 
-from indian_railways.history_content import DISCLAIMER, TECHNOLOGY, TIMELINE
+from indian_railways.history_content import DISCLAIMER, GLOSSARY, TECHNOLOGY, TIMELINE
 
 _TAG_LABEL = {"milestone": "Milestone", "train": "Train", "technology": "Technology"}
 _TAG_COLOR = {"milestone": "#f97316", "train": "#38bdf8", "technology": "#a855f7"}
@@ -43,10 +43,18 @@ def _tech_card(entry: dict) -> str:
       </div>"""
 
 
+def _glossary_card(entry: dict) -> str:
+    return f"""
+      <div class="gl-card" data-cat="{entry['category']}" data-term="{entry['term'].lower()}">
+        <h3>{entry['term']}</h3>
+        <p>{entry['definition']}</p>
+      </div>"""
+
 
 def build_history_html() -> str:
     timeline_html = "\n".join(_timeline_card(e, i) for i, e in enumerate(TIMELINE))
     tech_html = "\n".join(_tech_card(e) for e in TECHNOLOGY)
+    glossary_html = "\n".join(_glossary_card(e) for e in sorted(GLOSSARY, key=lambda e: e["term"].lower()))
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -156,6 +164,19 @@ def build_history_html() -> str:
   .tech-icon {{ font-size: 1.6rem; margin-bottom: 8px; }}
   .tech-card h3 {{ font-size: .92rem; margin-bottom: 6px; }}
   .tech-card p {{ font-size: .8rem; color: var(--muted); line-height: 1.6; }}
+  .gl-search {{
+    width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--bg); color: var(--text); font-size: .82rem; font-family: inherit;
+    outline: none; margin-bottom: 16px; transition: border .2s;
+  }}
+  .gl-search:focus {{ border-color: var(--accent); }}
+  .gl-grid {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }}
+  .gl-card {{
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 12px 16px; box-shadow: var(--shadow);
+  }}
+  .gl-card h3 {{ font-size: .85rem; margin-bottom: 4px; color: var(--accent); }}
+  .gl-card p {{ font-size: .78rem; color: var(--muted); line-height: 1.5; }}
   footer {{ text-align: center; padding: 20px; font-size: .72rem; color: var(--muted); }}
 </style>
 </head>
@@ -207,16 +228,44 @@ def build_history_html() -> str:
       {tech_html}
     </div>
   </section>
+
+  <section>
+    <h2>&#128214; Railway Glossary</h2>
+    <input type="text" class="gl-search" id="gl-search" placeholder="Search terms (e.g. LHB, Tatkal, RAC)…" oninput="filterGlossary()"/>
+    <div class="filters">
+      <button class="filter-chip active" data-filter="all" onclick="applyGlossaryFilter('all', this)">All</button>
+      <button class="filter-chip" data-filter="train_type" onclick="applyGlossaryFilter('train_type', this)">&#128646; Train Types</button>
+      <button class="filter-chip" data-filter="term" onclick="applyGlossaryFilter('term', this)">&#128214; Terms</button>
+    </div>
+    <div class="gl-grid" id="glossary">
+      {glossary_html}
+    </div>
+  </section>
 </main>
 
 <footer>Compiled from publicly available Indian Railways history — not an official IR publication.</footer>
 
 <script>
 function applyFilter(tag, btnEl) {{
-  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
   btnEl.classList.add('active');
   document.querySelectorAll('#timeline .tl-card').forEach(card => {{
     card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'flex' : 'none';
+  }});
+}}
+let _glossaryFilter = 'all';
+function applyGlossaryFilter(cat, btnEl) {{
+  _glossaryFilter = cat;
+  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btnEl.classList.add('active');
+  filterGlossary();
+}}
+function filterGlossary() {{
+  const q = document.getElementById('gl-search').value.trim().toLowerCase();
+  document.querySelectorAll('#glossary .gl-card').forEach(card => {{
+    const matchesCat = _glossaryFilter === 'all' || card.dataset.cat === _glossaryFilter;
+    const matchesQ = !q || card.dataset.term.includes(q) || card.textContent.toLowerCase().includes(q);
+    card.style.display = (matchesCat && matchesQ) ? 'block' : 'none';
   }});
 }}
 function toggleDetail(btnEl) {{
