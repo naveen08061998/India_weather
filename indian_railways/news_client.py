@@ -42,15 +42,23 @@ def _split_title(raw_title: str) -> tuple[str, str]:
     return raw_title.strip(), ""
 
 
-def _parse_date(entry) -> str:
+
+
+def _parse_datetime(entry) -> datetime:
+    """Actual datetime for sorting (falls back to epoch so undated entries sort last)."""
     if getattr(entry, "published_parsed", None):
-        dt = datetime(*entry.published_parsed[:6], tzinfo=timezone.utc).astimezone(IST)
-        return dt.strftime("%d %b, %H:%M IST")
-    return ""
+        return datetime(*entry.published_parsed[:6], tzinfo=timezone.utc).astimezone(IST)
+    return datetime.min.replace(tzinfo=IST)
 
 
 def fetch_railway_news(limit: int = _MAX_ARTICLES) -> list[dict]:
-    """Recent railway-related headlines, newest first. Returns [] on failure."""
+    """Recent railway-related headlines, newest first. Returns [] on failure.
+
+    Google News' RSS feed is ordered by relevance, not strictly by recency —
+    a same-day article can end up buried behind older but more "relevant"
+    ones — so results are explicitly re-sorted by actual published time here
+    rather than trusting feed order.
+    """
     url = _FEED_URL.format(q=quote(_QUERY))
     try:
         resp = requests.get(url, headers={"User-Agent": _USER_AGENT}, timeout=_TIMEOUT, verify=False)
@@ -59,17 +67,19 @@ def fetch_railway_news(limit: int = _MAX_ARTICLES) -> list[dict]:
     except Exception:
         return []
 
-    articles: list[dict] = []
-    for entry in feed.entries[:limit]:
+    parsed: list[tuple[datetime, dict]] = []
+    for entry in feed.entries:
         raw_title = getattr(entry, "title", "").strip()
         link = getattr(entry, "link", "").strip()
         if not raw_title or not link:
             continue
         title, source = _split_title(raw_title)
-        articles.append({
+        when = _parse_datetime(entry)
+        parsed.append((when, {
             "title": title,
             "source": source,
             "link": link,
-            "published": _parse_date(entry),
-        })
-    return articles
+            "published": when.strftime("%d %b, %H:%M IST") if when != datetime.min.replace(tzinfo=IST) else "",
+        }))
+    parsed.sort(key=lambda pair: pair[0], reverse=True)
+    return [article for _, article in parsed[:limit]]
