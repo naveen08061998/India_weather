@@ -17,8 +17,10 @@ from __future__ import annotations
 import json
 
 from indian_railways.history_content import TIMELINE
+from indian_railways.ir_client import zone_counts
 from indian_railways.station_amenities import STATION_AMENITIES
 from indian_railways.train_data import ALL_STATION_NAMES, STATION_ALIASES, STATION_COORDS
+from indian_railways.zone_info import ZONE_INFO
 
 
 def build_html(payload: dict) -> str:
@@ -51,6 +53,14 @@ def build_html(payload: dict) -> str:
         ensure_ascii=False,
     )
     station_amenities_json = json.dumps(STATION_AMENITIES, ensure_ascii=False)
+
+    # Zone code -> {name, headquarters, count, note?} — count computed live from
+    # the full train database (not hardcoded), for the "Browse by Zone" feature.
+    _zc = zone_counts()
+    zone_info_json = json.dumps(
+        {code: {**info, "count": _zc.get(code, 0)} for code, info in ZONE_INFO.items()},
+        ensure_ascii=False,
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -131,7 +141,7 @@ def build_html(payload: dict) -> str:
   .history-link {{
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     color: var(--text); padding: 7px 12px; font-size: .8rem; white-space: nowrap;
-    text-decoration: none; transition: background .2s;
+    text-decoration: none; transition: background .2s; cursor: pointer; font-family: inherit;
   }}
   .history-link:hover {{ background: var(--card-h); }}
   .fact-bar {{
@@ -340,6 +350,29 @@ def build_html(payload: dict) -> str:
     padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top;
   }}
   .compare-table td:first-child {{ color: var(--muted); font-weight: 600; white-space: nowrap; }}
+  .zone-row {{
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    padding: 10px 4px; border-bottom: 1px solid var(--border); cursor: pointer;
+    font-size: .8rem; color: var(--text); transition: background .15s;
+  }}
+  .zone-row:last-child {{ border-bottom: none; }}
+  .zone-row:hover {{ background: var(--card-h); }}
+  .zone-hq {{ font-size: .72rem; color: var(--muted); }}
+  .zone-count {{
+    flex-shrink: 0; background: var(--accent-glow); color: var(--accent); font-weight: 700;
+    font-size: .74rem; padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  }}
+  .lb-heading {{ font-size: .82rem; margin: 12px 0 6px; color: var(--text); }}
+  .lb-row {{
+    display: flex; justify-content: space-between; gap: 10px; padding: 5px 4px;
+    font-size: .78rem; color: var(--text); border-bottom: 1px dashed var(--border);
+  }}
+  .lb-late {{ color: var(--bad); font-weight: 600; white-space: nowrap; }}
+  .lb-early {{ color: var(--ok); font-weight: 600; white-space: nowrap; }}
+  .sc-compare-btn {{
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 7px 16px; font-size: .8rem; cursor: pointer; font-family: inherit;
+  }}
   #lang-select, #sort-select {{
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     color: var(--text); padding: 6px 10px; font-size: .8rem; font-family: inherit; cursor: pointer;
@@ -417,6 +450,9 @@ def build_html(payload: dict) -> str:
       <option value="ml">മലയാളം</option>
     </select>
     <button id="theme-btn" onclick="toggleTheme()">&#9728; Light</button>
+    <button class="history-link" onclick="openZoneModal()">&#128506; Zones</button>
+    <button class="history-link" onclick="openLeaderboardModal()">&#128202; Leaderboard</button>
+    <button class="history-link" onclick="openStationCompareModal()">&#128269; Compare Stations</button>
     <a class="history-link" href="history.html" data-i18n="nav_history">&#128220; History</a>
   </div>
 </header>
@@ -473,6 +509,7 @@ const STATION_ALIASES = {station_aliases_json};
 const STATION_INFO = {station_info_json};
 const HISTORY_TIMELINE = {timeline_json};
 const STATION_AMENITIES = {station_amenities_json};
+const ZONE_INFO = {zone_info_json};
 let TRAINS = CURATED_TRAINS.slice();
 
 // ── i18n ─────────────────────────────────────────────────────────────────
@@ -787,6 +824,7 @@ function matches(t, q) {{
 
 let _fromFilter = '';
 let _toFilter = '';
+let _zoneFilter = null;
 
 function populateStationList() {{
   document.getElementById('station-list').innerHTML =
@@ -833,6 +871,7 @@ function onSearchInput(value) {{
 }}
 
 async function performSearch(query) {{
+  _zoneFilter = null;
   const q = (query || '').trim();
   if (!q) {{
     TRAINS = CURATED_TRAINS.slice();
@@ -859,6 +898,7 @@ async function performSearch(query) {{
 }}
 
 async function applyRouteSearch() {{
+  _zoneFilter = null;
   _fromFilter = document.getElementById('from-station').value.trim();
   _toFilter = document.getElementById('to-station').value.trim();
   if (!_fromFilter && !_toFilter) return;
@@ -888,6 +928,7 @@ async function applyRouteSearch() {{
 }}
 
 function clearRouteSearch() {{
+  _zoneFilter = null;
   document.getElementById('from-station').value = '';
   document.getElementById('to-station').value = '';
   _fromFilter = '';
@@ -1289,7 +1330,14 @@ function _printItinerary(title, text) {{
     document.body.appendChild(panel);
   }}
   const safeText = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-  panel.innerHTML = `<h2>${{title}}</h2><pre>${{safeText}}</pre>`;
+  // Free QR code image service (api.qrserver.com), no key — encodes the same
+  // itinerary text so it can be scanned straight off a printed copy.
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${{encodeURIComponent(text)}}`;
+  panel.innerHTML = `
+    <div style="display:flex; gap:20px; align-items:flex-start">
+      <div><h2>${{title}}</h2><pre>${{safeText}}</pre></div>
+      <img src="${{qrUrl}}" alt="QR code with this itinerary" width="160" height="160"/>
+    </div>`;
   if (navigator.clipboard) {{
     navigator.clipboard.writeText(text).catch(() => {{}});
   }}
@@ -1633,6 +1681,160 @@ function closeCompareModal() {{
   document.getElementById('compare-overlay')?.remove();
 }}
 
+// ── Browse by Zone ──────────────────────────────────────────────────────────
+function openZoneModal() {{
+  const zones = Object.entries(ZONE_INFO).sort((a, b) => (b[1].count || 0) - (a[1].count || 0));
+  const rows = zones.map(([code, z]) => `
+    <div class="zone-row" onclick="browseZone('${{code}}')">
+      <div><b>${{z.name}}</b> (${{code}})<br/><span class="zone-hq">HQ: ${{z.headquarters}}</span>${{z.note ? `<br/><span class="zone-hq">${{z.note}}</span>` : ''}}</div>
+      <span class="zone-count">${{z.count}} trains</span>
+    </div>`).join('');
+  const overlay = document.createElement('div');
+  overlay.className = 'compare-overlay';
+  overlay.id = 'zone-overlay';
+  overlay.onclick = (e) => {{ if (e.target === overlay) closeZoneModal(); }};
+  overlay.innerHTML = `
+    <div class="compare-modal">
+      <div class="compare-modal-head">
+        <b>&#128506; Browse by Railway Zone</b>
+        <button onclick="closeZoneModal()">&#10005;</button>
+      </div>
+      <div style="padding:8px 16px 16px">${{rows}}</div>
+    </div>`;
+  document.body.appendChild(overlay);
+}}
+function closeZoneModal() {{ document.getElementById('zone-overlay')?.remove(); }}
+
+async function browseZone(code) {{
+  closeZoneModal();
+  document.getElementById('search').value = '';
+  document.getElementById('from-station').value = '';
+  document.getElementById('to-station').value = '';
+  _fromFilter = '';
+  _toFilter = '';
+  _zoneFilter = code;
+  const zoneName = ZONE_INFO[code]?.name || code;
+  const mode = await _modeReady;
+  if (mode !== 'static') {{
+    try {{
+      const r = await fetch(`${{_apiBase(mode)}}/api/trains/zone/${{encodeURIComponent(code)}}`, {{ signal: AbortSignal.timeout(45000) }});
+      if (r.ok) {{
+        const data = await r.json();
+        TRAINS = data.results || [];
+        setNote(`Found ${{TRAINS.length}} train(s) operated by ${{zoneName}} (${{code}}).`);
+        renderCards('');
+        return;
+      }}
+    }} catch (_) {{}}
+  }}
+  TRAINS = CURATED_TRAINS.filter(t => t.zone === code);
+  setNote(`Live zone search unavailable — showing ${{TRAINS.length}} embedded train(s) for ${{zoneName}} (${{code}}).`);
+  renderCards('');
+}}
+
+// ── Punctuality leaderboard (computed client-side from whatever trains are
+// currently loaded — no extra backend call needed) ─────────────────────────
+function openLeaderboardModal() {{
+  const running = TRAINS.filter(t => (t.status === 'running' || t.status === 'at_station') && typeof t.delay_min === 'number');
+  const mostDelayed = [...running].sort((a, b) => b.delay_min - a.delay_min).slice(0, 8);
+  const mostOnTime = [...running].sort((a, b) => a.delay_min - b.delay_min).slice(0, 8);
+  const row = (t) => {{
+    const label = t.delay_min > 0 ? `${{t.delay_min}} min late` : (t.delay_min < 0 ? `${{Math.abs(t.delay_min)}} min early` : 'On time');
+    const cls = t.delay_min > 0 ? 'lb-late' : 'lb-early';
+    return `<div class="lb-row"><span>#${{t.number}} ${{t.name}}</span><span class="${{cls}}">${{label}}</span></div>`;
+  }};
+  const overlay = document.createElement('div');
+  overlay.className = 'compare-overlay';
+  overlay.id = 'leaderboard-overlay';
+  overlay.onclick = (e) => {{ if (e.target === overlay) closeLeaderboardModal(); }};
+  overlay.innerHTML = `
+    <div class="compare-modal">
+      <div class="compare-modal-head">
+        <b>&#128202; Punctuality Leaderboard</b>
+        <button onclick="closeLeaderboardModal()">&#10005;</button>
+      </div>
+      <div style="padding:8px 16px 16px">
+        ${{running.length ? '' : '<p class="fare-disclaimer">No currently-running trains in the loaded set — try a search first.</p>'}}
+        ${{mostDelayed.length ? `<h4 class="lb-heading">&#9201;&#65039; Most Delayed Right Now</h4>${{mostDelayed.map(row).join('')}}` : ''}}
+        ${{mostOnTime.length ? `<h4 class="lb-heading">&#9989; Most On-Time / Running Early</h4>${{mostOnTime.map(row).join('')}}` : ''}}
+        <div class="fare-disclaimer">Based on ${{running.length}} currently-running train(s) in the loaded set — status is SIMULATED, see footer disclaimer.</div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}}
+function closeLeaderboardModal() {{ document.getElementById('leaderboard-overlay')?.remove(); }}
+
+// ── Station-vs-station comparison (weather + curated facilities) ───────────
+function openStationCompareModal() {{
+  const overlay = document.createElement('div');
+  overlay.className = 'compare-overlay';
+  overlay.id = 'stationcompare-overlay';
+  overlay.onclick = (e) => {{ if (e.target === overlay) closeStationCompareModal(); }};
+  overlay.innerHTML = `
+    <div class="compare-modal">
+      <div class="compare-modal-head">
+        <b>&#128269; Compare Two Stations</b>
+        <button onclick="closeStationCompareModal()">&#10005;</button>
+      </div>
+      <div style="padding:12px 16px">
+        <div class="rs-field" style="margin-bottom:8px; width:100%">
+          <label style="width:70px">Station A</label>
+          <input type="text" id="sc-a" list="station-list" placeholder="e.g. NDLS — New Delhi" style="flex:1"/>
+        </div>
+        <div class="rs-field" style="margin-bottom:8px; width:100%">
+          <label style="width:70px">Station B</label>
+          <input type="text" id="sc-b" list="station-list" placeholder="e.g. HWH — Howrah Junction" style="flex:1"/>
+        </div>
+        <button class="sc-compare-btn" onclick="runStationCompare()">Compare</button>
+        <div id="sc-result" style="margin-top:14px"></div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}}
+function closeStationCompareModal() {{ document.getElementById('stationcompare-overlay')?.remove(); }}
+
+function _resolveStationCode(input) {{
+  const raw = (input || '').trim();
+  if (!raw) return null;
+  const codeMatch = raw.match(/^([A-Za-z0-9]+)\\s*[\u2014-]\\s*/);
+  const code = (codeMatch ? codeMatch[1] : raw).toUpperCase();
+  if (STATION_INFO[code]) return code;
+  const lower = raw.toLowerCase();
+  const found = Object.entries(STATION_INFO).find(([, info]) => info.name.toLowerCase().includes(lower));
+  return found ? found[0] : null;
+}}
+
+async function runStationCompare() {{
+  const codeA = _resolveStationCode(document.getElementById('sc-a').value);
+  const codeB = _resolveStationCode(document.getElementById('sc-b').value);
+  const result = document.getElementById('sc-result');
+  if (!codeA || !codeB) {{
+    result.innerHTML = `<p class="fare-disclaimer">Could not recognise one or both station names/codes.</p>`;
+    return;
+  }}
+  result.innerHTML = `<p class="fare-disclaimer">Loading weather…</p>`;
+  const [wxA, wxB] = await Promise.allSettled([
+    _fetchStationCurrent(codeA, STATION_INFO[codeA].lat, STATION_INFO[codeA].lon),
+    _fetchStationCurrent(codeB, STATION_INFO[codeB].lat, STATION_INFO[codeB].lon),
+  ]);
+  const col = (code, wx) => {{
+    const info = STATION_INFO[code];
+    const amenity = STATION_AMENITIES[code];
+    const cur = (wx.status === 'fulfilled') ? wx.value.current : null;
+    const wxLine = cur ? `${{WMO_ICON[cur.weather_code] || '🌡️'}} ${{cur.temperature_2m}}&deg;C, ${{WMO_DESC[cur.weather_code] || 'Unknown'}}` : 'Weather unavailable';
+    const tags = amenity ? amenity.facilities.map(f => `<span>${{f}}</span>`).join('') : '';
+    return `
+      <div style="flex:1;min-width:220px">
+        <h4>${{info.name}} (${{code}})</h4>
+        <div style="font-size:.8rem;margin:6px 0">${{wxLine}}</div>
+        ${{amenity
+          ? `<div class="amenity-tags">${{tags}}</div><div style="margin-top:6px;font-size:.76rem;color:var(--muted)">${{amenity.highlight}}</div>`
+          : '<div style="font-size:.76rem;color:var(--muted)">No curated facility info for this station.</div>'}}
+      </div>`;
+  }};
+  result.innerHTML = `<div style="display:flex;gap:16px;flex-wrap:wrap">${{col(codeA, wxA)}}${{col(codeB, wxB)}}</div>`;
+}}
+
 // ── GPS Trip Mode ──────────────────────────────────────────────────────────
 // Reads the rider's own device location in the browser only — never sent to
 // a server. Matches it against the train's station coordinates to show the
@@ -1835,7 +2037,7 @@ async function _refreshHeaderStats() {{
     if (data.generated_at) document.getElementById('generated-at').textContent = data.generated_at;
     if (data.total_trains) document.getElementById('total-trains').textContent = data.total_trains;
     const q = document.getElementById('search').value.trim();
-    if (!q && !_fromFilter && !_toFilter) {{
+    if (!q && !_fromFilter && !_toFilter && !_zoneFilter) {{
       CURATED_TRAINS.length = 0;
       CURATED_TRAINS.push(...data.trains);
       TRAINS = CURATED_TRAINS.slice();

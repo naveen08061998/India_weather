@@ -368,3 +368,27 @@ def search_by_route(from_query: str, to_query: str, now: datetime | None = None,
         if len(matches) >= limit:
             break
     return matches
+
+
+def search_by_zone(zone_code: str, now: datetime | None = None, limit: int = 300) -> list[dict]:
+    """All trains operated by a given railway zone (e.g. "NR", "SCR", "ECoR")."""
+    zc = (zone_code or "").strip()
+    if not zc:
+        return []
+    matches = []
+    for t in TRAINS:
+        if (t.get("zone") or "").strip() == zc:
+            matches.append(get_status_for_number(t["number"], now))
+            if len(matches) >= limit:
+                break
+    return matches
+
+
+def zone_counts() -> dict[str, int]:
+    """Number of trains per railway zone code, across the full database."""
+    counts: dict[str, int] = {}
+    for t in TRAINS:
+        zc = (t.get("zone") or "").strip()
+        if zc:
+            counts[zc] = counts.get(zc, 0) + 1
+    return counts

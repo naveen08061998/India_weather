@@ -13,6 +13,8 @@ Endpoints:
     GET  /api/trains         -> Summary + curated trains payload
     GET  /api/trains/search  -> Search by train number/name
     GET  /api/trains/route   -> Search by source/destination
+    GET  /api/trains/zone/<code> -> Trains operated by a railway zone
+    GET  /api/zones          -> Zone metadata (name/HQ/train count)
     GET  /api/trains/<no>    -> Live status for one train
     GET  /api/trains/<no>/weather -> Weather at every halt on that train's route
     GET  /api/news           -> Recent Indian Railways-related headlines
@@ -27,7 +29,10 @@ from pathlib import Path
 
 from flask import Flask, jsonify, request, send_from_directory
 
-from indian_railways.ir_client import get_route_weather, get_status_for_number, search_by_route, search_trains
+from indian_railways.ir_client import (
+    get_route_weather, get_status_for_number, search_by_route, search_by_zone, search_trains, zone_counts,
+)
+from indian_railways.zone_info import ZONE_INFO
 from indian_railways.news_client import fetch_railway_news
 from indian_railways.orchestrator import build_payload, generate_history_html, generate_html, save_json
 
@@ -108,6 +113,22 @@ def api_trains_route():
     from_q = request.args.get("from", "")
     to_q = request.args.get("to", "")
     return jsonify({"from": from_q, "to": to_q, "results": search_by_route(from_q, to_q)})
+
+
+@app.route("/api/trains/zone/<zone_code>")
+def api_trains_zone(zone_code: str):
+    return jsonify({"zone": zone_code, "results": search_by_zone(zone_code)})
+
+
+@app.route("/api/zones")
+def api_zones():
+    counts = zone_counts()
+    zones = [
+        {"code": code, "count": counts.get(code, 0), **info}
+        for code, info in ZONE_INFO.items()
+    ]
+    zones.sort(key=lambda z: -z["count"])
+    return jsonify({"zones": zones})
 
 
 @app.route("/api/trains/<train_number>")
