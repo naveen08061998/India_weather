@@ -93,6 +93,16 @@ def build_html(payload: dict) -> str:
     background: var(--bg); color: var(--text); min-height: 100vh;
     transition: background .3s, color .3s;
   }}
+  .visually-hidden {{
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }}
+  .skip-link {{
+    position: absolute; left: -9999px; top: 0; z-index: 1000;
+    background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 0 0 8px 0;
+    font-size: .85rem; font-weight: 600; text-decoration: none;
+  }}
+  .skip-link:focus {{ left: 0; }}
   .tricolor {{
     height: 4px; position: sticky; top: 0; z-index: 200;
     background: linear-gradient(90deg, #f97316 0% 33.3%, #e2e8f0 33.3% 66.6%, #22c55e 66.6% 100%);
@@ -354,9 +364,12 @@ def build_html(payload: dict) -> str:
     display: flex; justify-content: space-between; align-items: center; gap: 10px;
     padding: 10px 4px; border-bottom: 1px solid var(--border); cursor: pointer;
     font-size: .8rem; color: var(--text); transition: background .15s;
+    width: 100%; text-align: left; background: none; border-left: none; border-right: none;
+    border-top: none; font-family: inherit;
   }}
   .zone-row:last-child {{ border-bottom: none; }}
-  .zone-row:hover {{ background: var(--card-h); }}
+  .zone-row:hover, .zone-row:focus-visible {{ background: var(--card-h); }}
+  .zone-row:focus-visible {{ outline: 2px solid var(--accent); outline-offset: -2px; }}
   .zone-hq {{ font-size: .72rem; color: var(--muted); }}
   .zone-count {{
     flex-shrink: 0; background: var(--accent-glow); color: var(--accent); font-weight: 700;
@@ -416,6 +429,7 @@ def build_html(payload: dict) -> str:
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to train list</a>
 <div class="tricolor"></div>
 
 <header>
@@ -434,9 +448,10 @@ def build_html(payload: dict) -> str:
   </div>
   <div class="header-right">
     <div class="search-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
+      <label for="search" class="visually-hidden">Search trains by number or name</label>
       <input type="text" id="search" data-i18n-placeholder="search_placeholder" placeholder="Train number or name…"
              oninput="onSearchInput(this.value)" autocomplete="off"/>
     </div>
@@ -457,14 +472,14 @@ def build_html(payload: dict) -> str:
   </div>
 </header>
 
-<div class="fact-bar" id="fact-bar" style="display:none">
-  <span class="fact-bar-icon">&#128197;</span>
+<div class="fact-bar" id="fact-bar" style="display:none" role="status" aria-live="polite">
+  <span class="fact-bar-icon" aria-hidden="true">&#128197;</span>
   <span class="fact-bar-text" id="fact-bar-text"></span>
   <a class="fact-bar-link" href="history.html">More history &#8594;</a>
-  <button class="fact-bar-close" onclick="document.getElementById('fact-bar').style.display='none'">&#10005;</button>
+  <button class="fact-bar-close" onclick="document.getElementById('fact-bar').style.display='none'" aria-label="Dismiss">&#10005;</button>
 </div>
-<div class="news-ticker" id="news-ticker" style="display:none">
-  <span class="news-ticker-icon">&#128240;</span>
+<div class="news-ticker" id="news-ticker" style="display:none" role="status" aria-live="polite">
+  <span class="news-ticker-icon" aria-hidden="true">&#128240;</span>
   <a class="news-ticker-text" id="news-ticker-text" href="#" target="_blank" rel="noopener"></a>
 </div>
 
@@ -488,10 +503,10 @@ def build_html(payload: dict) -> str:
   </select>
   <button id="near-me-btn" onclick="findTrainsNearMe()" data-i18n="near_me_btn">&#128205; Find Trains Near Me</button>
 </div>
-<div class="near-me-note" id="near-me-note" style="display:none"></div>
+<div class="near-me-note" id="near-me-note" style="display:none" role="status" aria-live="polite"></div>
 
-<main>
-  <div class="cards-note" id="cards-note">Showing {len(trains)} popular trains &mdash; type a train number/name above, or use From/To, to search the full database of {total_trains} trains.</div>
+<main id="main-content">
+  <div class="cards-note" id="cards-note" role="status" aria-live="polite">Showing {len(trains)} popular trains &mdash; type a train number/name above, or use From/To, to search the full database of {total_trains} trains.</div>
   <div class="cards" id="cards"></div>
 </main>
 
@@ -1008,6 +1023,7 @@ function toggleFareBox(number, btnEl) {{
   const show = box.style.display === 'none';
   box.style.display = show ? 'block' : 'none';
   btnEl.textContent = show ? tr('fare_hide') : tr('fare_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
 }}
 
 function toggleRouteNote(number, btnEl) {{
@@ -1016,6 +1032,7 @@ function toggleRouteNote(number, btnEl) {{
   const show = box.style.display === 'none';
   box.style.display = show ? 'block' : 'none';
   btnEl.textContent = show ? tr('route_note_hide') : tr('route_note_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
 }}
 
 // ── Destination weather (Open-Meteo — free, no API key, CORS-friendly) ─────
@@ -1044,6 +1061,7 @@ async function toggleWeatherBox(number, btnEl) {{
   const show = box.style.display === 'none';
   box.style.display = show ? 'block' : 'none';
   btnEl.textContent = show ? tr('weather_hide') : tr('weather_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
   if (!show || box.dataset.loaded === '1') return;
   box.dataset.loaded = '1';
   const code = btnEl.dataset.code;
@@ -1103,6 +1121,7 @@ async function toggleRouteWeather(number, btnEl) {{
     const alertEl = document.getElementById(`severewx-${{number}}`);
     if (alertEl) alertEl.style.display = showing ? 'none' : (alertEl.dataset.hasAlert === '1' ? 'block' : 'none');
     btnEl.textContent = showing ? tr('route_weather_show') : tr('route_weather_hide');
+    btnEl.setAttribute('aria-expanded', showing ? 'false' : 'true');
     return;
   }}
   const originalText = btnEl.textContent;
@@ -1149,6 +1168,7 @@ async function toggleRouteWeather(number, btnEl) {{
     btnEl.dataset.loaded = '1';
     btnEl.dataset.showing = '1';
     btnEl.textContent = tr('route_weather_hide');
+    btnEl.setAttribute('aria-expanded', 'true');
   }} catch (_) {{
     btnEl.textContent = tr('route_weather_error');
     setTimeout(() => {{ btnEl.textContent = originalText; }}, 2500);
@@ -1180,6 +1200,7 @@ async function togglePlacesBox(number, btnEl) {{
   const show = box.style.display === 'none';
   box.style.display = show ? 'block' : 'none';
   btnEl.textContent = show ? tr('places_hide') : tr('places_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
   if (!show || box.dataset.loaded === '1') return;
   box.dataset.loaded = '1';
   const code = btnEl.dataset.code;
@@ -1239,6 +1260,7 @@ async function toggleRoutePlaces(number, btnEl) {{
       if (el.innerHTML) el.style.display = showing ? 'none' : 'inline';
     }});
     btnEl.textContent = showing ? tr('route_places_show') : tr('route_places_hide');
+    btnEl.setAttribute('aria-expanded', showing ? 'false' : 'true');
     return;
   }}
   const originalText = btnEl.textContent;
@@ -1255,6 +1277,7 @@ async function toggleRoutePlaces(number, btnEl) {{
     btnEl.dataset.loaded = '1';
     btnEl.dataset.showing = '1';
     btnEl.textContent = tr('route_places_hide');
+    btnEl.setAttribute('aria-expanded', 'true');
   }} catch (_) {{
     btnEl.textContent = tr('route_places_error');
     setTimeout(() => {{ btnEl.textContent = originalText; }}, 2500);
@@ -1271,6 +1294,7 @@ function toggleAmenitiesBox(number, btnEl) {{
   const show = box.style.display === 'none';
   box.style.display = show ? 'block' : 'none';
   btnEl.textContent = show ? tr('amenities_hide') : tr('amenities_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
   if (!show || box.dataset.loaded === '1') return;
   box.dataset.loaded = '1';
   const train = TRAINS.find(x => x.number === number);
@@ -1361,6 +1385,7 @@ function toggleRouteMap(number, btnEl) {{
   const show = container.style.display === 'none';
   container.style.display = show ? 'block' : 'none';
   btnEl.textContent = show ? tr('map_hide') : tr('map_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
   if (!show || _mapInstances[number]) {{
     if (show && _mapInstances[number]) setTimeout(() => _mapInstances[number].invalidateSize(), 50);
     return;
@@ -1444,7 +1469,7 @@ function renderCards(query) {{
       : '';
     const routeNote = t.route_note
       ? `<div class="route-note-wrap">
-          <button class="route-note-btn" onclick="toggleRouteNote('${{t.number}}', this)">${{tr('route_note_show')}}</button>
+          <button class="route-note-btn" aria-expanded="false" onclick="toggleRouteNote('${{t.number}}', this)">${{tr('route_note_show')}}</button>
           <div class="route-note" id="routenote-${{t.number}}" style="display:none">&#8505; ${{t.route_note}}</div>
         </div>`
       : '';
@@ -1467,18 +1492,18 @@ function renderCards(query) {{
         <div class="fare-disclaimer">Illustrative only, based on commonly cited average emission factors — actual figures vary by vehicle/occupancy/fuel mix.</div>
       </div>` : '';
     const weatherBtn = leg
-      ? `<button class="weather-btn" data-code="${{leg.alight.code}}" onclick="toggleWeatherBox('${{t.number}}', this)">${{tr('weather_show')}}</button>`
+      ? `<button class="weather-btn" aria-expanded="false" data-code="${{leg.alight.code}}" onclick="toggleWeatherBox('${{t.number}}', this)">${{tr('weather_show')}}</button>`
       : '';
     const weatherBox = leg ? `<div class="weather-box" id="weather-${{t.number}}" style="display:none"></div>` : '';
-    const routeWeatherBtn = `<button class="route-weather-btn" onclick="toggleRouteWeather('${{t.number}}', this)">${{tr('route_weather_show')}}</button>`;
+    const routeWeatherBtn = `<button class="route-weather-btn" aria-expanded="false" onclick="toggleRouteWeather('${{t.number}}', this)">${{tr('route_weather_show')}}</button>`;
     const placesBtn = leg
-      ? `<button class="places-btn" data-code="${{leg.alight.code}}" onclick="togglePlacesBox('${{t.number}}', this)">${{tr('places_show')}}</button>`
+      ? `<button class="places-btn" aria-expanded="false" data-code="${{leg.alight.code}}" onclick="togglePlacesBox('${{t.number}}', this)">${{tr('places_show')}}</button>`
       : '';
     const placesBox = leg ? `<div class="places-box" id="places-${{t.number}}" style="display:none"></div>` : '';
-    const routePlacesBtn = `<button class="route-places-btn" onclick="toggleRoutePlaces('${{t.number}}', this)">${{tr('route_places_show')}}</button>`;
+    const routePlacesBtn = `<button class="route-places-btn" aria-expanded="false" onclick="toggleRoutePlaces('${{t.number}}', this)">${{tr('route_places_show')}}</button>`;
     const hasAmenityStop = (t.route || []).some(s => STATION_AMENITIES[s.code]);
     const amenitiesBtn = hasAmenityStop
-      ? `<button class="amenities-btn" onclick="toggleAmenitiesBox('${{t.number}}', this)">${{tr('amenities_show')}}</button>`
+      ? `<button class="amenities-btn" aria-expanded="false" onclick="toggleAmenitiesBox('${{t.number}}', this)">${{tr('amenities_show')}}</button>`
       : '';
     const amenitiesBox = hasAmenityStop ? `<div class="amenities-box" id="amenities-${{t.number}}" style="display:none"></div>` : '';
     const itineraryBtn = leg
@@ -1500,9 +1525,9 @@ function renderCards(query) {{
       ${{routeNote}}
       <div class="card-actions">
         <button class="gps-btn" onclick="locateOnTrain('${{t.number}}', this)">${{tr('gps_start')}}</button>
-        <button class="map-btn" onclick="toggleRouteMap('${{t.number}}', this)">${{tr('map_show')}}</button>
-        <button class="fare-btn" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
-        <button class="story-btn" onclick="toggleStoryBox('${{t.number}}', this)">${{tr('story_show')}}</button>
+        <button class="map-btn" aria-expanded="false" onclick="toggleRouteMap('${{t.number}}', this)">${{tr('map_show')}}</button>
+        <button class="fare-btn" aria-expanded="false" onclick="toggleFareBox('${{t.number}}', this)">${{tr('fare_show')}}</button>
+        <button class="story-btn" aria-expanded="false" onclick="toggleStoryBox('${{t.number}}', this)">${{tr('story_show')}}</button>
         ${{weatherBtn}}
         ${{routeWeatherBtn}}
         ${{placesBtn}}
@@ -1554,6 +1579,7 @@ async function toggleStoryBox(number, btnEl) {{
   const show = box.style.display === 'none';
   box.style.display = show ? 'flex' : 'none';
   btnEl.textContent = show ? tr('story_hide') : tr('story_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
   if (!show || box.dataset.loaded) return;
   box.dataset.loaded = '1';
   const searchLink = `https://en.wikipedia.org/w/index.php?search=${{encodeURIComponent(train.name)}}`;
@@ -1642,6 +1668,25 @@ function clearCompare() {{
   renderCards(document.getElementById('search').value);
 }}
 
+// ── Shared modal accessibility helpers: focus the dialog on open, restore
+// focus to whatever triggered it on close, and let Escape close it ─────────
+let _modalLastFocusedEl = null;
+function _openModal(overlay) {{
+  _modalLastFocusedEl = document.activeElement;
+  document.body.appendChild(overlay);
+  const dialog = overlay.querySelector('[role="dialog"]');
+  if (dialog) {{ dialog.setAttribute('tabindex', '-1'); dialog.focus(); }}
+  const onKey = (e) => {{ if (e.key === 'Escape') overlay._onEscape?.(); }};
+  overlay._onKeyHandler = onKey;
+  document.addEventListener('keydown', onKey);
+}}
+function _closeModal(overlay) {{
+  if (!overlay) return;
+  document.removeEventListener('keydown', overlay._onKeyHandler);
+  overlay.remove();
+  if (_modalLastFocusedEl) {{ _modalLastFocusedEl.focus(); _modalLastFocusedEl = null; }}
+}}
+
 function openCompareModal() {{
   const trains = [..._compareTrains.values()];
   const rows = trains.map(t => {{
@@ -1656,11 +1701,12 @@ function openCompareModal() {{
   overlay.className = 'compare-overlay';
   overlay.id = 'compare-overlay';
   overlay.onclick = (e) => {{ if (e.target === overlay) closeCompareModal(); }};
+  overlay._onEscape = closeCompareModal;
   overlay.innerHTML = `
-    <div class="compare-modal">
+    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="compare-modal-title">
       <div class="compare-modal-head">
-        <b>${{tr('compare_title')}}</b>
-        <button onclick="closeCompareModal()">&#10005;</button>
+        <b id="compare-modal-title">${{tr('compare_title')}}</b>
+        <button onclick="closeCompareModal()" aria-label="Close dialog">&#10005;</button>
       </div>
       <table class="compare-table">
         <tr><th></th>${{rows.map(r => `<th>#${{r.t.number}}<br/>${{r.t.name}}</th>`).join('')}}</tr>
@@ -1674,36 +1720,37 @@ function openCompareModal() {{
       </table>
       <div class="fare-disclaimer" style="padding:0 16px 12px">Fare figures are rough estimates only — not an official IRCTC quote.</div>
     </div>`;
-  document.body.appendChild(overlay);
+  _openModal(overlay);
 }}
 
 function closeCompareModal() {{
-  document.getElementById('compare-overlay')?.remove();
+  _closeModal(document.getElementById('compare-overlay'));
 }}
 
 // ── Browse by Zone ──────────────────────────────────────────────────────────
 function openZoneModal() {{
   const zones = Object.entries(ZONE_INFO).sort((a, b) => (b[1].count || 0) - (a[1].count || 0));
   const rows = zones.map(([code, z]) => `
-    <div class="zone-row" onclick="browseZone('${{code}}')">
+    <button type="button" class="zone-row" onclick="browseZone('${{code}}')">
       <div><b>${{z.name}}</b> (${{code}})<br/><span class="zone-hq">HQ: ${{z.headquarters}}</span>${{z.note ? `<br/><span class="zone-hq">${{z.note}}</span>` : ''}}</div>
       <span class="zone-count">${{z.count}} trains</span>
-    </div>`).join('');
+    </button>`).join('');
   const overlay = document.createElement('div');
   overlay.className = 'compare-overlay';
   overlay.id = 'zone-overlay';
   overlay.onclick = (e) => {{ if (e.target === overlay) closeZoneModal(); }};
+  overlay._onEscape = closeZoneModal;
   overlay.innerHTML = `
-    <div class="compare-modal">
+    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="zone-modal-title">
       <div class="compare-modal-head">
-        <b>&#128506; Browse by Railway Zone</b>
-        <button onclick="closeZoneModal()">&#10005;</button>
+        <b id="zone-modal-title">&#128506; Browse by Railway Zone</b>
+        <button onclick="closeZoneModal()" aria-label="Close dialog">&#10005;</button>
       </div>
       <div style="padding:8px 16px 16px">${{rows}}</div>
     </div>`;
-  document.body.appendChild(overlay);
+  _openModal(overlay);
 }}
-function closeZoneModal() {{ document.getElementById('zone-overlay')?.remove(); }}
+function closeZoneModal() {{ _closeModal(document.getElementById('zone-overlay')); }}
 
 async function browseZone(code) {{
   closeZoneModal();
@@ -1747,11 +1794,12 @@ function openLeaderboardModal() {{
   overlay.className = 'compare-overlay';
   overlay.id = 'leaderboard-overlay';
   overlay.onclick = (e) => {{ if (e.target === overlay) closeLeaderboardModal(); }};
+  overlay._onEscape = closeLeaderboardModal;
   overlay.innerHTML = `
-    <div class="compare-modal">
+    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="leaderboard-modal-title">
       <div class="compare-modal-head">
-        <b>&#128202; Punctuality Leaderboard</b>
-        <button onclick="closeLeaderboardModal()">&#10005;</button>
+        <b id="leaderboard-modal-title">&#128202; Punctuality Leaderboard</b>
+        <button onclick="closeLeaderboardModal()" aria-label="Close dialog">&#10005;</button>
       </div>
       <div style="padding:8px 16px 16px">
         ${{running.length ? '' : '<p class="fare-disclaimer">No currently-running trains in the loaded set — try a search first.</p>'}}
@@ -1760,9 +1808,9 @@ function openLeaderboardModal() {{
         <div class="fare-disclaimer">Based on ${{running.length}} currently-running train(s) in the loaded set — status is SIMULATED, see footer disclaimer.</div>
       </div>
     </div>`;
-  document.body.appendChild(overlay);
+  _openModal(overlay);
 }}
-function closeLeaderboardModal() {{ document.getElementById('leaderboard-overlay')?.remove(); }}
+function closeLeaderboardModal() {{ _closeModal(document.getElementById('leaderboard-overlay')); }}
 
 // ── Station-vs-station comparison (weather + curated facilities) ───────────
 function openStationCompareModal() {{
@@ -1770,28 +1818,29 @@ function openStationCompareModal() {{
   overlay.className = 'compare-overlay';
   overlay.id = 'stationcompare-overlay';
   overlay.onclick = (e) => {{ if (e.target === overlay) closeStationCompareModal(); }};
+  overlay._onEscape = closeStationCompareModal;
   overlay.innerHTML = `
-    <div class="compare-modal">
+    <div class="compare-modal" role="dialog" aria-modal="true" aria-labelledby="sc-modal-title">
       <div class="compare-modal-head">
-        <b>&#128269; Compare Two Stations</b>
-        <button onclick="closeStationCompareModal()">&#10005;</button>
+        <b id="sc-modal-title">&#128269; Compare Two Stations</b>
+        <button onclick="closeStationCompareModal()" aria-label="Close dialog">&#10005;</button>
       </div>
       <div style="padding:12px 16px">
         <div class="rs-field" style="margin-bottom:8px; width:100%">
-          <label style="width:70px">Station A</label>
+          <label for="sc-a" style="width:70px">Station A</label>
           <input type="text" id="sc-a" list="station-list" placeholder="e.g. NDLS — New Delhi" style="flex:1"/>
         </div>
         <div class="rs-field" style="margin-bottom:8px; width:100%">
-          <label style="width:70px">Station B</label>
+          <label for="sc-b" style="width:70px">Station B</label>
           <input type="text" id="sc-b" list="station-list" placeholder="e.g. HWH — Howrah Junction" style="flex:1"/>
         </div>
         <button class="sc-compare-btn" onclick="runStationCompare()">Compare</button>
-        <div id="sc-result" style="margin-top:14px"></div>
+        <div id="sc-result" style="margin-top:14px" role="status" aria-live="polite"></div>
       </div>
     </div>`;
-  document.body.appendChild(overlay);
+  _openModal(overlay);
 }}
-function closeStationCompareModal() {{ document.getElementById('stationcompare-overlay')?.remove(); }}
+function closeStationCompareModal() {{ _closeModal(document.getElementById('stationcompare-overlay')); }}
 
 function _resolveStationCode(input) {{
   const raw = (input || '').trim();

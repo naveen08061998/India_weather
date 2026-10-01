@@ -29,7 +29,7 @@ def _timeline_card(entry: dict, idx: int) -> str:
           <h3>{entry['title']}</h3>
           <p>{entry['text']}</p>
           <p class="detail-text" style="display:none">{entry['detail']}</p>
-          <button class="read-more-btn" onclick="toggleDetail(this)">Read more &#8595;</button>
+          <button class="read-more-btn" aria-expanded="false" onclick="toggleDetail(this)">Read more &#8595;</button>
         </div>
       </div>"""
 
@@ -41,7 +41,7 @@ def _tech_card(entry: dict) -> str:
         <h3>{entry['title']}</h3>
         <p>{entry['text']}</p>
         <p class="detail-text" style="display:none">{entry['detail']}</p>
-        <button class="read-more-btn" onclick="toggleDetail(this)">Read more &#8595;</button>
+        <button class="read-more-btn" aria-expanded="false" onclick="toggleDetail(this)">Read more &#8595;</button>
       </div>"""
 
 
@@ -103,6 +103,16 @@ def build_history_html() -> str:
     background: var(--bg); color: var(--text); min-height: 100vh;
     transition: background .3s, color .3s;
   }}
+  .visually-hidden {{
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }}
+  .skip-link {{
+    position: absolute; left: -9999px; top: 0; z-index: 1000;
+    background: var(--accent); color: #fff; padding: 10px 16px; border-radius: 0 0 8px 0;
+    font-size: .85rem; font-weight: 600; text-decoration: none;
+  }}
+  .skip-link:focus {{ left: 0; }}
   .tricolor {{
     height: 4px; position: sticky; top: 0; z-index: 200;
     background: linear-gradient(90deg, #f97316 0% 33.3%, #e2e8f0 33.3% 66.6%, #22c55e 66.6% 100%);
@@ -153,6 +163,7 @@ def build_history_html() -> str:
     font-family: inherit; transition: border-color .2s, color .2s;
   }}
   .filter-chip.active {{ border-color: var(--accent); color: var(--text); }}
+  .filter-chip:focus-visible {{ outline: 2px solid var(--accent); outline-offset: 2px; }}
   section {{ margin-bottom: 40px; }}
   section > h2 {{ font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }}
   .timeline {{ display: flex; flex-direction: column; gap: 14px; }}
@@ -211,6 +222,7 @@ def build_history_html() -> str:
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <div class="tricolor"></div>
 <header>
   <div class="brand">
@@ -226,15 +238,15 @@ def build_history_html() -> str:
   </div>
 </header>
 
-<main>
+<main id="main-content">
   <div class="page-intro">
     <h2>From the first steam train to Vande Bharat and beyond</h2>
     <p>A timeline of major trains Indian Railways has introduced, followed by the
        technology — traction, coaches, signalling and passenger systems — that has
        shaped the network since 1853.</p>
   </div>
-  <div class="fact-bar" id="fact-bar" style="display:none">
-    <span class="fact-bar-icon">&#128197;</span>
+  <div class="fact-bar" id="fact-bar" style="display:none" role="status" aria-live="polite">
+    <span class="fact-bar-icon" aria-hidden="true">&#128197;</span>
     <span class="fact-bar-text" id="fact-bar-text"></span>
   </div>
   <div class="disclaimer">&#8505;&#65039; {DISCLAIMER}</div>
@@ -242,10 +254,10 @@ def build_history_html() -> str:
   <section>
     <h2>&#128197; Timeline of Notable Trains &amp; Milestones</h2>
     <div class="filters">
-      <button class="filter-chip active" data-filter="all" onclick="applyFilter('all', this)">All</button>
-      <button class="filter-chip" data-filter="train" onclick="applyFilter('train', this)">&#128646; Trains</button>
-      <button class="filter-chip" data-filter="technology" onclick="applyFilter('technology', this)">&#9889; Technology</button>
-      <button class="filter-chip" data-filter="milestone" onclick="applyFilter('milestone', this)">&#127942; Milestones</button>
+      <button class="filter-chip active" aria-pressed="true" data-filter="all" onclick="applyFilter('all', this)">All</button>
+      <button class="filter-chip" aria-pressed="false" data-filter="train" onclick="applyFilter('train', this)">&#128646; Trains</button>
+      <button class="filter-chip" aria-pressed="false" data-filter="technology" onclick="applyFilter('technology', this)">&#9889; Technology</button>
+      <button class="filter-chip" aria-pressed="false" data-filter="milestone" onclick="applyFilter('milestone', this)">&#127942; Milestones</button>
     </div>
     <div class="timeline" id="timeline">
       {timeline_html}
@@ -269,11 +281,12 @@ def build_history_html() -> str:
 
   <section>
     <h2>&#128214; Railway Glossary</h2>
+    <label for="gl-search" class="visually-hidden">Search glossary terms</label>
     <input type="text" class="gl-search" id="gl-search" placeholder="Search terms (e.g. LHB, Tatkal, RAC)…" oninput="filterGlossary()"/>
     <div class="filters">
-      <button class="filter-chip active" data-filter="all" onclick="applyGlossaryFilter('all', this)">All</button>
-      <button class="filter-chip" data-filter="train_type" onclick="applyGlossaryFilter('train_type', this)">&#128646; Train Types</button>
-      <button class="filter-chip" data-filter="term" onclick="applyGlossaryFilter('term', this)">&#128214; Terms</button>
+      <button class="filter-chip active" aria-pressed="true" data-filter="all" onclick="applyGlossaryFilter('all', this)">All</button>
+      <button class="filter-chip" aria-pressed="false" data-filter="train_type" onclick="applyGlossaryFilter('train_type', this)">&#128646; Train Types</button>
+      <button class="filter-chip" aria-pressed="false" data-filter="term" onclick="applyGlossaryFilter('term', this)">&#128214; Terms</button>
     </div>
     <div class="gl-grid" id="glossary">
       {glossary_html}
@@ -285,8 +298,9 @@ def build_history_html() -> str:
 
 <script>
 function applyFilter(tag, btnEl) {{
-  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => {{ b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }});
   btnEl.classList.add('active');
+  btnEl.setAttribute('aria-pressed', 'true');
   document.querySelectorAll('#timeline .tl-card').forEach(card => {{
     card.style.display = (tag === 'all' || card.dataset.tag === tag) ? 'flex' : 'none';
   }});
@@ -294,8 +308,9 @@ function applyFilter(tag, btnEl) {{
 let _glossaryFilter = 'all';
 function applyGlossaryFilter(cat, btnEl) {{
   _glossaryFilter = cat;
-  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btnEl.parentElement.querySelectorAll('.filter-chip').forEach(b => {{ b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); }});
   btnEl.classList.add('active');
+  btnEl.setAttribute('aria-pressed', 'true');
   filterGlossary();
 }}
 function filterGlossary() {{
@@ -314,6 +329,7 @@ function toggleDetail(btnEl) {{
   detail.style.display = show ? 'block' : 'none';
   summary.style.display = show ? 'none' : 'block';
   btnEl.innerHTML = show ? 'Show less &#8593;' : 'Read more &#8595;';
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
 }}
 function toggleTheme() {{
   const isLight = document.body.classList.toggle('light');
