@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 
+from indian_railways.coach_composition import COACH_COMPOSITION
 from indian_railways.history_content import TIMELINE
 from indian_railways.ir_client import zone_counts
 from indian_railways.station_amenities import STATION_AMENITIES
@@ -53,6 +54,7 @@ def build_html(payload: dict) -> str:
         ensure_ascii=False,
     )
     station_amenities_json = json.dumps(STATION_AMENITIES, ensure_ascii=False)
+    coach_composition_json = json.dumps(COACH_COMPOSITION, ensure_ascii=False)
 
     # Zone code -> {name, headquarters, count, note?} — count computed live from
     # the full train database (not hardcoded), for the "Browse by Zone" feature.
@@ -252,12 +254,12 @@ def build_html(payload: dict) -> str:
     padding: 6px 10px; font-size: .7rem; color: var(--muted); line-height: 1.5;
   }}
   .card-actions {{ display: flex; gap: 8px; flex-wrap: wrap; }}
-  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .route-places-btn, .amenities-btn, .itinerary-btn {{
+  .map-btn, .fare-btn, .story-btn, .weather-btn, .route-weather-btn, .places-btn, .route-places-btn, .amenities-btn, .itinerary-btn, .coach-btn {{
     align-self: flex-start; background: var(--card-h); border: 1px solid var(--border);
     border-radius: 8px; color: var(--text); padding: 5px 10px; font-size: .72rem;
     cursor: pointer; font-family: inherit; transition: background .2s, border-color .2s;
   }}
-  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .route-places-btn:hover, .amenities-btn:hover, .itinerary-btn:hover {{ border-color: var(--accent); }}
+  .map-btn:hover, .fare-btn:hover, .story-btn:hover, .weather-btn:hover, .route-weather-btn:hover, .places-btn:hover, .route-places-btn:hover, .amenities-btn:hover, .itinerary-btn:hover, .coach-btn:hover {{ border-color: var(--accent); }}
   .route-weather-btn:disabled, .route-places-btn:disabled {{ opacity: .6; cursor: wait; }}
   #itinerary-print {{ display: none; }}
   @media print {{
@@ -312,6 +314,12 @@ def build_html(payload: dict) -> str:
     display: inline-block; background: var(--card-h); border-radius: 999px;
     padding: 1px 8px; margin: 2px 4px 0 0; font-size: .68rem;
   }}
+  .coach-box {{
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: .72rem;
+    color: var(--muted); line-height: 1.7;
+  }}
+  .coach-row {{ display: flex; justify-content: space-between; gap: 8px; }}
+  .coach-row b {{ color: var(--text); }}
   .runs-badge {{
     align-self: flex-start; display: inline-block; font-size: .68rem; color: var(--muted);
     background: var(--card-h); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px;
@@ -524,6 +532,7 @@ const STATION_ALIASES = {station_aliases_json};
 const STATION_INFO = {station_info_json};
 const HISTORY_TIMELINE = {timeline_json};
 const STATION_AMENITIES = {station_amenities_json};
+const COACH_COMPOSITION = {coach_composition_json};
 const ZONE_INFO = {zone_info_json};
 let TRAINS = CURATED_TRAINS.slice();
 
@@ -570,6 +579,9 @@ const I18N = {{
     amenities_show: '🏢 Station Facilities', amenities_hide: '🏢 Hide Station Facilities',
     amenities_empty: 'No curated facility info for this route\\'s stations.',
     amenities_source: 'General-knowledge overview, not an official facilities directory',
+    coach_show: '🚃 Coach Layout', coach_hide: '🚃 Hide Coach Layout',
+    coach_empty: 'No curated coach layout for this train category.',
+    coach_source: 'Typical/illustrative composition, not an exact per-train coach list',
     itinerary_show: '🖨️ Print / Share Itinerary',
     route_note_show: 'ℹ️ Route simplified — tap for details', route_note_hide: 'ℹ️ Hide details',
     footer_disclaimer: 'Status is SIMULATED from public schedules (not an official live GPS feed). For official real-time status use NTES / IRCTC.<br/>"Use My GPS" reads your device\\'s own location in your browser only (never sent to a server) to show which stop you\\'re nearest — useful only if you\\'re actually riding that train.',
@@ -1312,6 +1324,29 @@ function toggleAmenitiesBox(number, btnEl) {{
   box.innerHTML = `${{rows}}<div class="fare-disclaimer">${{tr('amenities_source')}}</div>`;
 }}
 
+// ── Typical coach/rake composition — curated, static data embedded in the
+// page (no backend call needed, so it works in static/GitHub Pages mode too).
+function toggleCoachBox(number, btnEl) {{
+  const box = document.getElementById(`coach-${{number}}`);
+  if (!box) return;
+  const show = box.style.display === 'none';
+  box.style.display = show ? 'block' : 'none';
+  btnEl.textContent = show ? tr('coach_hide') : tr('coach_show');
+  btnEl.setAttribute('aria-expanded', show ? 'true' : 'false');
+  if (!show || box.dataset.loaded === '1') return;
+  box.dataset.loaded = '1';
+  const train = TRAINS.find(x => x.number === number);
+  const info = train && COACH_COMPOSITION[train.type];
+  if (!info) {{ box.innerHTML = `<div>${{tr('coach_empty')}}</div>`; return; }}
+  const rows = info.composition.map(c =>
+    `<div class="coach-row"><span>${{c.name}} (${{c.code}})</span><b>&times; ${{c.count}}</b></div>`
+  ).join('');
+  box.innerHTML = `<div><b>${{info.rake}}</b> &bull; ~${{info.total_coaches}} coaches</div>
+    <div style="margin-top:4px">${{rows}}</div>
+    <div style="margin-top:4px">${{info.note}}</div>
+    <div class="fare-disclaimer">${{tr('coach_source')}}</div>`;
+}}
+
 // ── Print / share itinerary ─────────────────────────────────────────────────
 // Uses the Web Share API where available (mobile browsers, some desktop);
 // otherwise falls back to a print-only summary view (window.print(), styled
@@ -1506,6 +1541,11 @@ function renderCards(query) {{
       ? `<button class="amenities-btn" aria-expanded="false" onclick="toggleAmenitiesBox('${{t.number}}', this)">${{tr('amenities_show')}}</button>`
       : '';
     const amenitiesBox = hasAmenityStop ? `<div class="amenities-box" id="amenities-${{t.number}}" style="display:none"></div>` : '';
+    const hasCoachInfo = !!COACH_COMPOSITION[t.type];
+    const coachBtn = hasCoachInfo
+      ? `<button class="coach-btn" aria-expanded="false" onclick="toggleCoachBox('${{t.number}}', this)">${{tr('coach_show')}}</button>`
+      : '';
+    const coachBox = hasCoachInfo ? `<div class="coach-box" id="coach-${{t.number}}" style="display:none"></div>` : '';
     const itineraryBtn = leg
       ? `<button class="itinerary-btn" onclick="shareItinerary('${{t.number}}')">${{tr('itinerary_show')}}</button>`
       : '';
@@ -1533,6 +1573,7 @@ function renderCards(query) {{
         ${{placesBtn}}
         ${{routePlacesBtn}}
         ${{amenitiesBtn}}
+        ${{coachBtn}}
         ${{itineraryBtn}}
         <button class="compare-btn ${{_compareTrains.has(t.number) ? 'active' : ''}}" onclick="toggleCompare('${{t.number}}', this)">${{_compareTrains.has(t.number) ? tr('compare_added') : tr('compare_add')}}</button>
       </div>
@@ -1542,6 +1583,7 @@ function renderCards(query) {{
       ${{weatherBox}}
       ${{placesBox}}
       ${{amenitiesBox}}
+      ${{coachBox}}
       <div class="severe-alert" id="severewx-${{t.number}}" style="display:none"></div>
       <div class="stops-detail" id="stops-${{t.number}}">
         ${{(t.route || []).map(s => `
