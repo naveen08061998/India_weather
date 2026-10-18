@@ -72,21 +72,21 @@ def build_html(payload: dict) -> str:
 <title>Indian Railways Train Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
   :root {{
-    --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
-    --accent: #38bdf8; --accent-glow: rgba(56,189,248,.18);
+    --bg: #140a0d; --surface: #1c1014; --card: #231318; --card-h: #2d171d;
+    --accent: #fb7185; --accent-glow: rgba(251,113,133,.2);
     --ok: #22c55e; --warn: #f59e0b; --bad: #ef4444; --muted2: #64748b;
-    --text: #e8edf5; --muted: #7b8899; --border: #1a2a45;
+    --text: #f3e8e8; --muted: #a18a8e; --border: #3a1e24;
     --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }}
   body.light {{
-    --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
-    --accent: #0284c7; --accent-glow: rgba(2,132,199,.1);
-    --text: #0f172a; --muted: #64748b; --border: #dde3f0;
+    --bg: #fdf2f3; --surface: #ffffff; --card: #ffffff; --card-h: #fff1f2;
+    --accent: #be123c; --accent-glow: rgba(190,18,60,.1);
+    --text: #1f1315; --muted: #78565c; --border: #f0dde0;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -119,11 +119,14 @@ def build_html(payload: dict) -> str:
   .brand {{ display: flex; align-items: center; gap: 12px; }}
   .brand-icon {{
     width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    background: linear-gradient(135deg, #fb7185 0%, #9f1239 100%);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(14,165,233,.35);
+    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(251,113,133,.35);
   }}
-  .brand-text h1 {{ font-size: 1.1rem; font-weight: 800; letter-spacing: -.025em; }}
+  .brand-text h1 {{
+    font-family: 'Oswald', 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700;
+    letter-spacing: .02em; text-transform: uppercase;
+  }}
   .brand-text p {{ font-size: .7rem; color: var(--muted); margin-top: 1px; }}
   .header-stats {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
   .stat-chip {{
@@ -215,13 +218,13 @@ def build_html(payload: dict) -> str:
   }}
   .card {{
     background: var(--card); border: 1px solid var(--border);
-    border-left: 4px solid var(--cc, #38bdf8); border-radius: var(--radius);
+    border-left: 4px solid var(--cc, #fb7185); border-radius: var(--radius);
     padding: 16px 18px; display: flex; flex-direction: column; gap: 10px;
     cursor: pointer; transition: transform .2s, box-shadow .2s;
   }}
   .card:hover {{
     transform: translateY(-3px);
-    box-shadow: 0 12px 36px rgba(0,0,0,.35), 0 0 0 1px var(--cc, #38bdf8);
+    box-shadow: 0 12px 36px rgba(0,0,0,.35), 0 0 0 1px var(--cc, #fb7185);
   }}
   .card-top {{ display: flex; align-items: center; justify-content: space-between; gap: 8px; }}
   .train-no {{
@@ -230,7 +233,7 @@ def build_html(payload: dict) -> str:
   }}
   .type-badge {{
     padding: 3px 10px; border-radius: 999px; font-size: .64rem; font-weight: 700;
-    color: #fff; background: var(--cc, #38bdf8); letter-spacing: .02em; flex-shrink: 0;
+    color: #fff; background: var(--cc, #fb7185); letter-spacing: .02em; flex-shrink: 0;
   }}
   .train-name {{ font-size: .95rem; font-weight: 700; line-height: 1.35; }}
   .route-line {{ font-size: .78rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }}
@@ -244,7 +247,7 @@ def build_html(payload: dict) -> str:
   .progress-track {{
     height: 6px; border-radius: 999px; background: var(--border); overflow: hidden;
   }}
-  .progress-fill {{ height: 100%; background: var(--cc, #38bdf8); border-radius: 999px; transition: width .4s; }}
+  .progress-fill {{ height: 100%; background: var(--cc, #fb7185); border-radius: 999px; transition: width .4s; }}
   .journey-banner {{
     background: var(--accent-glow); border: 1px solid var(--accent); border-radius: 8px;
     padding: 6px 10px; font-size: .74rem; color: var(--text); line-height: 1.5;
@@ -836,9 +839,9 @@ const STATUS_CLASS = {{
 }};
 const TYPE_COLOR = {{
   'Rajdhani': '#f97316', 'Shatabdi': '#8b5cf6', 'Duronto': '#ec4899',
-  'Vande Bharat': '#22c55e', 'Mail-Express': '#38bdf8', 'Sampark Kranti': '#eab308',
-  'Superfast': '#0ea5e9', 'Tejas': '#d946ef', 'Express': '#38bdf8', 'Garib Rath': '#eab308',
-  'Jan Shatabdi': '#8b5cf6', 'Mail': '#38bdf8',
+  'Vande Bharat': '#22c55e', 'Mail-Express': '#fb7185', 'Sampark Kranti': '#eab308',
+  'Superfast': '#0ea5e9', 'Tejas': '#d946ef', 'Express': '#fb7185', 'Garib Rath': '#eab308',
+  'Jan Shatabdi': '#8b5cf6', 'Mail': '#fb7185',
 }};
 
 function matches(t, q) {{
@@ -1437,8 +1440,8 @@ function toggleRouteMap(number, btnEl) {{
       attribution: '&copy; OpenStreetMap contributors', maxZoom: 18,
     }}).addTo(map);
     const latlngs = stops.map(s => [s.lat, s.lon]);
-    L.polyline(latlngs, {{ color: '#38bdf8', weight: 3 }}).addTo(map);
-    stops.forEach(s => L.circleMarker([s.lat, s.lon], {{ radius: 4, color: '#38bdf8', fillOpacity: 1 }})
+    L.polyline(latlngs, {{ color: '#fb7185', weight: 3 }}).addTo(map);
+    stops.forEach(s => L.circleMarker([s.lat, s.lon], {{ radius: 4, color: '#fb7185', fillOpacity: 1 }})
       .bindTooltip(`${{s.name}} (${{s.code}})`).addTo(map));
     map.fitBounds(latlngs, {{ padding: [20, 20] }});
     // Guard against the container's real size not being settled yet at
@@ -1490,7 +1493,7 @@ function renderCards(query) {{
     return;
   }}
   container.innerHTML = filtered.map(({{ train: t, journey }}) => {{
-    const color = TYPE_COLOR[t.type] || '#38bdf8';
+    const color = TYPE_COLOR[t.type] || '#fb7185';
     const delayLabel = t.delay_min > 0 ? ` (+${{t.delay_min}}m)` : (t.delay_min < 0 ? ` (${{t.delay_min}}m)` : '');
     const statusClass = STATUS_CLASS[t.status] || '';
     const pct = t.percent_complete || 0;

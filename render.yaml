@@ -32,3 +32,39 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: "3.11.0"
+
+  - type: web
+    name: stock-market
+    runtime: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn stock_market.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: REFRESH_MINUTES
+        value: "15"
+
+  - type: web
+    name: air-quality
+    runtime: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn air_quality.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: REFRESH_MINUTES
+        value: "30"
+
+  - type: web
+    name: gov-updates
+    runtime: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn gov_updates.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: REFRESH_MINUTES
+        value: "30"

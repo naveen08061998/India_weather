@@ -33,19 +33,19 @@ def build_html(payload: dict) -> str:
 <title>Current Affairs Daily — {date_label}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
 <style>
   :root {{
-    --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
-    --accent: #818cf8; --accent2: #f97316; --accent3: #22c55e;
-    --accent-glow: rgba(129,140,248,.18);
-    --text: #e8edf5; --muted: #7b8899; --border: #1a2a45;
-    --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
+    --bg: #121110; --surface: #1a1816; --card: #201e1b; --card-h: #28251f;
+    --accent: #b91c1c; --accent2: #3f3f3f; --accent3: #22c55e;
+    --accent-glow: rgba(185,28,28,.18);
+    --text: #ece7df; --muted: #8c8579; --border: #332f29;
+    --radius: 2px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }}
   body.light {{
-    --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
-    --accent: #4f46e5; --accent-glow: rgba(79,70,229,.1);
-    --text: #0f172a; --muted: #64748b; --border: #dde3f0;
+    --bg: #f5f1e6; --surface: #fbf8ef; --card: #fbf8ef; --card-h: #f1ead8;
+    --accent: #991b1b; --accent-glow: rgba(153,27,27,.1);
+    --text: #1a1816; --muted: #6b6457; --border: #ddd4bf;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -77,15 +77,15 @@ def build_html(payload: dict) -> str:
   }}
   .brand {{ display: flex; align-items: center; gap: 12px; }}
   .brand-icon {{
-    width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-    background: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+    width: 42px; height: 42px; border-radius: var(--radius); flex-shrink: 0;
+    background: var(--text); color: var(--bg);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(249,115,22,.35);
+    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(0,0,0,.35);
   }}
   .brand-text h1 {{
-    font-size: 1.1rem; font-weight: 800; letter-spacing: -.025em;
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; letter-spacing: -.01em;
   }}
-  .brand-text p {{ font-size: .7rem; color: var(--muted); margin-top: 1px; }}
+  .brand-text p {{ font-size: .7rem; color: var(--muted); margin-top: 1px; letter-spacing: .04em; text-transform: uppercase; }}
 
   .header-stats {{ display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }}
   .stat-chip {{
@@ -167,7 +167,7 @@ def build_html(payload: dict) -> str:
     background: var(--card); display: flex; align-items: center;
     justify-content: center; flex-shrink: 0;
   }}
-  .panel-title {{ font-size: 1.05rem; font-weight: 700; }}
+  .panel-title {{ font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; }}
   .panel-desc {{ font-size: .76rem; color: var(--muted); margin-top: 3px; line-height: 1.4; }}
   .panel-count {{
     margin-left: auto; background: var(--card); border: 1px solid var(--border);

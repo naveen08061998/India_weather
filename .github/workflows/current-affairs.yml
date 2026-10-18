@@ -1,10 +1,10 @@
-name: Refresh Dashboards (Weather + Current Affairs + Railways)
+name: Refresh Dashboards (Weather + Current Affairs + Railways + Markets + AQI + Gov Updates)
 
 # ── Triggers ────────────────────────────────────────────────────
 on:
   push:
     branches: [main]
-    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'static/**', '.github/workflows/current-affairs.yml']
+    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'stock_market/**', 'air_quality/**', 'gov_updates/**', 'static/**', '.github/workflows/current-affairs.yml']
   schedule:
     - cron: '30 */2 * * *'   # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …)
   workflow_dispatch:   # manual "Run workflow" button in GitHub UI
@@ -94,11 +94,29 @@ jobs:
         run: python -m indian_railways.orchestrator
         timeout-minutes: 5
 
-      # 11. Assemble a single Pages artifact with three independent sections.
+      # 10a. Build the Stock Market snapshot HTML (free Yahoo Finance quotes).
+      - name: Generate Stock Market HTML
+        run: python -m stock_market.orchestrator --workers 8
+        timeout-minutes: 5
+        continue-on-error: true
+
+      # 10b. Build the Air Quality dashboard HTML (free Open-Meteo AQI data).
+      - name: Generate Air Quality HTML
+        run: python -m air_quality.orchestrator --workers 10
+        timeout-minutes: 5
+        continue-on-error: true
+
+      # 10c. Build the Government Schemes & Exam Tracker HTML (free news RSS).
+      - name: Generate Gov Updates HTML
+        run: python -m gov_updates.orchestrator
+        timeout-minutes: 5
+        continue-on-error: true
+
+      # 11. Assemble a single Pages artifact with six independent sections.
       - name: Assemble multi-app Pages artifact
         run: |
           rm -rf site
-          mkdir -p site/weather/static site/current-affairs site/railways
+          mkdir -p site/weather/static site/current-affairs site/railways site/stock-market site/air-quality site/gov-updates
 
           cp india_weather/weathers/india_weather_report.html site/weather/index.html
           cp static/manifest.json site/weather/manifest.json
@@ -109,6 +127,10 @@ jobs:
           cp -r current_affairs/news/. site/current-affairs/
           cp indian_railways/trains/railways_report.html site/railways/index.html
           cp indian_railways/trains/railway_history.html site/railways/history.html
+
+          [ -f stock_market/market/stock_market_report.html ] && cp stock_market/market/stock_market_report.html site/stock-market/index.html
+          [ -f air_quality/aqi/air_quality_report.html ] && cp air_quality/aqi/air_quality_report.html site/air-quality/index.html
+          [ -f gov_updates/updates/gov_updates_report.html ] && cp gov_updates/updates/gov_updates_report.html site/gov-updates/index.html
 
           cat > site/index.html << 'HTML'
           <!DOCTYPE html>
@@ -127,6 +149,9 @@ jobs:
                 --accent1: #0ea5e9;
                 --accent2: #f97316;
                 --accent3: #16a34a;
+                --accent4: #22c55e;
+                --accent5: #0284c7;
+                --accent6: #be123c;
               }
               * { box-sizing: border-box; }
               body {
@@ -171,12 +196,15 @@ jobs:
               .c1 { background: var(--accent1); }
               .c2 { background: var(--accent2); }
               .c3 { background: var(--accent3); }
+              .c4 { background: var(--accent4); }
+              .c5 { background: var(--accent5); }
+              .c6 { background: var(--accent6); }
             </style>
           </head>
           <body>
             <main class="wrap">
               <h1>India Agent Dashboards</h1>
-              <p>Each dashboard now runs independently.</p>
+              <p>Six independent dashboards, refreshed automatically every 2 hours.</p>
               <section class="grid">
                 <a class="card" href="./weather/">
                   <span class="chip c1">Weather</span>
@@ -192,6 +220,21 @@ jobs:
                   <span class="chip c3">Railways</span>
                   <h2>Train Tracker</h2>
                   <p>Train status dashboard with number, name, and route views.</p>
+                </a>
+                <a class="card" href="./stock-market/">
+                  <span class="chip c4">Markets</span>
+                  <h2>Stock Market Snapshot</h2>
+                  <p>Nifty, Sensex &amp; Bank Nifty plus curated NSE large-cap movers.</p>
+                </a>
+                <a class="card" href="./air-quality/">
+                  <span class="chip c5">Air Quality</span>
+                  <h2>India AQI Dashboard</h2>
+                  <p>Live air quality for 32 major cities with US EPA AQI bands.</p>
+                </a>
+                <a class="card" href="./gov-updates/">
+                  <span class="chip c6">Government</span>
+                  <h2>Schemes &amp; Exam Tracker</h2>
+                  <p>Scheme announcements, exam news and a curated notification calendar.</p>
                 </a>
               </section>
               <p style="margin-top:40px;font-size:.8rem;opacity:.65">Built by Naveen Alla</p>

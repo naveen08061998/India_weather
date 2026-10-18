@@ -15,7 +15,7 @@ from indian_railways.history_content import (
 )
 
 _TAG_LABEL = {"milestone": "Milestone", "train": "Train", "technology": "Technology"}
-_TAG_COLOR = {"milestone": "#f97316", "train": "#38bdf8", "technology": "#a855f7"}
+_TAG_COLOR = {"milestone": "#f97316", "train": "#fb7185", "technology": "#a855f7"}
 
 
 def _timeline_card(entry: dict, idx: int) -> str:
@@ -83,18 +83,18 @@ def build_history_html() -> str:
 <title>Indian Railways — History &amp; Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
   :root {{
-    --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
-    --accent: #38bdf8; --accent-glow: rgba(56,189,248,.18);
-    --text: #e8edf5; --muted: #7b8899; --muted2: #4b5768; --bad: #ef4444; --border: #1a2a45;
+    --bg: #140a0d; --surface: #1c1014; --card: #231318; --card-h: #2d171d;
+    --accent: #fb7185; --accent-glow: rgba(251,113,133,.2);
+    --text: #f3e8e8; --muted: #a18a8e; --muted2: #705157; --bad: #ef4444; --border: #3a1e24;
     --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }}
   body.light {{
-    --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
-    --accent: #0284c7; --accent-glow: rgba(2,132,199,.1);
-    --text: #0f172a; --muted: #64748b; --muted2: #94a3b8; --bad: #dc2626; --border: #dde3f0;
+    --bg: #fdf2f3; --surface: #ffffff; --card: #ffffff; --card-h: #fff1f2;
+    --accent: #be123c; --accent-glow: rgba(190,18,60,.1);
+    --text: #1f1315; --muted: #78565c; --muted2: #a89194; --bad: #dc2626; --border: #f0dde0;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }}
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
@@ -127,11 +127,14 @@ def build_history_html() -> str:
   .brand {{ display: flex; align-items: center; gap: 12px; }}
   .brand-icon {{
     width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    background: linear-gradient(135deg, #fb7185 0%, #9f1239 100%);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(14,165,233,.35);
+    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(251,113,133,.35);
   }}
-  .brand-text h1 {{ font-size: 1.1rem; font-weight: 800; letter-spacing: -.025em; }}
+  .brand-text h1 {{
+    font-family: 'Oswald', 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700;
+    letter-spacing: .02em; text-transform: uppercase;
+  }}
   .brand-text p {{ font-size: .7rem; color: var(--muted); margin-top: 1px; }}
   .header-right {{ display: flex; align-items: center; gap: 8px; }}
   .nav-link, #theme-btn {{

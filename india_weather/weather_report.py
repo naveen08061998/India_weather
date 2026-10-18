@@ -264,7 +264,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>India Weather Dashboard — 28 States &amp; 8 Union Territories</title>
-  <meta name="theme-color" content="#6366f1"/>
+  <meta name="theme-color" content="#f97316"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -272,7 +272,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <link rel="manifest" href="manifest.json"/>
   <link rel="apple-touch-icon" href="static/icon-192.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 
@@ -290,7 +290,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       content: "";
       position: fixed; inset: 0; z-index: -1; pointer-events: none;
       background:
-        radial-gradient(ellipse 80% 60% at 20% 10%,  rgba(99,102,241,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 20% 10%,  rgba(249,115,22,.18) 0%, transparent 60%),
         radial-gradient(ellipse 60% 50% at 80% 80%,  rgba(16,185,129,.12) 0%, transparent 55%),
         radial-gradient(ellipse 50% 40% at 60% 30%,  rgba(245,158,11,.08) 0%, transparent 50%),
         linear-gradient(160deg, #060b18 0%, #0b1528 40%, #0c0c22 70%, #060b18 100%);
@@ -321,8 +321,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       opacity: .55;
     }}
     .header-left h1 {{
-      font-size: 1.5rem; font-weight: 900; letter-spacing: -.6px;
-      background: linear-gradient(135deg, #e2e8f0 0%, #a5b4fc 50%, #818cf8 100%);
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 1.5rem; font-weight: 700; letter-spacing: -.3px;
+      background: linear-gradient(135deg, #fef3e2 0%, #fdba74 50%, #fb923c 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }}
@@ -344,13 +345,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     @keyframes pulse {{ 0%,100%{{opacity:1;transform:scale(1)}} 50%{{opacity:.5;transform:scale(.9)}} }}
 
     #refresh-btn {{
-      background: linear-gradient(135deg,rgba(99,102,241,.3),rgba(139,92,246,.2));
-      border: 1px solid rgba(139,92,246,.45);
-      color: #c4b5fd; border-radius: 999px; padding: .32rem 1.1rem;
+      background: linear-gradient(135deg,rgba(249,115,22,.3),rgba(234,88,12,.2));
+      border: 1px solid rgba(234,88,12,.45);
+      color: #fdba74; border-radius: 999px; padding: .32rem 1.1rem;
       font-size: .74rem; font-weight: 600; cursor: pointer;
       transition: all .2s; letter-spacing: .01em;
     }}
-    #refresh-btn:hover    {{ background:linear-gradient(135deg,rgba(99,102,241,.5),rgba(139,92,246,.35)); box-shadow:0 0 12px rgba(139,92,246,.35); }}
+    #refresh-btn:hover    {{ background:linear-gradient(135deg,rgba(249,115,22,.5),rgba(234,88,12,.35)); box-shadow:0 0 12px rgba(234,88,12,.35); }}
     #refresh-btn:disabled {{ opacity: .4; cursor: not-allowed; }}
 
     /* ── State nav ── */
@@ -379,9 +380,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       font-size: .62rem; text-transform: uppercase; letter-spacing: .1em;
       padding: .25rem .5rem; cursor: default; pointer-events: none;
     }}
-    .state-btn.all-btn {{ border-color:rgba(99,102,241,.4); color:#818cf8; }}
-    .state-btn.all-btn:hover {{ border-color:#818cf8; background:rgba(99,102,241,.12); color:#a5b4fc; }}
-    .state-btn.all-btn.active {{ background:#818cf8; color:#060b18; }}
+    .state-btn.all-btn {{ border-color:rgba(249,115,22,.4); color:#fb923c; }}
+    .state-btn.all-btn:hover {{ border-color:#fb923c; background:rgba(249,115,22,.12); color:#fdba74; }}
+    .state-btn.all-btn.active {{ background:#fb923c; color:#060b18; }}
 
     /* ── State sections ── */
     .state-section  {{ max-width:1900px; margin:1.5rem auto 0; padding:0 1.75rem; }}
@@ -522,7 +523,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.07);
       border-radius:.45rem; padding:.32rem .45rem; min-width:52px;
     }}
-    .hr-slot.hr-current {{ border-color:rgba(99,102,241,.5); background:rgba(99,102,241,.1); }}
+    .hr-slot.hr-current {{ border-color:rgba(249,115,22,.5); background:rgba(249,115,22,.1); }}
     .hr-time {{ color:#475569; margin-bottom:.1rem; }}
     .hr-temp {{ color:#fbbf24; font-weight:700; margin:.1rem 0; }}
     .hr-rain {{ color:#60a5fa; }}
@@ -685,7 +686,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     body.light::before {{
       background:
-        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(99,102,241,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(249,115,22,.07) 0%, transparent 60%),
         radial-gradient(ellipse 60% 50% at 80% 80%, rgba(16,185,129,.05) 0%, transparent 55%),
         radial-gradient(ellipse 50% 40% at 60% 30%, rgba(245,158,11,.04) 0%, transparent 50%),
         linear-gradient(160deg, #eef2fb 0%, #e0e7ff 40%, #ede9fe 70%, #eef2fb 100%);
@@ -697,7 +698,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       box-shadow: 0 4px 24px rgba(0,0,0,.07);
     }}
     body.light .header-left h1 {{
-      background: linear-gradient(135deg, #1e293b 0%, #4338ca 50%, #4f46e5 100%);
+      background: linear-gradient(135deg, #1e293b 0%, #c2410c 50%, #ea580c 100%);
       -webkit-background-clip: text; background-clip: text;
     }}
     body.light .header-left p {{ color: #475569; }}
@@ -707,13 +708,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       color: #475569;
     }}
     body.light #refresh-btn {{
-      background: linear-gradient(135deg,rgba(99,102,241,.18),rgba(139,92,246,.12));
-      border-color: rgba(99,102,241,.4);
-      color: #4338ca;
+      background: linear-gradient(135deg,rgba(249,115,22,.18),rgba(234,88,12,.12));
+      border-color: rgba(249,115,22,.4);
+      color: #c2410c;
     }}
     body.light #refresh-btn:hover {{
-      background: linear-gradient(135deg,rgba(99,102,241,.28),rgba(139,92,246,.2));
-      box-shadow: 0 0 12px rgba(99,102,241,.25);
+      background: linear-gradient(135deg,rgba(249,115,22,.28),rgba(234,88,12,.2));
+      box-shadow: 0 0 12px rgba(249,115,22,.25);
     }}
     body.light #theme-toggle {{
       background: rgba(0,0,0,.06);
@@ -722,9 +723,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }}
     body.light #theme-toggle:hover {{ background: rgba(0,0,0,.1); }}
     body.light #pwa-notif-btn {{
-      border-color: rgba(99,102,241,.35);
-      background: rgba(99,102,241,.09);
-      color: #4338ca;
+      border-color: rgba(249,115,22,.35);
+      background: rgba(249,115,22,.09);
+      color: #c2410c;
     }}
     body.light #pwa-install-btn {{
       border-color: rgba(16,185,129,.35);
@@ -748,9 +749,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       border-color: rgba(0,0,0,.2);
     }}
     body.light .state-btn.active {{ color: #fff; }}
-    body.light .state-btn.all-btn {{ color: #4338ca; border-color: rgba(99,102,241,.35); }}
-    body.light .state-btn.all-btn:hover {{ background: rgba(99,102,241,.08); color: #3730a3; }}
-    body.light .state-btn.all-btn.active {{ background: #6366f1; color: #fff; }}
+    body.light .state-btn.all-btn {{ color: #c2410c; border-color: rgba(249,115,22,.35); }}
+    body.light .state-btn.all-btn:hover {{ background: rgba(249,115,22,.08); color: #9a3412; }}
+    body.light .state-btn.all-btn.active {{ background: #f97316; color: #fff; }}
     body.light .state-btn.ut-separator {{ color: #94a3b8; }}
     /* State sections */
     body.light .state-header {{ border-bottom-color: rgba(0,0,0,.08); }}
@@ -795,7 +796,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       background: rgba(0,0,0,.04);
       border-color: rgba(0,0,0,.07);
     }}
-    body.light .hr-slot.hr-current {{ border-color: rgba(99,102,241,.45); background: rgba(99,102,241,.08); }}
+    body.light .hr-slot.hr-current {{ border-color: rgba(249,115,22,.45); background: rgba(249,115,22,.08); }}
     body.light .hr-time {{ color: #64748b; }}
     body.light .hourly-toggle {{ color: #94a3b8; border-top-color: rgba(0,0,0,.07); }}
     body.light .hourly-toggle:hover {{ color: #64748b; }}
@@ -847,7 +848,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="status-pill" id="pill-hot" style="display:none">&#128293; <span id="global-hot">&mdash;</span></div>
     <div class="status-pill" id="pill-cold" style="display:none">&#10052; <span id="global-cold">&mdash;</span></div>
     <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
-    <button id="pwa-notif-btn" onclick="_requestNotifications()" style="display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(99,102,241,.4);background:rgba(99,102,241,.12);color:#c7d2fe;font-size:.75rem;cursor:pointer">&#128276; Enable Alerts</button>
+    <button id="pwa-notif-btn" onclick="_requestNotifications()" style="display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(249,115,22,.4);background:rgba(249,115,22,.12);color:#fdba74;font-size:.75rem;cursor:pointer">&#128276; Enable Alerts</button>
     <button id="pwa-install-btn" onclick="_installPWA()" style="display:none;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#6ee7b7;font-size:.75rem;cursor:pointer">&#11015; Install App</button>
     <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode">&#9728; Light</button>
   </div>
@@ -2274,14 +2275,14 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (cont) {{
         const msg = document.createElement("div");
         msg.id = "empty-msg";
-        msg.style.cssText = "max-width:560px;margin:3rem auto;text-align:center;padding:1.75rem 1.5rem;background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.25);border-radius:1rem";
+        msg.style.cssText = "max-width:560px;margin:3rem auto;text-align:center;padding:1.75rem 1.5rem;background:rgba(249,115,22,.08);border:1px solid rgba(249,115,22,.25);border-radius:1rem";
         msg.innerHTML = `<div style="font-size:1.9rem;margin-bottom:.6rem">&#127868;</div>
-          <div style="font-size:1rem;font-weight:700;color:#c7d2fe;margin-bottom:.5rem">No cached data</div>
+          <div style="font-size:1rem;font-weight:700;color:#fdba74;margin-bottom:.5rem">No cached data</div>
           <div style="font-size:.82rem;color:#94a3b8;line-height:1.65">
-            Click any <b style="color:#c7d2fe">state button above</b> to load live weather,
+            Click any <b style="color:#fdba74">state button above</b> to load live weather,
             or run the orchestrator to refresh all districts:<br>
             <code style="display:inline-block;margin-top:.5rem;background:rgba(255,255,255,.07);
-              padding:.25rem .7rem;border-radius:.35rem;font-size:.78rem;color:#a5b4fc">
+              padding:.25rem .7rem;border-radius:.35rem;font-size:.78rem;color:#fdba74">
               .venv\\Scripts\\python -m india_weather.orchestrator</code>
           </div>`;
         cont.prepend(msg);

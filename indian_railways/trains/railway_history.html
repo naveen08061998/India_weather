@@ -6,18 +6,18 @@
 <title>Indian Railways — History &amp; Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #070c1b; --surface: #0d1528; --card: #111e35; --card-h: #172543;
-    --accent: #38bdf8; --accent-glow: rgba(56,189,248,.18);
-    --text: #e8edf5; --muted: #7b8899; --muted2: #4b5768; --bad: #ef4444; --border: #1a2a45;
+    --bg: #140a0d; --surface: #1c1014; --card: #231318; --card-h: #2d171d;
+    --accent: #fb7185; --accent-glow: rgba(251,113,133,.2);
+    --text: #f3e8e8; --muted: #a18a8e; --muted2: #705157; --bad: #ef4444; --border: #3a1e24;
     --radius: 14px; --shadow: 0 8px 32px rgba(0,0,0,.5);
   }
   body.light {
-    --bg: #eef2ff; --surface: #ffffff; --card: #ffffff; --card-h: #f4f6ff;
-    --accent: #0284c7; --accent-glow: rgba(2,132,199,.1);
-    --text: #0f172a; --muted: #64748b; --muted2: #94a3b8; --bad: #dc2626; --border: #dde3f0;
+    --bg: #fdf2f3; --surface: #ffffff; --card: #ffffff; --card-h: #fff1f2;
+    --accent: #be123c; --accent-glow: rgba(190,18,60,.1);
+    --text: #1f1315; --muted: #78565c; --muted2: #a89194; --bad: #dc2626; --border: #f0dde0;
     --shadow: 0 4px 20px rgba(0,0,0,.08);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,11 +50,14 @@
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand-icon {
     width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
-    background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+    background: linear-gradient(135deg, #fb7185 0%, #9f1239 100%);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(14,165,233,.35);
+    font-size: 1.35rem; box-shadow: 0 4px 12px rgba(251,113,133,.35);
   }
-  .brand-text h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: -.025em; }
+  .brand-text h1 {
+    font-family: 'Oswald', 'Inter', sans-serif; font-size: 1.2rem; font-weight: 700;
+    letter-spacing: .02em; text-transform: uppercase;
+  }
   .brand-text p { font-size: .7rem; color: var(--muted); margin-top: 1px; }
   .header-right { display: flex; align-items: center; gap: 8px; }
   .nav-link, #theme-btn {
@@ -242,7 +245,7 @@
       <div class="tl-card" id="tl-card-5" data-tag="train" data-monthday="03-01">
         <div class="tl-year">1969</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚄 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚄 Train</span>
           <h3>Rajdhani Express</h3>
           <p>India's first fully air-conditioned, superfast train launched between New Delhi and Howrah, linking the capital directly with state capitals.</p>
           <p class="detail-text" style="display:none">The first Rajdhani Express began service on 1 March 1969 between New Delhi and Howrah, introduced specifically to give India's state capitals a fast, fully air-conditioned overnight link to the national capital (the name means 'capital'). It ran with lighter, higher-priority coaches and reached speeds around 120 km/h — exceptional for Indian Railways at the time. The Rajdhani concept was later extended to dozens of routes connecting New Delhi with state capitals across the country, and for many years it was considered the network's most prestigious train service.</p>
@@ -253,7 +256,7 @@
       <div class="tl-card" id="tl-card-6" data-tag="train" data-monthday="10-24">
         <div class="tl-year">1984</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚇 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚇 Train</span>
           <h3>Kolkata Metro</h3>
           <p>South Asia's first metro rail system opened in Kolkata, bringing urban rapid transit to Indian Railways for the first time.</p>
           <p class="detail-text" style="display:none">Kolkata Metro's first stretch, between Esplanade and Bhowanipore (Netaji Bhavan), opened on 24 October 1984, making it the first metro rail system not just in India but in the whole of South Asia. Planning had begun back in the 1970s, and construction faced major delays due to the city's congested streets and difficult underground conditions. It was built and is still operated directly by Indian Railways — a unique arrangement, since India's other metros are run by separate state/city metro corporations — and its success influenced the decision to build the Delhi Metro roughly two decades later.</p>
@@ -275,7 +278,7 @@
       <div class="tl-card" id="tl-card-8" data-tag="train" data-monthday="">
         <div class="tl-year">1988</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚄 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚄 Train</span>
           <h3>Shatabdi Express</h3>
           <p>A same-day, chair-car intercity service launched — the fastest train of its era for day trips between major cities.</p>
           <p class="detail-text" style="display:none">The first Shatabdi Express ran between New Delhi and Jhansi/Gwalior in 1988 (named to mark the railways' upcoming 150th anniversary), designed as a same-day return service rather than an overnight train like the Rajdhani. It offered fully air-conditioned chair-car seating, onboard catering and higher average speeds for business travellers who needed to reach a city and return within a day. Shatabdi services were subsequently launched on dozens of routes radiating from major state capitals, and for a long time the Bhopal Shatabdi held the record as India's fastest train, briefly touching 150 km/h in trials.</p>
@@ -319,7 +322,7 @@
       <div class="tl-card" id="tl-card-12" data-tag="train" data-monthday="12-24">
         <div class="tl-year">2002</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚇 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚇 Train</span>
           <h3>Delhi Metro Opens</h3>
           <p>Delhi's first metro line began service, kicking off rapid urban-rail expansion that later spread to many other Indian cities.</p>
           <p class="detail-text" style="display:none">Delhi Metro's first line, between Shahdara and Tis Hazari, opened on 24 December 2002, built by the Delhi Metro Rail Corporation under the leadership of E. Sreedharan, often called the 'Metro Man of India'. Unlike Kolkata Metro, it was built as a separate state-backed corporation rather than run directly by Indian Railways — a model later copied by nearly every other Indian city that built a metro. Delhi Metro's rapid, largely on-time construction became a widely cited example of large infrastructure delivery in India, and the network has since grown into one of the largest metro systems in the world by route length.</p>
@@ -330,7 +333,7 @@
       <div class="tl-card" id="tl-card-13" data-tag="train" data-monthday="">
         <div class="tl-year">2009</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚄 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚄 Train</span>
           <h3>Duronto Express</h3>
           <p>India's first point-to-point, non-stop long-distance train — running between origin and destination without scheduled intermediate halts.</p>
           <p class="detail-text" style="display:none">The first Duronto Express services were flagged off in September 2009, built around a simple idea: a long-distance train that runs non-stop between its origin and destination, with no scheduled passenger halts in between (only technical stops for crew change or watering). 'Duronto' means 'restless' or 'unstoppable' in Bengali, reflecting the concept. Because they skip intermediate commercial stops, Duronto trains could offer meaningfully shorter journey times than an equivalent Rajdhani or ordinary express service on the same route.</p>
@@ -341,7 +344,7 @@
       <div class="tl-card" id="tl-card-14" data-tag="train" data-monthday="">
         <div class="tl-year">2016</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚄 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚄 Train</span>
           <h3>Gatimaan Express</h3>
           <p>Running at up to 160 km/h between Delhi and Agra, it became India's fastest conventional train at the time of launch.</p>
           <p class="detail-text" style="display:none">The Gatimaan Express, launched in April 2016 between Hazrat Nizamuddin (Delhi) and Agra Cantonment, was designed to run at up to 160 km/h — making it India's fastest conventional train at the time, cutting the roughly 200 km journey to under two hours. It used upgraded track, signalling and Linke Hofmann Busch (LHB) coaches capable of the higher speed, effectively serving as a testbed for what would later become the Vande Bharat programme's higher-speed ambitions. 'Gatimaan' means 'speedy' or 'swift' in Hindi.</p>
@@ -352,7 +355,7 @@
       <div class="tl-card" id="tl-card-15" data-tag="train" data-monthday="">
         <div class="tl-year">2017</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🎬 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🎬 Train</span>
           <h3>Tejas Express</h3>
           <p>A premium chair-car service with onboard infotainment, better catering and modern passenger amenities.</p>
           <p class="detail-text" style="display:none">Tejas Express, first launched in 2017 on the Mumbai–Goa route, was positioned as a premium, fully air-conditioned chair-car service with amenities uncommon on Indian trains at the time — onboard infotainment screens, automatic doors, CCTV, better catering and dedicated attendants. It was also notable as one of the first Indian Railways trains to trial private-style service standards, and a Lucknow–Delhi Tejas run directly by IRCTC (rather than the zonal railway) became one of the earliest examples of private operation of a train on the IR network.</p>
@@ -363,7 +366,7 @@
       <div class="tl-card" id="tl-card-16" data-tag="train" data-monthday="02-15">
         <div class="tl-year">2019</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚅 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚅 Train</span>
           <h3>Vande Bharat Express</h3>
           <p>India's first indigenously designed and manufactured semi-high-speed train (originally "Train 18"), built at the Integral Coach Factory, Chennai.</p>
           <p class="detail-text" style="display:none">Vande Bharat Express, originally called 'Train 18', was flagged off in February 2019 on the New Delhi–Varanasi route. It was India's first indigenously designed and manufactured semi-high-speed train, built at the Integral Coach Factory (ICF), Chennai, using a self-propelled 'distributed traction' design (motors spread across the train, like a metro) rather than a separate locomotive — letting it accelerate and brake faster than a conventional loco-hauled train. It's designed for speeds up to 180 km/h (though it typically runs slower depending on track conditions) and became the flagship of India's push toward faster, domestically built rolling stock.</p>
@@ -396,7 +399,7 @@
       <div class="tl-card" id="tl-card-19" data-tag="train" data-monthday="">
         <div class="tl-year">2023</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚆 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚆 Train</span>
           <h3>Vande Bharat Expansion & Namo Bharat</h3>
           <p>The Vande Bharat network expanded to dozens of routes; Namo Bharat (RRTS) introduced regional rapid transit on the Delhi–Meerut corridor.</p>
           <p class="detail-text" style="display:none">By 2023 the Vande Bharat network had grown from its single original route to dozens of pairs connecting major cities across almost every state, making it Indian Railways' fastest-growing train brand. The same year also saw the debut of Namo Bharat (the RRTS — Regional Rapid Transit System) on the Delhi–Ghaziabad–Meerut corridor, India's first purpose-built regional rapid rail service designed to run at higher speed and frequency than a metro but over longer, more spread-out distances than a typical city metro line.</p>
@@ -407,7 +410,7 @@
       <div class="tl-card" id="tl-card-20" data-tag="train" data-monthday="">
         <div class="tl-year">2024</div>
         <div class="tl-body">
-          <span class="tl-tag" style="--tc:#38bdf8">🚋 Train</span>
+          <span class="tl-tag" style="--tc:#fb7185">🚋 Train</span>
           <h3>Amrit Bharat Express</h3>
           <p>A push-pull long-distance express aimed at non-AC classes, pairing modern LHB-based coaches with a more affordable fare segment.</p>
           <p class="detail-text" style="display:none">Amrit Bharat Express, first flagged off in December 2023/January 2024, was designed to bring modern LHB-based push-pull coaches (with locomotives at both ends, for faster acceleration and braking without reversing) to the large number of passengers who travel in non-AC sleeper and general classes — a segment the fully air-conditioned Vande Bharat and Tejas trains don't serve. It aimed to combine better ride quality and safety features with an affordable fare structure for long-distance travel.</p>
