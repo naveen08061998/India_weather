@@ -101,9 +101,24 @@ jobs:
         continue-on-error: true
 
       # 10b. Build the Air Quality dashboard HTML (free Open-Meteo AQI data).
+      - name: Restore AQI history cache
+        uses: actions/cache/restore@v4
+        with:
+          path: air_quality/aqi/history
+          key: air-quality-history-${{ runner.os }}-${{ github.run_number }}
+          restore-keys: |
+            air-quality-history-${{ runner.os }}-
+
       - name: Generate Air Quality HTML
         run: python -m air_quality.orchestrator --workers 6
         timeout-minutes: 5
+        continue-on-error: true
+
+      - name: Save AQI history cache
+        uses: actions/cache/save@v4
+        with:
+          path: air_quality/aqi/history
+          key: air-quality-history-${{ runner.os }}-${{ github.run_number }}
         continue-on-error: true
 
       # 10c. Build the Government Schemes & Exam Tracker HTML (free news RSS).

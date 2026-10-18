@@ -31,6 +31,7 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 from air_quality.cities import CITIES
 from air_quality.aqi_client import fetch_all as fetch_all_aqi
+from air_quality import history_agent
 
 BASE_DIR    = Path(__file__).parent
 AQI_DIR     = BASE_DIR / "aqi"
@@ -60,21 +61,38 @@ def fetch_all(workers: int = 6, verbose: bool = False) -> dict:
 
     print(f"  {ok_count}/{len(CITIES)} cities OK in {elapsed:.1f}s")
 
+    valid_aqis = [c["reading"]["us_aqi"] for c in cities_out if "error" not in c["reading"]]
+    national_avg = round(sum(valid_aqis) / len(valid_aqis), 1) if valid_aqis else None
+    severe_cities = sorted(
+        (c["name"] for c in cities_out if "error" not in c["reading"] and c["reading"]["us_aqi"] > 200),
+        key=lambda n: next(c["reading"]["us_aqi"] for c in cities_out if c["name"] == n),
+        reverse=True,
+    )
+
     return {
-        "generated_at": datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
-        "date"        : datetime.now(IST).strftime("%d %B %Y"),
-        "cities"      : cities_out,
-        "elapsed_s"   : round(elapsed, 1),
+        "generated_at" : datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
+        "date"         : datetime.now(IST).strftime("%d %B %Y"),
+        "cities"       : cities_out,
+        "national_avg" : national_avg,
+        "severe_cities": severe_cities,
+        "elapsed_s"    : round(elapsed, 1),
     }
 
 
 def save_json(payload: dict) -> None:
     OUTPUT_JSON.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"  JSON → {OUTPUT_JSON}")
+    date_key = history_agent.archive_today(payload)
+    print(f"  History → archived as {date_key}")
 
 
 def generate_html(payload: dict) -> None:
     from air_quality.report import build_html
+    city_names = [c["name"] for c in payload.get("cities", [])]
+    payload["trends"] = {
+        name: [[d, v] for d, v in points]
+        for name, points in history_agent.load_all_trends(city_names, days=14).items()
+    }
     html = build_html(payload)
     OUTPUT_HTML.write_text(html, encoding="utf-8")
     print(f"  HTML → {OUTPUT_HTML}")
