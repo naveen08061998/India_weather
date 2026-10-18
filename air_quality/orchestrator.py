@@ -40,7 +40,7 @@ OUTPUT_HTML = AQI_DIR / "air_quality_report.html"
 AQI_DIR.mkdir(exist_ok=True)
 
 
-def fetch_all(workers: int = 10, verbose: bool = False) -> dict:
+def fetch_all(workers: int = 6, verbose: bool = False) -> dict:
     print(f"\n[Air Quality] Fetching {len(CITIES)} cities with {workers} workers…")
     start = time.time()
     readings = fetch_all_aqi(CITIES, workers=workers)
@@ -83,7 +83,7 @@ def generate_html(payload: dict) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description="India Air Quality Orchestrator")
     parser.add_argument("--output", choices=["all", "json", "html"], default="all")
-    parser.add_argument("--workers", type=int, default=10)
+    parser.add_argument("--workers", type=int, default=6)
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 

@@ -102,7 +102,7 @@ jobs:
 
       # 10b. Build the Air Quality dashboard HTML (free Open-Meteo AQI data).
       - name: Generate Air Quality HTML
-        run: python -m air_quality.orchestrator --workers 10
+        run: python -m air_quality.orchestrator --workers 6
         timeout-minutes: 5
         continue-on-error: true
 
