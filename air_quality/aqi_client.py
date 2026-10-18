@@ -19,8 +19,8 @@ IST = timezone(timedelta(hours=5, minutes=30))
 
 _AQI_URL = "https://air-quality-api.open-meteo.com/v1/air-quality"
 _TIMEOUT = 20
-_MAX_RETRIES = 3
-_RETRY_BACKOFF_S = 2
+_MAX_RETRIES = 4
+_RETRY_BACKOFF_S = 3
 
 # ── US EPA AQI bands ────────────────────────────────────────────────────────
 _BANDS = [
@@ -86,7 +86,13 @@ def fetch_city_aqi(city: dict) -> dict:
 
 
 def fetch_all(cities: list[dict], workers: int = 6) -> dict[str, dict]:
-    """Fetch AQI for all cities concurrently. Returns {city_name: reading}."""
+    """
+    Fetch AQI for all cities concurrently. Returns {city_name: reading}.
+    Any city still failing after the concurrent batch (e.g. a request that
+    exhausted its retries while the network was especially busy) gets one
+    more sequential, low-concurrency attempt — isolating it from whatever
+    caused the original burst of failures.
+    """
     results: dict[str, dict] = {}
     with ThreadPoolExecutor(max_workers=workers) as pool:
         future_map = {pool.submit(fetch_city_aqi, c): c["name"] for c in cities}
@@ -96,4 +102,11 @@ def fetch_all(cities: list[dict], workers: int = 6) -> dict[str, dict]:
                 results[name] = future.result()
             except Exception as exc:
                 results[name] = {"error": str(exc)}
+
+    failed = [c for c in cities if "error" in results.get(c["name"], {})]
+    if failed:
+        time.sleep(5)   # let any upstream congestion clear before retrying
+        for city in failed:
+            results[city["name"]] = fetch_city_aqi(city)
+
     return results
