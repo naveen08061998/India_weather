@@ -28,7 +28,7 @@ IST = timezone(timedelta(hours=5, minutes=30))
 from india_highways.highways import (
     NATIONAL_HIGHWAYS, STATE_HIGHWAY_SUMMARY, ROAD_NETWORK_STATS,
     EXPRESSWAYS, CORRIDOR_MAP, CORRIDOR_NOTES, RENUMBERING,
-    CITY_COORDS, HIGHWAY_ENDPOINTS,
+    CITY_COORDS, HIGHWAY_ENDPOINTS, HIGHWAY_VIA,
 )
 
 BASE_DIR     = Path(__file__).parent
@@ -39,13 +39,21 @@ OUTPUT_HTML  = NETWORK_DIR / "india_highways_report.html"
 NETWORK_DIR.mkdir(exist_ok=True)
 
 
+def _haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
+    from math import radians, sin, cos, asin, sqrt
+    lat1, lon1, lat2, lon2 = radians(a[0]), radians(a[1]), radians(b[0]), radians(b[1])
+    d_lat, d_lon = lat2 - lat1, lon2 - lon1
+    h = sin(d_lat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(d_lon / 2) ** 2
+    return round(2 * 6371 * asin(sqrt(h)), 1)
+
+
 def build_payload() -> dict:
     current = [h for h in NATIONAL_HIGHWAYS if h["status"] == "current"]
     historic = [h for h in NATIONAL_HIGHWAYS if h["status"] == "historic"]
     longest = max(current, key=lambda h: h["length_km"])
     shortest = min(current, key=lambda h: h["length_km"])
 
-    # Merge endpoint coordinates + corridor tag into each highway record.
+    # Merge endpoint coordinates + corridor tag + straight-line detour factor into each highway record.
     highways_out = []
     for h in NATIONAL_HIGHWAYS:
         out = dict(h)
@@ -54,7 +62,12 @@ def build_payload() -> dict:
             out["start_city"], out["end_city"] = ends
             out["start_coords"] = CITY_COORDS[ends[0]]
             out["end_coords"] = CITY_COORDS[ends[1]]
+            straight_km = _haversine_km(out["start_coords"], out["end_coords"])
+            out["straight_line_km"] = round(straight_km)
+            out["detour_factor"] = round(h["length_km"] / straight_km, 2) if straight_km else None
         out["corridor"] = CORRIDOR_MAP.get(h["number"])
+        out["via"] = HIGHWAY_VIA.get(h["number"], [])
+        out["via_coords"] = [CITY_COORDS[c] for c in out["via"]]
         highways_out.append(out)
 
     # State -> list of current highway numbers passing through it.
@@ -79,6 +92,22 @@ def build_payload() -> dict:
         key=lambda r: r["length_km"], reverse=True,
     )
 
+    # Total published length per named corridor (current highways only).
+    corridor_totals = {
+        name: sum(h["length_km"] for h in current if h["number"] in members)
+        for name, members in corridor_groups.items()
+    }
+
+    # Expressway state -> list of expressway names (reverse index, same idea as state_index).
+    expwy_state_index: dict[str, list[str]] = {}
+    for e in EXPRESSWAYS:
+        for state in e["states"]:
+            expwy_state_index.setdefault(state, []).append(e["name"])
+    expwy_state_leaderboard = sorted(
+        ({"state": s, "count": len(names)} for s, names in expwy_state_index.items()),
+        key=lambda r: r["count"], reverse=True,
+    )
+
     return {
         "generated_at": datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
         "date"        : datetime.now(IST).strftime("%d %B %Y"),
@@ -88,10 +117,13 @@ def build_payload() -> dict:
         "expressways": EXPRESSWAYS,
         "corridor_groups": corridor_groups,
         "corridor_notes": CORRIDOR_NOTES,
+        "corridor_totals": corridor_totals,
         "renumbering": RENUMBERING,
         "state_index": state_index,
         "state_leaderboard": state_leaderboard,
         "length_leaderboard": length_leaderboard,
+        "expwy_state_index": expwy_state_index,
+        "expwy_state_leaderboard": expwy_state_leaderboard,
         "stats": {
             "current_count": len(current),
             "historic_count": len(historic),

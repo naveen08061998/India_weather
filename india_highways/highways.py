@@ -289,7 +289,9 @@ CITY_COORDS: dict[str, tuple[float, float]] = {
     "Varanasi": (25.3176, 82.9739), "Baharagora": (22.3667, 86.7500),
     "Goalpara": (26.1736, 90.6259), "Numaligarh": (26.6667, 93.7333),
     "Attari": (31.6000, 74.6333), "Mumbai": (19.0760, 72.8777),
-    "Kochi": (9.9312, 76.2673),
+    "Kochi": (9.9312, 76.2673), "Jaipur": (26.9124, 75.7873),
+    "Ahmedabad": (23.0225, 72.5714), "Agra": (27.1767, 78.0081),
+    "Kanpur": (26.4499, 80.3319), "Jorabat": (26.0667, 91.8333),
 }
 HIGHWAY_ENDPOINTS: dict[str, list[str]] = {
     "NH44": ["Srinagar", "Kanyakumari"],
@@ -310,4 +312,12 @@ HIGHWAY_ENDPOINTS: dict[str, list[str]] = {
     "NH2 (historic)": ["Delhi", "Kolkata"],
     "NH17 (historic)": ["Panvel", "Kochi"],
 }
+
+# ── Known intermediate waypoint cities (only where explicitly named in the route text) ──
+HIGHWAY_VIA: dict[str, list[str]] = {
+    "NH48": ["Jaipur", "Ahmedabad", "Mumbai", "Pune"],
+    "NH19": ["Agra", "Kanpur", "Varanasi"],
+    "NH37": ["Jorabat"],
+}
+
 

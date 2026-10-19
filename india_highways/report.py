@@ -222,6 +222,33 @@ select#sort-select {
 #map-view.show { display: block; }
 .nh-grid.map-hidden { display: none; }
 
+.skip-link {
+  position: absolute; left: -999px; top: 0; background: var(--yellow); color: #1b1d21;
+  padding: 10px 16px; z-index: 2000; border-radius: 0 0 6px 0; font-size: 0.85rem; font-weight: 700;
+}
+.skip-link:focus { left: 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+.featured-banner {
+  background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--yellow);
+  border-radius: var(--radius); padding: 14px 18px; margin: 18px 0; box-shadow: var(--shadow);
+  font-size: 0.9rem; cursor: pointer;
+}
+.featured-banner strong { color: var(--yellow); }
+
+.detour-note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 6px; }
+
+.print-btn {
+  background: none; border: 1px solid var(--yellow); color: var(--yellow); border-radius: 4px;
+  padding: 5px 12px; font-size: 0.76rem; cursor: pointer; font-family: inherit; margin-left: 10px;
+}
+@media print {
+  body * { visibility: hidden; }
+  .detail-panel, .detail-panel * { visibility: visible; }
+  .detail-panel { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; }
+  .close-btn, .print-btn { display: none; }
+}
+
 footer { text-align: center; margin-top: 40px; padding: 18px; color: var(--ink-soft); font-size: 0.78rem; }
 @media (max-width: 560px) { header.hero h1 { font-size: 1.8rem; } }
 """
@@ -266,10 +293,11 @@ def _lb_row(name: str, value, max_value, suffix: str = "") -> str:
 </div>'''
 
 
-def _corridor_card(name: str, members: list, note: str) -> str:
+def _corridor_card(name: str, members: list, note: str, total_km: int) -> str:
     return f'''
 <div class="corridor-card">
   <h4>{name}</h4>
+  <div class="ew-len">{total_km:,} km total</div>
   <div class="cn-note">{note}</div>
   <div class="cn-members">{", ".join(members)}</div>
 </div>'''
@@ -295,10 +323,12 @@ def build_html(payload: dict) -> str:
     expressways = payload["expressways"]
     corridor_groups = payload["corridor_groups"]
     corridor_notes = payload["corridor_notes"]
+    corridor_totals = payload["corridor_totals"]
     renumbering = payload["renumbering"]
     state_index = payload["state_index"]
     state_leaderboard = payload["state_leaderboard"]
     length_leaderboard = payload["length_leaderboard"]
+    expwy_state_leaderboard = payload["expwy_state_leaderboard"]
 
     cards_html = "\n".join(_nh_card(h) for h in sorted(nh_list, key=lambda h: h["length_km"], reverse=True))
 
@@ -314,9 +344,12 @@ def build_html(payload: dict) -> str:
     length_lb_html = "\n".join(_lb_row(r["number"], r["length_km"], max_length, suffix=" km") for r in length_leaderboard)
 
     corridor_html = "\n".join(
-        _corridor_card(name, members, corridor_notes.get(name, ""))
+        _corridor_card(name, members, corridor_notes.get(name, ""), corridor_totals.get(name, 0))
         for name, members in sorted(corridor_groups.items(), key=lambda kv: len(kv[1]), reverse=True)
     )
+
+    max_expwy_state = expwy_state_leaderboard[0]["count"] if expwy_state_leaderboard else 1
+    expwy_state_lb_html = "\n".join(_lb_row(r["state"], r["count"], max_expwy_state) for r in expwy_state_leaderboard)
 
     renumber_rows = "\n".join(
         f'<tr><td>{r["old"]}</td><td class="arrow">\u2192</td><td>{r["new"]}</td><td>{r["note"]}</td></tr>'
@@ -349,6 +382,8 @@ def build_html(payload: dict) -> str:
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <header class="hero">
   <div class="shield">NH</div>
   <h1>India Highways</h1>
@@ -356,7 +391,7 @@ def build_html(payload: dict) -> str:
   <p class="meta">Compiled {payload['date']} &middot; MoRTH / NHAI published figures</p>
 </header>
 
-<div class="wrap">
+<main id="main-content" class="wrap">
 
   <div class="stats-strip">
     <div class="stat-card">
@@ -380,21 +415,24 @@ def build_html(payload: dict) -> str:
     </div>
   </div>
 
+  <div class="featured-banner" id="featured-banner" role="button" tabindex="0"></div>
+
   <h2 class="section-title">National Highway Corridors</h2>
   <div class="toolbar">
+    <label for="search" class="visually-hidden">Search by number, city or route</label>
     <input id="search" type="text" placeholder="Search by number, city or route…" oninput="filterNh()">
     <button class="chip active" data-filter="all" onclick="setNhFilter('all', this)">All</button>
     <button class="chip" data-filter="current" onclick="setNhFilter('current', this)">Current</button>
     <button class="chip" data-filter="historic" onclick="setNhFilter('historic', this)">Historic</button>
-    <select id="sort-select" onchange="sortNh()">
+    <select id="sort-select" onchange="sortNh()" aria-label="Sort highways">
       <option value="length-desc">Length: Longest first</option>
       <option value="length-asc">Length: Shortest first</option>
       <option value="number">Number</option>
     </select>
-    <button class="chip" id="map-toggle-btn" onclick="toggleMap()">Map View</button>
+    <button class="chip" id="map-toggle-btn" onclick="toggleMap()" aria-expanded="false">Map View</button>
     <button class="chip" onclick="openCompare()">Compare</button>
   </div>
-  <p id="count-line"></p>
+  <p id="count-line" role="status" aria-live="polite"></p>
   <div id="map-view"></div>
   <div class="nh-grid" id="nh-grid">
     {cards_html}
@@ -407,6 +445,7 @@ def build_html(payload: dict) -> str:
 
   <h2 class="section-title">Find Highways By State</h2>
   <div class="state-finder">
+    <label for="state-select" class="visually-hidden">Choose a state or union territory</label>
     <select id="state-select" onchange="showStateHighways()">
       <option value="">Choose a state/UT…</option>
       {state_options}
@@ -417,6 +456,11 @@ def build_html(payload: dict) -> str:
   <h2 class="section-title">States With the Most National Highways</h2>
   <div class="sh-bars">
     {state_lb_html}
+  </div>
+
+  <h2 class="section-title">States With the Most Expressways</h2>
+  <div class="sh-bars">
+    {expwy_state_lb_html}
   </div>
 
   <h2 class="section-title">Highway Length Leaderboard</h2>
@@ -463,9 +507,9 @@ def build_html(payload: dict) -> str:
   <h2 class="section-title">Highway Trivia Quiz</h2>
   <div class="quiz-box" id="quiz-box"></div>
 
-</div>
+</main>
 
-<footer>India Highways &middot; Static reference data from published MoRTH/NHAI figures &middot; Generated {payload['generated_at']}</footer>
+<footer role="contentinfo">India Highways &middot; Static reference data from published MoRTH/NHAI figures &middot; Generated {payload['generated_at']}</footer>
 
 <div class="modal-overlay" id="compare-overlay" role="dialog" aria-modal="true" aria-labelledby="compare-title">
   <div class="compare-modal">
@@ -520,9 +564,13 @@ function sortNh() {{
 function showNhDetail(number) {{
   const h = NH_DATA.find(x => x.number === number);
   if (!h) return;
+  const detourHtml = h.detour_factor
+    ? `<div class="detour-note">Straight-line distance between endpoints: ~${{h.straight_line_km.toLocaleString()}} km &middot; actual route is ${{h.detour_factor}}× that (detour factor)</div>`
+    : '';
   document.getElementById('detail-content').innerHTML = `
-    <h3>${{h.number}} — ${{h.route}}</h3>
+    <h3>${{h.number}} — ${{h.route}} <button class="print-btn" onclick="window.print()">🖨️ Print</button></h3>
     <div class="dp-meta">${{h.length_km.toLocaleString()}} km &middot; ${{h.states.length}} states/UTs crossed ${{h.status === 'historic' ? '&middot; Historic numbering' : ''}}</div>
+    ${{detourHtml}}
     <p class="dp-note">${{h.note}}</p>
     <div class="dp-meta"><strong>States crossed:</strong> ${{h.states.join(', ')}}</div>
   `;
@@ -533,6 +581,21 @@ function showNhDetail(number) {{
 function closeDetail() {{
   document.getElementById('detail-panel').classList.remove('open');
 }}
+
+// ── Featured highway of the day (deterministic daily rotation) ──
+function dayOfYear() {{
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  return Math.floor((now - start) / 86400000);
+}}
+function renderFeaturedBanner() {{
+  const current = NH_DATA.filter(h => h.status === 'current');
+  const pick = current[dayOfYear() % current.length];
+  document.getElementById('featured-banner').innerHTML =
+    `🌟 Featured today: <strong>${{pick.number}}</strong> — ${{pick.route}} (${{pick.length_km.toLocaleString()}} km)`;
+  document.getElementById('featured-banner').onclick = () => showNhDetail(pick.number);
+}}
+renderFeaturedBanner();
 
 // ── State highway finder ──
 function showStateHighways() {{
@@ -624,6 +687,18 @@ const QUIZ_QUESTIONS = (function buildQuiz() {{
     options: shuffle(['Delhi, Mumbai, Chennai & Kolkata', 'Delhi, Jaipur, Pune & Kochi', 'Mumbai, Goa, Bengaluru & Chennai', 'Kolkata, Patna, Lucknow & Delhi']),
     answer: 'Delhi, Mumbai, Chennai & Kolkata',
   }});
+  const withDetour = current.filter(h => h.detour_factor);
+  const mostDetour = withDetour.reduce((m, h) => h.detour_factor > m.detour_factor ? h : m);
+  qs.push({{
+    q: 'Which highway\\'s actual route length deviates the most from a straight line between its endpoints (highest "detour factor")?',
+    options: shuffle([mostDetour.number, ...wrongNumbers(mostDetour.number, withDetour, 3)]),
+    answer: mostDetour.number,
+  }});
+  qs.push({{
+    q: 'Which expressway was built with a stretch usable as an emergency Indian Air Force airstrip?',
+    options: shuffle(['Purvanchal Expressway', 'Mumbai\u2013Pune Expressway', 'Ahmedabad\u2013Vadodara Expressway', 'Eastern Peripheral Expressway']),
+    answer: 'Purvanchal Expressway',
+  }});
   return qs;
 }})();
 let quizIdx = 0;
@@ -663,7 +738,9 @@ function toggleMap() {{
   const grid = document.getElementById('nh-grid');
   const showing = mapDiv.classList.toggle('show');
   grid.classList.toggle('map-hidden', showing);
-  document.getElementById('map-toggle-btn').classList.toggle('active', showing);
+  const btn = document.getElementById('map-toggle-btn');
+  btn.classList.toggle('active', showing);
+  btn.setAttribute('aria-expanded', showing ? 'true' : 'false');
   if (showing && !mapInstance) initMap();
   else if (showing && mapInstance) setTimeout(() => mapInstance.invalidateSize(), 50);
 }}
@@ -676,11 +753,14 @@ function initMap() {{
   NH_DATA.forEach(h => {{
     if (!h.start_coords || !h.end_coords) return;
     const color = h.status === 'historic' ? '#a7acb5' : '#ffc93c';
-    L.polyline([h.start_coords, h.end_coords], {{ color, weight: 3, opacity: 0.75 }})
+    const points = [h.start_coords, ...(h.via_coords || []), h.end_coords];
+    L.polyline(points, {{ color, weight: 3, opacity: 0.75 }})
       .addTo(mapInstance)
       .bindPopup(`<strong>${{h.number}}</strong><br>${{h.route}}<br>${{h.length_km.toLocaleString()}} km`)
       .on('click', () => {{ toggleMap(); showNhDetail(h.number); }});
-    [[h.start_city, h.start_coords], [h.end_city, h.end_coords]].forEach(([name, coords]) => {{
+    const named = [[h.start_city, h.start_coords], [h.end_city, h.end_coords]];
+    (h.via || []).forEach((city, i) => named.push([city, h.via_coords[i]]));
+    named.forEach(([name, coords]) => {{
       if (cityMarkers.has(name)) return;
       cityMarkers.add(name);
       L.circleMarker(coords, {{ radius: 6, color: '#ffc93c', fillColor: '#ffc93c', fillOpacity: 0.9, weight: 1.5 }})
@@ -689,6 +769,10 @@ function initMap() {{
     }});
   }});
 }}
+
+document.getElementById('featured-banner').addEventListener('keydown', e => {{
+  if (e.key === 'Enter' || e.key === ' ') {{ e.preventDefault(); document.getElementById('featured-banner').click(); }}
+}});
 
 filterNh();
 </script>
