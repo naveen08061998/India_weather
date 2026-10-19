@@ -95,9 +95,24 @@ jobs:
         timeout-minutes: 5
 
       # 10a. Build the Stock Market snapshot HTML (free Yahoo Finance quotes).
+      - name: Restore Stock Market history cache
+        uses: actions/cache/restore@v4
+        with:
+          path: stock_market/market/history
+          key: stock-market-history-${{ runner.os }}-${{ github.run_number }}
+          restore-keys: |
+            stock-market-history-${{ runner.os }}-
+
       - name: Generate Stock Market HTML
         run: python -m stock_market.orchestrator --workers 8
         timeout-minutes: 5
+        continue-on-error: true
+
+      - name: Save Stock Market history cache
+        uses: actions/cache/save@v4
+        with:
+          path: stock_market/market/history
+          key: stock-market-history-${{ runner.os }}-${{ github.run_number }}
         continue-on-error: true
 
       # 10b. Build the Air Quality dashboard HTML (free Open-Meteo AQI data).

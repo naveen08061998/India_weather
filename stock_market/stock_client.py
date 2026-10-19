@@ -79,3 +79,39 @@ def fetch_many(symbols: list[str], workers: int = 8) -> dict[str, dict]:
             except Exception as exc:
                 results[sym] = {"symbol": sym, "error": str(exc)}
     return results
+
+
+def fetch_intraday(symbol: str) -> list[float]:
+    """
+    Fetch today's intraday 5-minute closing prices for a mini sparkline chart.
+    Returns a plain list of prices (nulls dropped), oldest-first. Empty list
+    on any failure — this is a "nice to have" visual, never worth retrying.
+    """
+    try:
+        resp = requests.get(
+            _CHART_URL.format(symbol=symbol),
+            headers=_HEADERS, timeout=_TIMEOUT,
+            params={"interval": "5m", "range": "1d"},
+        )
+        resp.raise_for_status()
+        result = resp.json().get("chart", {}).get("result")
+        if not result:
+            return []
+        closes = result[0]["indicators"]["quote"][0].get("close", [])
+        return [round(c, 2) for c in closes if c is not None]
+    except Exception:
+        return []
+
+
+def fetch_many_intraday(symbols: list[str], workers: int = 8) -> dict[str, list[float]]:
+    """Fetch intraday series for multiple symbols concurrently."""
+    results: dict[str, list[float]] = {}
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        future_map = {pool.submit(fetch_intraday, sym): sym for sym in symbols}
+        for future in as_completed(future_map):
+            sym = future_map[future]
+            try:
+                results[sym] = future.result()
+            except Exception:
+                results[sym] = []
+    return results

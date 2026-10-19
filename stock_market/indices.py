@@ -16,6 +16,13 @@ INDICES: list[dict] = [
     {"symbol": "^CNXIT",   "name": "NIFTY IT",       "exchange": "NSE"},
 ]
 
+# ── Currency & commodities ticker ──────────────────────────────────────────
+COMMODITIES: list[dict] = [
+    {"symbol": "INR=X", "name": "USD/INR",   "unit": ""},
+    {"symbol": "GC=F",  "name": "Gold",      "unit": "/oz"},
+    {"symbol": "CL=F",  "name": "Crude Oil", "unit": "/bbl"},
+]
+
 # ── Curated large-cap stocks (used for the "Top Movers" board) ────────────
 STOCKS: list[dict] = [
     {"symbol": "RELIANCE.NS",   "name": "Reliance Industries",   "sector": "Energy"},
