@@ -184,3 +184,130 @@ ROAD_NETWORK_STATS: dict = {
     "district_roads_km": 632154,
     "rural_roads_share_pct": 72.97,
 }
+
+# ── Expressways (a distinct, increasingly important network MoRTH tracks separately from NH) ──
+EXPRESSWAYS: list[dict] = [
+    {
+        "name": "Delhi–Mumbai Expressway", "status": "operational",
+        "route": "Delhi → Mumbai (via Jaipur, Kota, Indore)",
+        "length_km": 1386,
+        "states": ["Delhi", "Haryana", "Rajasthan", "Madhya Pradesh", "Gujarat", "Maharashtra"],
+        "note": "India's longest expressway on full completion — an access-controlled greenfield corridor designed to cut Delhi-Mumbai travel time roughly in half.",
+    },
+    {
+        "name": "Mumbai–Pune Expressway", "status": "operational",
+        "route": "Mumbai → Pune",
+        "length_km": 94,
+        "states": ["Maharashtra"],
+        "note": "India's first 6-lane access-controlled expressway, opened in 2002.",
+    },
+    {
+        "name": "Yamuna Expressway", "status": "operational",
+        "route": "Greater Noida → Agra",
+        "length_km": 165,
+        "states": ["Uttar Pradesh"],
+        "note": "Links the NCR to Agra; also used as a test track and for motorsport events.",
+    },
+    {
+        "name": "Eastern Peripheral Expressway", "status": "operational",
+        "route": "Kundli → Palwal (bypassing Delhi)",
+        "length_km": 135,
+        "states": ["Haryana", "Uttar Pradesh"],
+        "note": "Built to divert non-Delhi-bound traffic around the capital and ease pollution/congestion.",
+    },
+    {
+        "name": "Ahmedabad–Vadodara Expressway", "status": "operational",
+        "route": "Ahmedabad → Vadodara",
+        "length_km": 93,
+        "states": ["Gujarat"],
+        "note": "One of India's earliest expressways, opened in phases from 2000-2004.",
+    },
+    {
+        "name": "Bundelkhand Expressway", "status": "operational",
+        "route": "Chitrakoot → Etawah",
+        "length_km": 296,
+        "states": ["Uttar Pradesh"],
+        "note": "Built to spur industrial/economic development in the historically underdeveloped Bundelkhand region.",
+    },
+    {
+        "name": "Purvanchal Expressway", "status": "operational",
+        "route": "Lucknow → Ghazipur",
+        "length_km": 341,
+        "states": ["Uttar Pradesh"],
+        "note": "Includes a stretch usable as an emergency airstrip for the Indian Air Force.",
+    },
+    {
+        "name": "Bengaluru–Mysuru Expressway", "status": "operational",
+        "route": "Bengaluru → Mysuru",
+        "length_km": 118,
+        "states": ["Karnataka"],
+        "note": "Cut typical road travel time between the two cities roughly in half.",
+    },
+    {
+        "name": "Ganga Expressway", "status": "under_construction",
+        "route": "Meerut → Prayagraj",
+        "length_km": 594,
+        "states": ["Uttar Pradesh"],
+        "note": "Planned to be one of India's longest expressways on completion; includes an airstrip segment, like Purvanchal.",
+    },
+]
+
+# ── Named megaproject corridors that several National Highways above belong to ──
+CORRIDOR_MAP: dict[str, str] = {
+    "NH44": "North–South Corridor", "NH7 (historic)": "North–South Corridor",
+    "NH27": "East–West Corridor",
+    "NH48": "Golden Quadrilateral", "NH8 (historic)": "Golden Quadrilateral",
+    "NH16": "Golden Quadrilateral", "NH5 (historic)": "Golden Quadrilateral",
+    "NH19": "Golden Quadrilateral", "NH2 (historic)": "Golden Quadrilateral",
+    "NH66": "Golden Quadrilateral", "NH17 (historic)": "Golden Quadrilateral",
+}
+CORRIDOR_NOTES: dict[str, str] = {
+    "Golden Quadrilateral": "A 1999-launched megaproject linking Delhi, Mumbai, Chennai and Kolkata in a single quadrilateral — India's first large-scale controlled-access highway programme.",
+    "North–South Corridor": "Connects Srinagar in the far north to Kanyakumari at India's southern tip.",
+    "East–West Corridor": "Connects Porbandar on the Arabian Sea coast to Silchar in the Northeast.",
+}
+
+# ── Pre-2010 → post-2010 National Highway renumbering (MoRTH's 2010 consolidation) ──
+RENUMBERING: list[dict] = [
+    {"old": "NH1", "new": "NH44", "note": "Delhi–Amritsar stretch folded into the new north-south NH44."},
+    {"old": "NH7", "new": "NH44", "note": "Varanasi–Kanyakumari, formerly India's longest NH, became the southern half of NH44."},
+    {"old": "NH8", "new": "NH48", "note": "The original Delhi–Mumbai Golden Quadrilateral arm, renumbered NH48."},
+    {"old": "NH5", "new": "NH16", "note": "Kolkata–Chennai east-coast corridor, renumbered NH16."},
+    {"old": "NH2", "new": "NH19", "note": "The historic Grand Trunk Road's Delhi–Kolkata stretch, renumbered NH19."},
+    {"old": "NH17", "new": "NH66", "note": "The original west-coast highway, renumbered NH66."},
+]
+
+# ── Approximate city coordinates + each highway's end-to-end endpoints, for the map view ──
+CITY_COORDS: dict[str, tuple[float, float]] = {
+    "Srinagar": (34.0837, 74.7973), "Kanyakumari": (8.0883, 77.5385),
+    "Porbandar": (21.6417, 69.6293), "Silchar": (24.8333, 92.7789),
+    "Delhi": (28.6139, 77.2090), "Chennai": (13.0827, 80.2707),
+    "Sangrur": (30.2458, 75.8421), "Ankola": (14.6698, 74.3045),
+    "Sitarganj": (28.9333, 79.7000), "Ibrahimpatnam": (16.5500, 80.4300),
+    "Kolkata": (22.5726, 88.3639), "Panvel": (18.9894, 73.1175),
+    "Pune": (18.5204, 73.8567), "Machilipatnam": (16.1875, 81.1389),
+    "Varanasi": (25.3176, 82.9739), "Baharagora": (22.3667, 86.7500),
+    "Goalpara": (26.1736, 90.6259), "Numaligarh": (26.6667, 93.7333),
+    "Attari": (31.6000, 74.6333), "Mumbai": (19.0760, 72.8777),
+    "Kochi": (9.9312, 76.2673),
+}
+HIGHWAY_ENDPOINTS: dict[str, list[str]] = {
+    "NH44": ["Srinagar", "Kanyakumari"],
+    "NH27": ["Porbandar", "Silchar"],
+    "NH48": ["Delhi", "Chennai"],
+    "NH52": ["Sangrur", "Ankola"],
+    "NH30": ["Sitarganj", "Ibrahimpatnam"],
+    "NH16": ["Chennai", "Kolkata"],
+    "NH66": ["Panvel", "Kanyakumari"],
+    "NH19": ["Delhi", "Kolkata"],
+    "NH65": ["Pune", "Machilipatnam"],
+    "NH33": ["Varanasi", "Baharagora"],
+    "NH37": ["Goalpara", "Numaligarh"],
+    "NH1 (historic)": ["Delhi", "Attari"],
+    "NH8 (historic)": ["Delhi", "Mumbai"],
+    "NH7 (historic)": ["Varanasi", "Kanyakumari"],
+    "NH5 (historic)": ["Kolkata", "Chennai"],
+    "NH2 (historic)": ["Delhi", "Kolkata"],
+    "NH17 (historic)": ["Panvel", "Kochi"],
+}
+

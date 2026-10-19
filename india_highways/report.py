@@ -159,6 +159,69 @@ select#sort-select {
 .net-card .num { font-size: 1.5rem; color: var(--yellow); font-weight: 700; }
 .net-card .lbl { font-size: 0.78rem; color: var(--ink-soft); margin-top: 4px; }
 
+.state-finder { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); }
+.state-finder select {
+  width: 100%; max-width: 340px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 6px;
+  background: var(--bg2); color: var(--ink); font-family: inherit; font-size: 0.95rem; margin-bottom: 14px;
+}
+.state-nh-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.state-nh-chip {
+  background: var(--bg2); border: 1px solid var(--yellow-dim); color: var(--yellow);
+  border-radius: 4px; padding: 6px 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+}
+.state-nh-chip:hover { background: var(--yellow); color: #1b1d21; }
+
+.lb-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+.lb-name { width: 150px; font-size: 0.85rem; flex-shrink: 0; }
+.lb-bar-track { flex: 1; background: var(--line); border-radius: 6px; overflow: hidden; height: 16px; }
+.lb-bar { background: linear-gradient(90deg, var(--yellow-dim), var(--yellow)); height: 100%; border-radius: 6px; }
+.lb-val { width: 40px; font-size: 0.8rem; text-align: right; color: var(--ink-soft); }
+
+.corridor-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.corridor-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--yellow); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
+.corridor-card h4 { margin: 0 0 6px; color: var(--yellow); font-size: 1.05rem; }
+.corridor-card .cn-note { font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 10px; line-height: 1.5; }
+.corridor-card .cn-members { font-size: 0.85rem; font-weight: 600; }
+
+.renumber-table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+.renumber-table th, .renumber-table td { padding: 11px 14px; text-align: left; font-size: 0.88rem; border-bottom: 1px solid var(--line); }
+.renumber-table th { background: var(--bg2); color: var(--yellow); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+.renumber-table .arrow { color: var(--yellow); font-weight: 700; }
+
+.expwy-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.expwy-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.expwy-card h4 { margin: 0 0 6px; font-size: 1rem; color: var(--ink); }
+.expwy-card .ew-len { color: var(--yellow); font-weight: 700; font-size: 1rem; }
+.expwy-card .ew-route { font-size: 0.85rem; color: var(--ink-soft); margin: 4px 0; }
+.expwy-card .ew-note { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; margin-top: 6px; }
+.tag-uc { display: inline-block; margin-top: 6px; font-size: 0.68rem; padding: 2px 8px; border-radius: 10px; background: #6b4a1a; color: #ffd98a; text-transform: uppercase; letter-spacing: 0.5px; }
+
+.quiz-box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); }
+.quiz-q { font-size: 0.98rem; font-weight: 600; margin-bottom: 12px; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.quiz-opt { text-align: left; padding: 10px 14px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg2); cursor: pointer; font-family: inherit; font-size: 0.88rem; color: var(--ink); }
+.quiz-opt:hover { border-color: var(--yellow); }
+.quiz-opt.correct { background: #1f4a2e; border-color: var(--green); }
+.quiz-opt.wrong { background: #4a2420; border-color: var(--red); }
+.quiz-progress { font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 6px; }
+.quiz-next-btn { display: none; }
+.quiz-next-btn.show { display: inline-block; }
+.pf-btn { background: var(--yellow); color: #1b1d21; border: none; border-radius: 6px; padding: 10px 18px; font-size: 0.88rem; cursor: pointer; font-family: inherit; font-weight: 700; }
+
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+.modal-overlay.show { display: flex; }
+.compare-modal { background: var(--bg2); border: 2px solid var(--yellow); border-radius: var(--radius); padding: 24px; max-width: 640px; width: 100%; max-height: 85vh; overflow: auto; box-shadow: var(--shadow); }
+.compare-modal h3 { color: var(--yellow); margin-bottom: 14px; }
+.compare-selects { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.compare-selects select { flex: 1; min-width: 160px; padding: 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); font-family: inherit; }
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th, .compare-table td { padding: 9px 10px; font-size: 0.85rem; border-bottom: 1px solid var(--line); text-align: left; }
+.close-modal-btn { margin-top: 16px; background: none; border: 1px solid var(--yellow); color: var(--yellow); border-radius: 6px; padding: 8px 16px; font-size: 0.85rem; cursor: pointer; font-family: inherit; }
+
+#map-view { display: none; height: 560px; border-radius: var(--radius); overflow: hidden; margin-bottom: 18px; border: 1px solid var(--line); }
+#map-view.show { display: block; }
+.nh-grid.map-hidden { display: none; }
+
 footer { text-align: center; margin-top: 40px; padding: 18px; color: var(--ink-soft); font-size: 0.78rem; }
 @media (max-width: 560px) { header.hero h1 { font-size: 1.8rem; } }
 """
@@ -192,11 +255,50 @@ def _sh_row(name: str, pct: float, max_pct: float, unlisted: bool = False) -> st
 </div>'''
 
 
+def _lb_row(name: str, value, max_value, suffix: str = "") -> str:
+    pct = round((value / max_value) * 100) if max_value else 0
+    val_text = f"{value:,}{suffix}" if isinstance(value, int) else f"{value}{suffix}"
+    return f'''
+<div class="lb-row">
+  <div class="lb-name">{name}</div>
+  <div class="lb-bar-track"><div class="lb-bar" style="width:{pct}%"></div></div>
+  <div class="lb-val">{val_text}</div>
+</div>'''
+
+
+def _corridor_card(name: str, members: list, note: str) -> str:
+    return f'''
+<div class="corridor-card">
+  <h4>{name}</h4>
+  <div class="cn-note">{note}</div>
+  <div class="cn-members">{", ".join(members)}</div>
+</div>'''
+
+
+def _expwy_card(e: dict) -> str:
+    tag = '<span class="tag-uc">Under construction</span>' if e["status"] == "under_construction" else ''
+    return f'''
+<div class="expwy-card">
+  <h4>{e['name']}</h4>
+  <div class="ew-len">{e['length_km']:,} km</div>
+  <div class="ew-route">{e['route']}</div>
+  <div class="ew-note">{e['note']}</div>
+  {tag}
+</div>'''
+
+
 def build_html(payload: dict) -> str:
     nh_list = payload["national_highways"]
     sh = payload["state_highway_summary"]
     net = payload["road_network_stats"]
     stats = payload["stats"]
+    expressways = payload["expressways"]
+    corridor_groups = payload["corridor_groups"]
+    corridor_notes = payload["corridor_notes"]
+    renumbering = payload["renumbering"]
+    state_index = payload["state_index"]
+    state_leaderboard = payload["state_leaderboard"]
+    length_leaderboard = payload["length_leaderboard"]
 
     cards_html = "\n".join(_nh_card(h) for h in sorted(nh_list, key=lambda h: h["length_km"], reverse=True))
 
@@ -205,7 +307,33 @@ def build_html(payload: dict) -> str:
     sh_rows = "\n".join(_sh_row(s["state"], s["share_pct"], max_pct) for s in top_states)
     sh_rows += _sh_row("All other states/UTs", sh["unlisted_share_pct"], max_pct, unlisted=True)
 
+    max_state_count = state_leaderboard[0]["count"] if state_leaderboard else 1
+    state_lb_html = "\n".join(_lb_row(r["state"], r["count"], max_state_count) for r in state_leaderboard)
+
+    max_length = length_leaderboard[0]["length_km"] if length_leaderboard else 1
+    length_lb_html = "\n".join(_lb_row(r["number"], r["length_km"], max_length, suffix=" km") for r in length_leaderboard)
+
+    corridor_html = "\n".join(
+        _corridor_card(name, members, corridor_notes.get(name, ""))
+        for name, members in sorted(corridor_groups.items(), key=lambda kv: len(kv[1]), reverse=True)
+    )
+
+    renumber_rows = "\n".join(
+        f'<tr><td>{r["old"]}</td><td class="arrow">\u2192</td><td>{r["new"]}</td><td>{r["note"]}</td></tr>'
+        for r in renumbering
+    )
+
+    expwy_html = "\n".join(_expwy_card(e) for e in sorted(expressways, key=lambda e: e["length_km"], reverse=True))
+
+    state_options = "".join(f'<option value="{s}">{s}</option>' for s in sorted(state_index.keys()))
+    nh_select_options = "".join(
+        f'<option value="{h["number"]}">{h["number"]} \u2014 {h["route"]}</option>'
+        for h in sorted(nh_list, key=lambda h: h["number"])
+    )
+
     nh_json = json.dumps(nh_list, ensure_ascii=False)
+    state_index_json = json.dumps(state_index, ensure_ascii=False)
+    renumbering_json = json.dumps(renumbering, ensure_ascii=False)
 
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -215,6 +343,8 @@ def build_html(payload: dict) -> str:
 <title>India Highways</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>{CSS}</style>
 </head>
 <body>
@@ -261,8 +391,11 @@ def build_html(payload: dict) -> str:
       <option value="length-asc">Length: Shortest first</option>
       <option value="number">Number</option>
     </select>
+    <button class="chip" id="map-toggle-btn" onclick="toggleMap()">Map View</button>
+    <button class="chip" onclick="openCompare()">Compare</button>
   </div>
   <p id="count-line"></p>
+  <div id="map-view"></div>
   <div class="nh-grid" id="nh-grid">
     {cards_html}
   </div>
@@ -270,6 +403,41 @@ def build_html(payload: dict) -> str:
   <div class="detail-panel" id="detail-panel">
     <button class="close-btn" onclick="closeDetail()">✕</button>
     <div id="detail-content"></div>
+  </div>
+
+  <h2 class="section-title">Find Highways By State</h2>
+  <div class="state-finder">
+    <select id="state-select" onchange="showStateHighways()">
+      <option value="">Choose a state/UT…</option>
+      {state_options}
+    </select>
+    <div class="state-nh-list" id="state-nh-list"></div>
+  </div>
+
+  <h2 class="section-title">States With the Most National Highways</h2>
+  <div class="sh-bars">
+    {state_lb_html}
+  </div>
+
+  <h2 class="section-title">Highway Length Leaderboard</h2>
+  <div class="sh-bars">
+    {length_lb_html}
+  </div>
+
+  <h2 class="section-title">Named Megaproject Corridors</h2>
+  <div class="corridor-grid">
+    {corridor_html}
+  </div>
+
+  <h2 class="section-title">2010 Renumbering — Old → New</h2>
+  <table class="renumber-table">
+    <tr><th>Old Number</th><th></th><th>New Number</th><th>What Changed</th></tr>
+    {renumber_rows}
+  </table>
+
+  <h2 class="section-title">Expressways</h2>
+  <div class="expwy-grid">
+    {expwy_html}
   </div>
 
   <h2 class="section-title">State Highway Share (Top Published States)</h2>
@@ -292,12 +460,29 @@ def build_html(payload: dict) -> str:
     <div class="net-card"><div class="num">{net['rural_roads_share_pct']}%</div><div class="lbl">Share That Are Rural Roads</div></div>
   </div>
 
+  <h2 class="section-title">Highway Trivia Quiz</h2>
+  <div class="quiz-box" id="quiz-box"></div>
+
 </div>
 
 <footer>India Highways &middot; Static reference data from published MoRTH/NHAI figures &middot; Generated {payload['generated_at']}</footer>
 
+<div class="modal-overlay" id="compare-overlay" role="dialog" aria-modal="true" aria-labelledby="compare-title">
+  <div class="compare-modal">
+    <h3 id="compare-title">Compare Two Highways</h3>
+    <div class="compare-selects">
+      <select id="compare-a">{nh_select_options}</select>
+      <select id="compare-b">{nh_select_options}</select>
+    </div>
+    <table class="compare-table" id="compare-table"></table>
+    <button class="close-modal-btn" onclick="closeCompare()">Close</button>
+  </div>
+</div>
+
 <script>
 const NH_DATA = {nh_json};
+const STATE_INDEX = {state_index_json};
+const RENUMBERING = {renumbering_json};
 let nhFilter = 'all';
 
 function setNhFilter(f, btn) {{
@@ -347,6 +532,162 @@ function showNhDetail(number) {{
 
 function closeDetail() {{
   document.getElementById('detail-panel').classList.remove('open');
+}}
+
+// ── State highway finder ──
+function showStateHighways() {{
+  const state = document.getElementById('state-select').value;
+  const list = document.getElementById('state-nh-list');
+  if (!state) {{ list.innerHTML = ''; return; }}
+  const numbers = STATE_INDEX[state] || [];
+  list.innerHTML = numbers.length
+    ? numbers.map(n => `<span class="state-nh-chip" onclick="showNhDetail('${{n}}');document.getElementById('detail-panel').scrollIntoView({{behavior:'smooth',block:'center'}})">${{n}}</span>`).join('')
+    : '<em>No current National Highways recorded for this state in this curated dataset.</em>';
+}}
+
+// ── Compare modal ──
+function openCompare() {{
+  document.getElementById('compare-overlay').classList.add('show');
+  renderCompare();
+}}
+function closeCompare() {{
+  document.getElementById('compare-overlay').classList.remove('show');
+}}
+function renderCompare() {{
+  const a = NH_DATA.find(x => x.number === document.getElementById('compare-a').value);
+  const b = NH_DATA.find(x => x.number === document.getElementById('compare-b').value);
+  const rows = [
+    ['Route', a.route, b.route],
+    ['Length', a.length_km.toLocaleString() + ' km', b.length_km.toLocaleString() + ' km'],
+    ['States/UTs crossed', a.states.length, b.states.length],
+    ['Status', a.status, b.status],
+    ['Corridor', a.corridor || 'None', b.corridor || 'None'],
+  ];
+  document.getElementById('compare-table').innerHTML =
+    `<tr><th></th><th>${{a.number}}</th><th>${{b.number}}</th></tr>` +
+    rows.map(r => `<tr><td><strong>${{r[0]}}</strong></td><td>${{r[1]}}</td><td>${{r[2]}}</td></tr>`).join('');
+}}
+document.getElementById('compare-a').addEventListener('change', renderCompare);
+document.getElementById('compare-b').addEventListener('change', renderCompare);
+document.getElementById('compare-overlay').addEventListener('click', e => {{
+  if (e.target.id === 'compare-overlay') closeCompare();
+}});
+
+// ── Trivia quiz (generated from real NH_DATA) ──
+function shuffle(arr) {{
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {{
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }}
+  return a;
+}}
+const QUIZ_QUESTIONS = (function buildQuiz() {{
+  const current = NH_DATA.filter(h => h.status === 'current');
+  const historic = NH_DATA.filter(h => h.status === 'historic');
+  const longest = current.reduce((m, h) => h.length_km > m.length_km ? h : m);
+  const mostStates = current.reduce((m, h) => h.states.length > m.states.length ? h : m);
+  function wrongNumbers(correct, pool, n) {{
+    const choices = pool.filter(h => h.number !== correct).map(h => h.number);
+    const picked = [];
+    while (picked.length < n && choices.length) {{
+      const i = Math.floor(Math.random() * choices.length);
+      picked.push(choices.splice(i, 1)[0]);
+    }}
+    return picked;
+  }}
+  const qs = [];
+  qs.push({{
+    q: 'Which is the longest National Highway in India (current numbering)?',
+    options: shuffle([longest.number, ...wrongNumbers(longest.number, current, 3)]),
+    answer: longest.number,
+  }});
+  qs.push({{
+    q: 'Which current National Highway crosses the most states/UTs?',
+    options: shuffle([mostStates.number, ...wrongNumbers(mostStates.number, current, 3)]),
+    answer: mostStates.number,
+  }});
+  const sampleHistoric = historic[Math.floor(Math.random() * historic.length)];
+  const mapping = RENUMBERING.find(r => r.old === sampleHistoric.number.replace(' (historic)', ''));
+  qs.push({{
+    q: `What is the old "${{sampleHistoric.number}}" numbered as today?`,
+    options: shuffle([mapping.new, ...wrongNumbers(mapping.new, current, 3)]),
+    answer: mapping.new,
+  }});
+  qs.push({{
+    q: 'India\\'s first major expressway, opened in 2002, connects which two cities?',
+    options: shuffle(['Mumbai & Pune', 'Delhi & Jaipur', 'Chennai & Bengaluru', 'Ahmedabad & Vadodara']),
+    answer: 'Mumbai & Pune',
+  }});
+  qs.push({{
+    q: 'The Golden Quadrilateral megaproject links which 4 cities?',
+    options: shuffle(['Delhi, Mumbai, Chennai & Kolkata', 'Delhi, Jaipur, Pune & Kochi', 'Mumbai, Goa, Bengaluru & Chennai', 'Kolkata, Patna, Lucknow & Delhi']),
+    answer: 'Delhi, Mumbai, Chennai & Kolkata',
+  }});
+  return qs;
+}})();
+let quizIdx = 0;
+let quizScore = 0;
+function renderQuiz() {{
+  const box = document.getElementById('quiz-box');
+  if (quizIdx >= QUIZ_QUESTIONS.length) {{
+    box.innerHTML = `<div class="quiz-q">Quiz complete! You scored ${{quizScore}} / ${{QUIZ_QUESTIONS.length}}.</div>
+      <button class="pf-btn" onclick="quizIdx=0;quizScore=0;renderQuiz()">Try Again</button>`;
+    return;
+  }}
+  const cur = QUIZ_QUESTIONS[quizIdx];
+  box.innerHTML = `
+    <div class="quiz-progress">Question ${{quizIdx + 1}} of ${{QUIZ_QUESTIONS.length}} &middot; Score: ${{quizScore}}</div>
+    <div class="quiz-q">${{cur.q}}</div>
+    <div class="quiz-opts">${{cur.options.map((o, i) => `<button class="quiz-opt" onclick="answerQuiz(this, ${{i}})">${{o}}</button>`).join('')}}</div>
+    <button class="pf-btn quiz-next-btn" id="quiz-next" onclick="quizIdx++;renderQuiz()">Next \u2192</button>
+  `;
+}}
+function answerQuiz(btn, idx) {{
+  const cur = QUIZ_QUESTIONS[quizIdx];
+  const picked = cur.options[idx];
+  document.querySelectorAll('.quiz-opt').forEach(o => {{
+    o.disabled = true;
+    if (o.textContent === cur.answer) o.classList.add('correct');
+    else if (o === btn) o.classList.add('wrong');
+  }});
+  if (picked === cur.answer) quizScore++;
+  document.getElementById('quiz-next').classList.add('show');
+}}
+renderQuiz();
+
+// ── Interactive Leaflet map (city-to-city lines for each highway's endpoints) ──
+let mapInstance = null;
+function toggleMap() {{
+  const mapDiv = document.getElementById('map-view');
+  const grid = document.getElementById('nh-grid');
+  const showing = mapDiv.classList.toggle('show');
+  grid.classList.toggle('map-hidden', showing);
+  document.getElementById('map-toggle-btn').classList.toggle('active', showing);
+  if (showing && !mapInstance) initMap();
+  else if (showing && mapInstance) setTimeout(() => mapInstance.invalidateSize(), 50);
+}}
+function initMap() {{
+  mapInstance = L.map('map-view').setView([22.9, 79.0], 5);
+  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 9,
+  }}).addTo(mapInstance);
+  const cityMarkers = new Set();
+  NH_DATA.forEach(h => {{
+    if (!h.start_coords || !h.end_coords) return;
+    const color = h.status === 'historic' ? '#a7acb5' : '#ffc93c';
+    L.polyline([h.start_coords, h.end_coords], {{ color, weight: 3, opacity: 0.75 }})
+      .addTo(mapInstance)
+      .bindPopup(`<strong>${{h.number}}</strong><br>${{h.route}}<br>${{h.length_km.toLocaleString()}} km`)
+      .on('click', () => {{ toggleMap(); showNhDetail(h.number); }});
+    [[h.start_city, h.start_coords], [h.end_city, h.end_coords]].forEach(([name, coords]) => {{
+      if (cityMarkers.has(name)) return;
+      cityMarkers.add(name);
+      L.circleMarker(coords, {{ radius: 6, color: '#ffc93c', fillColor: '#ffc93c', fillOpacity: 0.9, weight: 1.5 }})
+        .addTo(mapInstance)
+        .bindPopup(`<strong>${{name}}</strong>`);
+    }});
+  }});
 }}
 
 filterNh();
