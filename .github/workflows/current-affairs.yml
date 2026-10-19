@@ -6,7 +6,8 @@ on:
     branches: [main]
     paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'stock_market/**', 'air_quality/**', 'gov_updates/**', 'static/**', '.github/workflows/current-affairs.yml']
   schedule:
-    - cron: '30 */2 * * *'   # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …)
+    - cron: '30 */2 * * *'    # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …) — baseline, all agents
+    - cron: '*/15 3-10 * * 1-5'   # every 15 min, Mon-Fri ~8:30-15:30 IST (NSE 9:15-15:30 IST) — keeps Stock Market fresh
   workflow_dispatch:   # manual "Run workflow" button in GitHub UI
 
 # ── Permissions needed by actions/deploy-pages ────────────────────────────

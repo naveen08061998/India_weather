@@ -1,9 +1,9 @@
 """
 Stock Market — HTML Dashboard Generator
 ==========================================
-Trading-terminal aesthetic: black background, monospace green/amber text,
-scrolling ticker tape — deliberately distinct from the other agents'
-soft "news app" dashboards.
+Premium dark dashboard aesthetic: glassmorphic cards, indigo/gold gradient
+accents, gradient-filled area charts — deliberately distinct from the
+other agents' dashboards (and from this file's earlier terminal look).
 
 Features: market-open/closed badge, FX & commodities ticker, intraday
 index mini-charts, sector heatmap, per-stock expandable detail (day-range
@@ -31,8 +31,8 @@ def _cls(change: float) -> str:
     return "up" if change >= 0 else "down"
 
 
-def _sparkline_svg(points: list, width: int = 140, height: int = 32) -> str:
-    """Tiny inline SVG trend line from [[date, price], ...] points (oldest-first)."""
+def _sparkline_svg(points: list, width: int = 140, height: int = 36, grad_id: str = "sg") -> str:
+    """Tiny inline SVG trend line (with a soft gradient fill) from [[date, price], ...] points."""
     if len(points) < 2:
         return '<div class="trend-empty">Building trend… check back after a few daily refreshes.</div>'
     values = [p[1] for p in points]
@@ -43,17 +43,23 @@ def _sparkline_svg(points: list, width: int = 140, height: int = 32) -> str:
     for i, v in enumerate(values):
         x = (i / (n - 1)) * (width - 4) + 2
         y = height - 2 - ((v - lo) / span) * (height - 4)
-        coords.append(f"{x:.1f},{y:.1f}")
-    polyline = " ".join(coords)
+        coords.append((x, y))
+    polyline = " ".join(f"{x:.1f},{y:.1f}" for x, y in coords)
+    area = f"2,{height - 2} " + polyline + f" {width - 2:.1f},{height - 2}"
     stroke = "var(--up)" if values[-1] >= values[0] else "var(--down)"
     return f"""
     <svg class="sparkline" viewBox="0 0 {width} {height}" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="{grad_id}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="{stroke}" stop-opacity=".35"/>
+        <stop offset="100%" stop-color="{stroke}" stop-opacity="0"/>
+      </linearGradient></defs>
+      <polygon points="{area}" fill="url(#{grad_id})"/>
       <polyline points="{polyline}" fill="none" stroke="{stroke}" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round"/>
     </svg>"""
 
 
-def _intraday_svg(prices: list, color_var: str, width: int = 160, height: int = 40) -> str:
+def _intraday_svg(prices: list, color_var: str, grad_id: str, width: int = 170, height: int = 48) -> str:
     if len(prices) < 2:
         return ""
     lo, hi = min(prices), max(prices)
@@ -63,11 +69,17 @@ def _intraday_svg(prices: list, color_var: str, width: int = 160, height: int = 
     for i, v in enumerate(prices):
         x = (i / (n - 1)) * (width - 2) + 1
         y = height - 1 - ((v - lo) / span) * (height - 2)
-        coords.append(f"{x:.1f},{y:.1f}")
-    polyline = " ".join(coords)
+        coords.append((x, y))
+    polyline = " ".join(f"{x:.1f},{y:.1f}" for x, y in coords)
+    area = f"1,{height - 1} " + polyline + f" {width - 1:.1f},{height - 1}"
     return f"""
     <svg class="intraday-chart" viewBox="0 0 {width} {height}" preserveAspectRatio="none" aria-hidden="true">
-      <polyline points="{polyline}" fill="none" stroke="{color_var}" stroke-width="1.6"/>
+      <defs><linearGradient id="{grad_id}" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="{color_var}" stop-opacity=".4"/>
+        <stop offset="100%" stop-color="{color_var}" stop-opacity="0"/>
+      </linearGradient></defs>
+      <polygon points="{area}" fill="url(#{grad_id})"/>
+      <polyline points="{polyline}" fill="none" stroke="{color_var}" stroke-width="2"/>
     </svg>"""
 
 
@@ -90,7 +102,7 @@ def _week52_info(q: dict) -> str:
         return ""
     from_high = (price - yh) / yh * 100 if yh else 0
     return (f'<div class="week52">52w Range: {_fmt_num(yl)} – {_fmt_num(yh)} '
-            f'&nbsp;|&nbsp; {from_high:+.1f}% from 52w high</div>')
+            f'&nbsp;&middot;&nbsp; {from_high:+.1f}% from 52w high</div>')
 
 
 def _ticker_item(idx: dict) -> str:
@@ -102,22 +114,22 @@ def _ticker_item(idx: dict) -> str:
             f'{_fmt_num(q["price"])} {_arrow(q["change"])}{q["change_pct"]:+.2f}%</span>')
 
 
-def _index_card(idx: dict, intraday: dict) -> str:
+def _index_card(idx: dict, intraday: dict, i: int) -> str:
     q = idx.get("quote", {})
     if "error" in q:
         return f"""
-      <div class="idx-panel err">
-        <div class="idx-head">[{idx['exchange']}] {idx['name']}</div>
-        <div class="idx-na">-- NO DATA --</div>
+      <div class="glass-card idx-panel err">
+        <div class="idx-head">{idx['exchange']} &middot; {idx['name']}</div>
+        <div class="idx-na">No data available</div>
       </div>"""
     cls = _cls(q["change"])
-    chart = _intraday_svg(intraday.get(idx["symbol"], []), f"var(--{cls})")
+    chart = _intraday_svg(intraday.get(idx["symbol"], []), f"var(--{cls})", f"idx-grad-{i}")
     return f"""
-      <div class="idx-panel {cls}">
-        <div class="idx-head">[{idx['exchange']}] {idx['name']}</div>
+      <div class="glass-card idx-panel {cls}">
+        <div class="idx-head">{idx['exchange']} &middot; {idx['name']}</div>
         <div class="idx-price">{_fmt_num(q['price'])}</div>
-        <div class="idx-chg">{_arrow(q['change'])} {_fmt_num(abs(q['change']))}  ({q['change_pct']:+.2f}%)</div>
-        <div class="idx-range">HI {_fmt_num(q['day_high'])}  LO {_fmt_num(q['day_low'])}</div>
+        <div class="idx-chg">{_arrow(q['change'])} {_fmt_num(abs(q['change']))} &nbsp;({q['change_pct']:+.2f}%)</div>
+        <div class="idx-range">Day: {_fmt_num(q['day_low'])} – {_fmt_num(q['day_high'])}</div>
         {chart}
       </div>"""
 
@@ -125,10 +137,10 @@ def _index_card(idx: dict, intraday: dict) -> str:
 def _commodity_card(c: dict) -> str:
     q = c.get("quote", {})
     if "error" in q:
-        return f'<div class="idx-panel err"><div class="idx-head">{c["name"]}</div><div class="idx-na">-- NO DATA --</div></div>'
+        return f'<div class="glass-card idx-panel err commodity"><div class="idx-head">{c["name"]}</div><div class="idx-na">No data</div></div>'
     cls = _cls(q["change"])
     return f"""
-      <div class="idx-panel {cls} commodity">
+      <div class="glass-card idx-panel {cls} commodity">
         <div class="idx-head">{c['name']}</div>
         <div class="idx-price">{_fmt_num(q['price'])}{c.get('unit', '')}</div>
         <div class="idx-chg">{_arrow(q['change'])} {q['change_pct']:+.2f}%</div>
@@ -140,7 +152,7 @@ def _heatmap_cell(h: dict) -> str:
     cls = "up" if pct >= 0 else "down"
     intensity = min(abs(pct) / 3, 1)
     return f"""
-    <div class="heat-cell {cls}" style="opacity:{.35 + intensity * .65:.2f}">
+    <div class="glass-card heat-cell {cls}" style="--heat-a:{.18 + intensity * .5:.2f}">
       <div class="heat-sector">{h['sector']}</div>
       <div class="heat-pct">{pct:+.2f}%</div>
       <div class="heat-count">{h['count']} stock{'s' if h['count'] != 1 else ''}</div>
@@ -167,18 +179,18 @@ def _stock_row(s: dict, rank: int, trend_points: list) -> str:
       <td class="sym">{s['symbol'].replace('.NS','')}</td>
       <td>{s['name']}</td>
       <td class="muted">{s['sector']}</td>
-      <td class="num">{_fmt_num(q['price'])}</td>
-      <td class="num {cls}">{_arrow(q['change'])} {q['change_pct']:+.2f}%</td>
+      <td class="num">₹{_fmt_num(q['price'])}</td>
+      <td class="num"><span class="pct-pill {cls}">{_arrow(q['change'])} {q['change_pct']:+.2f}%</span></td>
       <td class="num">
         <button class="star-btn" data-sym="{s['symbol']}" onclick="toggleWatch(this)" aria-label="Toggle watchlist">☆</button>
-        <button class="expand-btn" aria-expanded="false" onclick="toggleRow(this, '{safe_id}')">+</button>
+        <button class="expand-btn" aria-expanded="false" onclick="toggleRow(this, '{safe_id}')">⌄</button>
       </td>
     </tr>
     <tr class="detail-row" id="detail-{safe_id}" hidden>
       <td colspan="7">
         {_day_range_bar(q)}
         {_week52_info(q)}
-        <div class="trend-wrap">{_sparkline_svg(trend_points)}</div>
+        <div class="trend-wrap">{_sparkline_svg(trend_points, grad_id=f"sg-{safe_id}")}</div>
       </td>
     </tr>"""
 
@@ -210,8 +222,8 @@ def build_html(payload: dict) -> str:
     sector_heatmap = payload.get("sector_heatmap", [])
     news         = payload.get("news", [])
 
-    ticker_items = " &nbsp;•&nbsp; ".join(_ticker_item(i) for i in indices)
-    index_cards  = "\n".join(_index_card(i, intraday) for i in indices)
+    ticker_items = " &nbsp;&bull;&nbsp; ".join(_ticker_item(i) for i in indices)
+    index_cards  = "\n".join(_index_card(i, intraday, n) for n, i in enumerate(indices))
     commodity_cards = "\n".join(_commodity_card(c) for c in commodities)
     stock_rows   = "\n".join(_stock_row(s, i + 1, trends.get(s["symbol"], [])) for i, s in enumerate(stocks))
     heatmap_cells = "\n".join(_heatmap_cell(h) for h in sector_heatmap)
@@ -222,8 +234,8 @@ def build_html(payload: dict) -> str:
     losers  = len(valid_stocks) - gainers
 
     status_html = (
-        '<span class="market-open">● MARKET OPEN</span>' if market_status.get("is_open")
-        else '<span class="market-closed">● MARKET CLOSED</span>'
+        '<span class="market-open">&#9679; Market Open</span>' if market_status.get("is_open")
+        else '<span class="market-closed">&#9679; Market Closed</span>'
     )
 
     stock_data_js = _stock_data_js(stocks)
@@ -233,247 +245,242 @@ def build_html(payload: dict) -> str:
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MKT// Indian Stock Terminal — {date_label}</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<title>Indian Stock Market — {date_label}</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
   :root {{
-    --bg:#060706; --panel:#0c0f0c; --panel-h:#121712; --grid:#1d2a1d;
-    --fg:#39ff7a; --fg-dim:#1f8c48; --up:#39ff7a; --down:#ff3b4e; --muted:#5f7a63;
-    --radius:4px; --glow:0 0 8px rgba(57,255,122,.25);
-  }}
-  body.amber {{
-    --fg:#ffb000; --fg-dim:#a66d00; --up:#ffb000; --down:#ff3b4e; --muted:#8a6a2f;
-    --grid:#2a2013; --panel:#0f0b05; --panel-h:#161006;
-    --glow:0 0 8px rgba(255,176,0,.25);
+    --bg:#0a0d16; --bg2:#0f1320; --glass:rgba(255,255,255,.045); --glass-h:rgba(255,255,255,.08);
+    --border:rgba(255,255,255,.09); --accent:#f5c451; --accent2:#818cf8;
+    --up:#34d399; --down:#f87171; --text:#eef0f7; --muted:#8a8fa3;
+    --radius:18px; --shadow:0 12px 40px rgba(0,0,0,.45);
   }}
   * {{ box-sizing:border-box; margin:0; padding:0; }}
   body {{
-    font-family:'IBM Plex Mono', 'Consolas', monospace;
+    font-family:'Manrope','Segoe UI',system-ui,sans-serif;
     background:
-      repeating-linear-gradient(0deg, rgba(255,255,255,.015) 0px, rgba(255,255,255,.015) 1px, transparent 1px, transparent 3px),
+      radial-gradient(900px 500px at 10% -10%, rgba(245,196,81,.08) 0%, transparent 60%),
+      radial-gradient(800px 500px at 100% 0%, rgba(129,140,248,.1) 0%, transparent 55%),
       var(--bg);
-    color:var(--fg); min-height:100vh;
+    color:var(--text); min-height:100vh;
+  }}
+  .glass-card {{
+    background:var(--glass); border:1px solid var(--border); border-radius:var(--radius);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); box-shadow:var(--shadow);
+    transition:transform .18s, background .18s;
   }}
   .ticker-bar {{
-    background:#000; border-bottom:1px solid var(--grid); overflow:hidden;
-    white-space:nowrap; padding:6px 0; position:sticky; top:0; z-index:200;
+    background:rgba(10,13,22,.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--border);
+    overflow:hidden; white-space:nowrap; padding:9px 0; position:sticky; top:0; z-index:200;
   }}
-  .ticker-track {{ display:inline-block; animation:scroll-left 28s linear infinite; }}
-  .ticker-track span {{ font-size:.78rem; }}
+  .ticker-track {{ display:inline-block; animation:scroll-left 30s linear infinite; }}
+  .ticker-track span {{ font-size:.82rem; font-weight:600; }}
   @keyframes scroll-left {{ 0% {{ transform:translateX(0); }} 100% {{ transform:translateX(-50%); }} }}
+  .tick-item {{ margin:0 6px; }}
   .tick-item.up {{ color:var(--up); }}
   .tick-item.down {{ color:var(--down); }}
 
   header {{
-    border-bottom:1px solid var(--grid); padding:16px 24px;
+    border-bottom:1px solid var(--border); padding:18px 26px;
     display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
   }}
-  .brand {{ display:flex; align-items:baseline; gap:10px; }}
-  .brand h1 {{ font-size:1.1rem; font-weight:700; letter-spacing:.06em; text-shadow:var(--glow); }}
-  .brand .blink {{ animation:blink 1.1s steps(1) infinite; }}
-  @keyframes blink {{ 50% {{ opacity:0; }} }}
-  .brand p {{ font-size:.7rem; color:var(--muted); }}
-  .stats {{ display:flex; gap:14px; flex-wrap:wrap; font-size:.72rem; color:var(--muted); align-items:center; }}
-  .stats b {{ color:var(--fg); }}
+  .brand {{ display:flex; align-items:center; gap:12px; }}
+  .brand-icon {{
+    width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center;
+    font-size:1.3rem; background:linear-gradient(135deg,var(--accent) 0%,#c9881f 100%); box-shadow:var(--shadow);
+  }}
+  .brand h1 {{ font-size:1.18rem; font-weight:800; letter-spacing:-.01em; }}
+  .brand p {{ font-size:.72rem; color:var(--muted); margin-top:1px; }}
+  .stats {{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }}
+  .stat-chip {{
+    background:var(--glass); border:1px solid var(--border); border-radius:999px;
+    padding:6px 14px; font-size:.74rem; color:var(--muted);
+  }}
+  .stat-chip b {{ color:var(--text); font-weight:700; }}
   .market-open {{ color:var(--up); font-weight:700; }}
   .market-closed {{ color:var(--down); font-weight:700; }}
-  #theme-btn {{
-    background:var(--panel); border:1px solid var(--grid); color:var(--fg);
-    padding:6px 12px; cursor:pointer; font-family:inherit; font-size:.72rem; border-radius:var(--radius);
-  }}
 
-  main {{ max-width:1200px; margin:0 auto; padding:22px 24px 40px; }}
-  .indices-grid, .commodities-grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:26px; }}
-  .idx-panel {{
-    background:var(--panel); border:1px solid var(--grid); border-radius:var(--radius); padding:14px 16px;
-  }}
-  .idx-panel.up {{ box-shadow:inset 3px 0 0 var(--up); }}
-  .idx-panel.down {{ box-shadow:inset 3px 0 0 var(--down); }}
-  .idx-head {{ font-size:.68rem; color:var(--muted); letter-spacing:.05em; }}
-  .idx-price {{ font-size:1.7rem; font-weight:700; margin:6px 0 2px; text-shadow:var(--glow); }}
-  .idx-chg.up, .idx-chg {{ font-size:.8rem; }}
+  main {{ max-width:1220px; margin:0 auto; padding:26px; }}
+  .indices-grid, .commodities-grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin-bottom:28px; }}
+  .idx-panel {{ padding:18px 20px; position:relative; overflow:hidden; }}
+  .idx-panel.up {{ border-top:3px solid var(--up); }}
+  .idx-panel.down {{ border-top:3px solid var(--down); }}
+  .idx-head {{ font-size:.72rem; color:var(--muted); font-weight:600; letter-spacing:.02em; }}
+  .idx-price {{ font-size:1.9rem; font-weight:800; margin:8px 0 4px; }}
+  .idx-chg {{ font-size:.85rem; font-weight:600; }}
   .up {{ color:var(--up); }} .down {{ color:var(--down); }}
-  .idx-range {{ font-size:.68rem; color:var(--muted); margin-top:6px; }}
-  .idx-na {{ color:var(--down); font-size:.78rem; margin-top:8px; }}
-  .intraday-chart {{ width:100%; height:40px; margin-top:8px; display:block; }}
+  .idx-range {{ font-size:.7rem; color:var(--muted); margin-top:6px; }}
+  .idx-na {{ color:var(--muted); font-size:.8rem; margin-top:10px; }}
+  .intraday-chart {{ width:100%; height:48px; margin-top:10px; display:block; }}
 
   .section-head {{
-    font-size:.82rem; letter-spacing:.08em; color:var(--fg); border-bottom:1px dashed var(--grid);
-    padding-bottom:8px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center;
+    font-size:1rem; font-weight:800; margin:0 0 14px; display:flex; justify-content:space-between; align-items:baseline;
   }}
-  .section-head span {{ color:var(--muted); font-size:.68rem; letter-spacing:0; }}
-  .toolbar {{ display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap; align-items:center; }}
-  .prompt {{ color:var(--fg-dim); }}
+  .section-head span {{ color:var(--muted); font-weight:500; font-size:.76rem; }}
+  .toolbar {{ display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center; }}
   #search {{
-    flex:1; min-width:200px; padding:7px 10px; border-radius:var(--radius); border:1px solid var(--grid);
-    background:#000; color:var(--fg); font-family:inherit; font-size:.78rem; outline:none;
+    flex:1; min-width:200px; padding:10px 16px; border-radius:999px; border:1px solid var(--border);
+    background:var(--glass); color:var(--text); font-family:inherit; font-size:.82rem; outline:none;
   }}
   .sort-btn {{
-    background:var(--panel); border:1px solid var(--grid); border-radius:var(--radius);
-    color:var(--fg); padding:7px 12px; cursor:pointer; font-size:.7rem; font-family:inherit; letter-spacing:.04em;
+    background:var(--glass); border:1px solid var(--border); border-radius:999px;
+    color:var(--text); padding:9px 16px; cursor:pointer; font-size:.76rem; font-family:inherit; font-weight:600;
   }}
-  .sort-btn.active {{ background:var(--fg); color:#000; }}
-  table {{ width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--grid); margin-bottom:26px; }}
-  th, td {{ padding:8px 12px; text-align:left; font-size:.76rem; border-bottom:1px solid var(--grid); }}
-  th {{ color:var(--muted); font-size:.64rem; text-transform:uppercase; letter-spacing:.06em; background:var(--panel-h); font-weight:500; }}
-  td.num, th.num {{ text-align:right; font-variant-numeric:tabular-nums; }}
-  td.sym {{ font-weight:700; }}
+  .sort-btn.active {{ background:var(--accent); color:#1a1304; border-color:var(--accent); }}
+
+  table {{ width:100%; border-collapse:separate; border-spacing:0 6px; margin-bottom:28px; }}
+  th {{ color:var(--muted); font-size:.68rem; text-transform:uppercase; letter-spacing:.05em; text-align:left; padding:0 14px 6px; font-weight:600; }}
+  th.num {{ text-align:right; }}
+  td {{ padding:12px 14px; font-size:.82rem; background:var(--glass); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }}
+  tr.stock-row td:first-child {{ border-left:1px solid var(--border); border-radius:14px 0 0 14px; }}
+  tr.stock-row td:last-child {{ border-right:1px solid var(--border); border-radius:0 14px 14px 0; }}
+  td.num {{ text-align:right; font-variant-numeric:tabular-nums; }}
+  td.sym {{ font-weight:800; }}
   td.muted {{ color:var(--muted); }}
-  tr.stock-row:hover {{ background:var(--panel-h); }}
+  tr.stock-row:hover td {{ background:var(--glass-h); }}
+  .pct-pill {{ padding:3px 10px; border-radius:999px; font-weight:700; font-size:.76rem; }}
+  .pct-pill.up {{ background:rgba(52,211,153,.14); }}
+  .pct-pill.down {{ background:rgba(248,113,113,.14); }}
   .star-btn, .expand-btn {{
-    background:none; border:1px solid var(--grid); color:var(--muted); border-radius:3px;
-    width:22px; height:22px; cursor:pointer; font-family:inherit; font-size:.72rem; line-height:1;
+    background:none; border:1px solid var(--border); color:var(--muted); border-radius:8px;
+    width:26px; height:26px; cursor:pointer; font-family:inherit; font-size:.8rem; line-height:1;
   }}
-  .star-btn.active {{ color:#ffd84d; border-color:#ffd84d; }}
-  tr.detail-row td {{ background:var(--panel-h); padding:12px 16px; }}
-  .range-row {{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }}
-  .range-label {{ font-size:.68rem; color:var(--muted); }}
-  .range-bar {{ flex:1; height:4px; background:var(--grid); border-radius:2px; position:relative; }}
-  .range-dot {{ position:absolute; top:-3px; width:10px; height:10px; border-radius:50%; background:var(--fg); transform:translateX(-50%); }}
-  .week52 {{ font-size:.68rem; color:var(--muted); margin-bottom:8px; }}
-  .sparkline {{ width:140px; height:32px; display:block; }}
-  .trend-empty {{ font-size:.66rem; color:var(--muted); font-style:italic; }}
+  .star-btn.active {{ color:var(--accent); border-color:var(--accent); }}
+  tr.detail-row td {{ background:transparent; border:none; padding:6px 20px 16px; }}
+  .range-row {{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }}
+  .range-label {{ font-size:.72rem; color:var(--muted); }}
+  .range-bar {{ flex:1; height:5px; background:var(--border); border-radius:3px; position:relative; }}
+  .range-dot {{ position:absolute; top:-3px; width:11px; height:11px; border-radius:50%; background:var(--accent); transform:translateX(-50%); box-shadow:0 0 8px var(--accent); }}
+  .week52 {{ font-size:.72rem; color:var(--muted); margin-bottom:10px; }}
+  .sparkline {{ width:160px; height:36px; display:block; }}
+  .trend-empty {{ font-size:.7rem; color:var(--muted); font-style:italic; }}
 
-  .heatmap-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:8px; margin-bottom:26px; }}
-  .heat-cell {{ border-radius:var(--radius); padding:10px; text-align:center; }}
-  .heat-cell.up {{ background:var(--up); color:#000; }}
-  .heat-cell.down {{ background:var(--down); color:#000; }}
-  .heat-sector {{ font-size:.66rem; font-weight:700; }}
-  .heat-pct {{ font-size:.9rem; font-weight:700; margin:2px 0; }}
-  .heat-count {{ font-size:.6rem; opacity:.8; }}
+  .heatmap-grid {{ display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; margin-bottom:28px; }}
+  .heat-cell {{ padding:14px; text-align:center; }}
+  .heat-cell.up {{ background:rgba(52,211,153,var(--heat-a)); }}
+  .heat-cell.down {{ background:rgba(248,113,113,var(--heat-a)); }}
+  .heat-sector {{ font-size:.72rem; font-weight:700; color:var(--muted); }}
+  .heat-pct {{ font-size:1.05rem; font-weight:800; margin:4px 0; }}
+  .heat-count {{ font-size:.66rem; color:var(--muted); }}
 
+  .news-list {{ display:flex; flex-direction:column; gap:8px; margin-bottom:28px; }}
   .news-row {{
-    display:flex; justify-content:space-between; gap:12px; padding:9px 12px; border-bottom:1px solid var(--grid);
-    text-decoration:none; color:var(--fg); font-size:.76rem;
+    display:flex; justify-content:space-between; gap:14px; padding:14px 18px;
+    text-decoration:none; color:var(--text); font-size:.84rem;
   }}
-  .news-row:hover {{ background:var(--panel-h); }}
-  .news-title {{ flex:1; }}
-  .news-meta {{ color:var(--muted); font-size:.66rem; white-space:nowrap; }}
-  .news-list {{ background:var(--panel); border:1px solid var(--grid); border-radius:var(--radius); margin-bottom:26px; }}
-  .news-empty {{ padding:14px; color:var(--muted); font-size:.76rem; }}
+  .news-row:hover {{ background:var(--glass-h); }}
+  .news-title {{ flex:1; font-weight:600; }}
+  .news-meta {{ color:var(--muted); font-size:.7rem; white-space:nowrap; }}
+  .news-empty {{ padding:16px; color:var(--muted); font-size:.82rem; }}
 
-  .sim-box {{ background:var(--panel); border:1px solid var(--grid); border-radius:var(--radius); padding:16px; margin-bottom:26px; }}
-  .sim-result {{ font-size:1rem; margin-top:10px; }}
-  .sim-note {{ font-size:.66rem; color:var(--muted); margin-top:6px; }}
+  .sim-box {{ padding:20px; margin-bottom:28px; }}
+  .sim-result {{ font-size:.9rem; margin-top:14px; line-height:1.9; }}
+  .sim-note {{ font-size:.7rem; color:var(--muted); margin-top:10px; }}
 
   .modal-overlay {{
-    display:none; position:fixed; inset:0; background:rgba(0,0,0,.75); z-index:1000;
+    display:none; position:fixed; inset:0; background:rgba(5,6,12,.72); backdrop-filter:blur(4px); z-index:1000;
     align-items:center; justify-content:center; padding:20px;
   }}
   .modal-overlay.show {{ display:flex; }}
-  .compare-modal {{
-    background:var(--bg); border:1px solid var(--grid); border-radius:var(--radius);
-    padding:22px; max-width:600px; width:100%; max-height:85vh; overflow:auto;
-  }}
-  .compare-selects {{ display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; }}
+  .compare-modal {{ padding:26px; max-width:620px; width:100%; max-height:85vh; overflow:auto; }}
+  .compare-modal h3 {{ margin-bottom:16px; font-size:1.05rem; }}
+  .compare-selects {{ display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap; }}
   .compare-selects select {{
-    flex:1; min-width:150px; padding:8px; border-radius:var(--radius); border:1px solid var(--grid);
-    background:var(--panel); color:var(--fg); font-family:inherit;
+    flex:1; min-width:160px; padding:10px; border-radius:12px; border:1px solid var(--border);
+    background:var(--bg2); color:var(--text); font-family:inherit;
   }}
+  #compare-table {{ width:100%; border-collapse:collapse; }}
+  #compare-table th, #compare-table td {{ padding:9px 10px; font-size:.8rem; border-bottom:1px solid var(--border); background:none; }}
   .close-modal {{
-    margin-top:14px; background:var(--panel); border:1px solid var(--grid); border-radius:var(--radius);
-    color:var(--fg); padding:7px 16px; cursor:pointer; font-family:inherit; font-size:.76rem;
+    margin-top:16px; background:var(--glass); border:1px solid var(--border); border-radius:999px;
+    color:var(--text); padding:8px 18px; cursor:pointer; font-family:inherit; font-size:.8rem; font-weight:600;
   }}
 
-  footer {{ text-align:center; color:var(--muted); font-size:.68rem; padding:28px; }}
-  .disclaimer {{
-    border:1px dashed var(--grid); border-radius:var(--radius); padding:12px 16px;
-    font-size:.7rem; color:var(--muted); margin-top:20px;
-  }}
+  footer {{ text-align:center; color:var(--muted); font-size:.74rem; padding:30px; }}
+  .disclaimer {{ padding:16px 20px; font-size:.76rem; color:var(--muted); margin-top:22px; line-height:1.6; }}
 </style>
 </head>
 <body>
-<div class="ticker-bar"><div class="ticker-track">{ticker_items} &nbsp;•&nbsp; {ticker_items}</div></div>
+<div class="ticker-bar"><div class="ticker-track">{ticker_items} &nbsp;&bull;&nbsp; {ticker_items}</div></div>
 <header>
   <div class="brand">
-    <h1>MKT<span class="blink">_</span>// INDIAN MARKET TERMINAL</h1>
-    <p>{date_label}</p>
+    <div class="brand-icon">📈</div>
+    <div>
+      <h1>Indian Stock Market</h1>
+      <p>{date_label}</p>
+    </div>
   </div>
   <div class="stats">
-    {status_html}
-    <span>SYNC <b id="generated-at">{generated_at}</b></span>
-    <span>UP <b>{gainers}</b></span>
-    <span>DOWN <b>{losers}</b></span>
+    <span class="stat-chip">{status_html}</span>
+    <span class="stat-chip">Synced <b id="generated-at">{generated_at}</b></span>
+    <span class="stat-chip">🟢 Up <b>{gainers}</b></span>
+    <span class="stat-chip">🔴 Down <b>{losers}</b></span>
   </div>
-  <button id="theme-btn" onclick="toggleTheme()">MODE: GREEN</button>
 </header>
 <main>
   <div class="indices-grid">
     {index_cards}
   </div>
 
-  <div class="section-head">FX &amp; COMMODITIES</div>
+  <div class="section-head">FX &amp; Commodities</div>
   <div class="commodities-grid">
     {commodity_cards}
   </div>
 
-  <div class="section-head">SECTOR HEATMAP <span>avg % change, curated stocks</span></div>
+  <div class="section-head">Sector Heatmap <span>avg % change, curated stocks</span></div>
   <div class="heatmap-grid">
     {heatmap_cells}
   </div>
 
-  <div class="section-head">TOP MOVERS — CURATED NSE LARGE-CAP <span>30 symbols</span></div>
+  <div class="section-head">Top Movers <span>30 curated NSE large-caps</span></div>
   <div class="toolbar">
-    <span class="prompt">&gt;</span>
-    <input id="search" type="text" placeholder="grep company / sector…" oninput="filterStocks()"/>
-    <button class="sort-btn active" id="sort-gainers" onclick="sortStocks('gainers')">SORT: GAINERS</button>
-    <button class="sort-btn" id="sort-losers" onclick="sortStocks('losers')">SORT: LOSERS</button>
-    <button class="sort-btn" id="watch-filter-btn" onclick="toggleWatchFilter()">☆ WATCHLIST</button>
-    <button class="sort-btn" onclick="openCompare()">COMPARE</button>
+    <input id="search" type="text" placeholder="🔍 Search company or sector…" oninput="filterStocks()"/>
+    <button class="sort-btn active" id="sort-gainers" onclick="sortStocks('gainers')">Top Gainers</button>
+    <button class="sort-btn" id="sort-losers" onclick="sortStocks('losers')">Top Losers</button>
+    <button class="sort-btn" id="watch-filter-btn" onclick="toggleWatchFilter()">☆ Watchlist</button>
+    <button class="sort-btn" onclick="openCompare()">⚖️ Compare</button>
   </div>
   <table>
     <thead>
-      <tr><th>#</th><th>SYM</th><th>NAME</th><th>SECTOR</th><th class="num">PRICE ₹</th><th class="num">CHG%</th><th class="num">​</th></tr>
+      <tr><th>#</th><th>Symbol</th><th>Name</th><th>Sector</th><th class="num">Price</th><th class="num">Change</th><th class="num"></th></tr>
     </thead>
     <tbody id="stock-tbody">
       {stock_rows}
     </tbody>
   </table>
 
-  <div class="section-head">NEWSWIRE <span>market-related headlines, keyword-filtered</span></div>
-  <div class="news-list">
+  <div class="section-head">Newswire <span>market-related headlines, keyword-filtered</span></div>
+  <div class="glass-card news-list">
     {news_rows}
   </div>
 
-  <div class="section-head">PORTFOLIO SIMULATOR <span>illustrative only</span></div>
-  <div class="sim-box">
-    <button class="sort-btn" onclick="runSimulator()">▶ SIMULATE ₹1,00,000 ACROSS TODAY'S TOP 5 GAINERS</button>
+  <div class="section-head">Portfolio Simulator <span>illustrative only</span></div>
+  <div class="glass-card sim-box">
+    <button class="sort-btn" onclick="runSimulator()">▶ Simulate ₹1,00,000 across today's top 5 gainers</button>
     <div class="sim-result" id="sim-result"></div>
-    <div class="sim-note">// Hypothetical equal-weight split, using today's intraday % change only. Not investment advice.</div>
+    <div class="sim-note">Hypothetical equal-weight split, using today's intraday % change only. Not investment advice.</div>
   </div>
 
-  <div class="disclaimer">
-    // DATA: Yahoo Finance free public quote endpoint, delayed ~15min. Market status is a simple weekday/time check
-    (not a holiday calendar). Informational use only — not investment advice.
+  <div class="glass-card disclaimer">
+    ⚠️ Data from Yahoo Finance's free public quote endpoint, delayed ~15min. Market status is a simple
+    weekday/time check (not a holiday calendar). Informational use only — not investment advice.
   </div>
 </main>
-<footer>:: free public market data feed :: no key required ::</footer>
+<footer>Built with free public market data · No API key required</footer>
 
 <div class="modal-overlay" id="compare-overlay" role="dialog" aria-modal="true" aria-labelledby="compare-title">
-  <div class="compare-modal">
-    <h3 id="compare-title">COMPARE STOCKS</h3>
+  <div class="glass-card compare-modal">
+    <h3 id="compare-title">⚖️ Compare Stocks</h3>
     <div class="compare-selects">
       <select id="compare-a"></select>
       <select id="compare-b"></select>
     </div>
     <table id="compare-table"></table>
-    <button class="close-modal" onclick="closeCompare()">CLOSE</button>
+    <button class="close-modal" onclick="closeCompare()">Close</button>
   </div>
 </div>
 
 <script>
   const STOCK_DATA = {stock_data_js};
-
-  function toggleTheme() {{
-    document.body.classList.toggle('amber');
-    const btn = document.getElementById('theme-btn');
-    btn.textContent = document.body.classList.contains('amber') ? 'MODE: AMBER' : 'MODE: GREEN';
-    localStorage.setItem('stock_theme', document.body.classList.contains('amber') ? 'amber' : 'green');
-  }}
-  if (localStorage.getItem('stock_theme') === 'amber') {{
-    document.body.classList.add('amber');
-    document.getElementById('theme-btn').textContent = 'MODE: AMBER';
-  }}
 
   function filterStocks() {{
     const q = document.getElementById('search').value.toLowerCase();
@@ -504,7 +511,7 @@ def build_html(payload: dict) -> str:
     const expanded = !row.hidden;
     row.hidden = expanded;
     btn.setAttribute('aria-expanded', String(!expanded));
-    btn.textContent = expanded ? '+' : '−';
+    btn.textContent = expanded ? '⌄' : '⌃';
   }}
 
   // ── Watchlist (localStorage) ─────────────────────────────────────────────
