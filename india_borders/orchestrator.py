@@ -25,7 +25,9 @@ if hasattr(sys.stdout, "reconfigure"):
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
-from india_borders.regions import REGIONS, CAPITAL_COORDS, BORDER_LENGTHS_KM, BORDER_CHECKPOINTS
+from india_borders.regions import (
+    REGIONS, CAPITAL_COORDS, BORDER_LENGTHS_KM, BORDER_CHECKPOINTS, border_districts_for,
+)
 
 BASE_DIR     = Path(__file__).parent
 BORDERS_DIR  = BASE_DIR / "borders"
@@ -40,6 +42,15 @@ def build_payload() -> dict:
         key: {**data, "key": key, "lat": CAPITAL_COORDS[key][0], "lon": CAPITAL_COORDS[key][1]}
         for key, data in REGIONS.items()
     }
+
+    # Per-region, per-neighbor district detail (own side + their side), where curated.
+    for key, out in regions_out.items():
+        border_districts = {}
+        for nb in out["land_neighbors"]:
+            pair = border_districts_for(key, nb)
+            if pair:
+                border_districts[nb] = {"own": pair[key], "their": pair[nb]}
+        out["border_districts"] = border_districts
 
     most_borders = max(REGIONS.items(), key=lambda kv: len(kv[1]["land_neighbors"]))
     island_only = [k for k, v in REGIONS.items() if not v["land_neighbors"]]

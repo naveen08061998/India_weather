@@ -182,6 +182,26 @@ header.hero p.meta {
   float: right; background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--ink-soft);
 }
 
+.nbr-row { margin: 0 0 8px; }
+.nbr-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.district-toggle {
+  background: none; border: 1px dashed var(--line); color: var(--ink-soft); border-radius: 12px;
+  padding: 3px 10px; font-size: 0.72rem; cursor: pointer; font-family: inherit;
+}
+.district-toggle:hover { border-color: var(--accent2); color: var(--accent2); }
+.district-box {
+  display: none; margin: 6px 0 0 4px; padding: 8px 12px; background: #fdf8ea;
+  border-left: 3px solid var(--accent2); border-radius: 0 8px 8px 0; font-size: 0.8rem; line-height: 1.6;
+}
+.district-box.show { display: block; }
+.district-box .d-side { margin-bottom: 4px; }
+.district-box .d-label { font-weight: 600; color: var(--accent2); }
+.district-box .d-empty { font-style: italic; color: var(--ink-soft); }
+
+.district-disclaimer {
+  font-size: 0.72rem; color: var(--ink-soft); font-style: italic; margin-top: 10px;
+}
+
 .leaderboard {
   margin-top: 34px;
 }
@@ -553,8 +573,27 @@ function closeDetail() {{
 }}
 
 function renderDetail(region) {{
-  const neighborChips = region.land_neighbors.length
-    ? region.land_neighbors.map(k => `<span class="chip-link" onclick="selectRegion('${{k}}')">${{REGIONS[k].name}}</span>`).join('')
+  const neighborRows = region.land_neighbors.length
+    ? region.land_neighbors.map(k => {{
+        const nb = REGIONS[k];
+        const bd = (region.border_districts || {{}})[k];
+        const boxId = `district-box-${{region.key}}-${{k}}`;
+        const districtBtn = bd
+          ? `<button class="district-toggle" onclick="toggleDistricts('${{boxId}}', this)">Districts \u25be</button>`
+          : '';
+        const boxHtml = bd ? `
+          <div class="district-box" id="${{boxId}}">
+            <div class="d-side"><span class="d-label">${{region.name}}:</span> ${{bd.own.join(', ')}}</div>
+            <div class="d-side"><span class="d-label">${{nb.name}}:</span> ${{bd.their.join(', ')}}</div>
+          </div>` : '';
+        return `<div class="nbr-row">
+          <div class="nbr-head">
+            <span class="chip-link" onclick="selectRegion('${{k}}')">${{nb.name}}</span>
+            ${{districtBtn}}
+          </div>
+          ${{boxHtml}}
+        </div>`;
+      }}).join('')
     : '<em>No land neighbours — surrounded entirely by sea.</em>';
   const countryChips = region.countries.length
     ? region.countries.map(c => `<span class="chip-link" style="cursor:default">🌍 ${{c}}</span>`).join('')
@@ -566,13 +605,20 @@ function renderDetail(region) {{
     ${{noteHtml}}
     <div class="dp-section">
       <h4>Shares a border with (${{region.land_neighbors.length}})</h4>
-      ${{neighborChips}}
+      ${{neighborRows}}
+      ${{region.land_neighbors.length ? '<div class="district-disclaimer">District lists are a best-effort reference (major, long-established districts along each border) — not exhaustive, and may not include every newly created district.</div>' : ''}}
     </div>
     <div class="dp-section">
       <h4>International borders</h4>
       ${{countryChips}}
     </div>
   `;
+}}
+
+function toggleDistricts(boxId, btn) {{
+  const box = document.getElementById(boxId);
+  const showing = box.classList.toggle('show');
+  btn.textContent = showing ? 'Districts \u25b4' : 'Districts \u25be';
 }}
 
 // ── Leaderboard show-all toggle ──

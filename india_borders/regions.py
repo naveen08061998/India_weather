@@ -300,3 +300,86 @@ BORDER_CHECKPOINTS: list[dict] = [
     },
 ]
 
+# ── District-level border detail ──
+# Best-effort, non-exhaustive reference: the major/well-established districts that lie
+# directly along each state-to-state or state-to-UT border. India's states periodically
+# carve out new districts (e.g. Andhra Pradesh went from 13 to 26 districts in 2022;
+# Assam, Chhattisgarh, Madhya Pradesh, Uttar Pradesh and others have also split districts
+# in recent years) — this list uses commonly-referenced, long-established district names
+# and may not capture every newly created district exactly. Keyed by the two region keys
+# joined with "|" in alphabetical order; look up via border_districts_for().
+BORDER_DISTRICTS: dict[str, dict] = {
+    "andhra_pradesh|odisha": {"andhra_pradesh": ["Srikakulam", "Vizianagaram"], "odisha": ["Gajapati", "Rayagada", "Koraput", "Malkangiri"]},
+    "andhra_pradesh|chhattisgarh": {"andhra_pradesh": ["Visakhapatnam (Agency area)"], "chhattisgarh": ["Sukma", "Bijapur"]},
+    "andhra_pradesh|telangana": {"andhra_pradesh": ["Guntur", "Prakasam", "Krishna"], "telangana": ["Khammam", "Nalgonda", "Suryapet"]},
+    "andhra_pradesh|karnataka": {"andhra_pradesh": ["Anantapur", "Kurnool"], "karnataka": ["Ballari", "Raichur"]},
+    "andhra_pradesh|tamil_nadu": {"andhra_pradesh": ["Chittoor", "SPSR Nellore"], "tamil_nadu": ["Vellore", "Tiruvallur", "Tiruvannamalai"]},
+    "andhra_pradesh|puducherry": {"andhra_pradesh": ["East Godavari"], "puducherry": ["Yanam"]},
+    "arunachal_pradesh|assam": {"arunachal_pradesh": ["Tirap", "Changlang", "Papum Pare", "Lower Subansiri", "Siang"], "assam": ["Dhemaji", "Lakhimpur", "Sonitpur", "Charaideo", "Tinsukia"]},
+    "arunachal_pradesh|nagaland": {"arunachal_pradesh": ["Tirap", "Changlang"], "nagaland": ["Mon", "Tuensang"]},
+    "assam|nagaland": {"assam": ["Sivasagar", "Charaideo", "Jorhat", "Golaghat"], "nagaland": ["Mon", "Wokha", "Zunheboto"]},
+    "assam|manipur": {"assam": ["Cachar", "Karbi Anglong"], "manipur": ["Tamenglong", "Jiribam"]},
+    "assam|mizoram": {"assam": ["Cachar", "Hailakandi"], "mizoram": ["Kolasib", "Mamit"]},
+    "assam|tripura": {"assam": ["Cachar", "Karimganj"], "tripura": ["Dhalai", "Unakoti", "North Tripura"]},
+    "assam|meghalaya": {"assam": ["Kamrup", "Kamrup Metropolitan", "Goalpara", "Dhubri", "Karbi Anglong", "Cachar"], "meghalaya": ["West Garo Hills", "South Garo Hills", "Ri Bhoi", "East Khasi Hills", "Jaintia Hills"]},
+    "assam|west_bengal": {"assam": ["Dhubri", "Kokrajhar"], "west_bengal": ["Cooch Behar", "Alipurduar", "Jalpaiguri"]},
+    "bihar|uttar_pradesh": {"bihar": ["West Champaran", "East Champaran", "Siwan", "Gopalganj", "Kaimur", "Buxar", "Rohtas"], "uttar_pradesh": ["Maharajganj", "Kushinagar", "Deoria", "Ballia", "Ghazipur", "Sonbhadra"]},
+    "bihar|jharkhand": {"bihar": ["Banka", "Jamui", "Nawada", "Gaya", "Aurangabad", "Rohtas"], "jharkhand": ["Deoghar", "Godda", "Dumka", "Giridih", "Hazaribagh", "Chatra", "Palamu"]},
+    "bihar|west_bengal": {"bihar": ["Kishanganj", "Purnia", "Katihar"], "west_bengal": ["Uttar Dinajpur", "Malda"]},
+    "chhattisgarh|madhya_pradesh": {"chhattisgarh": ["Kabirdham", "Balod", "Rajnandgaon", "Mungeli", "Surguja", "Korea"], "madhya_pradesh": ["Balaghat", "Dindori", "Anuppur", "Shahdol", "Sidhi"]},
+    "chhattisgarh|uttar_pradesh": {"chhattisgarh": ["Korea"], "uttar_pradesh": ["Sonbhadra"]},
+    "chhattisgarh|jharkhand": {"chhattisgarh": ["Jashpur", "Surguja"], "jharkhand": ["Gumla", "Simdega", "Latehar"]},
+    "chhattisgarh|odisha": {"chhattisgarh": ["Raigarh", "Jashpur", "Mahasamund", "Bastar"], "odisha": ["Jharsuguda", "Sundargarh", "Nuapada", "Bargarh", "Nabarangpur", "Kalahandi"]},
+    "chhattisgarh|telangana": {"chhattisgarh": ["Bijapur", "Sukma"], "telangana": ["Bhadradri Kothagudem", "Mulugu"]},
+    "chhattisgarh|maharashtra": {"chhattisgarh": ["Rajnandgaon", "Balod", "Gariaband", "Bastar"], "maharashtra": ["Gondia", "Gadchiroli"]},
+    "goa|maharashtra": {"goa": ["North Goa"], "maharashtra": ["Sindhudurg"]},
+    "goa|karnataka": {"goa": ["North Goa", "South Goa"], "karnataka": ["Belagavi", "Uttara Kannada"]},
+    "gujarat|rajasthan": {"gujarat": ["Banaskantha", "Patan"], "rajasthan": ["Sirohi", "Barmer", "Jalore"]},
+    "gujarat|madhya_pradesh": {"gujarat": ["Chhota Udepur", "Dahod", "Panchmahal"], "madhya_pradesh": ["Jhabua", "Alirajpur", "Dhar"]},
+    "gujarat|maharashtra": {"gujarat": ["Valsad", "Dang", "Tapi", "Surat"], "maharashtra": ["Nashik", "Dhule", "Nandurbar"]},
+    "dnh_dd|gujarat": {"dnh_dd": ["Dadra & Nagar Haveli", "Daman"], "gujarat": ["Valsad"]},
+    "haryana|punjab": {"haryana": ["Ambala", "Fatehabad", "Sirsa"], "punjab": ["Patiala", "Sangrur", "Mansa", "Bathinda"]},
+    "haryana|himachal_pradesh": {"haryana": ["Panchkula", "Yamunanagar"], "himachal_pradesh": ["Sirmaur", "Solan"]},
+    "haryana|uttar_pradesh": {"haryana": ["Faridabad", "Panipat", "Yamunanagar"], "uttar_pradesh": ["Saharanpur", "Muzaffarnagar", "Baghpat", "Meerut", "Gautam Buddh Nagar"]},
+    "haryana|rajasthan": {"haryana": ["Mahendragarh", "Bhiwani", "Sirsa"], "rajasthan": ["Jhunjhunu", "Churu", "Hanumangarh"]},
+    "delhi|haryana": {"haryana": ["Faridabad", "Gurugram", "Jhajjar", "Sonipat"], "delhi": ["North West Delhi", "South West Delhi", "South Delhi", "East Delhi"]},
+    "chandigarh|haryana": {"haryana": ["Panchkula"], "chandigarh": ["Chandigarh (UT)"]},
+    "himachal_pradesh|jammu_kashmir": {"himachal_pradesh": ["Chamba"], "jammu_kashmir": ["Kishtwar", "Doda", "Udhampur"]},
+    "himachal_pradesh|ladakh": {"himachal_pradesh": ["Lahaul & Spiti"], "ladakh": ["Kargil", "Leh"]},
+    "himachal_pradesh|punjab": {"himachal_pradesh": ["Una", "Hamirpur", "Kangra"], "punjab": ["Hoshiarpur", "Rupnagar"]},
+    "himachal_pradesh|uttarakhand": {"himachal_pradesh": ["Sirmaur"], "uttarakhand": ["Dehradun", "Uttarkashi"]},
+    "jharkhand|west_bengal": {"jharkhand": ["Sahibganj", "Pakur", "Dumka", "East Singhbhum"], "west_bengal": ["Malda", "Birbhum", "Bankura", "Purulia", "West Medinipur"]},
+    "jharkhand|odisha": {"jharkhand": ["West Singhbhum", "Saraikela Kharsawan"], "odisha": ["Mayurbhanj", "Kendujhar", "Sundargarh"]},
+    "jharkhand|uttar_pradesh": {"jharkhand": ["Garhwa"], "uttar_pradesh": ["Sonbhadra"]},
+    "karnataka|maharashtra": {"karnataka": ["Belagavi", "Bidar", "Kalaburagi"], "maharashtra": ["Kolhapur", "Sangli", "Solapur", "Latur"]},
+    "karnataka|telangana": {"karnataka": ["Raichur", "Kalaburagi", "Bidar"], "telangana": ["Narayanpet", "Vikarabad", "Jogulamba Gadwal"]},
+    "karnataka|tamil_nadu": {"karnataka": ["Chamarajanagar", "Bengaluru Rural", "Kolar"], "tamil_nadu": ["Dharmapuri", "Krishnagiri", "Nilgiris", "Coimbatore"]},
+    "karnataka|kerala": {"karnataka": ["Dakshina Kannada", "Kodagu", "Mysuru"], "kerala": ["Kasaragod", "Wayanad", "Kannur"]},
+    "kerala|tamil_nadu": {"kerala": ["Palakkad", "Idukki", "Wayanad"], "tamil_nadu": ["Coimbatore", "Theni", "Nilgiris"]},
+    "kerala|puducherry": {"kerala": ["Kozhikode"], "puducherry": ["Mahe"]},
+    "madhya_pradesh|uttar_pradesh": {"madhya_pradesh": ["Sidhi", "Panna", "Chhatarpur", "Tikamgarh"], "uttar_pradesh": ["Mirzapur", "Banda", "Chitrakoot", "Mahoba"]},
+    "madhya_pradesh|maharashtra": {"madhya_pradesh": ["Betul", "Chhindwara", "Balaghat"], "maharashtra": ["Amravati", "Nagpur", "Bhandara"]},
+    "madhya_pradesh|rajasthan": {"madhya_pradesh": ["Neemuch", "Mandsaur", "Jhabua"], "rajasthan": ["Chittorgarh", "Pratapgarh", "Banswara"]},
+    "maharashtra|telangana": {"maharashtra": ["Chandrapur", "Gadchiroli", "Nanded"], "telangana": ["Adilabad", "Komaram Bheem Asifabad"]},
+    "dnh_dd|maharashtra": {"dnh_dd": ["Dadra & Nagar Haveli"], "maharashtra": ["Palghar"]},
+    "manipur|nagaland": {"manipur": ["Senapati", "Tamenglong"], "nagaland": ["Phek", "Kiphire"]},
+    "manipur|mizoram": {"manipur": ["Churachandpur"], "mizoram": ["Champhai"]},
+    "mizoram|tripura": {"mizoram": ["Mamit"], "tripura": ["South Tripura", "Dhalai"]},
+    "odisha|west_bengal": {"odisha": ["Balasore", "Mayurbhanj"], "west_bengal": ["Paschim Medinipur", "Jhargram"]},
+    "jammu_kashmir|punjab": {"punjab": ["Gurdaspur", "Pathankot"], "jammu_kashmir": ["Kathua"]},
+    "punjab|rajasthan": {"punjab": ["Fazilka", "Sri Muktsar Sahib"], "rajasthan": ["Sri Ganganagar"]},
+    "chandigarh|punjab": {"punjab": ["Sahibzada Ajit Singh Nagar (Mohali)"], "chandigarh": ["Chandigarh (UT)"]},
+    "rajasthan|uttar_pradesh": {"rajasthan": ["Dholpur", "Bharatpur", "Karauli"], "uttar_pradesh": ["Agra", "Etah", "Mainpuri"]},
+    "sikkim|west_bengal": {"sikkim": ["South Sikkim", "West Sikkim"], "west_bengal": ["Darjeeling", "Kalimpong"]},
+    "puducherry|tamil_nadu": {"tamil_nadu": ["Villupuram", "Cuddalore"], "puducherry": ["Puducherry", "Karaikal"]},
+    "uttar_pradesh|uttarakhand": {"uttar_pradesh": ["Saharanpur", "Bijnor", "Pilibhit", "Lakhimpur Kheri"], "uttarakhand": ["Dehradun", "Udham Singh Nagar", "Nainital"]},
+    "delhi|uttar_pradesh": {"uttar_pradesh": ["Ghaziabad", "Gautam Buddh Nagar"], "delhi": ["North East Delhi", "East Delhi", "South East Delhi"]},
+    "jammu_kashmir|ladakh": {"jammu_kashmir": ["Ganderbal", "Kishtwar"], "ladakh": ["Kargil", "Leh"]},
+}
+
+
+def border_districts_for(key_a: str, key_b: str) -> dict | None:
+    """Look up the curated district lists for a border pair, regardless of key order."""
+    return BORDER_DISTRICTS.get("|".join(sorted([key_a, key_b])))
+
+
