@@ -383,3 +383,37 @@ def border_districts_for(key_a: str, key_b: str) -> dict | None:
     return BORDER_DISTRICTS.get("|".join(sorted([key_a, key_b])))
 
 
+# ── Enclaves & exclaves — territory of one state/UT surrounded by another ──
+ENCLAVES: list[dict] = [
+    {
+        "title": "Puducherry's 4 non-contiguous regions",
+        "region_key": "puducherry",
+        "description": "Puducherry (the UT) is made of 4 separate pieces of land with no shared boundary: Puducherry town & Karaikal sit inside Tamil Nadu, Yanam sits inside Andhra Pradesh, and Mahe sits inside Kerala.",
+    },
+    {
+        "title": "Yanam — inside Andhra Pradesh",
+        "region_key": "andhra_pradesh",
+        "description": "Yanam, a Puducherry enclave on the Godavari delta, is completely surrounded by Andhra Pradesh's East Godavari district.",
+    },
+    {
+        "title": "Mahe — inside Kerala",
+        "region_key": "kerala",
+        "description": "Mahe, a Puducherry enclave on the Malabar coast, is completely surrounded by Kerala's Kozhikode district.",
+    },
+    {
+        "title": "Karaikal — inside Tamil Nadu",
+        "region_key": "tamil_nadu",
+        "description": "Karaikal, a Puducherry enclave on the Coromandel coast, is completely surrounded by Tamil Nadu's Villupuram/Cuddalore districts.",
+    },
+    {
+        "title": "Dadra & Nagar Haveli and Daman & Diu — a 2-part, non-contiguous UT",
+        "region_key": "dnh_dd",
+        "description": "Merged into a single UT in 2020, Dadra & Nagar Haveli (landlocked, surrounded by Gujarat/Maharashtra) and Daman & Diu (two separate coastal pockets on the Gujarat coast) still do not physically touch each other.",
+    },
+    {
+        "title": "Chandigarh — a shared capital, but its own separate UT",
+        "region_key": "chandigarh",
+        "description": "Chandigarh serves as the joint capital of both Punjab and Haryana, yet is itself neither — a compact Union Territory wedged between the two states it administers for.",
+    },
+]
+

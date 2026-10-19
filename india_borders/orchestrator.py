@@ -26,7 +26,7 @@ if hasattr(sys.stdout, "reconfigure"):
 IST = timezone(timedelta(hours=5, minutes=30))
 
 from india_borders.regions import (
-    REGIONS, CAPITAL_COORDS, BORDER_LENGTHS_KM, BORDER_CHECKPOINTS, border_districts_for,
+    REGIONS, CAPITAL_COORDS, BORDER_LENGTHS_KM, BORDER_CHECKPOINTS, ENCLAVES, border_districts_for,
 )
 
 BASE_DIR     = Path(__file__).parent
@@ -35,6 +35,14 @@ OUTPUT_JSON  = BORDERS_DIR / "india_borders_data.json"
 OUTPUT_HTML  = BORDERS_DIR / "india_borders_report.html"
 
 BORDERS_DIR.mkdir(exist_ok=True)
+
+
+def _haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
+    from math import radians, sin, cos, asin, sqrt
+    lat1, lon1, lat2, lon2 = radians(a[0]), radians(a[1]), radians(b[0]), radians(b[1])
+    d_lat, d_lon = lat2 - lat1, lon2 - lon1
+    h = sin(d_lat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(d_lon / 2) ** 2
+    return round(2 * 6371 * asin(sqrt(h)), 1)
 
 
 def build_payload() -> dict:
@@ -71,6 +79,26 @@ def build_payload() -> dict:
     for names in country_groups.values():
         names.sort()
 
+    # Capital-to-capital distance for every actual bordering pair (each pair once).
+    seen_pairs = set()
+    neighbor_distances = []
+    for key, v in REGIONS.items():
+        for nb in v["land_neighbors"]:
+            pair_key = "|".join(sorted([key, nb]))
+            if pair_key in seen_pairs:
+                continue
+            seen_pairs.add(pair_key)
+            dist = _haversine_km(CAPITAL_COORDS[key], CAPITAL_COORDS[nb])
+            neighbor_distances.append({
+                "a": REGIONS[key]["name"], "b": REGIONS[nb]["name"], "distance_km": dist,
+            })
+    neighbor_distances.sort(key=lambda r: r["distance_km"])
+
+    # States/UTs with no international border AND no coastline — fully "interior".
+    interior_regions = [
+        v["name"] for v in REGIONS.values() if not v["countries"] and not v["coastal"]
+    ]
+
     return {
         "generated_at": datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
         "date"        : datetime.now(IST).strftime("%d %B %Y"),
@@ -79,6 +107,9 @@ def build_payload() -> dict:
         "country_groups": country_groups,
         "border_lengths": BORDER_LENGTHS_KM,
         "border_checkpoints": BORDER_CHECKPOINTS,
+        "enclaves": ENCLAVES,
+        "neighbor_distances": neighbor_distances,
+        "interior_regions": interior_regions,
         "stats": {
             "total_regions": len(REGIONS),
             "most_borders_key": most_borders[0],

@@ -283,6 +283,49 @@ h2.section-title2 {
 #map-view.show { display: block; }
 .grid.map-hidden { display: none; }
 
+.skip-link {
+  position: absolute; left: -999px; top: 0; background: var(--accent); color: #fdf8ea;
+  padding: 10px 16px; z-index: 2000; border-radius: 0 0 8px 0; font-size: 0.85rem;
+}
+.skip-link:focus { left: 0; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+}
+
+.dist-result { font-size: 0.95rem; margin-top: 10px; }
+.dist-result strong { color: var(--accent); }
+
+.interior-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.interior-chip {
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 7px 14px;
+  font-size: 0.86rem; cursor: pointer;
+}
+.interior-chip:hover { border-color: var(--accent); background: #e3ecd9; }
+
+.enclave-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.enclave-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent2); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.enclave-card h4 { margin: 0 0 6px; font-size: 1rem; color: var(--ink); }
+.enclave-card p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.5; margin: 0; }
+.enclave-card .ec-link { font-size: 0.78rem; color: var(--accent); cursor: pointer; margin-top: 8px; display: inline-block; }
+
+.ndist-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .ndist-cols { grid-template-columns: 1fr; } }
+.ndist-col h4 { color: var(--accent2); font-size: 0.95rem; margin: 0 0 10px; }
+.ndist-row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 7px 0; border-bottom: 1px dashed var(--line); }
+.ndist-row .ndist-val { color: var(--accent); font-weight: 600; }
+.ndist-note { font-size: 0.74rem; color: var(--ink-soft); font-style: italic; margin-top: 10px; }
+
+.print-btn {
+  background: none; border: 1px solid var(--accent2); color: var(--accent2); border-radius: 16px;
+  padding: 5px 12px; font-size: 0.76rem; cursor: pointer; font-family: inherit; margin-left: 8px;
+}
+@media print {
+  body * { visibility: hidden; }
+  .detail-panel, .detail-panel * { visibility: visible; }
+  .detail-panel { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; }
+  .close-btn, .print-btn { display: none; }
+}
+
 footer {
   text-align: center; margin-top: 40px; padding: 18px; color: var(--ink-soft); font-size: 0.78rem;
 }
@@ -351,6 +394,9 @@ def build_html(payload: dict) -> str:
     country_groups = payload["country_groups"]
     border_lengths = payload["border_lengths"]
     checkpoints = payload["border_checkpoints"]
+    enclaves = payload["enclaves"]
+    neighbor_distances = payload["neighbor_distances"]
+    interior_regions = payload["interior_regions"]
 
     cards_html = "\n".join(_region_card(r) for r in sorted(regions.values(), key=lambda x: x["name"]))
 
@@ -381,6 +427,30 @@ def build_html(payload: dict) -> str:
         f'<option value="{r["key"]}">{r["name"]}</option>' for r in sorted(regions.values(), key=lambda x: x["name"])
     )
 
+    enclave_html = "\n".join(
+        f'''<div class="enclave-card">
+  <h4>{e['title']}</h4>
+  <p>{e['description']}</p>
+  <span class="ec-link" onclick="selectRegion('{e['region_key']}');document.getElementById('detail-panel').scrollIntoView({{behavior:'smooth',block:'center'}})">View on map \u2192</span>
+</div>'''
+        for e in enclaves
+    )
+
+    shortest10 = neighbor_distances[:10]
+    longest10 = neighbor_distances[-10:][::-1]
+    shortest_html = "\n".join(
+        f'<div class="ndist-row"><span>{r["a"]} \u2194 {r["b"]}</span><span class="ndist-val">{r["distance_km"]:,.0f} km</span></div>'
+        for r in shortest10
+    )
+    longest_html = "\n".join(
+        f'<div class="ndist-row"><span>{r["a"]} \u2194 {r["b"]}</span><span class="ndist-val">{r["distance_km"]:,.0f} km</span></div>'
+        for r in longest10
+    )
+
+    interior_html = "".join(
+        f'<span class="interior-chip" onclick="selectByName(\'{name}\')">{name}</span>' for name in interior_regions
+    )
+
     regions_json = json.dumps(regions, ensure_ascii=False)
 
     return f'''<!DOCTYPE html>
@@ -397,6 +467,8 @@ def build_html(payload: dict) -> str:
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Skip to main content</a>
+
 <header class="hero">
   <div class="compass">🧭</div>
   <h1>India Borders Atlas</h1>
@@ -404,7 +476,7 @@ def build_html(payload: dict) -> str:
   <p class="meta">Compiled {payload['date']} &middot; {stats['total_regions']} states &amp; union territories</p>
 </header>
 
-<div class="wrap">
+<main id="main-content" class="wrap">
 
   <div class="stats-strip">
     <div class="stat-card">
@@ -433,21 +505,23 @@ def build_html(payload: dict) -> str:
   </div>
 
   <div class="toolbar">
+    <label for="search" class="visually-hidden">Search a state or union territory</label>
     <input id="search" type="text" placeholder="Search a state or union territory…" oninput="filterRegions()">
     <button class="chip active" data-filter="all" onclick="setFilter('all', this)">All</button>
     <button class="chip" data-filter="State" onclick="setFilter('State', this)">States</button>
     <button class="chip" data-filter="Union Territory" onclick="setFilter('Union Territory', this)">UTs</button>
     <button class="chip" data-filter="coastal" onclick="setFilter('coastal', this)">Coastal</button>
     <button class="chip" data-filter="intl" onclick="setFilter('intl', this)">International Border</button>
-    <button class="chip" id="map-toggle-btn" onclick="toggleMap()">🗺️ Map View</button>
+    <button class="chip" id="map-toggle-btn" onclick="toggleMap()" aria-expanded="false">🗺️ Map View</button>
     <button class="chip" onclick="openCompare()">⚖️ Compare</button>
+    <button class="chip" onclick="surpriseMe()">🎲 Surprise Me</button>
   </div>
 
   <div class="legend">
     <span><strong>Tip:</strong> click any card to see its full neighbour list</span>
   </div>
 
-  <p id="count-line"></p>
+  <p id="count-line" role="status" aria-live="polite"></p>
 
   <div id="map-view"></div>
 
@@ -489,22 +563,59 @@ def build_html(payload: dict) -> str:
     {checkpoint_html}
   </div>
 
+  <h2 class="section-title2">Enclaves &amp; Exclaves</h2>
+  <div class="enclave-grid">
+    {enclave_html}
+  </div>
+
+  <h2 class="section-title2">Fully Interior — No Sea or International Border</h2>
+  <div class="interior-list">
+    {interior_html}
+  </div>
+
+  <h2 class="section-title2">Nearest &amp; Farthest Bordering Capitals</h2>
+  <div class="ndist-cols">
+    <div class="ndist-col">
+      <h4>Closest neighbouring capitals</h4>
+      {shortest_html}
+    </div>
+    <div class="ndist-col">
+      <h4>Farthest neighbouring capitals</h4>
+      {longest_html}
+    </div>
+  </div>
+  <p class="ndist-note">Straight-line distance between each pair's official capitals. Some pairs show 0 km because they literally share the same capital city (Chandigarh serves as the joint capital of Punjab and Haryana, and is itself a separate UT).</p>
+
+  <h2 class="section-title2">Capital-to-Capital Distance Calculator</h2>
+  <div class="pathfinder-box">
+    <div class="pf-row">
+      <label for="dist-a" class="visually-hidden">First state/UT</label>
+      <select id="dist-a"><option value="">Choose…</option>{region_options}</select>
+      <label for="dist-b" class="visually-hidden">Second state/UT</label>
+      <select id="dist-b"><option value="">Choose…</option>{region_options}</select>
+      <button class="pf-btn" onclick="calcDistance()">Calculate Distance</button>
+    </div>
+    <div class="dist-result" id="dist-result">Pick any two states/UTs to see the straight-line distance between their capitals.</div>
+  </div>
+
   <h2 class="section-title2">Border Path Finder</h2>
   <div class="pathfinder-box">
     <div class="pf-row">
+      <label for="pf-from" class="visually-hidden">From</label>
       <select id="pf-from"><option value="">From…</option>{region_options}</select>
+      <label for="pf-to" class="visually-hidden">To</label>
       <select id="pf-to"><option value="">To…</option>{region_options}</select>
       <button class="pf-btn" onclick="findPath()">Find Shortest Land Path</button>
     </div>
-    <div class="pf-result" id="pf-result">Pick two states/UTs to find the shortest chain of shared land borders between them.</div>
+    <div class="pf-result" id="pf-result" role="status" aria-live="polite">Pick two states/UTs to find the shortest chain of shared land borders between them.</div>
   </div>
 
   <h2 class="section-title2">Border Trivia Quiz</h2>
   <div class="quiz-box" id="quiz-box"></div>
 
-</div>
+</main>
 
-<footer>India Borders Atlas &middot; Static geographic reference data &middot; Generated {payload['generated_at']}</footer>
+<footer role="contentinfo">India Borders Atlas &middot; Static geographic reference data &middot; Generated {payload['generated_at']}</footer>
 
 <div class="modal-overlay" id="compare-overlay" role="dialog" aria-modal="true" aria-labelledby="compare-title">
   <div class="compare-modal">
@@ -524,6 +635,38 @@ let currentFilter = 'all';
 let selectedKey = null;
 
 function cardEls() {{ return document.querySelectorAll('.region-card'); }}
+
+function haversineKm(lat1, lon1, lat2, lon2) {{
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}}
+
+function selectByName(name) {{
+  const entry = Object.values(REGIONS).find(r => r.name === name);
+  if (entry) {{
+    selectRegion(entry.key);
+    document.getElementById('detail-panel').scrollIntoView({{behavior: 'smooth', block: 'center'}});
+  }}
+}}
+
+function surpriseMe() {{
+  const keys = Object.keys(REGIONS);
+  const pick = keys[Math.floor(Math.random() * keys.length)];
+  selectRegion(pick);
+}}
+
+function calcDistance() {{
+  const a = REGIONS[document.getElementById('dist-a').value];
+  const b = REGIONS[document.getElementById('dist-b').value];
+  const out = document.getElementById('dist-result');
+  if (!a || !b) {{ out.innerHTML = 'Please choose both states/UTs.'; return; }}
+  if (a.key === b.key) {{ out.innerHTML = 'Choose two different states/UTs.'; return; }}
+  const km = haversineKm(a.lat, a.lon, b.lat, b.lon);
+  out.innerHTML = `Straight-line distance between <strong>${{a.capital}}</strong> (${{a.name}}) and <strong>${{b.capital}}</strong> (${{b.name}}): <strong>${{km.toFixed(0)}} km</strong>`;
+}}
 
 function setFilter(f, btn) {{
   currentFilter = f;
@@ -600,7 +743,7 @@ function renderDetail(region) {{
     : '<em>None</em>';
   const noteHtml = region.note ? `<p class="dp-note">${{region.note}}</p>` : '';
   document.getElementById('detail-content').innerHTML = `
-    <h2>${{region.name}}</h2>
+    <h2>${{region.name}} <button class="print-btn" onclick="window.print()">🖨️ Print</button></h2>
     <div class="dp-meta">${{region.type}} &middot; Capital: ${{region.capital}} ${{region.coastal ? '&middot; Coastal' : ''}}</div>
     ${{noteHtml}}
     <div class="dp-section">
@@ -619,6 +762,7 @@ function toggleDistricts(boxId, btn) {{
   const box = document.getElementById(boxId);
   const showing = box.classList.toggle('show');
   btn.textContent = showing ? 'Districts \u25b4' : 'Districts \u25be';
+  btn.setAttribute('aria-expanded', showing ? 'true' : 'false');
 }}
 
 // ── Leaderboard show-all toggle ──
@@ -627,6 +771,7 @@ function toggleLeaderboard() {{
   const btn = document.getElementById('lb-toggle-btn');
   const collapsed = rows.classList.toggle('collapsed');
   btn.textContent = collapsed ? 'Show all {stats["total_regions"]} \u25be' : 'Show top 8 \u25b4';
+  btn.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
 }}
 
 // ── Path finder (BFS over land_neighbors) ──
@@ -652,8 +797,14 @@ function findPath() {{
     return;
   }}
   const chips = path.map(k => `<span class="pf-chip">${{REGIONS[k].name}}</span>`).join('<span class="pf-arrow"> \u2192 </span>');
-  out.innerHTML = `Shortest path (${{path.length - 1}} border crossing${{path.length - 1 !== 1 ? 's' : ''}}): ${{chips}}`;
+  let totalKm = 0;
+  for (let i = 0; i < path.length - 1; i++) {{
+    const a = REGIONS[path[i]], b = REGIONS[path[i + 1]];
+    totalKm += haversineKm(a.lat, a.lon, b.lat, b.lon);
+  }}
+  out.innerHTML = `Shortest path (${{path.length - 1}} border crossing${{path.length - 1 !== 1 ? 's' : ''}}, approx. ${{totalKm.toFixed(0)}} km capital-to-capital): ${{chips}}`;
 }}
+
 
 // ── Compare modal ──
 function openCompare() {{
