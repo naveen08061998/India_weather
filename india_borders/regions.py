@@ -223,3 +223,80 @@ REGIONS: dict[str, dict] = {
         "note": "Made of 4 non-contiguous enclaves: Puducherry & Karaikal (in Tamil Nadu), Yanam (in Andhra Pradesh), Mahe (in Kerala).",
     },
 }
+
+# ── Capital-city coordinates (approximate) — used for the interactive map ──
+CAPITAL_COORDS: dict[str, tuple[float, float]] = {
+    "andhra_pradesh": (16.5131, 80.5165), "arunachal_pradesh": (27.0844, 93.6053),
+    "assam": (26.1445, 91.7362), "bihar": (25.5941, 85.1376),
+    "chhattisgarh": (21.2514, 81.6296), "goa": (15.4909, 73.8278),
+    "gujarat": (23.2156, 72.6369), "haryana": (30.7333, 76.7794),
+    "himachal_pradesh": (31.1048, 77.1734), "jharkhand": (23.3441, 85.3096),
+    "karnataka": (12.9716, 77.5946), "kerala": (8.5241, 76.9366),
+    "madhya_pradesh": (23.2599, 77.4126), "maharashtra": (19.0760, 72.8777),
+    "manipur": (24.8170, 93.9368), "meghalaya": (25.5788, 91.8933),
+    "mizoram": (23.7271, 92.7176), "nagaland": (25.6751, 94.1086),
+    "odisha": (20.2961, 85.8245), "punjab": (30.7333, 76.7794),
+    "rajasthan": (26.9124, 75.7873), "sikkim": (27.3389, 88.6065),
+    "tamil_nadu": (13.0827, 80.2707), "telangana": (17.3850, 78.4867),
+    "tripura": (23.8315, 91.2868), "uttar_pradesh": (26.8467, 80.9462),
+    "uttarakhand": (30.3165, 78.0322), "west_bengal": (22.5726, 88.3639),
+    "andaman_nicobar": (11.6234, 92.7265), "chandigarh": (30.7333, 76.7794),
+    "dnh_dd": (20.3974, 72.8328), "delhi": (28.6139, 77.2090),
+    "jammu_kashmir": (34.0837, 74.7973), "ladakh": (34.1526, 77.5771),
+    "lakshadweep": (10.5669, 72.6420), "puducherry": (11.9416, 79.8083),
+}
+
+# ── Approximate international border lengths (published MEA/BSF figures) ──
+BORDER_LENGTHS_KM: list[dict] = [
+    {"country": "Bangladesh", "length_km": 4096, "note": "India's longest international border; fenced in most stretches."},
+    {"country": "China", "length_km": 3488, "note": "The Line of Actual Control (LAC) — not a mutually agreed/demarcated boundary."},
+    {"country": "Pakistan", "length_km": 3323, "note": "Includes the Line of Control (LoC) in Jammu & Kashmir."},
+    {"country": "Nepal", "length_km": 1751, "note": "Largely open border — free movement permitted under the 1950 Treaty."},
+    {"country": "Myanmar", "length_km": 1643, "note": "Runs through dense hill/forest terrain across the Northeast."},
+    {"country": "Bhutan", "length_km": 699, "note": "India's shortest major land border, entirely in the Northeast/Sikkim."},
+]
+
+# ── Major official land border crossings / Integrated Check Posts (ICPs) ──
+BORDER_CHECKPOINTS: list[dict] = [
+    {
+        "name": "Attari–Wagah", "state_key": "punjab", "country": "Pakistan",
+        "note": "India's best-known land crossing; famous for the daily Beating Retreat ceremony. Main road/rail trade and pedestrian crossing on the Amritsar–Lahore route.",
+    },
+    {
+        "name": "Petrapole–Benapole", "state_key": "west_bengal", "country": "Bangladesh",
+        "note": "India's largest land port by trade volume, on the Kolkata–Dhaka route.",
+    },
+    {
+        "name": "Akhaura–Agartala", "state_key": "tripura", "country": "Bangladesh",
+        "note": "Key crossing linking Tripura's capital directly to eastern Bangladesh.",
+    },
+    {
+        "name": "Dawki (Tamabil)", "state_key": "meghalaya", "country": "Bangladesh",
+        "note": "Crossing near the Dawki river, used for both trade and limited passenger movement.",
+    },
+    {
+        "name": "Raxaul–Birgunj", "state_key": "bihar", "country": "Nepal",
+        "note": "One of the busiest India–Nepal trade routes, linking Bihar to Nepal's Birgunj dry port.",
+    },
+    {
+        "name": "Sunauli", "state_key": "uttar_pradesh", "country": "Nepal",
+        "note": "A major open-border crossing on the Gorakhpur–Kathmandu route.",
+    },
+    {
+        "name": "Jaigaon–Phuentsholing", "state_key": "west_bengal", "country": "Bhutan",
+        "note": "The principal road gateway into Bhutan, twin towns straddling the border.",
+    },
+    {
+        "name": "Nathu La", "state_key": "sikkim", "country": "China",
+        "note": "A historic Silk Route pass reopened in 2006 for limited, seasonal border trade only (not a general public crossing).",
+    },
+    {
+        "name": "Moreh–Tamu", "state_key": "manipur", "country": "Myanmar",
+        "note": "A land customs station and key link on the India–Myanmar–Thailand trilateral highway corridor.",
+    },
+    {
+        "name": "Zokhawthar–Rih", "state_key": "mizoram", "country": "Myanmar",
+        "note": "A border trade point linking Champhai district to Myanmar's Chin State.",
+    },
+]
+

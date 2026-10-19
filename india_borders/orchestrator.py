@@ -25,7 +25,7 @@ if hasattr(sys.stdout, "reconfigure"):
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
-from india_borders.regions import REGIONS
+from india_borders.regions import REGIONS, CAPITAL_COORDS, BORDER_LENGTHS_KM, BORDER_CHECKPOINTS
 
 BASE_DIR     = Path(__file__).parent
 BORDERS_DIR  = BASE_DIR / "borders"
@@ -36,17 +36,38 @@ BORDERS_DIR.mkdir(exist_ok=True)
 
 
 def build_payload() -> dict:
-    regions_out = {key: {**data, "key": key} for key, data in REGIONS.items()}
+    regions_out = {
+        key: {**data, "key": key, "lat": CAPITAL_COORDS[key][0], "lon": CAPITAL_COORDS[key][1]}
+        for key, data in REGIONS.items()
+    }
 
     most_borders = max(REGIONS.items(), key=lambda kv: len(kv[1]["land_neighbors"]))
     island_only = [k for k, v in REGIONS.items() if not v["land_neighbors"]]
     most_countries = max(REGIONS.items(), key=lambda kv: len(kv[1]["countries"]))
     coastal_count = sum(1 for v in REGIONS.values() if v["coastal"])
 
+    # Full ranking, every region (not just the top one) — for the leaderboard.
+    leaderboard = sorted(
+        ({"key": k, "name": v["name"], "count": len(v["land_neighbors"])} for k, v in REGIONS.items()),
+        key=lambda r: r["count"], reverse=True,
+    )
+
+    # Reverse index: country -> [region names that border it].
+    country_groups: dict[str, list[str]] = {}
+    for v in REGIONS.values():
+        for country in v["countries"]:
+            country_groups.setdefault(country, []).append(v["name"])
+    for names in country_groups.values():
+        names.sort()
+
     return {
         "generated_at": datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
         "date"        : datetime.now(IST).strftime("%d %B %Y"),
         "regions"     : regions_out,
+        "leaderboard" : leaderboard,
+        "country_groups": country_groups,
+        "border_lengths": BORDER_LENGTHS_KM,
+        "border_checkpoints": BORDER_CHECKPOINTS,
         "stats": {
             "total_regions": len(REGIONS),
             "most_borders_key": most_borders[0],

@@ -191,6 +191,77 @@ header.hero p.meta {
 .lb-bar-track { flex: 1; background: #e5dcc3; border-radius: 6px; overflow: hidden; height: 16px; }
 .lb-bar { background: linear-gradient(90deg, var(--accent), var(--accent2)); height: 100%; border-radius: 6px; }
 .lb-val { width: 26px; font-size: 0.8rem; text-align: right; color: var(--ink-soft); }
+.lb-rows.collapsed .lb-row:nth-child(n+9) { display: none; }
+.show-more-btn {
+  margin-top: 10px; background: none; border: 1px solid var(--accent); color: var(--accent);
+  border-radius: 16px; padding: 6px 14px; font-size: 0.8rem; cursor: pointer; font-family: inherit;
+}
+
+h2.section-title2 {
+  color: var(--accent); font-size: 1.3rem; border-bottom: 2px solid var(--line); padding-bottom: 8px; margin: 34px 0 16px;
+}
+.country-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.country-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.country-card h4 { margin: 0 0 8px; color: var(--accent2); font-size: 1.05rem; }
+.country-card .c-states { font-size: 0.82rem; line-height: 1.6; }
+
+.length-rows .lb-row .lb-name { width: 120px; }
+
+.checkpoint-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.checkpoint-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent2); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); }
+.checkpoint-card h4 { margin: 0 0 4px; font-size: 1rem; color: var(--ink); }
+.checkpoint-card .cp-meta { font-size: 0.76rem; color: var(--accent2); margin-bottom: 6px; font-weight: 600; }
+.checkpoint-card .cp-note { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5; }
+
+.pathfinder-box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); }
+.pf-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+.pf-row select {
+  flex: 1; min-width: 180px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 8px;
+  background: #fdf8ea; color: var(--ink); font-family: inherit; font-size: 0.9rem;
+}
+.pf-btn {
+  background: var(--accent); color: #fdf8ea; border: none; border-radius: 8px;
+  padding: 10px 18px; font-size: 0.88rem; cursor: pointer; font-family: inherit; font-weight: 600;
+}
+.pf-result { font-size: 0.92rem; line-height: 1.8; }
+.pf-chip { display: inline-flex; align-items: center; gap: 6px; background: #fdf8ea; border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; margin: 0 4px 6px 0; font-size: 0.84rem; }
+.pf-arrow { color: var(--accent2); font-weight: 700; }
+
+.quiz-box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); }
+.quiz-q { font-size: 0.98rem; font-weight: 600; margin-bottom: 12px; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.quiz-opt {
+  text-align: left; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px;
+  background: #fdf8ea; cursor: pointer; font-family: inherit; font-size: 0.88rem; color: var(--ink);
+}
+.quiz-opt:hover { border-color: var(--accent); }
+.quiz-opt.correct { background: #e3ecd9; border-color: #355c2b; }
+.quiz-opt.wrong { background: #f3dede; border-color: #a23b3b; }
+.quiz-progress { font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 6px; }
+.quiz-next-btn { display: none; }
+.quiz-next-btn.show { display: inline-block; }
+
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(43,33,24,0.55); z-index: 1000;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.show { display: flex; }
+.compare-modal {
+  background: var(--bg); border: 2px solid var(--accent); border-radius: var(--radius);
+  padding: 24px; max-width: 640px; width: 100%; max-height: 85vh; overflow: auto; box-shadow: var(--shadow);
+}
+.compare-modal h3 { color: var(--accent); margin-bottom: 14px; }
+.compare-selects { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.compare-selects select {
+  flex: 1; min-width: 160px; padding: 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: #fdf8ea; color: var(--ink); font-family: inherit;
+}
+.compare-table { width: 100%; border-collapse: collapse; }
+.compare-table th, .compare-table td { padding: 9px 10px; font-size: 0.85rem; border-bottom: 1px solid var(--line); text-align: left; }
+
+#map-view { display: none; height: 560px; border-radius: var(--radius); overflow: hidden; margin-bottom: 18px; border: 1px solid var(--line); }
+#map-view.show { display: block; }
+.grid.map-hidden { display: none; }
 
 footer {
   text-align: center; margin-top: 40px; padding: 18px; color: var(--ink-soft); font-size: 0.78rem;
@@ -235,19 +306,60 @@ def _leaderboard_row(name: str, count: int, max_count: int) -> str:
 </div>'''
 
 
+def _country_card(country: str, states: list) -> str:
+    chips = "".join(f'<div>&bull; {s}</div>' for s in states)
+    return f'''
+<div class="country-card">
+  <h4>🌍 {country} <span style="font-weight:400;font-size:0.8rem;color:var(--ink-soft)">({len(states)} state{'s' if len(states) != 1 else ''})</span></h4>
+  <div class="c-states">{chips}</div>
+</div>'''
+
+
+def _checkpoint_card(cp: dict, region_name: str) -> str:
+    return f'''
+<div class="checkpoint-card">
+  <h4>{cp['name']}</h4>
+  <div class="cp-meta">{region_name} &harr; {cp['country']}</div>
+  <div class="cp-note">{cp['note']}</div>
+</div>'''
+
+
 def build_html(payload: dict) -> str:
     regions = payload["regions"]
     stats = payload["stats"]
+    leaderboard = payload["leaderboard"]
+    country_groups = payload["country_groups"]
+    border_lengths = payload["border_lengths"]
+    checkpoints = payload["border_checkpoints"]
 
     cards_html = "\n".join(_region_card(r) for r in sorted(regions.values(), key=lambda x: x["name"]))
 
-    ranked = sorted(regions.values(), key=lambda x: len(x["land_neighbors"]), reverse=True)[:8]
-    max_count = len(ranked[0]["land_neighbors"]) if ranked else 1
-    leaderboard_html = "\n".join(_leaderboard_row(r["name"], len(r["land_neighbors"]), max_count) for r in ranked)
+    max_count = leaderboard[0]["count"] if leaderboard else 1
+    leaderboard_html = "\n".join(_leaderboard_row(r["name"], r["count"], max_count) for r in leaderboard)
+
+    country_html = "\n".join(
+        _country_card(country, states)
+        for country, states in sorted(country_groups.items(), key=lambda kv: len(kv[1]), reverse=True)
+    )
+
+    max_length = border_lengths[0]["length_km"]
+    length_html = "\n".join(
+        f'''<div class="lb-row"><div class="lb-name">{b['country']}</div>
+<div class="lb-bar-track"><div class="lb-bar" style="width:{round(b['length_km']/max_length*100)}%"></div></div>
+<div class="lb-val">{b['length_km']}</div></div>'''
+        for b in border_lengths
+    )
+    length_notes_html = "\n".join(f"<p><strong>{b['country']}:</strong> {b['note']}</p>" for b in border_lengths)
+
+    checkpoint_html = "\n".join(_checkpoint_card(cp, regions[cp["state_key"]]["name"]) for cp in checkpoints)
 
     most_borders = regions[stats["most_borders_key"]]
     most_countries = regions[stats["most_countries_key"]]
     island_names = ", ".join(regions[k]["name"] for k in stats["island_only"]) or "None"
+
+    region_options = "".join(
+        f'<option value="{r["key"]}">{r["name"]}</option>' for r in sorted(regions.values(), key=lambda x: x["name"])
+    )
 
     regions_json = json.dumps(regions, ensure_ascii=False)
 
@@ -259,6 +371,8 @@ def build_html(payload: dict) -> str:
 <title>India Borders Atlas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>{CSS}</style>
 </head>
 <body>
@@ -305,6 +419,8 @@ def build_html(payload: dict) -> str:
     <button class="chip" data-filter="Union Territory" onclick="setFilter('Union Territory', this)">UTs</button>
     <button class="chip" data-filter="coastal" onclick="setFilter('coastal', this)">Coastal</button>
     <button class="chip" data-filter="intl" onclick="setFilter('intl', this)">International Border</button>
+    <button class="chip" id="map-toggle-btn" onclick="toggleMap()">🗺️ Map View</button>
+    <button class="chip" onclick="openCompare()">⚖️ Compare</button>
   </div>
 
   <div class="legend">
@@ -312,6 +428,8 @@ def build_html(payload: dict) -> str:
   </div>
 
   <p id="count-line"></p>
+
+  <div id="map-view"></div>
 
   <div class="grid" id="grid">
     {cards_html}
@@ -323,13 +441,62 @@ def build_html(payload: dict) -> str:
   </div>
 
   <div class="leaderboard">
-    <h2>Border Leaderboard — Most Neighbouring States/UTs</h2>
-    {leaderboard_html}
+    <h2>Border Leaderboard — All States/UTs by Neighbour Count</h2>
+    <div class="lb-rows collapsed" id="lb-rows">
+      {leaderboard_html}
+    </div>
+    <button class="show-more-btn" id="lb-toggle-btn" onclick="toggleLeaderboard()">Show all {stats['total_regions']} ▾</button>
   </div>
+
+  <h2 class="section-title2">Who Borders Which Country</h2>
+  <div class="country-grid">
+    {country_html}
+  </div>
+
+  <h2 class="section-title2">International Border Lengths</h2>
+  <div class="leaderboard" style="margin-top:0">
+    <div class="length-rows">
+      {length_html}
+    </div>
+    <div style="margin-top:14px;font-size:0.82rem;color:var(--ink-soft);line-height:1.6">
+      {length_notes_html}
+      <p style="margin-top:8px;font-style:italic">Approximate figures from published MEA/BSF sources; the China border is the Line of Actual Control (LAC), not a mutually demarcated boundary.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title2">Major Border Checkpoints</h2>
+  <div class="checkpoint-grid">
+    {checkpoint_html}
+  </div>
+
+  <h2 class="section-title2">Border Path Finder</h2>
+  <div class="pathfinder-box">
+    <div class="pf-row">
+      <select id="pf-from"><option value="">From…</option>{region_options}</select>
+      <select id="pf-to"><option value="">To…</option>{region_options}</select>
+      <button class="pf-btn" onclick="findPath()">Find Shortest Land Path</button>
+    </div>
+    <div class="pf-result" id="pf-result">Pick two states/UTs to find the shortest chain of shared land borders between them.</div>
+  </div>
+
+  <h2 class="section-title2">Border Trivia Quiz</h2>
+  <div class="quiz-box" id="quiz-box"></div>
 
 </div>
 
 <footer>India Borders Atlas &middot; Static geographic reference data &middot; Generated {payload['generated_at']}</footer>
+
+<div class="modal-overlay" id="compare-overlay" role="dialog" aria-modal="true" aria-labelledby="compare-title">
+  <div class="compare-modal">
+    <h3 id="compare-title">⚖️ Compare Two States/UTs</h3>
+    <div class="compare-selects">
+      <select id="compare-a">{region_options}</select>
+      <select id="compare-b">{region_options}</select>
+    </div>
+    <table class="compare-table" id="compare-table"></table>
+    <button class="show-more-btn" style="margin-top:16px" onclick="closeCompare()">Close</button>
+  </div>
+</div>
 
 <script>
 const REGIONS = {regions_json};
@@ -406,6 +573,196 @@ function renderDetail(region) {{
       ${{countryChips}}
     </div>
   `;
+}}
+
+// ── Leaderboard show-all toggle ──
+function toggleLeaderboard() {{
+  const rows = document.getElementById('lb-rows');
+  const btn = document.getElementById('lb-toggle-btn');
+  const collapsed = rows.classList.toggle('collapsed');
+  btn.textContent = collapsed ? 'Show all {stats["total_regions"]} \u25be' : 'Show top 8 \u25b4';
+}}
+
+// ── Path finder (BFS over land_neighbors) ──
+function findPath() {{
+  const from = document.getElementById('pf-from').value;
+  const to = document.getElementById('pf-to').value;
+  const out = document.getElementById('pf-result');
+  if (!from || !to) {{ out.innerHTML = 'Please choose both a starting and ending state/UT.'; return; }}
+  if (from === to) {{ out.innerHTML = 'Choose two different states/UTs.'; return; }}
+  const queue = [[from]];
+  const seen = new Set([from]);
+  let path = null;
+  while (queue.length) {{
+    const p = queue.shift();
+    const last = p[p.length - 1];
+    if (last === to) {{ path = p; break; }}
+    for (const nb of REGIONS[last].land_neighbors) {{
+      if (!seen.has(nb)) {{ seen.add(nb); queue.push([...p, nb]); }}
+    }}
+  }}
+  if (!path) {{
+    out.innerHTML = `<em>No land-border path exists between ${{REGIONS[from].name}} and ${{REGIONS[to].name}} \u2014 one or both are only reachable by sea/air, or sit on separate landmasses.</em>`;
+    return;
+  }}
+  const chips = path.map(k => `<span class="pf-chip">${{REGIONS[k].name}}</span>`).join('<span class="pf-arrow"> \u2192 </span>');
+  out.innerHTML = `Shortest path (${{path.length - 1}} border crossing${{path.length - 1 !== 1 ? 's' : ''}}): ${{chips}}`;
+}}
+
+// ── Compare modal ──
+function openCompare() {{
+  document.getElementById('compare-overlay').classList.add('show');
+  renderCompare();
+}}
+function closeCompare() {{
+  document.getElementById('compare-overlay').classList.remove('show');
+}}
+function renderCompare() {{
+  const a = REGIONS[document.getElementById('compare-a').value];
+  const b = REGIONS[document.getElementById('compare-b').value];
+  const rows = [
+    ['Type', a.type, b.type],
+    ['Capital', a.capital, b.capital],
+    ['Land neighbours', a.land_neighbors.length, b.land_neighbors.length],
+    ['Countries bordered', a.countries.length ? a.countries.join(', ') : 'None', b.countries.length ? b.countries.join(', ') : 'None'],
+    ['Coastal', a.coastal ? 'Yes' : 'No', b.coastal ? 'Yes' : 'No'],
+    ['Shares border with each other?', a.land_neighbors.includes(b.key) ? 'Yes' : 'No', b.land_neighbors.includes(a.key) ? 'Yes' : 'No'],
+  ];
+  document.getElementById('compare-table').innerHTML =
+    `<tr><th></th><th>${{a.name}}</th><th>${{b.name}}</th></tr>` +
+    rows.map(r => `<tr><td><strong>${{r[0]}}</strong></td><td>${{r[1]}}</td><td>${{r[2]}}</td></tr>`).join('');
+}}
+document.getElementById('compare-a').addEventListener('change', renderCompare);
+document.getElementById('compare-b').addEventListener('change', renderCompare);
+document.getElementById('compare-overlay').addEventListener('click', e => {{
+  if (e.target.id === 'compare-overlay') closeCompare();
+}});
+
+// ── Trivia quiz (generated from real REGIONS data) ──
+const QUIZ_QUESTIONS = (function buildQuiz() {{
+  const all = Object.values(REGIONS);
+  const mostNbr = all.reduce((m, r) => r.land_neighbors.length > m.land_neighbors.length ? r : m);
+  const islands = all.filter(r => r.land_neighbors.length === 0);
+  const china = all.filter(r => r.countries.includes('China'));
+  const bhutan = all.filter(r => r.countries.includes('Bhutan'));
+  function wrongNames(correctKeys, n) {{
+    const pool = all.filter(r => !correctKeys.includes(r.key)).map(r => r.name);
+    const picked = [];
+    while (picked.length < n && pool.length) {{
+      const i = Math.floor(Math.random() * pool.length);
+      picked.push(pool.splice(i, 1)[0]);
+    }}
+    return picked;
+  }}
+  const qs = [];
+  qs.push({{
+    q: 'Which state/UT has the most land-bordering neighbours?',
+    options: shuffle([mostNbr.name, ...wrongNames([mostNbr.key], 3)]),
+    answer: mostNbr.name,
+  }});
+  qs.push({{
+    q: `How many of India's states/UTs have no land border with any other state/UT or country?`,
+    options: shuffle([String(islands.length), String(islands.length + 2), String(Math.max(islands.length - 1, 0)), String(islands.length + 5)]),
+    answer: String(islands.length),
+  }});
+  qs.push({{
+    q: 'Which of these shares a border with China?',
+    options: shuffle([china[Math.floor(Math.random() * china.length)].name, ...wrongNames(china.map(r => r.key), 3)]),
+    answer: null,
+  }});
+  qs[2].answer = qs[2].options.find(o => china.some(r => r.name === o));
+  if (bhutan.length) {{
+    qs.push({{
+      q: 'Which of these shares a border with Bhutan?',
+      options: shuffle([bhutan[Math.floor(Math.random() * bhutan.length)].name, ...wrongNames(bhutan.map(r => r.key), 3)]),
+      answer: null,
+    }});
+    qs[3].answer = qs[3].options.find(o => bhutan.some(r => r.name === o));
+  }}
+  qs.push({{
+    q: `${{REGIONS['puducherry'].name}} is famously made up of non-contiguous enclaves inside which states?`,
+    options: shuffle(['Tamil Nadu, Andhra Pradesh & Kerala', 'Tamil Nadu & Karnataka only', 'Kerala & Karnataka only', 'Andhra Pradesh & Odisha only']),
+    answer: 'Tamil Nadu, Andhra Pradesh & Kerala',
+  }});
+  return qs;
+}})();
+function shuffle(arr) {{
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {{
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }}
+  return a;
+}}
+let quizIdx = 0;
+let quizScore = 0;
+function renderQuiz() {{
+  const box = document.getElementById('quiz-box');
+  if (quizIdx >= QUIZ_QUESTIONS.length) {{
+    box.innerHTML = `<div class="quiz-q">Quiz complete! You scored ${{quizScore}} / ${{QUIZ_QUESTIONS.length}}.</div>
+      <button class="pf-btn" onclick="quizIdx=0;quizScore=0;renderQuiz()">Try Again</button>`;
+    return;
+  }}
+  const cur = QUIZ_QUESTIONS[quizIdx];
+  box.innerHTML = `
+    <div class="quiz-progress">Question ${{quizIdx + 1}} of ${{QUIZ_QUESTIONS.length}} &middot; Score: ${{quizScore}}</div>
+    <div class="quiz-q">${{cur.q}}</div>
+    <div class="quiz-opts">${{cur.options.map((o, i) => `<button class="quiz-opt" onclick="answerQuiz(this, ${{i}})">${{o}}</button>`).join('')}}</div>
+    <button class="pf-btn quiz-next-btn" id="quiz-next" onclick="quizIdx++;renderQuiz()">Next \u2192</button>
+  `;
+}}
+function answerQuiz(btn, idx) {{
+  const cur = QUIZ_QUESTIONS[quizIdx];
+  const picked = cur.options[idx];
+  document.querySelectorAll('.quiz-opt').forEach(o => {{
+    o.disabled = true;
+    if (o.textContent === cur.answer) o.classList.add('correct');
+    else if (o === btn) o.classList.add('wrong');
+  }});
+  if (picked === cur.answer) quizScore++;
+  document.getElementById('quiz-next').classList.add('show');
+}}
+renderQuiz();
+
+// ── Interactive Leaflet map (node-graph of capitals + border connections) ──
+let mapInstance = null;
+function toggleMap() {{
+  const mapDiv = document.getElementById('map-view');
+  const grid = document.getElementById('grid');
+  const showing = mapDiv.classList.toggle('show');
+  grid.classList.toggle('map-hidden', showing);
+  document.getElementById('map-toggle-btn').classList.toggle('active', showing);
+  if (showing && !mapInstance) initMap();
+  else if (showing && mapInstance) setTimeout(() => mapInstance.invalidateSize(), 50);
+}}
+function initMap() {{
+  mapInstance = L.map('map-view').setView([22.9, 82.8], 5);
+  L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+    attribution: '&copy; OpenStreetMap contributors', maxZoom: 9,
+  }}).addTo(mapInstance);
+  const drawn = new Set();
+  Object.values(REGIONS).forEach(r => {{
+    r.land_neighbors.forEach(nk => {{
+      const edgeKey = [r.key, nk].sort().join('|');
+      if (drawn.has(edgeKey)) return;
+      drawn.add(edgeKey);
+      const nb = REGIONS[nk];
+      L.polyline([[r.lat, r.lon], [nb.lat, nb.lon]], {{ color: '#9c6b2e', weight: 1.5, opacity: 0.6 }}).addTo(mapInstance);
+    }});
+  }});
+  Object.values(REGIONS).forEach(r => {{
+    const n = r.land_neighbors.length;
+    const radius = 5 + Math.min(n, 8) * 1.4;
+    const color = r.countries.length ? '#a23b3b' : (n === 0 ? '#355c2b' : '#1f5c47');
+    const marker = L.circleMarker([r.lat, r.lon], {{
+      radius, color, fillColor: color, fillOpacity: 0.75, weight: 1.5,
+    }}).addTo(mapInstance);
+    marker.bindPopup(`<strong>${{r.name}}</strong><br>${{n}} land neighbour${{n !== 1 ? 's' : ''}}${{r.countries.length ? '<br>Borders: ' + r.countries.join(', ') : ''}}`);
+    marker.on('click', () => {{
+      toggleMap();
+      selectRegion(r.key);
+    }});
+  }});
 }}
 
 filterRegions();
