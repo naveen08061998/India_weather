@@ -1,10 +1,10 @@
-name: Refresh Dashboards (Weather + Current Affairs + Railways + Markets + AQI + Gov Updates)
+name: Refresh Dashboards (Weather + Current Affairs + Railways + Markets + AQI + Gov Updates + Borders + Highways)
 
 # ── Triggers ────────────────────────────────────────────────────
 on:
   push:
     branches: [main]
-    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'stock_market/**', 'air_quality/**', 'gov_updates/**', 'static/**', '.github/workflows/current-affairs.yml']
+    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'stock_market/**', 'air_quality/**', 'gov_updates/**', 'india_borders/**', 'india_highways/**', 'static/**', '.github/workflows/current-affairs.yml']
   schedule:
     - cron: '30 */2 * * *'    # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …) — baseline, all agents
     - cron: '*/15 3-10 * * 1-5'   # every 15 min, Mon-Fri ~8:30-15:30 IST (NSE 9:15-15:30 IST) — keeps Stock Market fresh
@@ -143,11 +143,23 @@ jobs:
         timeout-minutes: 5
         continue-on-error: true
 
-      # 11. Assemble a single Pages artifact with six independent sections.
+      # 10d. Build India Borders Atlas (fully static curated geography data, no API).
+      - name: Generate India Borders HTML
+        run: python -m india_borders.orchestrator
+        timeout-minutes: 2
+        continue-on-error: true
+
+      # 10e. Build India Highways (fully static curated MoRTH/NHAI reference data, no API).
+      - name: Generate India Highways HTML
+        run: python -m india_highways.orchestrator
+        timeout-minutes: 2
+        continue-on-error: true
+
+      # 11. Assemble a single Pages artifact with eight independent sections.
       - name: Assemble multi-app Pages artifact
         run: |
           rm -rf site
-          mkdir -p site/weather/static site/current-affairs site/railways site/stock-market site/air-quality site/gov-updates
+          mkdir -p site/weather/static site/current-affairs site/railways site/stock-market site/air-quality site/gov-updates site/borders site/highways
 
           cp india_weather/weathers/india_weather_report.html site/weather/index.html
           cp static/manifest.json site/weather/manifest.json
@@ -162,6 +174,8 @@ jobs:
           [ -f stock_market/market/stock_market_report.html ] && cp stock_market/market/stock_market_report.html site/stock-market/index.html
           [ -f air_quality/aqi/air_quality_report.html ] && cp air_quality/aqi/air_quality_report.html site/air-quality/index.html
           [ -f gov_updates/updates/gov_updates_report.html ] && cp gov_updates/updates/gov_updates_report.html site/gov-updates/index.html
+          [ -f india_borders/borders/india_borders_report.html ] && cp india_borders/borders/india_borders_report.html site/borders/index.html
+          [ -f india_highways/network/india_highways_report.html ] && cp india_highways/network/india_highways_report.html site/highways/index.html
 
           cat > site/index.html << 'HTML'
           <!DOCTYPE html>
@@ -183,6 +197,8 @@ jobs:
                 --accent4: #22c55e;
                 --accent5: #0284c7;
                 --accent6: #be123c;
+                --accent7: #7c3aed;
+                --accent8: #ca8a04;
               }
               * { box-sizing: border-box; }
               body {
@@ -230,12 +246,14 @@ jobs:
               .c4 { background: var(--accent4); }
               .c5 { background: var(--accent5); }
               .c6 { background: var(--accent6); }
+              .c7 { background: var(--accent7); }
+              .c8 { background: var(--accent8); }
             </style>
           </head>
           <body>
             <main class="wrap">
               <h1>India Agent Dashboards</h1>
-              <p>Six independent dashboards, refreshed automatically every 2 hours.</p>
+              <p>Eight independent dashboards, refreshed automatically every 2 hours (Stock Market every 15 min during NSE hours).</p>
               <section class="grid">
                 <a class="card" href="./weather/">
                   <span class="chip c1">Weather</span>
@@ -266,6 +284,16 @@ jobs:
                   <span class="chip c6">Government</span>
                   <h2>Schemes &amp; Exam Tracker</h2>
                   <p>Scheme announcements, exam news and a curated notification calendar.</p>
+                </a>
+                <a class="card" href="./borders/">
+                  <span class="chip c7">Geography</span>
+                  <h2>India Borders Atlas</h2>
+                  <p>Every state/UT's land neighbours, bordering countries and coastline.</p>
+                </a>
+                <a class="card" href="./highways/">
+                  <span class="chip c8">Infrastructure</span>
+                  <h2>India Highways</h2>
+                  <p>Major National Highway corridors, state-highway shares &amp; road network stats.</p>
                 </a>
               </section>
               <p style="margin-top:40px;font-size:.8rem;opacity:.65">Built by Naveen Alla</p>
