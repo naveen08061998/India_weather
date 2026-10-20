@@ -102,6 +102,7 @@ def _city_card(c: dict, trend_points: list) -> str:
     safe_id = c["name"].replace(" ", "-").replace("&", "and")
     return f"""
     <div class="city-card" data-name="{c['name'].lower()}" data-state="{c['state'].lower()}" data-aqi="{aqi}">
+      <button type="button" class="home-pin-btn" data-city="{c['name']}" aria-label="Set as home city" aria-pressed="false" onclick="toggleHomeCity(this)">📍</button>
       {_gauge(aqi, r['color'])}
       <div class="city-name">{c['name']} <span class="city-state">{c['state']}</span></div>
       <div class="aqi-label" style="color:{r['color']}">{r['label']}</div>
@@ -233,6 +234,12 @@ def build_html(payload: dict) -> str:
     padding:14px 18px; font-size:.82rem; margin-bottom:18px; display:none;
   }}
   .nearme-banner.show {{ display:block; }}
+  .home-banner {{
+    background:var(--card); border:1px solid #f59e0b; border-radius:var(--radius);
+    padding:14px 18px; font-size:.82rem; margin-bottom:18px; display:none;
+  }}
+  .home-banner.show {{ display:block; }}
+  .home-banner b {{ color:#f59e0b; }}
   .legend {{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px; }}
   .legend-item {{
     display:flex; align-items:center; gap:6px; font-size:.7rem; color:var(--muted);
@@ -254,8 +261,13 @@ def build_html(payload: dict) -> str:
     background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
     padding:20px 16px; box-shadow:var(--shadow); text-align:center;
     display:flex; flex-direction:column; align-items:center; gap:4px;
-    transition:transform .15s, background .15s;
+    transition:transform .15s, background .15s; position:relative;
   }}
+  .home-pin-btn {{
+    position:absolute; top:10px; left:10px; background:none; border:none; cursor:pointer;
+    font-size:1rem; color:var(--muted); line-height:1; padding:2px;
+  }}
+  .home-pin-btn[aria-pressed="true"] {{ color:#f59e0b; }}
   .city-card:hover {{ transform:translateY(-3px); background:var(--card-h); }}
   .gauge {{
     width:92px; height:92px; border-radius:50%; display:flex; align-items:center; justify-content:center;
@@ -353,6 +365,7 @@ def build_html(payload: dict) -> str:
 </header>
 <main>
   {severe_html}
+  <div class="home-banner" id="home-banner" role="status" aria-live="polite"></div>
   <div class="nearme-banner" id="nearme-banner"></div>
   <div class="legend">
     <span class="legend-item"><span class="legend-dot" style="background:#22c55e"></span>Good 0-50</span>
@@ -409,6 +422,38 @@ def build_html(payload: dict) -> str:
     document.body.classList.add('light');
     document.getElementById('theme-btn').textContent = '☀️ Day';
   }}
+
+  // ── Home city pin (localStorage, persists across visits) ────────────────
+  function toggleHomeCity(btn) {{
+    const city = btn.dataset.city;
+    const current = localStorage.getItem('aqi_home_city');
+    const newHome = current === city ? null : city;
+    if (newHome) localStorage.setItem('aqi_home_city', newHome);
+    else localStorage.removeItem('aqi_home_city');
+    _syncHomePins();
+    renderHomeBanner();
+  }}
+
+  function _syncHomePins() {{
+    const home = localStorage.getItem('aqi_home_city');
+    document.querySelectorAll('.home-pin-btn').forEach(b => {{
+      const isHome = b.dataset.city === home;
+      b.setAttribute('aria-pressed', String(isHome));
+    }});
+  }}
+
+  function renderHomeBanner() {{
+    const banner = document.getElementById('home-banner');
+    const home = localStorage.getItem('aqi_home_city');
+    if (!home) {{ banner.classList.remove('show'); banner.innerHTML = ''; return; }}
+    const c = CITY_DATA.find(x => x.name === home);
+    if (!c) {{ banner.classList.remove('show'); banner.innerHTML = ''; return; }}
+    banner.innerHTML = `📍 <b>${{c.name}}</b> (home city) &middot; AQI <b style="color:${{c.color}}">${{c.aqi.toFixed ? c.aqi.toFixed(0) : c.aqi}}</b> — ${{c.label}}. ${{c.advisory || ''}}`;
+    banner.classList.add('show');
+  }}
+
+  _syncHomePins();
+  renderHomeBanner();
 
   function filterCities() {{
     const q = document.getElementById('search').value.toLowerCase();
