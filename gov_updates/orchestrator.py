@@ -28,7 +28,7 @@ if hasattr(sys.stderr, "reconfigure"):
 
 IST = timezone(timedelta(hours=5, minutes=30))
 
-from gov_updates.sources import EXAM_CALENDAR
+from gov_updates.sources import EXAM_CALENDAR, GLOSSARY
 from gov_updates.fetcher import fetch_categorised
 
 BASE_DIR    = Path(__file__).parent
@@ -56,6 +56,7 @@ def fetch_all(verbose: bool = False) -> dict:
         "schemes"      : cat["schemes"],
         "exams_news"   : cat["exams"],
         "exam_calendar": EXAM_CALENDAR,
+        "glossary"     : GLOSSARY,
         "total_fetched": cat["all_count"],
     }
 
