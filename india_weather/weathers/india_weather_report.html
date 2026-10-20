@@ -386,6 +386,24 @@
     .cyc-link { font-size:.61rem; color:#818cf8; text-decoration:none; }
     .cyc-link:hover { text-decoration:underline; }
 
+    /* ── Weather Near Me ── */
+    #near-me-section { max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }
+    #near-me-section.hidden { display:none; }
+    .near-me-header { display:flex; align-items:center; justify-content:space-between; gap:.6rem; font-size:.8rem; font-weight:700; color:#38bdf8; margin-bottom:.65rem; }
+    .near-me-close { background:none; border:none; color:#64748b; cursor:pointer; font-size:.9rem; padding:.1rem .4rem; }
+    .near-me-close:hover { color:#e2e8f0; }
+    .near-me-note { font-size:.72rem; color:#94a3b8; margin-bottom:.6rem; }
+    #near-me-card.city-card { max-width:420px; }
+    body.light .near-me-note { color:#64748b; }
+
+    /* ── Accessibility ── */
+    .skip-link {
+      position:absolute; top:-40px; left:8px; z-index:500;
+      background:#f97316; color:#060b18; padding:.5rem 1rem; border-radius:.5rem;
+      text-decoration:none; font-size:.8rem; font-weight:700;
+    }
+    .skip-link:focus { top:8px; }
+
     /* ── Alert badges on cards ── */
     .alert-badge { display:inline-flex; align-items:center; gap:.2rem; font-size:.58rem; font-weight:700; padding:.1rem .4rem; border-radius:999px; color:#fff; margin:.1rem .1rem 0 0; }
     .city-alerts { margin:.25rem 0 .05rem; display:flex; flex-wrap:wrap; position:relative; z-index:1; }
@@ -574,12 +592,13 @@
 <body>
 
 <header>
+  <a href="#state-container" class="skip-link">Skip to weather content</a>
   <div class="header-left">
     <h1>&#127868; India Weather Dashboard</h1>
       <p>Live weather for 28 states + 8 union territories &amp; 780+ districts &mdash; powered by Open-Meteo</p>
   </div>
   <div class="header-right">
-    <div class="status-pill">
+    <div class="status-pill" role="status" aria-live="polite">
       <span class="dot" id="live-dot"></span>
       <span id="live-label">Live</span>
     </div>
@@ -588,9 +607,10 @@
     <div class="status-pill" id="pill-hot" style="display:none">&#128293; <span id="global-hot">&mdash;</span></div>
     <div class="status-pill" id="pill-cold" style="display:none">&#10052; <span id="global-cold">&mdash;</span></div>
     <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
+    <button id="near-me-btn" onclick="locateNearMe()" title="Show weather at your current location">&#128205; Near Me</button>
     <button id="pwa-notif-btn" onclick="_requestNotifications()" style="display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(249,115,22,.4);background:rgba(249,115,22,.12);color:#fdba74;font-size:.75rem;cursor:pointer">&#128276; Enable Alerts</button>
     <button id="pwa-install-btn" onclick="_installPWA()" style="display:none;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#6ee7b7;font-size:.75rem;cursor:pointer">&#11015; Install App</button>
-    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode">&#9728; Light</button>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode" aria-pressed="false">&#9728; Light</button>
   </div>
 </header>
 
@@ -608,12 +628,22 @@
   <div class="cyclone-cards" id="cyclone-cards"></div>
 </div>
 
+<!-- Weather Near Me -->
+<div id="near-me-section" class="hidden">
+  <div class="near-me-header">
+    <span>&#128205; Weather Near Me</span>
+    <button class="near-me-close" onclick="document.getElementById('near-me-section').classList.add('hidden')" aria-label="Close weather near me panel">&#10005;</button>
+  </div>
+  <div class="near-me-note" id="near-me-note" role="status" aria-live="polite"></div>
+  <div class="city-card" id="near-me-card" style="--accent:#38bdf8"></div>
+</div>
+
 <div id="state-nav">
   <button class="state-btn all-btn active" style="--c:#64748b"
           onclick="filterState('all', this)">All States</button>
 </div>
 
-<div id="state-container"></div>
+<div id="state-container" role="main" tabindex="-1"></div>
 
 <div id="w-modal" class="w-modal" onclick="if(event.target===this)closeWeatherModal()">
   <div class="w-box" id="w-box">
@@ -2191,6 +2221,65 @@
       }) + " IST",
       forecast,
     };
+  }
+
+  // ── Weather Near Me (pure client-side geolocation, no backend) ─────────────
+  async function locateNearMe() {
+    const section = document.getElementById("near-me-section");
+    const note    = document.getElementById("near-me-note");
+    const card    = document.getElementById("near-me-card");
+    section.classList.remove("hidden");
+    section.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    if (!navigator.geolocation) {
+      note.textContent = "Geolocation is not supported by this browser.";
+      return;
+    }
+    note.textContent = "Locating you…";
+    card.classList.add("refreshing");
+    card.innerHTML = skeleton();
+
+    navigator.geolocation.getCurrentPosition(async (pos) => {
+      const lat = pos.coords.latitude, lon = pos.coords.longitude;
+      note.textContent = "Fetching live weather…";
+      try {
+        const omUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
+          + `&current=temperature_2m,relative_humidity_2m,apparent_temperature,weathercode,cloud_cover,pressure_msl,visibility,wind_speed_10m,wind_direction_10m`
+          + `&daily=temperature_2m_max,temperature_2m_min,weathercode,precipitation_probability_max`
+          + `&hourly=temperature_2m,precipitation_probability,weathercode`
+          + `&forecast_days=7&timezone=Asia%2FKolkata&wind_speed_unit=kmh`;
+        const omR = await fetch(omUrl, { cache: "no-store" });
+        if (!omR.ok) throw new Error(`Open-Meteo HTTP ${omR.status}`);
+        const omJson = await omR.json();
+
+        // Best-effort reverse geocode for a friendly label; falls back to coordinates.
+        let placeLabel = `${lat.toFixed(2)}°, ${lon.toFixed(2)}°`;
+        try {
+          const rgR = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&language=en&format=json`,
+            { cache: "force-cache" }
+          );
+          if (rgR.ok) {
+            const rg  = await rgR.json();
+            const hit = (rg.results || [])[0];
+            if (hit) placeLabel = [hit.name, hit.admin1].filter(Boolean).join(", ");
+          }
+        } catch (_) {}
+
+        const data = buildFromOpenMeteo(omJson, placeLabel, placeLabel);
+        card.classList.remove("refreshing");
+        renderCard(card, data);
+        note.textContent = "Showing live weather at your current location.";
+      } catch (e) {
+        card.classList.remove("refreshing");
+        note.textContent = "Could not fetch weather for your location: " + e.message;
+      }
+    }, (err) => {
+      card.classList.remove("refreshing");
+      note.textContent = err.code === 1
+        ? "Location access was denied. Allow location access in your browser to use this feature."
+        : "Could not determine your location: " + err.message;
+    }, { timeout: 10000, maximumAge: 300000 });
   }
 
   // Pure Open-Meteo fetch: geocode → weather (no OWM call).
