@@ -210,6 +210,20 @@ def _stock_data_js(stocks: list) -> str:
     return json.dumps(rows, ensure_ascii=False)
 
 
+def _index_data_js(indices: list) -> str:
+    rows = []
+    for idx in indices:
+        q = idx.get("quote", {})
+        if "error" in q:
+            continue
+        rows.append({
+            "symbol": idx["symbol"], "name": idx["name"], "exchange": idx["exchange"],
+            "price": q["price"], "change": q["change"], "change_pct": q["change_pct"],
+            "day_low": q.get("day_low"), "day_high": q.get("day_high"),
+        })
+    return json.dumps(rows, ensure_ascii=False)
+
+
 def build_html(payload: dict) -> str:
     generated_at = payload.get("generated_at", "")
     date_label   = payload.get("date", "")
@@ -239,6 +253,7 @@ def build_html(payload: dict) -> str:
     )
 
     stock_data_js = _stock_data_js(stocks)
+    index_data_js = _index_data_js(indices)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -417,6 +432,7 @@ def build_html(payload: dict) -> str:
   </div>
 </header>
 <main>
+  <div class="section-head">Indices <button class="sort-btn" style="margin-left:auto" onclick="openIndexCompare()">📊 Compare Indices</button></div>
   <div class="indices-grid">
     {index_cards}
   </div>
@@ -479,8 +495,21 @@ def build_html(payload: dict) -> str:
   </div>
 </div>
 
+<div class="modal-overlay" id="index-compare-overlay" role="dialog" aria-modal="true" aria-labelledby="index-compare-title">
+  <div class="glass-card compare-modal">
+    <h3 id="index-compare-title">📊 Compare Indices</h3>
+    <div class="compare-selects">
+      <select id="index-compare-a"></select>
+      <select id="index-compare-b"></select>
+    </div>
+    <table id="index-compare-table"></table>
+    <button class="close-modal" onclick="closeIndexCompare()">Close</button>
+  </div>
+</div>
+
 <script>
   const STOCK_DATA = {stock_data_js};
+  const INDEX_DATA = {index_data_js};
 
   function filterStocks() {{
     const q = document.getElementById('search').value.toLowerCase();
@@ -565,6 +594,32 @@ def build_html(payload: dict) -> str:
     ];
     document.getElementById('compare-table').innerHTML =
       `<tr><th>${{a.symbol.replace('.NS','')}}</th><th>Metric</th><th>${{b.symbol.replace('.NS','')}}</th></tr>` +
+      rows.map(([label, av, bv]) => `<tr><td>${{av}}</td><td>${{label}}</td><td>${{bv}}</td></tr>`).join('');
+  }}
+
+  // ── Compare indices modal ────────────────────────────────────────────────
+  function openIndexCompare() {{
+    const a = document.getElementById('index-compare-a'), b = document.getElementById('index-compare-b');
+    if (!a.options.length) {{
+      INDEX_DATA.forEach((idx, i) => {{ a.add(new Option(idx.name, i)); b.add(new Option(idx.name, i)); }});
+      b.selectedIndex = Math.min(1, INDEX_DATA.length - 1);
+      a.onchange = b.onchange = renderIndexCompare;
+    }}
+    document.getElementById('index-compare-overlay').classList.add('show');
+    renderIndexCompare();
+  }}
+  function closeIndexCompare() {{ document.getElementById('index-compare-overlay').classList.remove('show'); }}
+  function renderIndexCompare() {{
+    const a = INDEX_DATA[document.getElementById('index-compare-a').value || 0];
+    const b = INDEX_DATA[document.getElementById('index-compare-b').value || 1];
+    if (!a || !b) return;
+    const rows = [
+      ['Price', a.price, b.price], ['Change %', a.change_pct, b.change_pct],
+      ['Exchange', a.exchange, b.exchange],
+      ['Day Low/High', `${{a.day_low}} / ${{a.day_high}}`, `${{b.day_low}} / ${{b.day_high}}`],
+    ];
+    document.getElementById('index-compare-table').innerHTML =
+      `<tr><th>${{a.name}}</th><th>Metric</th><th>${{b.name}}</th></tr>` +
       rows.map(([label, av, bv]) => `<tr><td>${{av}}</td><td>${{label}}</td><td>${{bv}}</td></tr>`).join('');
   }}
 
