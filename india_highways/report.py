@@ -567,12 +567,21 @@ function showNhDetail(number) {{
   const detourHtml = h.detour_factor
     ? `<div class="detour-note">Straight-line distance between endpoints: ~${{h.straight_line_km.toLocaleString()}} km &middot; actual route is ${{h.detour_factor}}× that (detour factor)</div>`
     : '';
+  const bi = h.border_info || {{ international: [], coastal: [] }};
+  const borderHtml = bi.international.length
+    ? `<div class="dp-meta">🌍 International border states on this route: ${{bi.international.map(x => `${{x.state}} (${{x.countries.join(', ')}})`).join('; ')}}</div>`
+    : '';
+  const coastalHtml = bi.coastal.length
+    ? `<div class="dp-meta">🌊 Coastal states on this route: ${{bi.coastal.join(', ')}}</div>`
+    : '';
   document.getElementById('detail-content').innerHTML = `
     <h3>${{h.number}} — ${{h.route}} <button class="print-btn" onclick="window.print()">🖨️ Print</button></h3>
     <div class="dp-meta">${{h.length_km.toLocaleString()}} km &middot; ${{h.states.length}} states/UTs crossed ${{h.status === 'historic' ? '&middot; Historic numbering' : ''}}</div>
     ${{detourHtml}}
     <p class="dp-note">${{h.note}}</p>
     <div class="dp-meta"><strong>States crossed:</strong> ${{h.states.join(', ')}}</div>
+    ${{borderHtml}}
+    ${{coastalHtml}}
   `;
   document.getElementById('detail-panel').classList.add('open');
   document.getElementById('detail-panel').scrollIntoView({{behavior: 'smooth', block: 'center'}});

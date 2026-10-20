@@ -29,6 +29,23 @@ from india_borders.regions import (
     REGIONS, CAPITAL_COORDS, BORDER_LENGTHS_KM, BORDER_CHECKPOINTS, ENCLAVES, border_districts_for,
 )
 
+# Cross-link with india_highways: same repo, build-time data join (no live hyperlink
+# dependency between the two separately-deployed static sites). Only "Delhi" needs an
+# alias — every other highway state name matches a REGIONS `name` exactly.
+_HIGHWAY_STATE_ALIASES = {"Delhi (NCT)": "Delhi"}
+
+
+def _highways_for_region(region_name: str) -> dict:
+    try:
+        from india_highways.highways import NATIONAL_HIGHWAYS, EXPRESSWAYS
+    except Exception:
+        return {"national_highways": [], "expressways": []}
+    lookup_name = _HIGHWAY_STATE_ALIASES.get(region_name, region_name)
+    nh = [hw["number"] for hw in NATIONAL_HIGHWAYS
+          if hw["status"] == "current" and lookup_name in hw["states"]]
+    ew = [e["name"] for e in EXPRESSWAYS if lookup_name in e["states"]]
+    return {"national_highways": nh, "expressways": ew}
+
 BASE_DIR     = Path(__file__).parent
 BORDERS_DIR  = BASE_DIR / "borders"
 OUTPUT_JSON  = BORDERS_DIR / "india_borders_data.json"
@@ -59,6 +76,7 @@ def build_payload() -> dict:
             if pair:
                 border_districts[nb] = {"own": pair[key], "their": pair[nb]}
         out["border_districts"] = border_districts
+        out.update(_highways_for_region(out["name"]))
 
     most_borders = max(REGIONS.items(), key=lambda kv: len(kv[1]["land_neighbors"]))
     island_only = [k for k, v in REGIONS.items() if not v["land_neighbors"]]

@@ -47,6 +47,30 @@ def _haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
     return round(2 * 6371 * asin(sqrt(h)), 1)
 
 
+# Cross-link with india_borders: same repo, build-time data join (no live hyperlink
+# dependency between the two separately-deployed static sites). Only "Delhi" needs an
+# alias — every other state name here matches a india_borders REGIONS `name` exactly.
+_BORDERS_STATE_ALIASES = {"Delhi": "Delhi (NCT)"}
+
+
+def _border_info_for_states(states: list[str]) -> dict:
+    try:
+        from india_borders.regions import REGIONS
+    except Exception:
+        return {"international": [], "coastal": []}
+    by_name = {v["name"]: v for v in REGIONS.values()}
+    international, coastal = [], []
+    for state in states:
+        region = by_name.get(_BORDERS_STATE_ALIASES.get(state, state))
+        if not region:
+            continue
+        if region["countries"]:
+            international.append({"state": state, "countries": region["countries"]})
+        if region["coastal"]:
+            coastal.append(state)
+    return {"international": international, "coastal": coastal}
+
+
 def build_payload() -> dict:
     current = [h for h in NATIONAL_HIGHWAYS if h["status"] == "current"]
     historic = [h for h in NATIONAL_HIGHWAYS if h["status"] == "historic"]
@@ -68,6 +92,7 @@ def build_payload() -> dict:
         out["corridor"] = CORRIDOR_MAP.get(h["number"])
         out["via"] = HIGHWAY_VIA.get(h["number"], [])
         out["via_coords"] = [CITY_COORDS[c] for c in out["via"]]
+        out["border_info"] = _border_info_for_states(h["states"])
         highways_out.append(out)
 
     # State -> list of current highway numbers passing through it.

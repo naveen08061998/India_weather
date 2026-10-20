@@ -742,6 +742,12 @@ function renderDetail(region) {{
     ? region.countries.map(c => `<span class="chip-link" style="cursor:default">🌍 ${{c}}</span>`).join('')
     : '<em>None</em>';
   const noteHtml = region.note ? `<p class="dp-note">${{region.note}}</p>` : '';
+  const nhChips = (region.national_highways || []).map(n => `<span class="chip-link" style="cursor:default">🛣️ ${{n}}</span>`).join('');
+  const ewChips = (region.expressways || []).map(n => `<span class="chip-link" style="cursor:default">🛤️ ${{n}}</span>`).join('');
+  const highwaysHtml = (nhChips || ewChips)
+    ? `<div class="dp-section"><h4>Highways through this state</h4>${{nhChips}}${{ewChips}}
+         <div class="district-disclaimer">Cross-referenced from the India Highways agent (National Highways + Expressways data).</div></div>`
+    : '';
   document.getElementById('detail-content').innerHTML = `
     <h2>${{region.name}} <button class="print-btn" onclick="window.print()">🖨️ Print</button></h2>
     <div class="dp-meta">${{region.type}} &middot; Capital: ${{region.capital}} ${{region.coastal ? '&middot; Coastal' : ''}}</div>
@@ -755,6 +761,7 @@ function renderDetail(region) {{
       <h4>International borders</h4>
       ${{countryChips}}
     </div>
+    ${{highwaysHtml}}
   `;
 }}
 
