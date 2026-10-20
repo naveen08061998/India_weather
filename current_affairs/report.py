@@ -8,6 +8,10 @@ Features:
   • Category tabs (National, Economy, Science, etc.)
   • Article cards with title, summary, source badge, date & read-more link
   • Search bar to filter articles by keyword
+  • Per-category source filter chips
+  • Save-for-later bookmarks (localStorage, own "Saved" tab)
+  • Category coverage trend (sparklines from the archived history)
+  • Daily quiz generated from today's real fetched counts
   • Auto-refresh countdown (every 30 minutes)
   • Dark/light mode toggle
   • Fully offline-capable once loaded (no CDN dependencies)
@@ -21,9 +25,12 @@ def build_html(payload: dict) -> str:
     date_label   = payload.get("date", "")
     categories   = payload.get("categories", {})
     total        = payload.get("total_articles", 0)
+    trend        = payload.get("category_trend", {})
 
     tabs_html    = _build_tabs(categories)
     panels_html  = _build_panels(categories)
+    trends_panel = _build_trends_panel(trend)
+    quiz_panel   = _build_quiz_panel(categories, total)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -256,10 +263,70 @@ def build_html(payload: dict) -> str:
     #search {{ width: 130px; }}
     .panel-count {{ display: none; }}
   }}
+
+  /* ── Accessibility ── */
+  .visually-hidden {{
+    position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }}
+  .skip-link {{
+    position: absolute; top: -40px; left: 8px; z-index: 300;
+    background: var(--accent); color: #fff; padding: 8px 16px; border-radius: 6px;
+    text-decoration: none; font-size: .82rem; font-weight: 600;
+  }}
+  .skip-link:focus {{ top: 8px; }}
+
+  /* ── Bookmark star ── */
+  .bookmark-star {{
+    background: none; border: none; cursor: pointer; font-size: 1.05rem;
+    line-height: 1; padding: 2px; color: var(--muted); flex-shrink: 0;
+  }}
+  .bookmark-star[aria-pressed="true"] {{ color: #f59e0b; }}
+
+  /* ── Source filter chips ── */
+  .source-filter-row {{
+    display: none; gap: 8px; flex-wrap: wrap; padding: 10px 24px 0;
+    max-width: 1280px; margin: 0 auto;
+  }}
+  .source-filter-row .chip {{
+    background: var(--card); border: 1px solid var(--border); border-radius: 999px;
+    padding: 5px 12px; font-size: .72rem; color: var(--text); cursor: pointer; font-family: inherit;
+  }}
+  .source-filter-row .chip.active {{ background: var(--accent); border-color: var(--accent); color: #fff; }}
+
+  /* ── Trend panel ── */
+  .trend-list {{ display: flex; flex-direction: column; gap: 10px; }}
+  .trend-row {{
+    display: flex; align-items: center; gap: 16px; background: var(--card);
+    border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 16px;
+    flex-wrap: wrap;
+  }}
+  .trend-label {{ font-size: .82rem; font-weight: 600; min-width: 170px; }}
+  .trend-spark {{ flex-shrink: 0; }}
+  .trend-latest {{ margin-left: auto; font-size: .78rem; font-weight: 700; }}
+
+  /* ── Quiz panel ── */
+  .quiz-list {{ display: flex; flex-direction: column; gap: 16px; }}
+  .quiz-q {{
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px 18px;
+  }}
+  .quiz-question {{ font-size: .88rem; font-weight: 650; margin-bottom: 12px; }}
+  .quiz-options {{ display: flex; gap: 8px; flex-wrap: wrap; }}
+  .quiz-options button {{
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 14px; font-size: .8rem; color: var(--text); cursor: pointer; font-family: inherit;
+  }}
+  .quiz-q.answered .quiz-options button {{ cursor: default; }}
+  .quiz-options button.correct {{ background: #166534; border-color: #166534; color: #fff; }}
+  .quiz-options button.wrong {{ background: #991b1b; border-color: #991b1b; color: #fff; }}
+  .quiz-explain {{ display: none; margin-top: 10px; font-size: .78rem; color: var(--muted); }}
+  .quiz-q.answered .quiz-explain {{ display: block; }}
 </style>
 </head>
 <body>
 
+<a href="#main" class="skip-link">Skip to news content</a>
 <div class="tricolor"></div>
 
 <header>
@@ -274,17 +341,18 @@ def build_html(payload: dict) -> str:
     <div class="stat-chip">📅 <b>{date_label}</b></div>
     <div class="stat-chip">🗞️ <b>{total}</b> articles</div>
     <div class="stat-chip">🕐 Fetched: <b>{generated_at}</b></div>
-    <div class="stat-chip">⏱ <span id="countdown">—</span></div>
+    <div class="stat-chip" role="status" aria-live="polite">⏱ <span id="countdown">—</span></div>
   </div>
   <div class="header-right">
     <div class="search-wrap">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
       </svg>
+      <label for="search" class="visually-hidden">Search articles</label>
       <input type="text" id="search" placeholder="Search articles…"
              oninput="filterCards(this.value)" autocomplete="off"/>
     </div>
-    <button id="theme-btn" onclick="toggleTheme()">☀ Light</button>
+    <button id="theme-btn" onclick="toggleTheme()" aria-pressed="false">☀ Light</button>
     <a href="./history/" style="
       background:var(--card);border:1px solid var(--border);border-radius:10px;
       color:var(--text);padding:7px 12px;font-size:.8rem;text-decoration:none;
@@ -295,13 +363,32 @@ def build_html(payload: dict) -> str:
 </header>
 
 <div class="tabs-wrapper">
-  <div class="tabs" id="tabs">
+  <div class="tabs" id="tabs" role="tablist">
     {tabs_html}
+    <span class="tab-separator">┃ Tools</span>
+    <button class="tab-btn" id="tab-bookmarks" data-key="bookmarks" role="tab" aria-selected="false" aria-controls="panel-bookmarks" onclick="switchTab('bookmarks')">🔖 Saved<span class="tab-count" id="saved-count">0</span></button>
+    <button class="tab-btn" id="tab-trends" data-key="trends" role="tab" aria-selected="false" aria-controls="panel-trends" onclick="switchTab('trends')">📈 Trends</button>
+    <button class="tab-btn" id="tab-quiz" data-key="quiz" role="tab" aria-selected="false" aria-controls="panel-quiz" onclick="switchTab('quiz')">🧠 Quiz</button>
   </div>
 </div>
+<div class="source-filter-row" id="source-filter-row"></div>
 
-<main id="main">
+<main id="main" tabindex="-1">
   {panels_html}
+
+  <div class="panel" id="panel-bookmarks" role="tabpanel" aria-labelledby="tab-bookmarks">
+    <div class="panel-header">
+      <div class="panel-icon">🔖</div>
+      <div>
+        <div class="panel-title">Saved for Later</div>
+        <div class="panel-desc">Articles you've bookmarked across all categories (stored locally in this browser).</div>
+      </div>
+      <div class="panel-count"><b id="saved-count-2">0</b> saved</div>
+    </div>
+    <div class="cards" id="saved-cards"></div>
+  </div>
+  {trends_panel}
+  {quiz_panel}
 </main>
 
 <footer>
@@ -313,15 +400,21 @@ def build_html(payload: dict) -> str:
 <script>
 // ── Tab switching ──────────────────────────────────────────────────────────
 function switchTab(key) {{
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => {{ b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); }});
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelector(`[data-key="${{key}}"]`).classList.add('active');
+  const btn = document.querySelector(`[data-key="${{key}}"]`);
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
   document.getElementById('panel-' + key).classList.add('active');
   currentTab = key;
+  _activeSource = '';
   filterCards(document.getElementById('search').value);
+  renderSourceChips();
+  if (key === 'bookmarks') renderSavedPanel();
 }}
 
 let currentTab = document.querySelector('.tab-btn')?.dataset.key || '';
+let _activeSource = '';
 
 // ── Search / filter ────────────────────────────────────────────────────────
 function filterCards(query) {{
@@ -330,14 +423,96 @@ function filterCards(query) {{
   if (!panel) return;
   panel.querySelectorAll('.card').forEach(card => {{
     const text = card.textContent.toLowerCase();
-    card.style.display = (!q || text.includes(q)) ? '' : 'none';
+    const textMatch = !q || text.includes(q);
+    const sourceMatch = !_activeSource || card.dataset.source === _activeSource;
+    card.style.display = (textMatch && sourceMatch) ? '' : 'none';
   }});
+}}
+
+// ── Per-category source filter chips ──────────────────────────────────────
+function renderSourceChips() {{
+  const row = document.getElementById('source-filter-row');
+  const panel = document.getElementById('panel-' + currentTab);
+  if (!panel) {{ row.style.display = 'none'; row.innerHTML = ''; return; }}
+  const sources = [...new Set(Array.from(panel.querySelectorAll('.card')).map(c => c.dataset.source).filter(Boolean))];
+  if (sources.length < 2) {{ row.style.display = 'none'; row.innerHTML = ''; return; }}
+  row.style.display = 'flex';
+  row.innerHTML = '<button type="button" class="chip active" onclick="setSourceFilter(this, \\'\\')">All sources</button>' +
+    sources.map(s => `<button type="button" class="chip" onclick="setSourceFilter(this, '${{s}}')">${{s}}</button>`).join('');
+}}
+
+function setSourceFilter(btn, source) {{
+  _activeSource = source;
+  document.querySelectorAll('#source-filter-row .chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  filterCards(document.getElementById('search').value);
+}}
+
+// ── Bookmarks / Save for later ─────────────────────────────────────────────
+function _savedLinks() {{
+  try {{ return JSON.parse(localStorage.getItem('ca_bookmarks') || '[]'); }} catch (e) {{ return []; }}
+}}
+
+function toggleBookmark(btn) {{
+  const link = btn.dataset.link;
+  const list = _savedLinks();
+  const idx = list.indexOf(link);
+  const nowSaved = idx === -1;
+  if (nowSaved) list.push(link); else list.splice(idx, 1);
+  localStorage.setItem('ca_bookmarks', JSON.stringify(list));
+  document.querySelectorAll('.bookmark-star').forEach(b => {{
+    if (b.dataset.link === link) {{
+      b.textContent = nowSaved ? '★' : '☆';
+      b.setAttribute('aria-pressed', nowSaved ? 'true' : 'false');
+    }}
+  }});
+  renderSavedPanel();
+}}
+
+function renderSavedPanel() {{
+  const list = _savedLinks();
+  document.getElementById('saved-count').textContent = list.length;
+  document.getElementById('saved-count-2').textContent = list.length;
+  const container = document.getElementById('saved-cards');
+  container.innerHTML = '';   // clear first so lookups below never match stale clones
+  if (!list.length) {{
+    container.innerHTML = '<div class="no-articles"><div class="no-articles-icon">🔖</div>No saved articles yet — click the ☆ on any article card to save it for later.</div>';
+    return;
+  }}
+  const seen = new Set();
+  const frag = document.createDocumentFragment();
+  list.forEach(link => {{
+    if (seen.has(link)) return;
+    let original;
+    try {{ original = document.querySelector('.card[data-link="' + CSS.escape(link) + '"]'); }} catch (e) {{ original = null; }}
+    if (!original) return;
+    seen.add(link);
+    frag.appendChild(original.cloneNode(true));
+  }});
+  if (!frag.childNodes.length) {{
+    container.innerHTML = '<div class="no-articles"><div class="no-articles-icon">🔖</div>Saved articles are no longer in today\\'s feed.</div>';
+  }} else {{
+    container.appendChild(frag);
+  }}
+}}
+
+// ── Quiz ────────────────────────────────────────────────────────────────────
+function answerQuiz(btn) {{
+  const q = btn.closest('.quiz-q');
+  if (q.classList.contains('answered')) return;
+  q.classList.add('answered');
+  const correct = parseInt(q.dataset.correct, 10);
+  const options = Array.from(q.querySelectorAll('.quiz-options button'));
+  options[correct].classList.add('correct');
+  if (options.indexOf(btn) !== correct) btn.classList.add('wrong');
 }}
 
 // ── Theme toggle ───────────────────────────────────────────────────────────
 function toggleTheme() {{
   const isLight = document.body.classList.toggle('light');
-  document.getElementById('theme-btn').textContent = isLight ? '🌙 Dark' : '☀ Light';
+  const themeBtn = document.getElementById('theme-btn');
+  themeBtn.textContent = isLight ? '🌙 Dark' : '☀ Light';
+  themeBtn.setAttribute('aria-pressed', isLight ? 'true' : 'false');
   localStorage.setItem('ca_theme', isLight ? 'light' : 'dark');
 }}
 if (localStorage.getItem('ca_theme') === 'light') toggleTheme();
@@ -460,6 +635,11 @@ updateCountdown();
 
 // ── Init first tab ─────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {{
+  const saved = _savedLinks();
+  document.querySelectorAll('.bookmark-star').forEach(b => {{
+    if (saved.includes(b.dataset.link)) {{ b.textContent = '★'; b.setAttribute('aria-pressed', 'true'); }}
+  }});
+  renderSavedPanel();
   const first = document.querySelector('.tab-btn');
   if (first) switchTab(first.dataset.key);
 }});
@@ -482,7 +662,8 @@ def _build_tabs(categories: dict) -> str:
         label = cat["label"]
         count = len(categories[key].get("articles", []))
         parts.append(
-            f'<button class="tab-btn" data-key="{key}" '
+            f'<button class="tab-btn" id="tab-{key}" data-key="{key}" role="tab" aria-selected="false" '
+            f'aria-controls="panel-{key}" '
             f'onclick="switchTab(\'{key}\')">{icon} {label}'
             f'<span class="tab-count">{count}</span></button>'
         )
@@ -498,7 +679,8 @@ def _build_tabs(categories: dict) -> str:
         label = cat["label"]
         count = len(categories[key].get("articles", []))
         parts.append(
-            f'<button class="tab-btn state-tab" data-key="{key}" '
+            f'<button class="tab-btn state-tab" id="tab-{key}" data-key="{key}" role="tab" aria-selected="false" '
+            f'aria-controls="panel-{key}" '
             f'onclick="switchTab(\'{key}\')">{icon} {label}'
             f'<span class="tab-count">{count}</span></button>'
         )
@@ -527,7 +709,7 @@ def _build_panels(categories: dict) -> str:
 
         count = len(articles)
         parts.append(f"""
-  <div class="panel" id="panel-{key}">
+  <div class="panel" id="panel-{key}" role="tabpanel" aria-labelledby="tab-{key}">
     <div class="panel-header">
       <div class="panel-icon">{icon}</div>
       <div>
@@ -552,9 +734,12 @@ def _build_cards(articles: list[dict], color: str) -> str:
         pub     = _esc(art.get("published", ""))
         source  = _esc(art.get("source", ""))
 
-        parts.append(f"""      <a class="card" href="{link}" target="_blank" rel="noopener noreferrer" style="--cc:{color}">
+        parts.append(f"""      <a class="card" href="{link}" target="_blank" rel="noopener noreferrer" style="--cc:{color}" data-link="{link}" data-source="{source}">
         <div class="card-top">
-          <span class="source-badge" style="background:{color}">{source}</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <button type="button" class="bookmark-star" data-link="{link}" aria-label="Save for later" aria-pressed="false" onclick="event.preventDefault();event.stopPropagation();toggleBookmark(this)">☆</button>
+            <span class="source-badge" style="background:{color}">{source}</span>
+          </div>
           <span class="card-date">{pub}</span>
         </div>
         <div class="card-title">{title}</div>
@@ -571,3 +756,147 @@ def _esc(text: str) -> str:
             .replace("<", "&lt;")
             .replace(">", "&gt;")
             .replace('"', "&quot;"))
+
+
+def _trend_sparkline_svg(counts: list[int], color: str) -> str:
+    w, h, pad = 160, 40, 5
+    n = len(counts)
+    mx = max(counts) or 1
+
+    def _xy(i: int, v: int) -> tuple[float, float]:
+        x = pad + (i * (w - 2 * pad) / (n - 1)) if n > 1 else w / 2
+        y = h - pad - (v / mx) * (h - 2 * pad)
+        return round(x, 1), round(y, 1)
+
+    pts = [_xy(i, v) for i, v in enumerate(counts)]
+    poly = " ".join(f"{x},{y}" for x, y in pts)
+    dots = "".join(f'<circle cx="{x}" cy="{y}" r="2.2" fill="{color}"/>' for x, y in pts)
+    return (f'<svg viewBox="0 0 {w} {h}" width="{w}" height="{h}" class="trend-spark">'
+            f'<polyline points="{poly}" fill="none" stroke="{color}" stroke-width="2"/>{dots}</svg>')
+
+
+def _build_trends_panel(trend: dict) -> str:
+    from current_affairs.categories import CATEGORIES
+
+    dates  = trend.get("dates", [])
+    series = trend.get("series", {})
+
+    if len(dates) < 2:
+        return """
+  <div class="panel" id="panel-trends" role="tabpanel" aria-labelledby="tab-trends">
+    <div class="panel-header">
+      <div class="panel-icon">📈</div>
+      <div>
+        <div class="panel-title">Category Coverage Trend</div>
+        <div class="panel-desc">How many articles were fetched per category over recent days.</div>
+      </div>
+    </div>
+    <div class="no-articles"><div class="no-articles-icon">📈</div>Building trend data… check back after a couple more days of archived history.</div>
+  </div>"""
+
+    date_label = ", ".join(d[5:] for d in dates)
+    rows = []
+    for cat in CATEGORIES:
+        counts = series.get(cat["key"])
+        if not counts or not any(counts):
+            continue
+        spark = _trend_sparkline_svg(counts, cat["color"])
+        rows.append(f"""
+      <div class="trend-row">
+        <div class="trend-label">{cat['icon']} {cat['label']}</div>
+        {spark}
+        <div class="trend-latest" style="color:{cat['color']}">{counts[-1]} today</div>
+      </div>""")
+
+    return f"""
+  <div class="panel" id="panel-trends" role="tabpanel" aria-labelledby="tab-trends">
+    <div class="panel-header">
+      <div class="panel-icon">📈</div>
+      <div>
+        <div class="panel-title">Category Coverage Trend</div>
+        <div class="panel-desc">Articles fetched per category — last {len(dates)} day(s): {date_label}</div>
+      </div>
+    </div>
+    <div class="trend-list">
+      {''.join(rows)}
+    </div>
+  </div>"""
+
+
+def _build_quiz_panel(categories: dict, total: int) -> str:
+    import random
+    from current_affairs.categories import CATEGORIES
+
+    cat_counts = [(cat["label"], len(categories.get(cat["key"], {}).get("articles", []))) for cat in CATEGORIES]
+    cat_counts = [c for c in cat_counts if c[1] > 0]
+
+    source_counts: dict[str, int] = {}
+    for data in categories.values():
+        for art in data.get("articles", []):
+            src = art.get("source") or "Unknown"
+            source_counts[src] = source_counts.get(src, 0) + 1
+
+    if not cat_counts or not source_counts:
+        return """
+  <div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <div class="panel-header">
+      <div class="panel-icon">🧠</div>
+      <div>
+        <div class="panel-title">Today's Current Affairs Quiz</div>
+        <div class="panel-desc">A quick quiz generated from today's real fetched data.</div>
+      </div>
+    </div>
+    <div class="no-articles"><div class="no-articles-icon">🧠</div>Not enough articles fetched yet today to generate a quiz.</div>
+  </div>"""
+
+    rnd = random.Random(total)  # deterministic per day's total article count
+
+    top_cat_label, top_cat_count = max(cat_counts, key=lambda c: c[1])
+    cat_options = [top_cat_label] + [c[0] for c in cat_counts if c[0] != top_cat_label][:3]
+    rnd.shuffle(cat_options)
+    q1_correct = cat_options.index(top_cat_label)
+
+    top_source, top_source_count = max(source_counts.items(), key=lambda s: s[1])
+    src_options = list(source_counts.keys())[:4]
+    if top_source not in src_options:
+        src_options[-1] = top_source
+    rnd.shuffle(src_options)
+    q2_correct = src_options.index(top_source)
+
+    total_options = sorted({max(0, total + o) for o in (0, 8, -8, 15)})
+    while len(total_options) < 4:
+        total_options.append(total_options[-1] + 3)
+    total_options = total_options[:4]
+    rnd.shuffle(total_options)
+    q3_correct = total_options.index(total)
+
+    def _option_buttons(options: list) -> str:
+        return "".join(f'<button type="button" onclick="answerQuiz(this)">{o}</button>' for o in options)
+
+    return f"""
+  <div class="panel" id="panel-quiz" role="tabpanel" aria-labelledby="tab-quiz">
+    <div class="panel-header">
+      <div class="panel-icon">🧠</div>
+      <div>
+        <div class="panel-title">Today's Current Affairs Quiz</div>
+        <div class="panel-desc">Generated from today's real fetched article counts — not fabricated trivia.</div>
+      </div>
+    </div>
+    <div class="quiz-list">
+      <div class="quiz-q" data-correct="{q1_correct}">
+        <div class="quiz-question">Which category has the most articles fetched today?</div>
+        <div class="quiz-options">{_option_buttons(cat_options)}</div>
+        <div class="quiz-explain">{top_cat_label} leads today with {top_cat_count} article(s).</div>
+      </div>
+      <div class="quiz-q" data-correct="{q2_correct}">
+        <div class="quiz-question">Which news source published the most articles today (across all categories)?</div>
+        <div class="quiz-options">{_option_buttons(src_options)}</div>
+        <div class="quiz-explain">{top_source} published the most today ({top_source_count} article(s)).</div>
+      </div>
+      <div class="quiz-q" data-correct="{q3_correct}">
+        <div class="quiz-question">How many total articles were fetched across all categories today?</div>
+        <div class="quiz-options">{_option_buttons(total_options)}</div>
+        <div class="quiz-explain">{total} articles were fetched in total today.</div>
+      </div>
+    </div>
+  </div>"""

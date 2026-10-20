@@ -97,6 +97,8 @@ def fetch_all(category_keys: list[str] | None = None,
                 }
 
     elapsed = time.time() - start
+
+    from current_affairs.history_agent import category_trend
     payload = {
         "generated_at": datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
         "date"        : datetime.now(IST).strftime("%d %B %Y"),
@@ -105,6 +107,7 @@ def fetch_all(category_keys: list[str] | None = None,
             len(v.get("articles", [])) for v in results.values()
         ),
         "elapsed_s"   : round(elapsed, 1),
+        "category_trend": category_trend(results),
     }
 
     print(f"\n  Total: {payload['total_articles']} articles "

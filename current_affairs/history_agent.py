@@ -102,14 +102,20 @@ def _pick_important(categories: dict) -> dict:
 def _write_snapshot(payload: dict, date_key_str: str) -> None:
     """Serialise and write a snapshot to disk."""
     dest = HISTORY_DIR / f"{date_key_str}.json"
-    important_cats = _pick_important(payload.get("categories", {}))
+    all_categories = payload.get("categories", {})
+    important_cats = _pick_important(all_categories)
     total = sum(len(v.get("articles", [])) for v in important_cats.values())
+    # Full (uncapped) per-category counts — kept separately from the top-5
+    # archived articles above so the category trend chart reflects the real
+    # day's volume, not just how many articles were preserved verbatim.
+    category_counts = {k: len(v.get("articles", [])) for k, v in all_categories.items()}
     snapshot = {
         "date"          : payload.get("date", date_key_str),
         "date_key"      : date_key_str,
         "generated_at"  : payload.get("generated_at", ""),
         "archived_at"   : datetime.now(IST).strftime("%Y-%m-%d %H:%M IST"),
         "total_articles": total,
+        "category_counts": category_counts,
         "categories"    : important_cats,
     }
     dest.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -171,6 +177,43 @@ def list_dates() -> list[str]:
         (p.stem for p in HISTORY_DIR.glob("*.json")),
         reverse=True,
     )
+
+
+def category_trend(current_categories: Optional[dict] = None, max_days: int = 7) -> dict:
+    """
+    Build a chronological (oldest→newest) per-category article-count trend
+    from the archived history, optionally appending today's live counts as
+    the most recent point.
+
+    Returns {"dates": [...], "series": {cat_key: [count, count, ...]}}.
+    Only archives written after `category_counts` started being stored carry
+    that field — older archives are skipped rather than back-filled with
+    fake zeros, so the trend may show fewer than `max_days` points for a
+    while after this feature first ships.
+    """
+    budget = max_days - 1 if current_categories is not None else max_days
+    dates = list_dates()[:budget]
+    dates.reverse()  # oldest → newest among archived days
+
+    points: list[tuple[str, dict]] = []
+    for d in dates:
+        snap = load_snapshot(d)
+        if not snap or "category_counts" not in snap:
+            continue
+        points.append((d, snap["category_counts"]))
+
+    if current_categories is not None:
+        today_key = datetime.now(IST).strftime("%Y-%m-%d")
+        today_counts = {k: len(v.get("articles", [])) for k, v in current_categories.items()}
+        points.append((today_key, today_counts))
+
+    return {
+        "dates": [p[0] for p in points],
+        "series": {
+            key: [p[1].get(key, 0) for p in points]
+            for key in NATIONAL_KEYS
+        },
+    }
 
 
 def generate_static_pages() -> None:
