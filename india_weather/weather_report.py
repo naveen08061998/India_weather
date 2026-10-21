@@ -851,6 +851,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 
+<a href="../" title="Back to India Agents Hub" aria-label="Back to India Agents Hub" style="position:fixed;top:14px;left:14px;z-index:1500;background:rgba(0,0,0,0.55);color:#fff;padding:8px 14px;border-radius:20px;font-family:system-ui,sans-serif;font-size:0.82rem;text-decoration:none;backdrop-filter:blur(4px);box-shadow:0 4px 10px rgba(0,0,0,0.25);">🏠 Home</a>
 <header>
   <a href="#state-container" class="skip-link">Skip to weather content</a>
   <div class="header-left">
