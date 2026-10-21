@@ -327,7 +327,6 @@ def build_html(payload: dict) -> str:
 <body>
 
 <a href="#main" class="skip-link">Skip to news content</a>
-<a href="../" title="Back to India Agents Hub" aria-label="Back to India Agents Hub" style="position:fixed;top:14px;left:14px;z-index:1500;background:rgba(0,0,0,0.55);color:#fff;padding:8px 14px;border-radius:20px;font-family:system-ui,sans-serif;font-size:0.82rem;text-decoration:none;backdrop-filter:blur(4px);box-shadow:0 4px 10px rgba(0,0,0,0.25);">🏠 Home</a>
 <div class="tricolor"></div>
 
 <header>
@@ -354,6 +353,12 @@ def build_html(payload: dict) -> str:
              oninput="filterCards(this.value)" autocomplete="off"/>
     </div>
     <button id="theme-btn" onclick="toggleTheme()" aria-pressed="false">☀ Light</button>
+    <a href="../" title="Back to India Agents Hub" style="
+      background:var(--card);border:1px solid var(--border);border-radius:10px;
+      color:var(--text);padding:7px 12px;font-size:.8rem;text-decoration:none;
+      transition:background .2s;white-space:nowrap;font-family:inherit;"
+      onmouseover="this.style.background='var(--card-h)'"
+      onmouseout="this.style.background='var(--card)'">🏠 Home</a>
     <a href="./history/" style="
       background:var(--card);border:1px solid var(--border);border-radius:10px;
       color:var(--text);padding:7px 12px;font-size:.8rem;text-decoration:none;

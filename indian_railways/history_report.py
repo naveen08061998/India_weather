@@ -226,7 +226,6 @@ def build_history_html() -> str:
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
-<a href="../" title="Back to India Agents Hub" aria-label="Back to India Agents Hub" style="position:fixed;top:14px;left:14px;z-index:1500;background:rgba(0,0,0,0.55);color:#fff;padding:8px 14px;border-radius:20px;font-family:system-ui,sans-serif;font-size:0.82rem;text-decoration:none;backdrop-filter:blur(4px);box-shadow:0 4px 10px rgba(0,0,0,0.25);">🏠 Home</a>
 <div class="tricolor"></div>
 <header>
   <div class="brand">
@@ -237,6 +236,7 @@ def build_history_html() -> str:
     </div>
   </div>
   <div class="header-right">
+    <a class="nav-link" href="../" title="Back to India Agents Hub">&#127968; Home</a>
     <a class="nav-link" href="index.html">&#128646; Live Tracker</a>
     <button id="theme-btn" onclick="toggleTheme()">&#9728; Light</button>
   </div>

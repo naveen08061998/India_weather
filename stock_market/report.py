@@ -415,7 +415,6 @@ def build_html(payload: dict) -> str:
 </style>
 </head>
 <body>
-<a href="../" title="Back to India Agents Hub" aria-label="Back to India Agents Hub" style="position:fixed;top:14px;left:14px;z-index:1500;background:rgba(0,0,0,0.55);color:#fff;padding:8px 14px;border-radius:20px;font-family:system-ui,sans-serif;font-size:0.82rem;text-decoration:none;backdrop-filter:blur(4px);box-shadow:0 4px 10px rgba(0,0,0,0.25);">🏠 Home</a>
 <div class="ticker-bar"><div class="ticker-track">{ticker_items} &nbsp;&bull;&nbsp; {ticker_items}</div></div>
 <header>
   <div class="brand">
@@ -426,6 +425,7 @@ def build_html(payload: dict) -> str:
     </div>
   </div>
   <div class="stats">
+    <a href="../" class="stat-chip" style="text-decoration:none;cursor:pointer" title="Back to India Agents Hub">🏠 Home</a>
     <span class="stat-chip">{status_html}</span>
     <span class="stat-chip">Synced <b id="generated-at">{generated_at}</b></span>
     <span class="stat-chip">🟢 Up <b>{gainers}</b></span>
