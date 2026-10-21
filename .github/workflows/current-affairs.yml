@@ -4,7 +4,7 @@ name: Refresh Dashboards (Weather + Current Affairs + Railways + Markets + AQI +
 on:
   push:
     branches: [main]
-    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'stock_market/**', 'air_quality/**', 'gov_updates/**', 'india_borders/**', 'india_highways/**', 'abbreviations/**', 'static/**', '.github/workflows/current-affairs.yml']
+    paths: ['india_weather/**', 'current_affairs/**', 'indian_railways/**', 'stock_market/**', 'air_quality/**', 'gov_updates/**', 'india_borders/**', 'india_highways/**', 'abbreviations/**', 'short_news/**', 'static/**', '.github/workflows/current-affairs.yml']
   schedule:
     - cron: '30 */2 * * *'    # every 2 hours at :30 (e.g. 0:30, 2:30, 4:30 …) — baseline, all agents
     - cron: '*/15 3-10 * * 1-5'   # every 15 min, Mon-Fri ~8:30-15:30 IST (NSE 9:15-15:30 IST) — keeps Stock Market fresh
@@ -161,11 +161,17 @@ jobs:
         timeout-minutes: 2
         continue-on-error: true
 
-      # 11. Assemble a single Pages artifact with nine independent sections.
+      # 10g. Build Short News / Quick Read (crisp ~60-word story digest, free RSS, no API key).
+      - name: Generate Short News HTML
+        run: python -m short_news.orchestrator --workers 6
+        timeout-minutes: 5
+        continue-on-error: true
+
+      # 11. Assemble a single Pages artifact with ten independent sections.
       - name: Assemble multi-app Pages artifact
         run: |
           rm -rf site
-          mkdir -p site/weather/static site/current-affairs site/railways site/stock-market site/air-quality site/gov-updates site/borders site/highways site/abbreviations
+          mkdir -p site/weather/static site/current-affairs site/railways site/stock-market site/air-quality site/gov-updates site/borders site/highways site/abbreviations site/short-news
 
           cp india_weather/weathers/india_weather_report.html site/weather/index.html
           cp static/manifest.json site/weather/manifest.json
@@ -183,6 +189,7 @@ jobs:
           [ -f india_borders/borders/india_borders_report.html ] && cp india_borders/borders/india_borders_report.html site/borders/index.html
           [ -f india_highways/network/india_highways_report.html ] && cp india_highways/network/india_highways_report.html site/highways/index.html
           [ -f abbreviations/lexicon/abbreviations_report.html ] && cp abbreviations/lexicon/abbreviations_report.html site/abbreviations/index.html
+          [ -f short_news/digest/short_news_report.html ] && cp short_news/digest/short_news_report.html site/short-news/index.html
 
           cat > site/index.html << 'HTML'
           <!DOCTYPE html>
@@ -207,6 +214,7 @@ jobs:
                 --accent7: #7c3aed;
                 --accent8: #ca8a04;
                 --accent9: #6e1f3a;
+                --accent10: #ff5e57;
               }
               * { box-sizing: border-box; }
               body {
@@ -257,12 +265,13 @@ jobs:
               .c7 { background: var(--accent7); }
               .c8 { background: var(--accent8); }
               .c9 { background: var(--accent9); }
+              .c10 { background: var(--accent10); }
             </style>
           </head>
           <body>
             <main class="wrap">
               <h1>India Agent Dashboards</h1>
-              <p>Nine independent dashboards, refreshed automatically every 2 hours (Stock Market every 15 min during NSE hours).</p>
+              <p>Ten independent dashboards, refreshed automatically every 2 hours (Stock Market every 15 min during NSE hours).</p>
               <section class="grid">
                 <a class="card" href="./weather/">
                   <span class="chip c1">Weather</span>
@@ -308,6 +317,11 @@ jobs:
                   <span class="chip c9">Reference</span>
                   <h2>The Lexicon</h2>
                   <p>A searchable general reference of common abbreviations across government, finance, tech, science &amp; more.</p>
+                </a>
+                <a class="card" href="./short-news/">
+                  <span class="chip c10">Quick Read</span>
+                  <h2>Short News</h2>
+                  <p>Every story condensed to ~60 words &mdash; the full picture, in seconds.</p>
                 </a>
               </section>
               <p style="margin-top:40px;font-size:.8rem;opacity:.65">Built by Naveen Alla</p>

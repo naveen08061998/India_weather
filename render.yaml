@@ -68,3 +68,15 @@ services:
         value: "3.11.0"
       - key: REFRESH_MINUTES
         value: "30"
+
+  - type: web
+    name: short-news
+    runtime: python
+    buildCommand: pip install -r requirements-web.txt
+    startCommand: gunicorn short_news.app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+    plan: free
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+      - key: REFRESH_MINUTES
+        value: "20"
