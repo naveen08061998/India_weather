@@ -9,6 +9,9 @@ No server required.
 
 from __future__ import annotations
 from pathlib import Path
+import html as _html
+
+from india_weather.weather_glossary import TERMS as GLOSSARY_TERMS, CATEGORIES as GLOSSARY_CATEGORIES
 
 OUTPUT_FILE = Path(__file__).parent / "weathers" / "india_weather_report.html"
 
@@ -256,6 +259,142 @@ def _build_states_js() -> str:
     ut_ids = [f'"{sid}"' for sid, *_ in UNION_TERRITORIES]
     lines.append(f"  const UT_IDS = new Set([{', '.join(ut_ids)}]);")
     return "\n".join(lines)
+
+
+_GLOSSARY_CAT_COLORS = {
+    "Pressure Systems & Cyclones": "#f87171",
+    "Instruments & Observation": "#38bdf8",
+    "Measurements & Scales": "#fbbf24",
+    "Wind & Air Movement": "#34d399",
+    "Fronts & Clouds": "#a78bfa",
+}
+
+
+def _build_learn_section() -> str:
+    """Build the self-contained 'Weather Learn' section (glossary + live wind
+    map). Returned as a plain string (NOT re-processed by HTML_TEMPLATE's own
+    .format() braces-doubling convention) so ordinary single braces in this
+    function's own CSS/JS are safe to write normally."""
+    chip_counts: dict[str, int] = {}
+    for t in GLOSSARY_TERMS:
+        chip_counts[t["category"]] = chip_counts.get(t["category"], 0) + 1
+
+    chips = ['<button class="gl-chip active" data-cat="all" onclick="setGlossaryFilter(\'all\', this)">All</button>']
+    for cat in GLOSSARY_CATEGORIES:
+        chips.append(
+            f'<button class="gl-chip" data-cat="{_html.escape(cat)}" onclick="setGlossaryFilter(\'{cat}\', this)">'
+            f'{_html.escape(cat)} ({chip_counts.get(cat, 0)})</button>'
+        )
+
+    cards = []
+    for t in GLOSSARY_TERMS:
+        color = _GLOSSARY_CAT_COLORS.get(t["category"], "#94a3b8")
+        cards.append(f'''
+<div class="term-card" data-cat="{_html.escape(t["category"])}" data-text="{_html.escape((t["term"] + " " + t["definition"]).lower())}">
+  <span class="term-badge" style="background:{color}">{_html.escape(t["category"])}</span>
+  <h4>{_html.escape(t["term"])}</h4>
+  <p>{_html.escape(t["definition"])}</p>
+</div>''')
+
+    return """
+<style>
+  #learn-section { max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }
+  #learn-section.hidden { display:none; }
+  .learn-header { display:flex; align-items:center; justify-content:space-between; gap:.6rem; font-size:.8rem; font-weight:700; color:#fb923c; margin-bottom:.65rem; }
+  .learn-close { background:none; border:none; color:#64748b; cursor:pointer; font-size:.9rem; padding:.1rem .4rem; }
+  .learn-close:hover { color:#e2e8f0; }
+  .learn-tabs { display:flex; gap:.5rem; margin-bottom:.75rem; }
+  .learn-tab-btn { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#94a3b8; border-radius:999px; padding:.35rem .9rem; font-size:.72rem; font-weight:700; cursor:pointer; }
+  .learn-tab-btn.active { background:rgba(251,146,60,.2); border-color:rgba(251,146,60,.5); color:#fdba74; }
+  #glossary-pane, #windmap-pane { display:none; }
+  #glossary-pane.show, #windmap-pane.show { display:block; }
+  .gl-search { width:100%; max-width:420px; padding:.5rem .8rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:#e2e8f0; font-size:.78rem; margin-bottom:.6rem; }
+  .gl-chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:.8rem; }
+  .gl-chip { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); color:#94a3b8; border-radius:999px; padding:.3rem .75rem; font-size:.68rem; cursor:pointer; }
+  .gl-chip.active, .gl-chip:hover { background:rgba(251,146,60,.2); border-color:rgba(251,146,60,.5); color:#fdba74; }
+  .term-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:.7rem; padding-bottom:1rem; }
+  .term-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.8rem; padding:.8rem .95rem; }
+  .term-badge { display:inline-block; font-size:.58rem; font-weight:700; color:#0f172a; padding:.1rem .5rem; border-radius:999px; margin-bottom:.4rem; }
+  .term-card h4 { margin:0 0 .3rem; font-size:.88rem; color:#e2e8f0; }
+  .term-card p { margin:0; font-size:.74rem; line-height:1.5; color:#94a3b8; }
+  #gl-count { font-size:.7rem; color:#64748b; margin-bottom:.5rem; }
+  .windmap-note { font-size:.72rem; color:#94a3b8; margin-bottom:.6rem; line-height:1.5; }
+  .windmap-frame-wrap { position:relative; width:100%; max-width:1100px; aspect-ratio:16/9; border-radius:.9rem; overflow:hidden; border:1px solid rgba(255,255,255,.1); }
+  .windmap-frame-wrap iframe { width:100%; height:100%; border:0; }
+  .windmap-load-btn { background:rgba(251,146,60,.2); border:1px solid rgba(251,146,60,.5); color:#fdba74; border-radius:.6rem; padding:.6rem 1.1rem; font-size:.78rem; font-weight:700; cursor:pointer; }
+  body.light #learn-section .term-card { background:#fff; border-color:#e2e8f0; }
+  body.light #learn-section .term-card h4 { color:#1e293b; }
+  body.light #learn-section .term-card p { color:#64748b; }
+  body.light #learn-section .gl-search { background:#fff; color:#1e293b; border-color:#e2e8f0; }
+</style>
+
+<div id="learn-section" class="hidden">
+  <div class="learn-header">
+    <span>&#128218; Weather Learn &mdash; Terminology &amp; Live Wind Patterns</span>
+    <button class="learn-close" onclick="document.getElementById('learn-section').classList.add('hidden')" aria-label="Close weather learn panel">&#10005;</button>
+  </div>
+  <div class="learn-tabs">
+    <button class="learn-tab-btn active" id="tab-glossary-btn" onclick="setLearnTab('glossary')">&#128214; Glossary</button>
+    <button class="learn-tab-btn" id="tab-windmap-btn" onclick="setLearnTab('windmap')">&#127788;&#65039; Live Wind Map</button>
+  </div>
+
+  <div id="glossary-pane" class="show">
+    <input type="text" class="gl-search" id="gl-search" placeholder="Search a term, e.g. cyclone, radar, dew point..." oninput="filterGlossary()">
+    <div class="gl-chips">""" + "".join(chips) + """</div>
+    <p id="gl-count"></p>
+    <div class="term-grid" id="term-grid">""" + "".join(cards) + """</div>
+  </div>
+
+  <div id="windmap-pane">
+    <p class="windmap-note">Live, real-time wind-flow visualisation (powered by Windy.com) &mdash; the animated streaks show live wind direction and speed across India and the surrounding seas. Loads on demand since it embeds a third-party map.</p>
+    <div class="windmap-frame-wrap" id="windmap-frame-wrap">
+      <button class="windmap-load-btn" id="windmap-load-btn" onclick="loadWindMap()">&#9654; Load Live Wind Map</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleLearn() {
+  document.getElementById('learn-section').classList.toggle('hidden');
+  if (!document.getElementById('learn-section').classList.contains('hidden')) {
+    filterGlossary();
+  }
+}
+let _glossaryFilter = 'all';
+function setGlossaryFilter(cat, btn) {
+  _glossaryFilter = cat;
+  document.querySelectorAll('.gl-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  filterGlossary();
+}
+function filterGlossary() {
+  const q = document.getElementById('gl-search').value.trim().toLowerCase();
+  let shown = 0;
+  document.querySelectorAll('.term-card').forEach(card => {
+    const matchesCat = _glossaryFilter === 'all' || card.dataset.cat === _glossaryFilter;
+    const matchesText = !q || card.dataset.text.includes(q);
+    const pass = matchesCat && matchesText;
+    card.style.display = pass ? '' : 'none';
+    if (pass) shown++;
+  });
+  document.getElementById('gl-count').textContent = `Showing ${shown} of """ + str(len(GLOSSARY_TERMS)) + """ terms`;
+}
+function setLearnTab(tab) {
+  document.getElementById('tab-glossary-btn').classList.toggle('active', tab === 'glossary');
+  document.getElementById('tab-windmap-btn').classList.toggle('active', tab === 'windmap');
+  document.getElementById('glossary-pane').classList.toggle('show', tab === 'glossary');
+  document.getElementById('windmap-pane').classList.toggle('show', tab === 'windmap');
+}
+let _windMapLoaded = false;
+function loadWindMap() {
+  if (_windMapLoaded) return;
+  _windMapLoaded = true;
+  const wrap = document.getElementById('windmap-frame-wrap');
+  const src = 'https://embed.windy.com/embed2.html?lat=22.5&lon=79.5&detailLat=22.5&detailLon=79.5&zoom=4&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1';
+  wrap.innerHTML = `<iframe src="${src}" title="Live wind flow map over India" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
+}
+</script>
+"""
 
 
 HTML_TEMPLATE = """<!DOCTYPE html>
@@ -869,6 +1008,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     <div class="status-pill" id="pill-cold" style="display:none">&#10052; <span id="global-cold">&mdash;</span></div>
     <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
     <button id="near-me-btn" onclick="locateNearMe()" title="Show weather at your current location">&#128205; Near Me</button>
+    <button id="learn-btn" onclick="toggleLearn()" title="Learn weather terms, cyclone scale, radar &amp; see the live wind map">&#128218; Learn</button>
     <button id="pwa-notif-btn" onclick="_requestNotifications()" style="display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(249,115,22,.4);background:rgba(249,115,22,.12);color:#fdba74;font-size:.75rem;cursor:pointer">&#128276; Enable Alerts</button>
     <button id="pwa-install-btn" onclick="_installPWA()" style="display:none;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#6ee7b7;font-size:.75rem;cursor:pointer">&#11015; Install App</button>
     <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode" aria-pressed="false">&#9728; Light</button>
@@ -898,6 +1038,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <div class="near-me-note" id="near-me-note" role="status" aria-live="polite"></div>
   <div class="city-card" id="near-me-card" style="--accent:#38bdf8"></div>
 </div>
+
+{LEARN_SECTION}
 
 <div id="state-nav">
   <button class="state-btn all-btn active" style="--c:#64748b"
@@ -2507,7 +2649,8 @@ def generate() -> None:
     else:
         alerts_data = '{"cyclones":[],"district_alerts":[],"generated_at":""}'
     alerts_js = f"const ALERTS_DATA = {alerts_data};\n"
-    html = HTML_TEMPLATE.format(STATES_JS=states_js + "\n  " + weather_js + "\n  " + alerts_js)
+    learn_section = _build_learn_section()
+    html = HTML_TEMPLATE.format(STATES_JS=states_js + "\n  " + weather_js + "\n  " + alerts_js, LEARN_SECTION=learn_section)
     OUTPUT_FILE.write_text(html, encoding="utf-8")
     print(f"Report saved \u2192 {OUTPUT_FILE}")
 

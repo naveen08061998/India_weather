@@ -609,6 +609,7 @@
     <div class="status-pill" id="pill-cold" style="display:none">&#10052; <span id="global-cold">&mdash;</span></div>
     <button id="refresh-btn" onclick="triggerRefresh()">&#8635; Refresh Now</button>
     <button id="near-me-btn" onclick="locateNearMe()" title="Show weather at your current location">&#128205; Near Me</button>
+    <button id="learn-btn" onclick="toggleLearn()" title="Learn weather terms, cyclone scale, radar &amp; see the live wind map">&#128218; Learn</button>
     <button id="pwa-notif-btn" onclick="_requestNotifications()" style="display:inline-flex;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(249,115,22,.4);background:rgba(249,115,22,.12);color:#fdba74;font-size:.75rem;cursor:pointer">&#128276; Enable Alerts</button>
     <button id="pwa-install-btn" onclick="_installPWA()" style="display:none;align-items:center;gap:.35rem;padding:.4rem .85rem;border-radius:.6rem;border:1px solid rgba(16,185,129,.4);background:rgba(16,185,129,.12);color:#6ee7b7;font-size:.75rem;cursor:pointer">&#11015; Install App</button>
     <button id="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode" aria-pressed="false">&#9728; Light</button>
@@ -638,6 +639,311 @@
   <div class="near-me-note" id="near-me-note" role="status" aria-live="polite"></div>
   <div class="city-card" id="near-me-card" style="--accent:#38bdf8"></div>
 </div>
+
+
+<style>
+  #learn-section { max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }
+  #learn-section.hidden { display:none; }
+  .learn-header { display:flex; align-items:center; justify-content:space-between; gap:.6rem; font-size:.8rem; font-weight:700; color:#fb923c; margin-bottom:.65rem; }
+  .learn-close { background:none; border:none; color:#64748b; cursor:pointer; font-size:.9rem; padding:.1rem .4rem; }
+  .learn-close:hover { color:#e2e8f0; }
+  .learn-tabs { display:flex; gap:.5rem; margin-bottom:.75rem; }
+  .learn-tab-btn { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); color:#94a3b8; border-radius:999px; padding:.35rem .9rem; font-size:.72rem; font-weight:700; cursor:pointer; }
+  .learn-tab-btn.active { background:rgba(251,146,60,.2); border-color:rgba(251,146,60,.5); color:#fdba74; }
+  #glossary-pane, #windmap-pane { display:none; }
+  #glossary-pane.show, #windmap-pane.show { display:block; }
+  .gl-search { width:100%; max-width:420px; padding:.5rem .8rem; border-radius:.6rem; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:#e2e8f0; font-size:.78rem; margin-bottom:.6rem; }
+  .gl-chips { display:flex; flex-wrap:wrap; gap:.4rem; margin-bottom:.8rem; }
+  .gl-chip { background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); color:#94a3b8; border-radius:999px; padding:.3rem .75rem; font-size:.68rem; cursor:pointer; }
+  .gl-chip.active, .gl-chip:hover { background:rgba(251,146,60,.2); border-color:rgba(251,146,60,.5); color:#fdba74; }
+  .term-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:.7rem; padding-bottom:1rem; }
+  .term-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.8rem; padding:.8rem .95rem; }
+  .term-badge { display:inline-block; font-size:.58rem; font-weight:700; color:#0f172a; padding:.1rem .5rem; border-radius:999px; margin-bottom:.4rem; }
+  .term-card h4 { margin:0 0 .3rem; font-size:.88rem; color:#e2e8f0; }
+  .term-card p { margin:0; font-size:.74rem; line-height:1.5; color:#94a3b8; }
+  #gl-count { font-size:.7rem; color:#64748b; margin-bottom:.5rem; }
+  .windmap-note { font-size:.72rem; color:#94a3b8; margin-bottom:.6rem; line-height:1.5; }
+  .windmap-frame-wrap { position:relative; width:100%; max-width:1100px; aspect-ratio:16/9; border-radius:.9rem; overflow:hidden; border:1px solid rgba(255,255,255,.1); }
+  .windmap-frame-wrap iframe { width:100%; height:100%; border:0; }
+  .windmap-load-btn { background:rgba(251,146,60,.2); border:1px solid rgba(251,146,60,.5); color:#fdba74; border-radius:.6rem; padding:.6rem 1.1rem; font-size:.78rem; font-weight:700; cursor:pointer; }
+  body.light #learn-section .term-card { background:#fff; border-color:#e2e8f0; }
+  body.light #learn-section .term-card h4 { color:#1e293b; }
+  body.light #learn-section .term-card p { color:#64748b; }
+  body.light #learn-section .gl-search { background:#fff; color:#1e293b; border-color:#e2e8f0; }
+</style>
+
+<div id="learn-section" class="hidden">
+  <div class="learn-header">
+    <span>&#128218; Weather Learn &mdash; Terminology &amp; Live Wind Patterns</span>
+    <button class="learn-close" onclick="document.getElementById('learn-section').classList.add('hidden')" aria-label="Close weather learn panel">&#10005;</button>
+  </div>
+  <div class="learn-tabs">
+    <button class="learn-tab-btn active" id="tab-glossary-btn" onclick="setLearnTab('glossary')">&#128214; Glossary</button>
+    <button class="learn-tab-btn" id="tab-windmap-btn" onclick="setLearnTab('windmap')">&#127788;&#65039; Live Wind Map</button>
+  </div>
+
+  <div id="glossary-pane" class="show">
+    <input type="text" class="gl-search" id="gl-search" placeholder="Search a term, e.g. cyclone, radar, dew point..." oninput="filterGlossary()">
+    <div class="gl-chips"><button class="gl-chip active" data-cat="all" onclick="setGlossaryFilter('all', this)">All</button><button class="gl-chip" data-cat="Pressure Systems &amp; Cyclones" onclick="setGlossaryFilter('Pressure Systems & Cyclones', this)">Pressure Systems &amp; Cyclones (14)</button><button class="gl-chip" data-cat="Instruments &amp; Observation" onclick="setGlossaryFilter('Instruments & Observation', this)">Instruments &amp; Observation (7)</button><button class="gl-chip" data-cat="Measurements &amp; Scales" onclick="setGlossaryFilter('Measurements & Scales', this)">Measurements &amp; Scales (7)</button><button class="gl-chip" data-cat="Wind &amp; Air Movement" onclick="setGlossaryFilter('Wind & Air Movement', this)">Wind &amp; Air Movement (6)</button><button class="gl-chip" data-cat="Fronts &amp; Clouds" onclick="setGlossaryFilter('Fronts & Clouds', this)">Fronts &amp; Clouds (7)</button></div>
+    <p id="gl-count"></p>
+    <div class="term-grid" id="term-grid">
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="low pressure area a region where atmospheric pressure is lower than its surroundings — the starting point from which a cyclone may develop. winds are below 31 km/h.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Low Pressure Area</h4>
+  <p>A region where atmospheric pressure is lower than its surroundings — the starting point from which a cyclone may develop. Winds are below 31 km/h.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="depression a low-pressure system with sustained winds of 31-49 km/h — the first stage the india meteorological department (imd) formally tracks on its way to becoming a cyclone.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Depression</h4>
+  <p>A low-pressure system with sustained winds of 31-49 km/h — the first stage the India Meteorological Department (IMD) formally tracks on its way to becoming a cyclone.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="deep depression the next stage up from a depression, with sustained winds of 50-61 km/h.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Deep Depression</h4>
+  <p>The next stage up from a Depression, with sustained winds of 50-61 km/h.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="cyclonic storm winds of 62-88 km/h. this is the stage at which imd officially names the storm (e.g. &#x27;cyclone biparjoy&#x27;).">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Cyclonic Storm</h4>
+  <p>Winds of 62-88 km/h. This is the stage at which IMD officially names the storm (e.g. &#x27;Cyclone Biparjoy&#x27;).</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="severe cyclonic storm winds of 89-117 km/h, strong enough to cause structural damage and significant storm surge.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Severe Cyclonic Storm</h4>
+  <p>Winds of 89-117 km/h, strong enough to cause structural damage and significant storm surge.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="very severe cyclonic storm winds of 118-165 km/h — equivalent in strength to a major hurricane.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Very Severe Cyclonic Storm</h4>
+  <p>Winds of 118-165 km/h — equivalent in strength to a major hurricane.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="extremely severe cyclonic storm winds of 166-221 km/h, capable of catastrophic damage near landfall.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Extremely Severe Cyclonic Storm</h4>
+  <p>Winds of 166-221 km/h, capable of catastrophic damage near landfall.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="super cyclonic storm the most intense category — sustained winds of 222 km/h or more. rare; the 1999 odisha cyclone was a super cyclonic storm.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Super Cyclonic Storm</h4>
+  <p>The most intense category — sustained winds of 222 km/h or more. Rare; the 1999 Odisha cyclone was a Super Cyclonic Storm.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="eye of the storm the calm, roughly circular region at the centre of a mature cyclone, often with clear skies, surrounded by the storm&#x27;s strongest winds.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Eye of the Storm</h4>
+  <p>The calm, roughly circular region at the centre of a mature cyclone, often with clear skies, surrounded by the storm&#x27;s strongest winds.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="eyewall the ring of intense thunderstorms immediately surrounding the eye — where a cyclone&#x27;s strongest winds and heaviest rain occur.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Eyewall</h4>
+  <p>The ring of intense thunderstorms immediately surrounding the eye — where a cyclone&#x27;s strongest winds and heaviest rain occur.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="storm surge an abnormal rise of sea level pushed ashore by a cyclone&#x27;s winds — historically the single deadliest hazard in major indian cyclones (e.g. 1999 odisha, bhola 1970).">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Storm Surge</h4>
+  <p>An abnormal rise of sea level pushed ashore by a cyclone&#x27;s winds — historically the single deadliest hazard in major Indian cyclones (e.g. 1999 Odisha, Bhola 1970).</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="anticyclone a high-pressure system with winds spiralling outward — generally brings clear skies and calm, settled weather (the opposite of a cyclone).">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Anticyclone</h4>
+  <p>A high-pressure system with winds spiralling outward — generally brings clear skies and calm, settled weather (the opposite of a cyclone).</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="trough an elongated area of relatively low pressure extending from a larger low-pressure system, often associated with cloudy or unsettled weather.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Trough</h4>
+  <p>An elongated area of relatively low pressure extending from a larger low-pressure system, often associated with cloudy or unsettled weather.</p>
+</div>
+<div class="term-card" data-cat="Pressure Systems &amp; Cyclones" data-text="ridge an elongated area of relatively high pressure, usually bringing clear and stable weather along its length.">
+  <span class="term-badge" style="background:#f87171">Pressure Systems &amp; Cyclones</span>
+  <h4>Ridge</h4>
+  <p>An elongated area of relatively high pressure, usually bringing clear and stable weather along its length.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="doppler weather radar (dwr) a radar that uses the doppler effect to measure both the intensity and the speed/direction of precipitation moving toward or away from it — imd operates a network of dwrs across india&#x27;s coast to track cyclones in real time.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Doppler Weather Radar (DWR)</h4>
+  <p>A radar that uses the Doppler effect to measure both the intensity and the speed/direction of precipitation moving toward or away from it — IMD operates a network of DWRs across India&#x27;s coast to track cyclones in real time.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="weather satellite (insat) india&#x27;s geostationary insat/insat-3d series satellites continuously image cloud cover, helping forecasters spot and track developing storm systems from space.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Weather Satellite (INSAT)</h4>
+  <p>India&#x27;s geostationary INSAT/INSAT-3D series satellites continuously image cloud cover, helping forecasters spot and track developing storm systems from space.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="anemometer an instrument that measures wind speed, typically using spinning cups or a propeller.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Anemometer</h4>
+  <p>An instrument that measures wind speed, typically using spinning cups or a propeller.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="wind vane a simple instrument that shows the direction the wind is blowing from, usually paired with an anemometer at a weather station.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Wind Vane</h4>
+  <p>A simple instrument that shows the direction the wind is blowing FROM, usually paired with an anemometer at a weather station.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="barometer an instrument that measures atmospheric pressure — a rapidly falling reading often signals an approaching storm.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Barometer</h4>
+  <p>An instrument that measures atmospheric pressure — a rapidly falling reading often signals an approaching storm.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="radiosonde a small instrument package carried by a weather balloon to measure temperature, humidity and pressure as it rises through the atmosphere, transmitting data back by radio.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Radiosonde</h4>
+  <p>A small instrument package carried by a weather balloon to measure temperature, humidity and pressure as it rises through the atmosphere, transmitting data back by radio.</p>
+</div>
+<div class="term-card" data-cat="Instruments &amp; Observation" data-text="automatic weather station (aws) an unmanned station that automatically records and transmits weather data (temperature, rainfall, wind, humidity) at regular intervals, widely deployed by imd for dense ground coverage.">
+  <span class="term-badge" style="background:#38bdf8">Instruments &amp; Observation</span>
+  <h4>Automatic Weather Station (AWS)</h4>
+  <p>An unmanned station that automatically records and transmits weather data (temperature, rainfall, wind, humidity) at regular intervals, widely deployed by IMD for dense ground coverage.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="atmospheric pressure the weight of the air above a point on earth&#x27;s surface, measured in hectopascals (hpa) or millibars — average sea-level pressure is about 1013 hpa.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>Atmospheric Pressure</h4>
+  <p>The weight of the air above a point on Earth&#x27;s surface, measured in hectopascals (hPa) or millibars — average sea-level pressure is about 1013 hPa.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="relative humidity the amount of water vapour in the air expressed as a percentage of the maximum the air could hold at that temperature.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>Relative Humidity</h4>
+  <p>The amount of water vapour in the air expressed as a percentage of the maximum the air could hold at that temperature.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="dew point the temperature at which air becomes saturated and water vapour starts condensing into dew/fog — a higher dew point means muggier, stickier air.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>Dew Point</h4>
+  <p>The temperature at which air becomes saturated and water vapour starts condensing into dew/fog — a higher dew point means muggier, stickier air.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="beaufort scale a 0-12 scale describing wind force from &#x27;calm&#x27; (0) to &#x27;hurricane&#x27; (12), based on observed effects on sea/land rather than instrument readings.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>Beaufort Scale</h4>
+  <p>A 0-12 scale describing wind force from &#x27;Calm&#x27; (0) to &#x27;Hurricane&#x27; (12), based on observed effects on sea/land rather than instrument readings.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="visibility the greatest distance at which an object can be clearly seen, reduced by fog, haze, heavy rain or dust.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>Visibility</h4>
+  <p>The greatest distance at which an object can be clearly seen, reduced by fog, haze, heavy rain or dust.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="uv index a scale (typically 0-11+) indicating the strength of sunburn-causing ultraviolet radiation expected at solar noon.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>UV Index</h4>
+  <p>A scale (typically 0-11+) indicating the strength of sunburn-causing ultraviolet radiation expected at solar noon.</p>
+</div>
+<div class="term-card" data-cat="Measurements &amp; Scales" data-text="heat index a &#x27;feels like&#x27; temperature combining actual air temperature with humidity, since high humidity reduces the body&#x27;s ability to cool itself by sweating.">
+  <span class="term-badge" style="background:#fbbf24">Measurements &amp; Scales</span>
+  <h4>Heat Index</h4>
+  <p>A &#x27;feels like&#x27; temperature combining actual air temperature with humidity, since high humidity reduces the body&#x27;s ability to cool itself by sweating.</p>
+</div>
+<div class="term-card" data-cat="Wind &amp; Air Movement" data-text="wind direction by meteorological convention, named for where the wind is blowing from — a &#x27;westerly&#x27; wind blows from the west toward the east.">
+  <span class="term-badge" style="background:#34d399">Wind &amp; Air Movement</span>
+  <h4>Wind Direction</h4>
+  <p>By meteorological convention, named for where the wind is blowing FROM — a &#x27;westerly&#x27; wind blows from the west toward the east.</p>
+</div>
+<div class="term-card" data-cat="Wind &amp; Air Movement" data-text="jet stream a narrow band of very strong winds high in the atmosphere (around 9-16 km up) that steers weather systems and strongly influences the timing of india&#x27;s monsoon.">
+  <span class="term-badge" style="background:#34d399">Wind &amp; Air Movement</span>
+  <h4>Jet Stream</h4>
+  <p>A narrow band of very strong winds high in the atmosphere (around 9-16 km up) that steers weather systems and strongly influences the timing of India&#x27;s monsoon.</p>
+</div>
+<div class="term-card" data-cat="Wind &amp; Air Movement" data-text="monsoon a seasonal reversal of prevailing winds — india&#x27;s southwest monsoon (june-september) brings most of its annual rainfall; the northeast monsoon (oct-dec) brings rain mainly to tamil nadu and the southeast coast.">
+  <span class="term-badge" style="background:#34d399">Wind &amp; Air Movement</span>
+  <h4>Monsoon</h4>
+  <p>A seasonal reversal of prevailing winds — India&#x27;s Southwest Monsoon (June-September) brings most of its annual rainfall; the Northeast Monsoon (Oct-Dec) brings rain mainly to Tamil Nadu and the southeast coast.</p>
+</div>
+<div class="term-card" data-cat="Wind &amp; Air Movement" data-text="sea breeze a local wind that blows from the (cooler) sea toward the (warmer) land during the day, common along india&#x27;s coastline in the afternoon.">
+  <span class="term-badge" style="background:#34d399">Wind &amp; Air Movement</span>
+  <h4>Sea Breeze</h4>
+  <p>A local wind that blows from the (cooler) sea toward the (warmer) land during the day, common along India&#x27;s coastline in the afternoon.</p>
+</div>
+<div class="term-card" data-cat="Wind &amp; Air Movement" data-text="land breeze the nighttime reverse of a sea breeze — land cools faster than the sea after sunset, so the wind flows from land out to sea.">
+  <span class="term-badge" style="background:#34d399">Wind &amp; Air Movement</span>
+  <h4>Land Breeze</h4>
+  <p>The nighttime reverse of a sea breeze — land cools faster than the sea after sunset, so the wind flows from land out to sea.</p>
+</div>
+<div class="term-card" data-cat="Wind &amp; Air Movement" data-text="squall a sudden, sharp increase in wind speed, usually accompanying a thunderstorm, that ends almost as abruptly as it began.">
+  <span class="term-badge" style="background:#34d399">Wind &amp; Air Movement</span>
+  <h4>Squall</h4>
+  <p>A sudden, sharp increase in wind speed, usually accompanying a thunderstorm, that ends almost as abruptly as it began.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="cold front the leading edge of an advancing cold air mass, often triggering a sharp, short burst of rain or thunderstorms as it passes.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Cold Front</h4>
+  <p>The leading edge of an advancing cold air mass, often triggering a sharp, short burst of rain or thunderstorms as it passes.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="warm front the leading edge of an advancing warm air mass, typically bringing a longer period of lighter, steadier rain ahead of it.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Warm Front</h4>
+  <p>The leading edge of an advancing warm air mass, typically bringing a longer period of lighter, steadier rain ahead of it.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="occluded front formed when a fast-moving cold front catches up to a warm front, lifting the warm air mass entirely off the ground.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Occluded Front</h4>
+  <p>Formed when a fast-moving cold front catches up to a warm front, lifting the warm air mass entirely off the ground.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="cumulonimbus a towering, anvil-shaped cloud associated with thunderstorms, heavy rain, hail and lightning.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Cumulonimbus</h4>
+  <p>A towering, anvil-shaped cloud associated with thunderstorms, heavy rain, hail and lightning.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="cirrus thin, wispy, high-altitude ice-crystal clouds, often an early sign that weather may change within a day or two.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Cirrus</h4>
+  <p>Thin, wispy, high-altitude ice-crystal clouds, often an early sign that weather may change within a day or two.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="stratus a flat, featureless, low-lying cloud layer that often covers the whole sky in grey, associated with overcast drizzly days.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Stratus</h4>
+  <p>A flat, featureless, low-lying cloud layer that often covers the whole sky in grey, associated with overcast drizzly days.</p>
+</div>
+<div class="term-card" data-cat="Fronts &amp; Clouds" data-text="fog a cloud at ground level that reduces visibility below 1 km, formed when moist air cools and water vapour condenses near the surface.">
+  <span class="term-badge" style="background:#a78bfa">Fronts &amp; Clouds</span>
+  <h4>Fog</h4>
+  <p>A cloud at ground level that reduces visibility below 1 km, formed when moist air cools and water vapour condenses near the surface.</p>
+</div></div>
+  </div>
+
+  <div id="windmap-pane">
+    <p class="windmap-note">Live, real-time wind-flow visualisation (powered by Windy.com) &mdash; the animated streaks show live wind direction and speed across India and the surrounding seas. Loads on demand since it embeds a third-party map.</p>
+    <div class="windmap-frame-wrap" id="windmap-frame-wrap">
+      <button class="windmap-load-btn" id="windmap-load-btn" onclick="loadWindMap()">&#9654; Load Live Wind Map</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleLearn() {
+  document.getElementById('learn-section').classList.toggle('hidden');
+  if (!document.getElementById('learn-section').classList.contains('hidden')) {
+    filterGlossary();
+  }
+}
+let _glossaryFilter = 'all';
+function setGlossaryFilter(cat, btn) {
+  _glossaryFilter = cat;
+  document.querySelectorAll('.gl-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  filterGlossary();
+}
+function filterGlossary() {
+  const q = document.getElementById('gl-search').value.trim().toLowerCase();
+  let shown = 0;
+  document.querySelectorAll('.term-card').forEach(card => {
+    const matchesCat = _glossaryFilter === 'all' || card.dataset.cat === _glossaryFilter;
+    const matchesText = !q || card.dataset.text.includes(q);
+    const pass = matchesCat && matchesText;
+    card.style.display = pass ? '' : 'none';
+    if (pass) shown++;
+  });
+  document.getElementById('gl-count').textContent = `Showing ${shown} of 41 terms`;
+}
+function setLearnTab(tab) {
+  document.getElementById('tab-glossary-btn').classList.toggle('active', tab === 'glossary');
+  document.getElementById('tab-windmap-btn').classList.toggle('active', tab === 'windmap');
+  document.getElementById('glossary-pane').classList.toggle('show', tab === 'glossary');
+  document.getElementById('windmap-pane').classList.toggle('show', tab === 'windmap');
+}
+let _windMapLoaded = false;
+function loadWindMap() {
+  if (_windMapLoaded) return;
+  _windMapLoaded = true;
+  const wrap = document.getElementById('windmap-frame-wrap');
+  const src = 'https://embed.windy.com/embed2.html?lat=22.5&lon=79.5&detailLat=22.5&detailLon=79.5&zoom=4&level=surface&overlay=wind&product=ecmwf&menu=&message=true&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1';
+  wrap.innerHTML = `<iframe src="${src}" title="Live wind flow map over India" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>`;
+}
+</script>
+
 
 <div id="state-nav">
   <button class="state-btn all-btn active" style="--c:#64748b"
