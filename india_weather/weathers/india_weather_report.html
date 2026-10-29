@@ -670,6 +670,34 @@
   body.light #learn-section .term-card h4 { color:#1e293b; }
   body.light #learn-section .term-card p { color:#64748b; }
   body.light #learn-section .gl-search { background:#fff; color:#1e293b; border-color:#e2e8f0; }
+
+  /* ── How Cyclones Form tab ── */
+  #formation-pane { display:none; }
+  #formation-pane.show { display:block; }
+  .form-steps { display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.1rem; }
+  .form-step { display:flex; align-items:flex-start; gap:.8rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.8rem; padding:.7rem .9rem; }
+  .form-step-num { font-size:1.3rem; flex-shrink:0; }
+  .form-step-title { font-size:.84rem; font-weight:700; color:#fdba74; margin-bottom:.2rem; }
+  .form-step-body p { margin:0; font-size:.76rem; line-height:1.5; color:#94a3b8; }
+  .form-section-title { font-size:.78rem; font-weight:700; color:#e2e8f0; margin:1rem 0 .6rem; text-transform:uppercase; letter-spacing:.04em; }
+  .ingredient-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:.6rem; margin-bottom:1.1rem; }
+  .ingredient-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.8rem; padding:.75rem .85rem; }
+  .ingredient-icon { font-size:1.2rem; margin-bottom:.25rem; }
+  .ingredient-label { font-size:.8rem; font-weight:700; color:#e2e8f0; margin-bottom:.25rem; }
+  .ingredient-card p { margin:0; font-size:.72rem; line-height:1.45; color:#94a3b8; }
+  .ladder-row { display:flex; align-items:center; gap:.6rem; margin:.4rem 0; }
+  .ladder-name { width:170px; flex-shrink:0; font-size:.7rem; color:#cbd5e1; }
+  .ladder-track { flex:1; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; height:14px; }
+  .ladder-bar { height:100%; border-radius:999px; }
+  .ladder-val { width:90px; flex-shrink:0; font-size:.68rem; color:#94a3b8; text-align:right; }
+  body.light #formation-pane .form-step,
+  body.light #formation-pane .ingredient-card { background:#fff; border-color:#e2e8f0; }
+  body.light #formation-pane .form-step-body p,
+  body.light #formation-pane .ingredient-card p,
+  body.light #formation-pane .ladder-name,
+  body.light #formation-pane .ladder-val { color:#64748b; }
+  body.light #formation-pane .form-section-title,
+  body.light #formation-pane .ingredient-label { color:#1e293b; }
 </style>
 
 <div id="learn-section" class="hidden">
@@ -679,6 +707,7 @@
   </div>
   <div class="learn-tabs">
     <button class="learn-tab-btn active" id="tab-glossary-btn" onclick="setLearnTab('glossary')">&#128214; Glossary</button>
+    <button class="learn-tab-btn" id="tab-formation-btn" onclick="setLearnTab('formation')">&#127744; How Cyclones Form</button>
     <button class="learn-tab-btn" id="tab-windmap-btn" onclick="setLearnTab('windmap')">&#127788;&#65039; Live Wind Map</button>
   </div>
 
@@ -900,6 +929,122 @@
       <button class="windmap-load-btn" id="windmap-load-btn" onclick="loadWindMap()">&#9654; Load Live Wind Map</button>
     </div>
   </div>
+
+  <div id="formation-pane">
+    <div class="form-section-title">The Physical Process</div>
+    <div class="form-steps">
+<div class="form-step">
+  <div class="form-step-num">🌊</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step 1: Warm ocean fuels it</div>
+    <p>Sea surface temperature of at least 26.5°C, down to about 50m depth, heats the air directly above the ocean.</p>
+  </div>
+</div>
+<div class="form-step">
+  <div class="form-step-num">💨</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step 2: Warm, moist air rises</div>
+    <p>Heated air picks up moisture and rises because it&#x27;s less dense than the air around it — like a hot air balloon.</p>
+  </div>
+</div>
+<div class="form-step">
+  <div class="form-step-num">☁️</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step 3: Condensation releases heat</div>
+    <p>As the rising air cools with altitude, its moisture condenses into clouds, releasing latent heat that makes the air rise even faster — reinforcing the cycle.</p>
+  </div>
+</div>
+<div class="form-step">
+  <div class="form-step-num">⬇️</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step 4: A low pressure area forms</div>
+    <p>Rising air leaves a near-vacuum at the surface, pulling in more air from every direction — surface pressure keeps dropping.</p>
+  </div>
+</div>
+<div class="form-step">
+  <div class="form-step-num">🌀</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step 5: The Coriolis effect spins it</div>
+    <p>Earth&#x27;s rotation deflects the inflowing air (to the right in the Northern Hemisphere), organising the system into a rotating spiral instead of flowing straight to the centre.</p>
+  </div>
+</div>
+<div class="form-step">
+  <div class="form-step-num">📈</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step 6: The system intensifies</div>
+    <p>If warm water and low wind shear persist, the spiral tightens and strengthens — climbing the wind-speed ladder from Depression to a full-blown Cyclonic Storm and beyond.</p>
+  </div>
+</div></div>
+    <div class="form-section-title">What It Takes For A Cyclone To Form</div>
+    <div class="ingredient-grid">
+<div class="ingredient-card">
+  <div class="ingredient-icon">🌡️</div>
+  <div class="ingredient-label">Warm ocean</div>
+  <p>Sea surface temperature ≥ 26.5°C, deep enough (~50m) to keep fuelling the system.</p>
+</div>
+<div class="ingredient-card">
+  <div class="ingredient-icon">🧭</div>
+  <div class="ingredient-label">Distance from the equator</div>
+  <p>At least ~5° latitude — the Coriolis force is too weak right at the equator for a storm to start spinning.</p>
+</div>
+<div class="ingredient-card">
+  <div class="ingredient-icon">🌬️</div>
+  <div class="ingredient-label">Low wind shear</div>
+  <p>Upper-level winds must stay close in speed/direction to surface winds, or they tear the storm apart before it organises.</p>
+</div>
+<div class="ingredient-card">
+  <div class="ingredient-icon">⛈️</div>
+  <div class="ingredient-label">A pre-existing disturbance</div>
+  <p>A cluster of thunderstorms or a tropical wave to act as the initial &#x27;seed&#x27; for rotation to build around.</p>
+</div>
+<div class="ingredient-card">
+  <div class="ingredient-icon">↗️</div>
+  <div class="ingredient-label">Upper-level divergence</div>
+  <p>Air spreading out high above keeps pulling air upward from the surface, sustaining the low pressure below.</p>
+</div></div>
+    <div class="form-section-title">IMD's Wind-Speed Intensity Ladder</div>
+    <div class="ladder-rows">
+<div class="ladder-row">
+  <div class="ladder-name">Low Pressure Area</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:11%;background:#94a3b8"></div></div>
+  <div class="ladder-val">&le;30 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Depression</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:18%;background:#fbbf24"></div></div>
+  <div class="ladder-val">&le;49 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Deep Depression</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:22%;background:#fb923c"></div></div>
+  <div class="ladder-val">&le;61 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Cyclonic Storm</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:31%;background:#f97316"></div></div>
+  <div class="ladder-val">&le;88 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Severe Cyclonic Storm</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:42%;background:#ef4444"></div></div>
+  <div class="ladder-val">&le;117 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Very Severe Cyclonic Storm</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:59%;background:#dc2626"></div></div>
+  <div class="ladder-val">&le;165 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Extremely Severe Cyclonic Storm</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:79%;background:#b91c1c"></div></div>
+  <div class="ladder-val">&le;221 km/h</div>
+</div>
+<div class="ladder-row">
+  <div class="ladder-name">Super Cyclonic Storm</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:100%;background:#7f1d1d"></div></div>
+  <div class="ladder-val">&le;280 km/h</div>
+</div></div>
+  </div>
 </div>
 
 <script>
@@ -930,8 +1075,10 @@ function filterGlossary() {
 }
 function setLearnTab(tab) {
   document.getElementById('tab-glossary-btn').classList.toggle('active', tab === 'glossary');
+  document.getElementById('tab-formation-btn').classList.toggle('active', tab === 'formation');
   document.getElementById('tab-windmap-btn').classList.toggle('active', tab === 'windmap');
   document.getElementById('glossary-pane').classList.toggle('show', tab === 'glossary');
+  document.getElementById('formation-pane').classList.toggle('show', tab === 'formation');
   document.getElementById('windmap-pane').classList.toggle('show', tab === 'windmap');
 }
 let _windMapLoaded = false;

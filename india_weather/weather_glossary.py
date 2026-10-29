@@ -112,3 +112,48 @@ TERMS: list[dict] = [
     {"term": "Fog", "category": "Fronts & Clouds",
      "definition": "A cloud at ground level that reduces visibility below 1 km, formed when moist air cools and water vapour condenses near the surface."},
 ]
+
+# ── How a cyclone actually forms (step-by-step physical process) ──────────
+# Distinct from TERMS above — TERMS defines each *stage name*, this explains
+# the *mechanism* that drives a disturbance through those stages.
+CYCLONE_FORMATION_STEPS: list[dict] = [
+    {"step": 1, "icon": "🌊", "title": "Warm ocean fuels it",
+     "detail": "Sea surface temperature of at least 26.5°C, down to about 50m depth, heats the air directly above the ocean."},
+    {"step": 2, "icon": "💨", "title": "Warm, moist air rises",
+     "detail": "Heated air picks up moisture and rises because it's less dense than the air around it — like a hot air balloon."},
+    {"step": 3, "icon": "☁️", "title": "Condensation releases heat",
+     "detail": "As the rising air cools with altitude, its moisture condenses into clouds, releasing latent heat that makes the air rise even faster — reinforcing the cycle."},
+    {"step": 4, "icon": "⬇️", "title": "A low pressure area forms",
+     "detail": "Rising air leaves a near-vacuum at the surface, pulling in more air from every direction — surface pressure keeps dropping."},
+    {"step": 5, "icon": "🌀", "title": "The Coriolis effect spins it",
+     "detail": "Earth's rotation deflects the inflowing air (to the right in the Northern Hemisphere), organising the system into a rotating spiral instead of flowing straight to the centre."},
+    {"step": 6, "icon": "📈", "title": "The system intensifies",
+     "detail": "If warm water and low wind shear persist, the spiral tightens and strengthens — climbing the wind-speed ladder from Depression to a full-blown Cyclonic Storm and beyond."},
+]
+
+# ── What has to line up for a cyclone to actually form ─────────────────────
+CYCLONE_INGREDIENTS: list[dict] = [
+    {"icon": "🌡️", "label": "Warm ocean",
+     "detail": "Sea surface temperature ≥ 26.5°C, deep enough (~50m) to keep fuelling the system."},
+    {"icon": "🧭", "label": "Distance from the equator",
+     "detail": "At least ~5° latitude — the Coriolis force is too weak right at the equator for a storm to start spinning."},
+    {"icon": "🌬️", "label": "Low wind shear",
+     "detail": "Upper-level winds must stay close in speed/direction to surface winds, or they tear the storm apart before it organises."},
+    {"icon": "⛈️", "label": "A pre-existing disturbance",
+     "detail": "A cluster of thunderstorms or a tropical wave to act as the initial 'seed' for rotation to build around."},
+    {"icon": "↗️", "label": "Upper-level divergence",
+     "detail": "Air spreading out high above keeps pulling air upward from the surface, sustaining the low pressure below."},
+]
+
+# Wind-speed ladder for the visual timeline, mirrors the TERMS definitions
+# above but kept as compact (name, max_kmh, color) tuples for the bar chart.
+CYCLONE_INTENSITY_LADDER: list[dict] = [
+    {"name": "Low Pressure Area", "max_kmh": 30, "color": "#94a3b8"},
+    {"name": "Depression", "max_kmh": 49, "color": "#fbbf24"},
+    {"name": "Deep Depression", "max_kmh": 61, "color": "#fb923c"},
+    {"name": "Cyclonic Storm", "max_kmh": 88, "color": "#f97316"},
+    {"name": "Severe Cyclonic Storm", "max_kmh": 117, "color": "#ef4444"},
+    {"name": "Very Severe Cyclonic Storm", "max_kmh": 165, "color": "#dc2626"},
+    {"name": "Extremely Severe Cyclonic Storm", "max_kmh": 221, "color": "#b91c1c"},
+    {"name": "Super Cyclonic Storm", "max_kmh": 280, "color": "#7f1d1d"},
+]

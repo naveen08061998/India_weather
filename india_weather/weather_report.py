@@ -11,7 +11,13 @@ from __future__ import annotations
 from pathlib import Path
 import html as _html
 
-from india_weather.weather_glossary import TERMS as GLOSSARY_TERMS, CATEGORIES as GLOSSARY_CATEGORIES
+from india_weather.weather_glossary import (
+    TERMS as GLOSSARY_TERMS,
+    CATEGORIES as GLOSSARY_CATEGORIES,
+    CYCLONE_FORMATION_STEPS,
+    CYCLONE_INGREDIENTS,
+    CYCLONE_INTENSITY_LADDER,
+)
 
 OUTPUT_FILE = Path(__file__).parent / "weathers" / "india_weather_report.html"
 
@@ -296,6 +302,37 @@ def _build_learn_section() -> str:
   <p>{_html.escape(t["definition"])}</p>
 </div>''')
 
+    steps_html = []
+    for s in CYCLONE_FORMATION_STEPS:
+        steps_html.append(f'''
+<div class="form-step">
+  <div class="form-step-num">{s["icon"]}</div>
+  <div class="form-step-body">
+    <div class="form-step-title">Step {s["step"]}: {_html.escape(s["title"])}</div>
+    <p>{_html.escape(s["detail"])}</p>
+  </div>
+</div>''')
+
+    ingredient_cards = []
+    for ing in CYCLONE_INGREDIENTS:
+        ingredient_cards.append(f'''
+<div class="ingredient-card">
+  <div class="ingredient-icon">{ing["icon"]}</div>
+  <div class="ingredient-label">{_html.escape(ing["label"])}</div>
+  <p>{_html.escape(ing["detail"])}</p>
+</div>''')
+
+    max_kmh = max(stage["max_kmh"] for stage in CYCLONE_INTENSITY_LADDER)
+    ladder_rows = []
+    for stage in CYCLONE_INTENSITY_LADDER:
+        pct = round(stage["max_kmh"] / max_kmh * 100)
+        ladder_rows.append(f'''
+<div class="ladder-row">
+  <div class="ladder-name">{_html.escape(stage["name"])}</div>
+  <div class="ladder-track"><div class="ladder-bar" style="width:{pct}%;background:{stage["color"]}"></div></div>
+  <div class="ladder-val">&le;{stage["max_kmh"]} km/h</div>
+</div>''')
+
     return """
 <style>
   #learn-section { max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }
@@ -326,6 +363,34 @@ def _build_learn_section() -> str:
   body.light #learn-section .term-card h4 { color:#1e293b; }
   body.light #learn-section .term-card p { color:#64748b; }
   body.light #learn-section .gl-search { background:#fff; color:#1e293b; border-color:#e2e8f0; }
+
+  /* ── How Cyclones Form tab ── */
+  #formation-pane { display:none; }
+  #formation-pane.show { display:block; }
+  .form-steps { display:flex; flex-direction:column; gap:.6rem; margin-bottom:1.1rem; }
+  .form-step { display:flex; align-items:flex-start; gap:.8rem; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.8rem; padding:.7rem .9rem; }
+  .form-step-num { font-size:1.3rem; flex-shrink:0; }
+  .form-step-title { font-size:.84rem; font-weight:700; color:#fdba74; margin-bottom:.2rem; }
+  .form-step-body p { margin:0; font-size:.76rem; line-height:1.5; color:#94a3b8; }
+  .form-section-title { font-size:.78rem; font-weight:700; color:#e2e8f0; margin:1rem 0 .6rem; text-transform:uppercase; letter-spacing:.04em; }
+  .ingredient-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(190px, 1fr)); gap:.6rem; margin-bottom:1.1rem; }
+  .ingredient-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.8rem; padding:.75rem .85rem; }
+  .ingredient-icon { font-size:1.2rem; margin-bottom:.25rem; }
+  .ingredient-label { font-size:.8rem; font-weight:700; color:#e2e8f0; margin-bottom:.25rem; }
+  .ingredient-card p { margin:0; font-size:.72rem; line-height:1.45; color:#94a3b8; }
+  .ladder-row { display:flex; align-items:center; gap:.6rem; margin:.4rem 0; }
+  .ladder-name { width:170px; flex-shrink:0; font-size:.7rem; color:#cbd5e1; }
+  .ladder-track { flex:1; background:rgba(255,255,255,.08); border-radius:999px; overflow:hidden; height:14px; }
+  .ladder-bar { height:100%; border-radius:999px; }
+  .ladder-val { width:90px; flex-shrink:0; font-size:.68rem; color:#94a3b8; text-align:right; }
+  body.light #formation-pane .form-step,
+  body.light #formation-pane .ingredient-card { background:#fff; border-color:#e2e8f0; }
+  body.light #formation-pane .form-step-body p,
+  body.light #formation-pane .ingredient-card p,
+  body.light #formation-pane .ladder-name,
+  body.light #formation-pane .ladder-val { color:#64748b; }
+  body.light #formation-pane .form-section-title,
+  body.light #formation-pane .ingredient-label { color:#1e293b; }
 </style>
 
 <div id="learn-section" class="hidden">
@@ -335,6 +400,7 @@ def _build_learn_section() -> str:
   </div>
   <div class="learn-tabs">
     <button class="learn-tab-btn active" id="tab-glossary-btn" onclick="setLearnTab('glossary')">&#128214; Glossary</button>
+    <button class="learn-tab-btn" id="tab-formation-btn" onclick="setLearnTab('formation')">&#127744; How Cyclones Form</button>
     <button class="learn-tab-btn" id="tab-windmap-btn" onclick="setLearnTab('windmap')">&#127788;&#65039; Live Wind Map</button>
   </div>
 
@@ -350,6 +416,15 @@ def _build_learn_section() -> str:
     <div class="windmap-frame-wrap" id="windmap-frame-wrap">
       <button class="windmap-load-btn" id="windmap-load-btn" onclick="loadWindMap()">&#9654; Load Live Wind Map</button>
     </div>
+  </div>
+
+  <div id="formation-pane">
+    <div class="form-section-title">The Physical Process</div>
+    <div class="form-steps">""" + "".join(steps_html) + """</div>
+    <div class="form-section-title">What It Takes For A Cyclone To Form</div>
+    <div class="ingredient-grid">""" + "".join(ingredient_cards) + """</div>
+    <div class="form-section-title">IMD's Wind-Speed Intensity Ladder</div>
+    <div class="ladder-rows">""" + "".join(ladder_rows) + """</div>
   </div>
 </div>
 
@@ -381,8 +456,10 @@ function filterGlossary() {
 }
 function setLearnTab(tab) {
   document.getElementById('tab-glossary-btn').classList.toggle('active', tab === 'glossary');
+  document.getElementById('tab-formation-btn').classList.toggle('active', tab === 'formation');
   document.getElementById('tab-windmap-btn').classList.toggle('active', tab === 'windmap');
   document.getElementById('glossary-pane').classList.toggle('show', tab === 'glossary');
+  document.getElementById('formation-pane').classList.toggle('show', tab === 'formation');
   document.getElementById('windmap-pane').classList.toggle('show', tab === 'windmap');
 }
 let _windMapLoaded = false;
