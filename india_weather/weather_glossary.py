@@ -157,3 +157,55 @@ CYCLONE_INTENSITY_LADDER: list[dict] = [
     {"name": "Extremely Severe Cyclonic Storm", "max_kmh": 221, "color": "#b91c1c"},
     {"name": "Super Cyclonic Storm", "max_kmh": 280, "color": "#7f1d1d"},
 ]
+
+# ── World ocean basins — typical cyclone season + notable historic storms ──
+# Curated public climatological reference (hedged "typical/average" framing,
+# same discipline as STATE_HIGHWAY_SUMMARY/SAFETY_HISTORY elsewhere in this
+# repo — actual yearly activity varies, these are long-term averages).
+# `basin` MUST exactly match agent_alerts.py's classify_basin() output so the
+# dashboard can slot in LIVE active-cyclone data per sea.
+# `outlook_name`/`outlook_url` link to each basin's real official forecasting
+# agency for genuinely upcoming/forming systems — not a guessed prediction,
+# since reliable free genesis-probability data isn't available for every
+# basin and fabricating one would be worse than pointing to the real source.
+SEA_BASINS: list[dict] = [
+    {"basin": "North Atlantic", "local_name": "Hurricane",
+     "season": "1 June – 30 November (peak: August–October)", "avg_per_year": "~14 named storms (~7 hurricanes)",
+     "notable": ["Hurricane Katrina (2005) — catastrophic New Orleans flooding",
+                 "Hurricane Harvey (2017) — record US rainfall/flooding",
+                 "Hurricane Ian (2022) — one of the costliest US hurricanes on record"],
+     "outlook_name": "NOAA National Hurricane Center (NHC)", "outlook_url": "https://www.nhc.noaa.gov/"},
+    {"basin": "Eastern Pacific", "local_name": "Hurricane",
+     "season": "15 May – 30 November", "avg_per_year": "~15 named storms",
+     "notable": ["Hurricane Patricia (2015) — strongest wind speed ever recorded for this basin",
+                 "Hurricane Otis (2023) — catastrophic rapid intensification hitting Acapulco"],
+     "outlook_name": "NOAA National Hurricane Center (NHC)", "outlook_url": "https://www.nhc.noaa.gov/"},
+    {"basin": "Western Pacific", "local_name": "Typhoon",
+     "season": "Year-round (peak: July–October)", "avg_per_year": "~26 named storms — the world's most active basin",
+     "notable": ["Typhoon Haiyan (2013) — one of the strongest landfalls ever recorded, devastated the Philippines",
+                 "Typhoon Mangkhut (2018) — major Philippines/South China landfall",
+                 "Typhoon Yagi (2024) — major impact across Philippines/Vietnam"],
+     "outlook_name": "Joint Typhoon Warning Center (JTWC)", "outlook_url": "https://www.metoc.navy.mil/jtwc/jtwc.html"},
+    {"basin": "North Indian Ocean", "local_name": "Cyclone",
+     "season": "April–June and October–December (bridging the monsoon)", "avg_per_year": "~5 named storms — fewest of the major basins, but historically the deadliest due to dense, low-lying coastal population",
+     "notable": ["Bhola Cyclone (1970) — deadliest tropical cyclone in recorded history",
+                 "Odisha Super Cyclone (1999) — India's only recorded Super Cyclonic Storm",
+                 "Cyclone Amphan (2020) — costliest cyclone on record in this basin"],
+     "outlook_name": "RSMC New Delhi (India Meteorological Department)", "outlook_url": "https://rsmcnewdelhi.imd.gov.in/"},
+    {"basin": "South-West Indian Ocean", "local_name": "Cyclone",
+     "season": "November–April", "avg_per_year": "~9 named storms",
+     "notable": ["Cyclone Idai (2019) — devastating Mozambique/Zimbabwe/Malawi landfall",
+                 "Cyclone Freddy (2023) — longest-lived tropical cyclone ever recorded"],
+     "outlook_name": "Joint Typhoon Warning Center (JTWC)", "outlook_url": "https://www.metoc.navy.mil/jtwc/jtwc.html"},
+    {"basin": "Australian Region", "local_name": "Cyclone",
+     "season": "November–April", "avg_per_year": "~11 named storms",
+     "notable": ["Cyclone Tracy (1974) — destroyed most of Darwin on Christmas Day",
+                 "Cyclone Yasi (2011) — one of the most powerful to cross the Queensland coast"],
+     "outlook_name": "Australian Bureau of Meteorology (BOM)", "outlook_url": "http://www.bom.gov.au/cyclone/"},
+    {"basin": "South Pacific", "local_name": "Cyclone",
+     "season": "November–April", "avg_per_year": "~7 named storms",
+     "notable": ["Cyclone Winston (2016) — strongest cyclone ever to make landfall in the Southern Hemisphere, hit Fiji",
+                 "Cyclone Pam (2015) — catastrophic impact on Vanuatu"],
+     "outlook_name": "Joint Typhoon Warning Center (JTWC)", "outlook_url": "https://www.metoc.navy.mil/jtwc/jtwc.html"},
+]
+

@@ -714,6 +714,31 @@
   body.light #formation-pane .ladder-val { color:#64748b; }
   body.light #formation-pane .form-section-title,
   body.light #formation-pane .ingredient-label { color:#1e293b; }
+
+  /* ── Seas tab ── */
+  #seas-pane { display:none; }
+  #seas-pane.show { display:block; }
+  .seas-intro { font-size:.74rem; color:#94a3b8; line-height:1.55; margin-bottom:.9rem; }
+  .sea-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:.8rem; }
+  .sea-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.9rem; padding:.9rem 1rem; }
+  .sea-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.5rem; }
+  .sea-head h4 { margin:0; font-size:.92rem; color:#e2e8f0; }
+  .sea-local-badge { font-size:.62rem; font-weight:700; color:#0f172a; background:#38bdf8; padding:.1rem .55rem; border-radius:999px; flex-shrink:0; }
+  .sea-stats { font-size:.71rem; color:#94a3b8; line-height:1.6; margin-bottom:.6rem; }
+  .sea-stats strong { color:#cbd5e1; }
+  .sea-subtitle { font-size:.64rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:#64748b; margin:.5rem 0 .3rem; }
+  .sea-notable { margin:0 0 .3rem; padding-left:1.1rem; font-size:.71rem; color:#94a3b8; line-height:1.55; }
+  .sea-active { font-size:.72rem; line-height:1.6; }
+  .sea-active-empty { color:#64748b; font-style:italic; }
+  .sea-active-item { display:flex; align-items:center; gap:.4rem; background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.3); border-radius:.6rem; padding:.35rem .6rem; margin-bottom:.3rem; }
+  .sea-active-level { font-size:.6rem; font-weight:700; color:#fff; padding:.05rem .4rem; border-radius:999px; flex-shrink:0; }
+  .sea-outlook-link { display:inline-block; margin-top:.7rem; font-size:.7rem; color:#38bdf8; text-decoration:none; }
+  .sea-outlook-link:hover { text-decoration:underline; }
+  body.light #seas-pane .sea-card { background:#fff; border-color:#e2e8f0; }
+  body.light #seas-pane .sea-head h4 { color:#1e293b; }
+  body.light #seas-pane .sea-stats,
+  body.light #seas-pane .sea-notable { color:#64748b; }
+  body.light #seas-pane .sea-stats strong { color:#1e293b; }
 </style>
 
 <div id="learn-section" class="hidden">
@@ -724,6 +749,7 @@
   <div class="learn-tabs">
     <button class="learn-tab-btn active" id="tab-glossary-btn" onclick="setLearnTab('glossary')">&#128214; Glossary</button>
     <button class="learn-tab-btn" id="tab-formation-btn" onclick="setLearnTab('formation')">&#127744; How Cyclones Form</button>
+    <button class="learn-tab-btn" id="tab-seas-btn" onclick="setLearnTab('seas')">&#127754; Seas</button>
     <button class="learn-tab-btn" id="tab-windmap-btn" onclick="setLearnTab('windmap')">&#127788;&#65039; Live Wind Map</button>
   </div>
 
@@ -1061,6 +1087,130 @@
   <div class="ladder-val">&le;280 km/h</div>
 </div></div>
   </div>
+
+  <div id="seas-pane">
+    <p class="seas-intro">Typical season and historical activity for each of the world's 7 tropical-cyclone basins, plus whatever is currently active right now (live, from the Global Cyclone Watch feed above). For genuinely upcoming/forming systems, each sea links straight to its real official forecasting agency rather than guessing at a prediction.</p>
+    <div class="sea-grid">
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>North Atlantic</h4>
+    <span class="sea-local-badge">Hurricane</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> 1 June – 30 November (peak: August–October)</div>
+    <div><strong>Typical activity:</strong> ~14 named storms (~7 hurricanes)</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Hurricane Katrina (2005) — catastrophic New Orleans flooding</li><li>Hurricane Harvey (2017) — record US rainfall/flooding</li><li>Hurricane Ian (2022) — one of the costliest US hurricanes on record</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-north-atlantic" data-basin="North Atlantic">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="https://www.nhc.noaa.gov/" target="_blank" rel="noopener">&#8599; NOAA National Hurricane Center (NHC) &mdash; official formation outlook</a>
+</div>
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>Eastern Pacific</h4>
+    <span class="sea-local-badge">Hurricane</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> 15 May – 30 November</div>
+    <div><strong>Typical activity:</strong> ~15 named storms</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Hurricane Patricia (2015) — strongest wind speed ever recorded for this basin</li><li>Hurricane Otis (2023) — catastrophic rapid intensification hitting Acapulco</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-eastern-pacific" data-basin="Eastern Pacific">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="https://www.nhc.noaa.gov/" target="_blank" rel="noopener">&#8599; NOAA National Hurricane Center (NHC) &mdash; official formation outlook</a>
+</div>
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>Western Pacific</h4>
+    <span class="sea-local-badge">Typhoon</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> Year-round (peak: July–October)</div>
+    <div><strong>Typical activity:</strong> ~26 named storms — the world&#x27;s most active basin</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Typhoon Haiyan (2013) — one of the strongest landfalls ever recorded, devastated the Philippines</li><li>Typhoon Mangkhut (2018) — major Philippines/South China landfall</li><li>Typhoon Yagi (2024) — major impact across Philippines/Vietnam</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-western-pacific" data-basin="Western Pacific">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="https://www.metoc.navy.mil/jtwc/jtwc.html" target="_blank" rel="noopener">&#8599; Joint Typhoon Warning Center (JTWC) &mdash; official formation outlook</a>
+</div>
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>North Indian Ocean</h4>
+    <span class="sea-local-badge">Cyclone</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> April–June and October–December (bridging the monsoon)</div>
+    <div><strong>Typical activity:</strong> ~5 named storms — fewest of the major basins, but historically the deadliest due to dense, low-lying coastal population</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Bhola Cyclone (1970) — deadliest tropical cyclone in recorded history</li><li>Odisha Super Cyclone (1999) — India&#x27;s only recorded Super Cyclonic Storm</li><li>Cyclone Amphan (2020) — costliest cyclone on record in this basin</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-north-indian-ocean" data-basin="North Indian Ocean">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="https://rsmcnewdelhi.imd.gov.in/" target="_blank" rel="noopener">&#8599; RSMC New Delhi (India Meteorological Department) &mdash; official formation outlook</a>
+</div>
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>South-West Indian Ocean</h4>
+    <span class="sea-local-badge">Cyclone</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> November–April</div>
+    <div><strong>Typical activity:</strong> ~9 named storms</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Cyclone Idai (2019) — devastating Mozambique/Zimbabwe/Malawi landfall</li><li>Cyclone Freddy (2023) — longest-lived tropical cyclone ever recorded</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-south-west-indian-ocean" data-basin="South-West Indian Ocean">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="https://www.metoc.navy.mil/jtwc/jtwc.html" target="_blank" rel="noopener">&#8599; Joint Typhoon Warning Center (JTWC) &mdash; official formation outlook</a>
+</div>
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>Australian Region</h4>
+    <span class="sea-local-badge">Cyclone</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> November–April</div>
+    <div><strong>Typical activity:</strong> ~11 named storms</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Cyclone Tracy (1974) — destroyed most of Darwin on Christmas Day</li><li>Cyclone Yasi (2011) — one of the most powerful to cross the Queensland coast</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-australian-region" data-basin="Australian Region">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="http://www.bom.gov.au/cyclone/" target="_blank" rel="noopener">&#8599; Australian Bureau of Meteorology (BOM) &mdash; official formation outlook</a>
+</div>
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>South Pacific</h4>
+    <span class="sea-local-badge">Cyclone</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> November–April</div>
+    <div><strong>Typical activity:</strong> ~7 named storms</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable"><li>Cyclone Winston (2016) — strongest cyclone ever to make landfall in the Southern Hemisphere, hit Fiji</li><li>Cyclone Pam (2015) — catastrophic impact on Vanuatu</li></ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-south-pacific" data-basin="South Pacific">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="https://www.metoc.navy.mil/jtwc/jtwc.html" target="_blank" rel="noopener">&#8599; Joint Typhoon Warning Center (JTWC) &mdash; official formation outlook</a>
+</div></div>
+  </div>
 </div>
 
 <script>
@@ -1092,10 +1242,28 @@ function filterGlossary() {
 function setLearnTab(tab) {
   document.getElementById('tab-glossary-btn').classList.toggle('active', tab === 'glossary');
   document.getElementById('tab-formation-btn').classList.toggle('active', tab === 'formation');
+  document.getElementById('tab-seas-btn').classList.toggle('active', tab === 'seas');
   document.getElementById('tab-windmap-btn').classList.toggle('active', tab === 'windmap');
   document.getElementById('glossary-pane').classList.toggle('show', tab === 'glossary');
   document.getElementById('formation-pane').classList.toggle('show', tab === 'formation');
+  document.getElementById('seas-pane').classList.toggle('show', tab === 'seas');
   document.getElementById('windmap-pane').classList.toggle('show', tab === 'windmap');
+  if (tab === 'seas') renderSeasActive();
+}
+function renderSeasActive() {
+  document.querySelectorAll('.sea-active').forEach(el => {
+    const basin = el.dataset.basin;
+    const active = (typeof _globalCyclones !== 'undefined' ? _globalCyclones : []).filter(c => (c.basin || classifyBasin(c.lat, c.lon)) === basin);
+    if (active.length === 0) {
+      el.innerHTML = '<span class="sea-active-empty">No active storms reported in this basin right now.</span>';
+      return;
+    }
+    el.innerHTML = active.map(c => `
+      <div class="sea-active-item">
+        <span class="sea-active-level" style="background:${LEVEL_COLOR[c.level] || '#dc2626'}">${c.level}</span>
+        <span>${c.name}${c.lat != null ? ` &mdash; ${c.lat.toFixed(1)}&deg;, ${c.lon.toFixed(1)}&deg;` : ''}</span>
+      </div>`).join('');
+  });
 }
 let _windMapLoaded = false;
 function loadWindMap() {
@@ -2120,6 +2288,8 @@ function loadWindMap() {
     } else {
       bar.classList.add("hidden");
     }
+
+    if (typeof renderSeasActive === "function") renderSeasActive();
   }
 
   // Fetch live alerts — primary: server /api/alerts (no CORS, updated every 30 min by

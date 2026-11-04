@@ -17,6 +17,7 @@ from india_weather.weather_glossary import (
     CYCLONE_FORMATION_STEPS,
     CYCLONE_INGREDIENTS,
     CYCLONE_INTENSITY_LADDER,
+    SEA_BASINS,
 )
 
 OUTPUT_FILE = Path(__file__).parent / "weathers" / "india_weather_report.html"
@@ -333,6 +334,32 @@ def _build_learn_section() -> str:
   <div class="ladder-val">&le;{stage["max_kmh"]} km/h</div>
 </div>''')
 
+    def _slug(name: str) -> str:
+        return name.lower().replace(" ", "-").replace("/", "").replace("--", "-")
+
+    sea_cards = []
+    for sb in SEA_BASINS:
+        slug = _slug(sb["basin"])
+        notable_html = "".join(f"<li>{_html.escape(n)}</li>" for n in sb["notable"])
+        sea_cards.append(f'''
+<div class="sea-card">
+  <div class="sea-head">
+    <h4>{_html.escape(sb["basin"])}</h4>
+    <span class="sea-local-badge">{_html.escape(sb["local_name"])}</span>
+  </div>
+  <div class="sea-stats">
+    <div><strong>Typical season:</strong> {_html.escape(sb["season"])}</div>
+    <div><strong>Typical activity:</strong> {_html.escape(sb["avg_per_year"])}</div>
+  </div>
+  <div class="sea-subtitle">Notable Historic Storms</div>
+  <ul class="sea-notable">{notable_html}</ul>
+  <div class="sea-subtitle">Currently Active</div>
+  <div class="sea-active" id="seas-active-{slug}" data-basin="{_html.escape(sb["basin"])}">
+    <span class="sea-active-empty">No active storms reported in this basin right now.</span>
+  </div>
+  <a class="sea-outlook-link" href="{sb["outlook_url"]}" target="_blank" rel="noopener">&#8599; {_html.escape(sb["outlook_name"])} &mdash; official formation outlook</a>
+</div>''')
+
     return """
 <style>
   #learn-section { max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }
@@ -391,6 +418,31 @@ def _build_learn_section() -> str:
   body.light #formation-pane .ladder-val { color:#64748b; }
   body.light #formation-pane .form-section-title,
   body.light #formation-pane .ingredient-label { color:#1e293b; }
+
+  /* ── Seas tab ── */
+  #seas-pane { display:none; }
+  #seas-pane.show { display:block; }
+  .seas-intro { font-size:.74rem; color:#94a3b8; line-height:1.55; margin-bottom:.9rem; }
+  .sea-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:.8rem; }
+  .sea-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.08); border-radius:.9rem; padding:.9rem 1rem; }
+  .sea-head { display:flex; align-items:center; justify-content:space-between; gap:.5rem; margin-bottom:.5rem; }
+  .sea-head h4 { margin:0; font-size:.92rem; color:#e2e8f0; }
+  .sea-local-badge { font-size:.62rem; font-weight:700; color:#0f172a; background:#38bdf8; padding:.1rem .55rem; border-radius:999px; flex-shrink:0; }
+  .sea-stats { font-size:.71rem; color:#94a3b8; line-height:1.6; margin-bottom:.6rem; }
+  .sea-stats strong { color:#cbd5e1; }
+  .sea-subtitle { font-size:.64rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:#64748b; margin:.5rem 0 .3rem; }
+  .sea-notable { margin:0 0 .3rem; padding-left:1.1rem; font-size:.71rem; color:#94a3b8; line-height:1.55; }
+  .sea-active { font-size:.72rem; line-height:1.6; }
+  .sea-active-empty { color:#64748b; font-style:italic; }
+  .sea-active-item { display:flex; align-items:center; gap:.4rem; background:rgba(239,68,68,.12); border:1px solid rgba(239,68,68,.3); border-radius:.6rem; padding:.35rem .6rem; margin-bottom:.3rem; }
+  .sea-active-level { font-size:.6rem; font-weight:700; color:#fff; padding:.05rem .4rem; border-radius:999px; flex-shrink:0; }
+  .sea-outlook-link { display:inline-block; margin-top:.7rem; font-size:.7rem; color:#38bdf8; text-decoration:none; }
+  .sea-outlook-link:hover { text-decoration:underline; }
+  body.light #seas-pane .sea-card { background:#fff; border-color:#e2e8f0; }
+  body.light #seas-pane .sea-head h4 { color:#1e293b; }
+  body.light #seas-pane .sea-stats,
+  body.light #seas-pane .sea-notable { color:#64748b; }
+  body.light #seas-pane .sea-stats strong { color:#1e293b; }
 </style>
 
 <div id="learn-section" class="hidden">
@@ -401,6 +453,7 @@ def _build_learn_section() -> str:
   <div class="learn-tabs">
     <button class="learn-tab-btn active" id="tab-glossary-btn" onclick="setLearnTab('glossary')">&#128214; Glossary</button>
     <button class="learn-tab-btn" id="tab-formation-btn" onclick="setLearnTab('formation')">&#127744; How Cyclones Form</button>
+    <button class="learn-tab-btn" id="tab-seas-btn" onclick="setLearnTab('seas')">&#127754; Seas</button>
     <button class="learn-tab-btn" id="tab-windmap-btn" onclick="setLearnTab('windmap')">&#127788;&#65039; Live Wind Map</button>
   </div>
 
@@ -425,6 +478,11 @@ def _build_learn_section() -> str:
     <div class="ingredient-grid">""" + "".join(ingredient_cards) + """</div>
     <div class="form-section-title">IMD's Wind-Speed Intensity Ladder</div>
     <div class="ladder-rows">""" + "".join(ladder_rows) + """</div>
+  </div>
+
+  <div id="seas-pane">
+    <p class="seas-intro">Typical season and historical activity for each of the world's 7 tropical-cyclone basins, plus whatever is currently active right now (live, from the Global Cyclone Watch feed above). For genuinely upcoming/forming systems, each sea links straight to its real official forecasting agency rather than guessing at a prediction.</p>
+    <div class="sea-grid">""" + "".join(sea_cards) + """</div>
   </div>
 </div>
 
@@ -457,10 +515,28 @@ function filterGlossary() {
 function setLearnTab(tab) {
   document.getElementById('tab-glossary-btn').classList.toggle('active', tab === 'glossary');
   document.getElementById('tab-formation-btn').classList.toggle('active', tab === 'formation');
+  document.getElementById('tab-seas-btn').classList.toggle('active', tab === 'seas');
   document.getElementById('tab-windmap-btn').classList.toggle('active', tab === 'windmap');
   document.getElementById('glossary-pane').classList.toggle('show', tab === 'glossary');
   document.getElementById('formation-pane').classList.toggle('show', tab === 'formation');
+  document.getElementById('seas-pane').classList.toggle('show', tab === 'seas');
   document.getElementById('windmap-pane').classList.toggle('show', tab === 'windmap');
+  if (tab === 'seas') renderSeasActive();
+}
+function renderSeasActive() {
+  document.querySelectorAll('.sea-active').forEach(el => {
+    const basin = el.dataset.basin;
+    const active = (typeof _globalCyclones !== 'undefined' ? _globalCyclones : []).filter(c => (c.basin || classifyBasin(c.lat, c.lon)) === basin);
+    if (active.length === 0) {
+      el.innerHTML = '<span class="sea-active-empty">No active storms reported in this basin right now.</span>';
+      return;
+    }
+    el.innerHTML = active.map(c => `
+      <div class="sea-active-item">
+        <span class="sea-active-level" style="background:${LEVEL_COLOR[c.level] || '#dc2626'}">${c.level}</span>
+        <span>${c.name}${c.lat != null ? ` &mdash; ${c.lat.toFixed(1)}&deg;, ${c.lon.toFixed(1)}&deg;` : ''}</span>
+      </div>`).join('');
+  });
 }
 let _windMapLoaded = false;
 function loadWindMap() {
@@ -1570,6 +1646,8 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     }} else {{
       bar.classList.add("hidden");
     }}
+
+    if (typeof renderSeasActive === "function") renderSeasActive();
   }}
 
   // Fetch live alerts — primary: server /api/alerts (no CORS, updated every 30 min by
