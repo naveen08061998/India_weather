@@ -42,6 +42,47 @@ GEORSS_NS  = "http://www.georss.org/georss"
 LAT_MIN, LAT_MAX =  0.0,  35.0
 LON_MIN, LON_MAX = 50.0, 110.0
 
+# ── World tropical-cyclone basin classification ────────────────────────────
+# Simplified/approximate bounding regions (good enough for grouping a live
+# alert feed, NOT precise meteorological basin boundaries — real agency
+# basin lines are irregular and vary by country/organisation). Same "state
+# the approximation, don't fake precision" discipline as other curated
+# datasets in this repo (e.g. india_highways' STATE_HIGHWAY_SUMMARY).
+BASIN_COLORS = {
+    "North Atlantic":            "#3b82f6",
+    "Eastern Pacific":           "#8b5cf6",
+    "Western Pacific":           "#f97316",
+    "North Indian Ocean":        "#ef4444",
+    "South-West Indian Ocean":   "#10b981",
+    "Australian Region":         "#eab308",
+    "South Pacific":             "#06b6d4",
+    "Other / Unclassified":      "#94a3b8",
+}
+
+
+def classify_basin(lat: float | None, lon: float | None) -> str:
+    """Return an approximate world tropical-cyclone basin name for a lat/lon."""
+    if lat is None or lon is None:
+        return "Other / Unclassified"
+    if lat < 0:
+        if 20 <= lon < 90:
+            return "South-West Indian Ocean"
+        if 90 <= lon < 160:
+            return "Australian Region"
+        if lon >= 160 or lon <= -120:
+            return "South Pacific"
+        return "Other / Unclassified"
+    # Northern Hemisphere
+    if 40 <= lon < 100:
+        return "North Indian Ocean"
+    if 100 <= lon <= 180:
+        return "Western Pacific"
+    if lon < -100:
+        return "Eastern Pacific"
+    if -100 <= lon < 40:
+        return "North Atlantic"
+    return "Other / Unclassified"
+
 
 # ── GDACS cyclone fetch ────────────────────────────────────────────────────
 
@@ -51,7 +92,10 @@ def _text(el, tag: str, ns: str, default: str = "") -> str:
 
 
 def fetch_gdacs_cyclones() -> list[dict]:
-    """Return tropical cyclones from GDACS RSS that are near India."""
+    """Return ALL active tropical cyclones worldwide from the GDACS RSS feed,
+    each tagged with an approximate `basin` and a `near_india` flag (the
+    latter preserves the original near-India-only behaviour for callers that
+    still want just the Bay of Bengal / Arabian Sea region)."""
     try:
         r = requests.get(
             GDACS_RSS, timeout=15, verify=False,
@@ -95,10 +139,10 @@ def fetch_gdacs_cyclones() -> list[dict]:
             except ValueError:
                 lat = lon = None
 
-        # Filter: keep if within near-India region OR no coords available
-        if lat is not None and lon is not None:
-            if not (LAT_MIN <= lat <= LAT_MAX and LON_MIN <= lon <= LON_MAX):
-                continue
+        near_india = (
+            lat is not None and lon is not None
+            and LAT_MIN <= lat <= LAT_MAX and LON_MIN <= lon <= LON_MAX
+        )
 
         # Extract name from title e.g. "Green notification for tropical cyclone BERTHA-26."
         name = title
@@ -116,6 +160,8 @@ def fetch_gdacs_cyclones() -> list[dict]:
             "description": desc[:200],
             "lat":        lat,
             "lon":        lon,
+            "basin":      classify_basin(lat, lon),
+            "near_india": near_india,
             "url":        link,
             "pubDate":    pubdate,
         })
@@ -185,11 +231,14 @@ def compute_district_alerts(weather_data: dict) -> list[dict]:
 # ── Main ───────────────────────────────────────────────────────────────────
 
 def run() -> dict:
-    """Fetch GDACS + compute district alerts. Save to india_alerts.json."""
-    print("  [Alerts] Fetching GDACS cyclone feed...")
-    cyclones = fetch_gdacs_cyclones()
-    ok_cyc   = [c for c in cyclones if "error" not in c]
-    print(f"  [Alerts] Cyclones near India: {len(ok_cyc)}")
+    """Fetch GDACS (worldwide) + compute district alerts. Save to india_alerts.json."""
+    print("  [Alerts] Fetching GDACS cyclone feed (worldwide)...")
+    all_cyclones   = fetch_gdacs_cyclones()
+    ok_all         = [c for c in all_cyclones if "error" not in c]
+    cyclones       = [c for c in all_cyclones if "error" in c or c.get("near_india")]
+    global_cyclones = ok_all
+    print(f"  [Alerts] Cyclones near India: {len([c for c in ok_all if c.get('near_india')])} "
+          f"/ Active worldwide: {len(ok_all)}")
 
     district_alerts: list[dict] = []
     if WEATHER_JSON.exists():
@@ -203,6 +252,7 @@ def run() -> dict:
     result = {
         "generated_at":    datetime.now().isoformat(timespec="seconds"),
         "cyclones":        cyclones,
+        "global_cyclones": global_cyclones,
         "district_alerts": district_alerts,
     }
     ALERTS_JSON.parent.mkdir(parents=True, exist_ok=True)
@@ -218,10 +268,17 @@ if __name__ == "__main__":
     result = run()
     # Quick summary
     cycs = [c for c in result["cyclones"] if "error" not in c]
+    g_cycs = [c for c in result["global_cyclones"] if "error" not in c]
     das  = result["district_alerts"]
-    print(f"\nCyclones: {len(cycs)}")
+    print(f"\nCyclones near India: {len(cycs)}")
     for c in cycs:
-        print(f"  🌀 {c['name']} [{c['level']}] lat={c['lat']} lon={c['lon']}")
+        print(f"  \U0001F300 {c['name']} [{c['level']}] lat={c['lat']} lon={c['lon']}")
+    print(f"\nActive worldwide: {len(g_cycs)}")
+    by_basin: dict[str, int] = {}
+    for c in g_cycs:
+        by_basin[c["basin"]] = by_basin.get(c["basin"], 0) + 1
+    for k, v in sorted(by_basin.items(), key=lambda x: -x[1]):
+        print(f"  {k}: {v}")
     print(f"\nDistrict alerts: {len(das)}")
     by_label: dict[str, int] = {}
     for a in das:

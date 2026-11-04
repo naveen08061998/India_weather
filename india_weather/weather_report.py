@@ -862,6 +862,15 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     .cyc-link {{ font-size:.61rem; color:#818cf8; text-decoration:none; }}
     .cyc-link:hover {{ text-decoration:underline; }}
 
+    /* ── Global Cyclone Watch ── */
+    #global-cyclone-panel {{ max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }}
+    #global-cyclone-panel.hidden {{ display:none; }}
+    .basin-group {{ margin-bottom:.9rem; }}
+    .basin-title {{ display:flex; align-items:center; gap:.5rem; font-size:.72rem; font-weight:700; color:#e2e8f0; margin-bottom:.5rem; }}
+    .basin-dot {{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }}
+    .global-cyclone-note {{ font-size:.63rem; color:#64748b; margin:.4rem 0 .8rem; line-height:1.5; }}
+    body.light .global-cyclone-note {{ color:#94a3b8; }}
+
     /* ── Weather Near Me ── */
     #near-me-section {{ max-width:1900px; margin:0 auto; padding:.8rem 1.75rem 0; }}
     #near-me-section.hidden {{ display:none; }}
@@ -1104,6 +1113,13 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <div id="cyclone-panel" class="hidden">
   <div class="cyclone-header">&#127744; Active Cyclones &mdash; Bay of Bengal / Arabian Sea</div>
   <div class="cyclone-cards" id="cyclone-cards"></div>
+</div>
+
+<!-- Global Cyclone Watch — all ocean basins worldwide -->
+<div id="global-cyclone-panel" class="hidden">
+  <div class="cyclone-header" style="color:#38bdf8">&#127760; Global Cyclone Watch &mdash; All Oceans</div>
+  <div id="global-cyclone-basins"></div>
+  <div class="global-cyclone-note">Source: GDACS (Global Disaster Alert and Coordination System). Basin grouping is an approximate world-region classification for display purposes, not an official meteorological boundary.</div>
 </div>
 
 <!-- Weather Near Me -->
@@ -1408,6 +1424,29 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   // ── Live Alerts ─────────────────────────────────────────────────────────
   const LEVEL_COLOR = {{ Red:"#dc2626", Orange:"#ea580c", Green:"#16a34a" }};
 
+  // World tropical-cyclone basin classification — mirrors agent_alerts.py's
+  // classify_basin() (approximate grouping for display, not an official
+  // meteorological boundary).
+  const BASIN_COLORS = {{
+    "North Atlantic": "#3b82f6", "Eastern Pacific": "#8b5cf6", "Western Pacific": "#f97316",
+    "North Indian Ocean": "#ef4444", "South-West Indian Ocean": "#10b981",
+    "Australian Region": "#eab308", "South Pacific": "#06b6d4", "Other / Unclassified": "#94a3b8",
+  }};
+  function classifyBasin(lat, lon) {{
+    if (lat == null || lon == null || isNaN(lat) || isNaN(lon)) return "Other / Unclassified";
+    if (lat < 0) {{
+      if (lon >= 20 && lon < 90) return "South-West Indian Ocean";
+      if (lon >= 90 && lon < 160) return "Australian Region";
+      if (lon >= 160 || lon <= -120) return "South Pacific";
+      return "Other / Unclassified";
+    }}
+    if (lon >= 40 && lon < 100) return "North Indian Ocean";
+    if (lon >= 100 && lon <= 180) return "Western Pacific";
+    if (lon < -100) return "Eastern Pacific";
+    if (lon >= -100 && lon < 40) return "North Atlantic";
+    return "Other / Unclassified";
+  }}
+
   // Alert rules (mirrors agent_alerts.py RULES) — evaluated against live dataCache
   const LIVE_ALERT_RULES = [
     {{ label:"Heat Wave",    color:"#ef4444", icon:"🔥",
@@ -1427,6 +1466,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 
   // Live state: cyclones seed from baked data, updated by fetchLiveCyclones()
   let _liveCyclones = (ALERTS_DATA.cyclones || []).filter(c => !c.error);
+  let _globalCyclones = (ALERTS_DATA.global_cyclones || []).filter(c => !c.error);
   let _liveDistAlerts = [];
 
   // Helper: run alert rules against a data object from dataCache
@@ -1478,10 +1518,41 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       }}
     }}
 
+    // ── Global Cyclone Watch panel (grouped by ocean basin)
+    const gPanel  = document.getElementById("global-cyclone-panel");
+    const gBasins = document.getElementById("global-cyclone-basins");
+    if (gPanel && gBasins) {{
+      if (_globalCyclones.length > 0) {{
+        const groups = {{}};
+        _globalCyclones.forEach(c => {{
+          const basin = c.basin || classifyBasin(c.lat, c.lon);
+          (groups[basin] = groups[basin] || []).push(c);
+        }});
+        gBasins.innerHTML = Object.entries(groups).map(([basin, list]) => `
+          <div class="basin-group">
+            <div class="basin-title"><span class="basin-dot" style="background:${{BASIN_COLORS[basin] || "#94a3b8"}}"></span>${{basin}} (${{list.length}})</div>
+            <div class="cyclone-cards">${{list.map(c => `
+              <div class="cyc-card" style="border-color:${{BASIN_COLORS[basin] || "#94a3b8"}}66">
+                <div class="cyc-name">&#127744; ${{c.name}}</div>
+                <span class="cyc-level ${{c.level}}">${{c.level}} Alert</span>
+                <div class="cyc-desc">${{c.description || c.title || ""}}</div>
+                ${{c.lat != null ? `<div class="cyc-coords">&#127759; ${{c.lat.toFixed(1)}}&deg;, ${{c.lon.toFixed(1)}}&deg;</div>` : ""}}
+                ${{c.url ? `<a class="cyc-link" href="${{c.url}}" target="_blank">&#8599; GDACS details</a>` : ""}}
+              </div>`).join("")}}</div>
+          </div>`).join("");
+        gPanel.classList.remove("hidden");
+      }} else {{
+        gPanel.classList.add("hidden");
+      }}
+    }}
+
     const items = [];
     _liveCyclones.forEach(c => items.push(
       `<span class="atick-item">&#127744; <span class="atick-badge" style="background:${{LEVEL_COLOR[c.level]||"#dc2626"}}">${{c.level}}</span> Cyclone ${{c.name}}</span>`
     ));
+    if (_globalCyclones.length > 0) {{
+      items.push(`<span class="atick-item">&#127760; <span class="atick-badge" style="background:#38bdf8">Worldwide</span> ${{_globalCyclones.length}} active tropical cyclone${{_globalCyclones.length !== 1 ? "s" : ""}}</span>`);
+    }}
     // Group district alerts by label to avoid repeating the same type for every district
     const _grouped = {{}};
     _liveDistAlerts.forEach(a => {{
@@ -1510,6 +1581,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       if (r.ok) {{
         const data = await r.json();
         _liveCyclones = (data.cyclones || []).filter(c => !c.error);
+        _globalCyclones = (data.global_cyclones || []).filter(c => !c.error);
         // Always update district alerts from server — server has all districts,
         // not just the ones the client has loaded into dataCache. Assign even when
         // empty so cleared/resolved alerts actually disappear instead of sticking around.
@@ -1534,20 +1606,25 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       const doc = new DOMParser().parseFromString(xml, "text/xml");
       const NS  = "http://www.gdacs.org";
       const cyclones = [];
+      const globalCyclones = [];
       for (const item of Array.from(doc.querySelectorAll("item"))) {{
         if (item.getElementsByTagNameNS(NS, "eventtype")[0]?.textContent !== "TC") continue;
         const lat = parseFloat(item.getElementsByTagNameNS(NS, "lat")[0]?.textContent || "");
         const lon = parseFloat(item.getElementsByTagNameNS(NS, "lon")[0]?.textContent || "");
-        // Keep only events in the India + surrounding ocean region
-        if (!isNaN(lat) && !isNaN(lon) && !(lat >= 0 && lat <= 35 && lon >= 50 && lon <= 110)) continue;
         const level = item.getElementsByTagNameNS(NS, "alertlevel")[0]?.textContent || "Green";
         const raw   = item.querySelector("title")?.textContent || "";
         const name  = raw.replace(/.*tropical cyclone\\s*/i, "").split(/[.,]/)[0].trim() || raw;
-        cyclones.push({{ name, level, lat: isNaN(lat) ? null : lat, lon: isNaN(lon) ? null : lon,
+        const entry = {{ name, level, lat: isNaN(lat) ? null : lat, lon: isNaN(lon) ? null : lon,
+                         basin: classifyBasin(isNaN(lat) ? null : lat, isNaN(lon) ? null : lon),
                          description: item.querySelector("description")?.textContent?.slice(0, 200) || "",
-                         url: item.querySelector("link")?.textContent || "" }});
+                         url: item.querySelector("link")?.textContent || "" }};
+        globalCyclones.push(entry);
+        // Keep only events in the India + surrounding ocean region for the near-India list
+        if (!isNaN(lat) && !isNaN(lon) && !(lat >= 0 && lat <= 35 && lon >= 50 && lon <= 110)) continue;
+        cyclones.push(entry);
       }}
       _liveCyclones = cyclones;
+      _globalCyclones = globalCyclones;
       rebuildAlertTicker();
     }} catch(_) {{ /* keep existing cyclone data on any error */ }}
   }}

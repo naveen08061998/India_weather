@@ -115,7 +115,7 @@ def api_weather():
 def api_alerts():
     """Return the latest alerts JSON."""
     if not ALERTS_JSON.exists():
-        return jsonify({"cyclones": [], "district_alerts": [], "generated_at": ""}), 200
+        return jsonify({"cyclones": [], "global_cyclones": [], "district_alerts": [], "generated_at": ""}), 200
     data = json.loads(ALERTS_JSON.read_text(encoding="utf-8"))
     return jsonify(data)
 
