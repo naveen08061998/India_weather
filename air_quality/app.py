@@ -33,6 +33,7 @@ BASE_DIR  = Path(__file__).parent
 AQI_DIR   = BASE_DIR / "aqi"
 AQI_JSON  = AQI_DIR / "air_quality_data.json"
 AQI_HTML  = AQI_DIR / "air_quality_report.html"
+STATIC_DIR = BASE_DIR / "static"
 
 AQI_DIR.mkdir(exist_ok=True)
 
@@ -126,6 +127,24 @@ def api_aqi_city(city_name: str):
         if c["name"].lower() == city_name.lower():
             return jsonify(c)
     return jsonify({"error": f"City '{city_name}' not found."}), 404
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 @app.route("/api/refresh", methods=["POST"])

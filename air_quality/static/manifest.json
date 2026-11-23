@@ -1,0 +1,31 @@
+{
+    "name": "India Air Quality Dashboard",
+    "short_name": "AQI India",
+    "description": "Live air quality index for major Indian cities with health advisories and trends",
+    "start_url": "./",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#0b1522",
+    "theme_color": "#38bdf8",
+    "icons": [
+        {
+            "src": "static/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "static/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "weather",
+        "health"
+    ],
+    "lang": "en-IN",
+    "dir": "ltr"
+}

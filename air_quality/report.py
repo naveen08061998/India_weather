@@ -173,6 +173,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>India Air Quality Dashboard — {date_label}</title>
+<meta name="description" content="Live air quality (AQI) for {len(cities)}+ Indian cities with health advisories, pollutant breakdown, 5-day forecast and historical trends."/>
+<meta property="og:title" content="India Air Quality Dashboard"/>
+<meta property="og:description" content="Live AQI, health advisories and pollutant breakdown for major Indian cities."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#38bdf8"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="AQI India"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%A4%EF%B8%8F%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -342,9 +354,21 @@ def build_html(payload: dict) -> str:
     background:var(--card); border:1px solid var(--border); border-radius:999px;
     color:var(--text); padding:7px 16px; cursor:pointer; font-size:.78rem; margin-top:14px; font-family:inherit;
   }}
+  .skip-link {{
+    position:absolute; left:-999px; top:0; background:var(--accent); color:#fff;
+    padding:10px 16px; z-index:2000; border-radius:0 0 8px 0; font-size:.85rem;
+  }}
+  .skip-link:focus {{ left:0; }}
+  .visually-hidden {{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }}
+  @media print {{
+    header, .toolbar, .legend, #map-view, .modal-overlay, .skip-link, footer {{ display:none !important; }}
+    .city-details {{ display:block !important; }}
+    body {{ background:#fff !important; color:#000 !important; }}
+  }}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <header>
   <div class="brand">
     <div class="brand-icon">🌤️</div>
@@ -364,7 +388,7 @@ def build_html(payload: dict) -> str:
     <button id="theme-btn" onclick="toggleTheme()">🌙 Night</button>
   </div>
 </header>
-<main>
+<main id="main-content">
   {severe_html}
   <div class="home-banner" id="home-banner" role="status" aria-live="polite"></div>
   <div class="nearme-banner" id="nearme-banner"></div>
@@ -377,6 +401,7 @@ def build_html(payload: dict) -> str:
     <span class="legend-item"><span class="legend-dot" style="background:#7f1d1d"></span>Hazardous 300+</span>
   </div>
   <div class="toolbar">
+    <label for="search" class="visually-hidden">Search city or state</label>
     <input id="search" type="text" placeholder="🔍 Search city or state…" oninput="filterCities()"/>
     <button class="sort-btn active" id="sort-worst" onclick="sortCities('worst')">Worst First</button>
     <button class="sort-btn" id="sort-best" onclick="sortCities('best')">Best First</button>
@@ -560,6 +585,12 @@ def build_html(payload: dict) -> str:
     document.getElementById('compare-table').innerHTML =
       `<tr><th>${{a.name}}</th><th>Metric</th><th>${{b.name}}</th></tr>` +
       rows.map(([label, av, bv]) => `<tr><td>${{av}}</td><td>${{label}}</td><td>${{bv}}</td></tr>`).join('');
+  }}
+
+  if ("serviceWorker" in navigator) {{
+    window.addEventListener("load", () => {{
+      navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+    }});
   }}
 </script>
 </body>
