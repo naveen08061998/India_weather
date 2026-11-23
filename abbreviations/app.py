@@ -29,6 +29,7 @@ BASE_DIR     = Path(__file__).parent
 LEXICON_DIR  = BASE_DIR / "lexicon"
 LEXICON_JSON = LEXICON_DIR / "abbreviations_data.json"
 LEXICON_HTML = LEXICON_DIR / "abbreviations_report.html"
+STATIC_DIR   = BASE_DIR / "static"
 
 LEXICON_DIR.mkdir(exist_ok=True)
 
@@ -73,6 +74,24 @@ def api_abbreviations():
     if not LEXICON_JSON.exists():
         return jsonify({"error": "Not built yet. Try again shortly."}), 503
     return jsonify(json.loads(LEXICON_JSON.read_text(encoding="utf-8")))
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 def main() -> None:

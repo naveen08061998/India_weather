@@ -115,6 +115,16 @@ header.hero p.meta { margin: 10px 0 0; color: var(--ink-soft); font-size: 0.8rem
 
 footer { text-align: center; margin-top: 40px; padding: 18px; color: var(--ink-soft); font-size: 0.78rem; }
 @media (max-width: 560px) { header.hero h1 { font-size: 1.7rem; } }
+
+.bookmark-btn { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--accent2); line-height: 1; }
+.entry-card { position: relative; }
+
+@media print {
+  .skip-link, .home-float-btn, .toolbar, .az-nav, #count-line, .bookmark-btn, .section-title2 + .quiz-box, h2.section-title2, footer { display: none !important; }
+  .entry-card .desc { display: block !important; }
+  body { background: #fff !important; }
+  .grid { grid-template-columns: 1fr 1fr !important; }
+}
 """
 
 
@@ -123,6 +133,7 @@ def _entry_card(e: dict, idx: int) -> str:
 <div class="entry-card" data-idx="{idx}" data-abbr="{e['abbr'].lower()}" data-full="{e['full'].lower()}"
      data-desc="{e['desc'].lower()}" data-category="{e['category']}" onclick="toggleEntry(this)"
      role="button" tabindex="0" aria-expanded="false">
+  <button type="button" class="bookmark-btn" data-abbr="{e['abbr']}" onclick="event.stopPropagation(); toggleBookmark(this)" aria-label="Bookmark {e['abbr']}" aria-pressed="false">☆</button>
   <span class="abbr-code mono">{e['abbr']}</span><span class="cat-badge">{e['category']}</span>
   <p class="full-form">{e['full']}</p>
   <p class="desc">{e['desc']}</p>
@@ -159,6 +170,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Lexicon — General Abbreviations Reference</title>
+<meta name="description" content="Searchable dictionary of {stats['total']}+ common abbreviations spanning government, defence, finance, technology, science, law and everyday life."/>
+<meta property="og:title" content="The Lexicon — General Abbreviations Reference"/>
+<meta property="og:description" content="Searchable dictionary of {stats['total']}+ common abbreviations spanning government, defence, finance, technology, science, law and everyday life."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#6e1f3a"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Lexicon"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%96%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>{CSS}</style>
@@ -194,6 +217,7 @@ def build_html(payload: dict) -> str:
     <input id="search" type="text" placeholder="Search e.g. GDP, Supreme Court, machine learning…" oninput="filterEntries()">
     <button class="chip active" data-filter="all" onclick="setFilter('all', this)">All</button>
     {category_chips}
+    <button class="chip" data-filter="__bookmarked" onclick="setFilter('__bookmarked', this)">⭐ Bookmarked</button>
   </div>
 
   <div class="az-nav" role="navigation" aria-label="Jump to letter">
@@ -219,6 +243,25 @@ let currentFilter = 'all';
 
 function cardEls() {{ return document.querySelectorAll('.entry-card'); }}
 
+function _bookmarks() {{
+  try {{ return JSON.parse(localStorage.getItem('abbr_bookmarks') || '[]'); }} catch (e) {{ return []; }}
+}}
+function toggleBookmark(btn) {{
+  const abbr = btn.dataset.abbr;
+  let list = _bookmarks();
+  const i = list.indexOf(abbr);
+  if (i >= 0) {{ list.splice(i, 1); btn.textContent = '☆'; btn.setAttribute('aria-pressed', 'false'); }}
+  else {{ list.push(abbr); btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  localStorage.setItem('abbr_bookmarks', JSON.stringify(list));
+  if (currentFilter === '__bookmarked') filterEntries();
+}}
+(function initBookmarks() {{
+  const bm = _bookmarks();
+  document.querySelectorAll('.bookmark-btn').forEach(btn => {{
+    if (bm.includes(btn.dataset.abbr)) {{ btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  }});
+}})();
+
 function toggleEntry(card) {{
   const expanded = card.classList.toggle('expanded');
   card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
@@ -237,10 +280,12 @@ function setFilter(f, btn) {{
 
 function filterEntries() {{
   const q = document.getElementById('search').value.trim().toLowerCase();
+  const bm = _bookmarks();
   let shown = 0;
   cardEls().forEach(card => {{
     const matchesText = card.dataset.abbr.includes(q) || card.dataset.full.includes(q) || card.dataset.desc.includes(q);
-    const matchesCat = currentFilter === 'all' || card.dataset.category === currentFilter;
+    const matchesCat = currentFilter === 'all' || card.dataset.category === currentFilter
+      || (currentFilter === '__bookmarked' && bm.includes(card.querySelector('.bookmark-btn').dataset.abbr));
     const pass = matchesText && matchesCat;
     card.style.display = pass ? '' : 'none';
     if (pass) shown++;
@@ -303,6 +348,12 @@ function answerQuiz(btn, idx) {{
 renderQuiz();
 
 filterEntries();
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 
 </body>
