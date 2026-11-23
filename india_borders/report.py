@@ -143,6 +143,8 @@ header.hero p.meta {
 .region-card.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(31,92,71,0.25), var(--shadow); }
 .region-card.dimmed { opacity: 0.32; }
 .region-card.neighbor-hl { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(156,107,46,0.3), var(--shadow); }
+.region-card { position: relative; }
+.bookmark-btn { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--accent2); line-height: 1; }
 
 .region-card h3 { margin: 0 0 4px; font-size: 1.08rem; color: var(--ink); }
 .badge-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 8px; }
@@ -352,6 +354,7 @@ def _region_card(r: dict) -> str:
 <div class="region-card" data-key="{r['key']}" data-name="{r['name'].lower()}" data-type="{r['type']}"
      data-coastal="{str(r['coastal']).lower()}" data-intl="{str(bool(r['countries'])).lower()}"
      onclick="selectRegion('{r['key']}')">
+  <button type="button" class="bookmark-btn" data-key="{r['key']}" onclick="event.stopPropagation(); toggleBookmark(this)" aria-label="Bookmark {r['name']}" aria-pressed="false">☆</button>
   <h3>{r['name']}</h3>
   {_badge_row(r)}
   <div class="capital">Capital: {r['capital']}</div>
@@ -459,6 +462,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>India Borders Atlas</title>
+<meta name="description" content="Explore every Indian state and union territory's land-border neighbours, international borders, coastline status and capital-to-capital distances."/>
+<meta property="og:title" content="India Borders Atlas"/>
+<meta property="og:description" content="Explore state/UT border adjacency, international borders, coastline status and distances across India."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#1f5c47"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Borders Atlas"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%AD%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -516,6 +531,7 @@ def build_html(payload: dict) -> str:
     <button class="chip" id="map-toggle-btn" onclick="toggleMap()" aria-expanded="false">🗺️ Map View</button>
     <button class="chip" onclick="openCompare()">⚖️ Compare</button>
     <button class="chip" onclick="surpriseMe()">🎲 Surprise Me</button>
+    <button class="chip" id="bookmark-chip" onclick="toggleBookmarkFilter()">⭐ Bookmarked</button>
   </div>
 
   <div class="legend">
@@ -637,6 +653,31 @@ let selectedKey = null;
 
 function cardEls() {{ return document.querySelectorAll('.region-card'); }}
 
+function _bookmarks() {{
+  try {{ return JSON.parse(localStorage.getItem('borders_bookmarks') || '[]'); }} catch (e) {{ return []; }}
+}}
+function toggleBookmark(btn) {{
+  const key = btn.dataset.key;
+  let list = _bookmarks();
+  const i = list.indexOf(key);
+  if (i >= 0) {{ list.splice(i, 1); btn.textContent = '☆'; btn.setAttribute('aria-pressed', 'false'); }}
+  else {{ list.push(key); btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  localStorage.setItem('borders_bookmarks', JSON.stringify(list));
+  if (bookmarkFilterOn) filterRegions();
+}}
+let bookmarkFilterOn = false;
+function toggleBookmarkFilter() {{
+  bookmarkFilterOn = !bookmarkFilterOn;
+  document.getElementById('bookmark-chip').classList.toggle('active', bookmarkFilterOn);
+  filterRegions();
+}}
+(function initBookmarks() {{
+  const bm = _bookmarks();
+  document.querySelectorAll('.bookmark-btn').forEach(btn => {{
+    if (bm.includes(btn.dataset.key)) {{ btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  }});
+}})();
+
 function haversineKm(lat1, lon1, lat2, lon2) {{
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -678,6 +719,7 @@ function setFilter(f, btn) {{
 
 function filterRegions() {{
   const q = document.getElementById('search').value.trim().toLowerCase();
+  const bm = _bookmarks();
   let shown = 0;
   cardEls().forEach(card => {{
     const name = card.dataset.name;
@@ -690,6 +732,7 @@ function filterRegions() {{
       else if (currentFilter === 'coastal') pass = coastal;
       else if (currentFilter === 'intl') pass = intl;
     }}
+    if (pass && bookmarkFilterOn) pass = bm.includes(card.dataset.key);
     card.style.display = pass ? '' : 'none';
     if (pass) shown++;
   }});
@@ -971,6 +1014,12 @@ function initMap() {{
 }}
 
 filterRegions();
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 
 </body>

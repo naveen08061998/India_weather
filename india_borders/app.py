@@ -30,6 +30,7 @@ BASE_DIR     = Path(__file__).parent
 BORDERS_DIR  = BASE_DIR / "borders"
 BORDERS_JSON = BORDERS_DIR / "india_borders_data.json"
 BORDERS_HTML = BORDERS_DIR / "india_borders_report.html"
+STATIC_DIR   = BASE_DIR / "static"
 
 BORDERS_DIR.mkdir(exist_ok=True)
 
@@ -85,6 +86,24 @@ def api_region(key: str):
     if not region:
         return jsonify({"error": "Unknown region key"}), 404
     return jsonify(region)
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 def main() -> None:
