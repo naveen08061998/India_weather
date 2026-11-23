@@ -125,6 +125,8 @@ select#sort-select {
 .nh-route { font-size: 0.92rem; font-weight: 600; line-height: 1.3; }
 .nh-length { color: var(--yellow); font-weight: 700; font-size: 1rem; }
 .nh-card.historic .nh-length { color: var(--ink-soft); }
+.nh-card { position: relative; }
+.bookmark-btn { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 1.1rem; cursor: pointer; color: var(--yellow); line-height: 1; }
 .nh-states { font-size: 0.78rem; color: var(--ink-soft); margin-top: 6px; }
 .tag-historic {
   display: inline-block; margin-top: 6px; font-size: 0.68rem; padding: 2px 8px; border-radius: 10px;
@@ -261,6 +263,7 @@ def _nh_card(h: dict) -> str:
     return f'''
 <div class="nh-card {historic_cls}" data-number="{h['number'].lower()}" data-route="{h['route'].lower()}"
      data-status="{h['status']}" data-length="{h['length_km']}" onclick="showNhDetail('{h['number']}')">
+  <button type="button" class="bookmark-btn" data-number="{h['number']}" onclick="event.stopPropagation(); toggleBookmark(this)" aria-label="Bookmark {h['number']}" aria-pressed="false">☆</button>
   <div class="nh-head">
     <div class="nh-shield">{h['number'].replace(' (historic)', '').replace('NH', 'NH ')}</div>
     <div class="nh-route">{h['route']}</div>
@@ -374,6 +377,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>India Highways</title>
+<meta name="description" content="National Highway corridors, state-highway share and road-network stats across India, with an interactive map and compare tool."/>
+<meta property="og:title" content="India Highways"/>
+<meta property="og:description" content="National Highway corridors, state-highway share and road-network stats across India."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#ffc93c"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="India Highways"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%A3%EF%B8%8F%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -432,6 +447,7 @@ def build_html(payload: dict) -> str:
     </select>
     <button class="chip" id="map-toggle-btn" onclick="toggleMap()" aria-expanded="false">Map View</button>
     <button class="chip" onclick="openCompare()">Compare</button>
+    <button class="chip" id="bookmark-chip" onclick="toggleBookmarkFilter()">⭐ Bookmarked</button>
   </div>
   <p id="count-line" role="status" aria-live="polite"></p>
   <div id="map-view"></div>
@@ -539,16 +555,43 @@ function setNhFilter(f, btn) {{
 
 function filterNh() {{
   const q = document.getElementById('search').value.trim().toLowerCase();
+  const bm = _bookmarks();
   let shown = 0;
   document.querySelectorAll('.nh-card').forEach(card => {{
     const matchesText = card.dataset.number.includes(q) || card.dataset.route.includes(q);
     const matchesFilter = nhFilter === 'all' || card.dataset.status === nhFilter;
-    const pass = matchesText && matchesFilter;
+    let pass = matchesText && matchesFilter;
+    if (pass && bookmarkFilterOn) pass = bm.includes(card.querySelector('.bookmark-btn').dataset.number);
     card.style.display = pass ? '' : 'none';
     if (pass) shown++;
   }});
   document.getElementById('count-line').textContent = `Showing ${{shown}} of {len(nh_list)} highways`;
 }}
+
+function _bookmarks() {{
+  try {{ return JSON.parse(localStorage.getItem('highways_bookmarks') || '[]'); }} catch (e) {{ return []; }}
+}}
+function toggleBookmark(btn) {{
+  const number = btn.dataset.number;
+  let list = _bookmarks();
+  const i = list.indexOf(number);
+  if (i >= 0) {{ list.splice(i, 1); btn.textContent = '☆'; btn.setAttribute('aria-pressed', 'false'); }}
+  else {{ list.push(number); btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  localStorage.setItem('highways_bookmarks', JSON.stringify(list));
+  if (bookmarkFilterOn) filterNh();
+}}
+let bookmarkFilterOn = false;
+function toggleBookmarkFilter() {{
+  bookmarkFilterOn = !bookmarkFilterOn;
+  document.getElementById('bookmark-chip').classList.toggle('active', bookmarkFilterOn);
+  filterNh();
+}}
+(function initBookmarks() {{
+  const bm = _bookmarks();
+  document.querySelectorAll('.bookmark-btn').forEach(btn => {{
+    if (bm.includes(btn.dataset.number)) {{ btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  }});
+}})();
 
 function sortNh() {{
   const mode = document.getElementById('sort-select').value;
@@ -785,6 +828,12 @@ document.getElementById('featured-banner').addEventListener('keydown', e => {{
 }});
 
 filterNh();
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 
 </body>

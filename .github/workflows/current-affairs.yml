@@ -171,7 +171,7 @@ jobs:
       - name: Assemble multi-app Pages artifact
         run: |
           rm -rf site
-          mkdir -p site/weather/static site/current-affairs/static site/railways site/stock-market site/air-quality/static site/gov-updates/static site/borders/static site/highways site/abbreviations/static site/short-news
+          mkdir -p site/weather/static site/current-affairs/static site/railways site/stock-market site/air-quality/static site/gov-updates/static site/borders/static site/highways/static site/abbreviations/static site/short-news
 
           cp india_weather/weathers/india_weather_report.html site/weather/index.html
           cp static/manifest.json site/weather/manifest.json
@@ -204,6 +204,10 @@ jobs:
           cp india_borders/static/icon-192.png site/borders/static/icon-192.png
           cp india_borders/static/icon-512.png site/borders/static/icon-512.png
           [ -f india_highways/network/india_highways_report.html ] && cp india_highways/network/india_highways_report.html site/highways/index.html
+          cp india_highways/static/manifest.json site/highways/manifest.json
+          cp india_highways/static/sw.js site/highways/sw.js
+          cp india_highways/static/icon-192.png site/highways/static/icon-192.png
+          cp india_highways/static/icon-512.png site/highways/static/icon-512.png
           [ -f abbreviations/lexicon/abbreviations_report.html ] && cp abbreviations/lexicon/abbreviations_report.html site/abbreviations/index.html
           cp abbreviations/static/manifest.json site/abbreviations/manifest.json
           cp abbreviations/static/sw.js site/abbreviations/sw.js
