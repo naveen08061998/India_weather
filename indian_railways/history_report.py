@@ -81,6 +81,13 @@ def build_history_html() -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Indian Railways — History &amp; Technology</title>
+<meta name="description" content="A timeline of Indian Railways history, technology milestones, a railway glossary and safety history."/>
+<meta property="og:title" content="Indian Railways — History &amp; Technology"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#fb7185"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%86%3C/text%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"/>
@@ -359,6 +366,12 @@ if (localStorage.getItem('ir_theme') === 'light') {{
   document.getElementById('fact-bar-text').innerHTML = `<b>On This Day:</b> ${{title}} (${{year}}) — scrolled to below.`;
   document.getElementById('fact-bar').style.display = 'flex';
 }})();
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 </body>
 </html>"""

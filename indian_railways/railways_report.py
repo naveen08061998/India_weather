@@ -70,6 +70,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Indian Railways Train Tracker</title>
+<meta name="description" content="Search and track Indian Railways trains by number, name or route — simulated live status, fare estimator, coach layout, weather at every halt and more."/>
+<meta property="og:title" content="Indian Railways Train Tracker"/>
+<meta property="og:description" content="Search and track Indian Railways trains by number, name or route with simulated live status."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#fb7185"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="IR Tracker"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9A%86%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet"/>
@@ -235,6 +247,11 @@ def build_html(payload: dict) -> str:
     padding: 3px 10px; border-radius: 999px; font-size: .64rem; font-weight: 700;
     color: #fff; background: var(--cc, #fb7185); letter-spacing: .02em; flex-shrink: 0;
   }}
+  .bookmark-btn {{
+    background: none; border: none; cursor: pointer; font-size: 1rem; line-height: 1;
+    color: var(--muted); padding: 0; flex-shrink: 0;
+  }}
+  .bookmark-btn[aria-pressed="true"] {{ color: #f59e0b; }}
   .train-name {{ font-size: .95rem; font-weight: 700; line-height: 1.35; }}
   .route-line {{ font-size: .78rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }}
   .route-line b {{ color: var(--text); font-weight: 600; }}
@@ -1557,6 +1574,7 @@ function renderCards(query) {{
     <div class="card" style="--cc:${{color}}">
       <div class="card-top">
         <span class="train-no">#${{t.number}}</span>
+        <button type="button" class="bookmark-btn" data-train="${{t.number}}" onclick="event.stopPropagation(); toggleTrainBookmark(this)" aria-label="Bookmark train ${{t.number}}" aria-pressed="${{_trainBookmarks().includes(t.number)}}">${{_trainBookmarks().includes(t.number) ? '★' : '☆'}}</button>
         <span class="type-badge" style="--cc:${{color}}">${{t.type}}</span>
       </div>
       <div class="train-name">${{t.name}}</div>
@@ -1671,6 +1689,18 @@ async function toggleStoryBox(number, btnEl) {{
 // otherwise silently drop earlier picks from the comparison.
 const _compareTrains = new Map();
 const COMPARE_MAX = 3;
+
+function _trainBookmarks() {{
+  try {{ return JSON.parse(localStorage.getItem('railways_bookmarks') || '[]'); }} catch (e) {{ return []; }}
+}}
+function toggleTrainBookmark(btn) {{
+  const number = btn.dataset.train;
+  let list = _trainBookmarks();
+  const i = list.indexOf(number);
+  if (i >= 0) {{ list.splice(i, 1); btn.textContent = '☆'; btn.setAttribute('aria-pressed', 'false'); }}
+  else {{ list.push(number); btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+  localStorage.setItem('railways_bookmarks', JSON.stringify(list));
+}}
 
 function toggleCompare(number, btnEl) {{
   if (_compareTrains.has(number)) {{
@@ -2142,6 +2172,12 @@ async function _refreshHeaderStats() {{
 }}
 _refreshHeaderStats();
 setInterval(_refreshHeaderStats, 60000);
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 </body>
 </html>"""

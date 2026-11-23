@@ -40,6 +40,7 @@ BASE_DIR = Path(__file__).parent
 TRAINS_DIR = BASE_DIR / "trains"
 HTML_FILE = TRAINS_DIR / "railways_report.html"
 HISTORY_HTML_FILE = TRAINS_DIR / "railway_history.html"
+STATIC_DIR = BASE_DIR / "static"
 
 _CACHE_TTL_S = 30
 _cache: dict = {"ts": 0.0, "payload": None}
@@ -91,6 +92,24 @@ def index():
 def history_page():
     _ensure_history()
     return send_from_directory(str(TRAINS_DIR), "railway_history.html")
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 @app.route("/api/trains")

@@ -171,7 +171,7 @@ jobs:
       - name: Assemble multi-app Pages artifact
         run: |
           rm -rf site
-          mkdir -p site/weather/static site/current-affairs/static site/railways site/stock-market site/air-quality/static site/gov-updates/static site/borders/static site/highways/static site/abbreviations/static site/short-news
+          mkdir -p site/weather/static site/current-affairs/static site/railways/static site/stock-market site/air-quality/static site/gov-updates/static site/borders/static site/highways/static site/abbreviations/static site/short-news
 
           cp india_weather/weathers/india_weather_report.html site/weather/index.html
           cp static/manifest.json site/weather/manifest.json
@@ -186,6 +186,10 @@ jobs:
           cp current_affairs/static/icon-512.png site/current-affairs/static/icon-512.png
           cp indian_railways/trains/railways_report.html site/railways/index.html
           cp indian_railways/trains/railway_history.html site/railways/history.html
+          cp indian_railways/static/manifest.json site/railways/manifest.json
+          cp indian_railways/static/sw.js site/railways/sw.js
+          cp indian_railways/static/icon-192.png site/railways/static/icon-192.png
+          cp indian_railways/static/icon-512.png site/railways/static/icon-512.png
 
           [ -f stock_market/market/stock_market_report.html ] && cp stock_market/market/stock_market_report.html site/stock-market/index.html
           [ -f air_quality/aqi/air_quality_report.html ] && cp air_quality/aqi/air_quality_report.html site/air-quality/index.html
