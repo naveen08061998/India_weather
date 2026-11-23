@@ -35,6 +35,7 @@ BASE_DIR    = Path(__file__).parent
 NEWS_DIR    = BASE_DIR / "news"
 NEWS_JSON   = NEWS_DIR / "current_affairs_data.json"
 NEWS_HTML   = NEWS_DIR / "current_affairs_report.html"
+STATIC_DIR  = BASE_DIR / "static"
 
 NEWS_DIR.mkdir(exist_ok=True)
 
@@ -152,6 +153,24 @@ def api_news_category(category_key: str):
     if category_key not in cats:
         return jsonify({"error": f"Category '{category_key}' not found."}), 404
     return jsonify(cats[category_key])
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 @app.route("/api/refresh", methods=["POST"])

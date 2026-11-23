@@ -82,6 +82,13 @@ def build_history_html(snapshot: dict, available_dates: list[str],
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>History: {date_label} — Current Affairs Daily</title>
+<meta name="description" content="Archived current affairs digest for {date_label} — categorized news for UPSC, SSC, Banking and State PSC exam preparation."/>
+<meta property="og:title" content="Current Affairs History — {date_label}"/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#b91c1c"/>
+<link rel="manifest" href="../manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%B0%3C/text%3E%3C/svg%3E"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
@@ -365,6 +372,12 @@ function toggleTheme() {{
   localStorage.setItem('ca_theme', isLight ? 'light' : 'dark');
 }}
 if (localStorage.getItem('ca_theme') === 'light') toggleTheme();
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("../sw.js", {{ scope: "../" }}).catch(() => {{}});
+  }});
+}}
 </script>
 
 </body>

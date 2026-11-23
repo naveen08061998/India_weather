@@ -38,6 +38,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Current Affairs Daily — {date_label}</title>
+<meta name="description" content="Daily current affairs digest for UPSC, SSC, Banking, State PSC and Railways exam aspirants — categorized, searchable, with a daily quiz."/>
+<meta property="og:title" content="Current Affairs Daily"/>
+<meta property="og:description" content="Daily current affairs digest for competitive exam aspirants, categorized and searchable."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#b91c1c"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Current Affairs"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%B0%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet"/>
@@ -322,6 +334,11 @@ def build_html(payload: dict) -> str:
   .quiz-options button.wrong {{ background: #991b1b; border-color: #991b1b; color: #fff; }}
   .quiz-explain {{ display: none; margin-top: 10px; font-size: .78rem; color: var(--muted); }}
   .quiz-q.answered .quiz-explain {{ display: block; }}
+
+  @media print {{
+    header, .tricolor, .tabs, .source-filter-row, #search, .skip-link {{ display: none !important; }}
+    body {{ background: #fff !important; color: #000 !important; }}
+  }}
 </style>
 </head>
 <body>
@@ -649,6 +666,12 @@ document.addEventListener('DOMContentLoaded', () => {{
   const first = document.querySelector('.tab-btn');
   if (first) switchTab(first.dataset.key);
 }});
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 </body>
 </html>"""
