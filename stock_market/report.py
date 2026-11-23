@@ -261,6 +261,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Indian Stock Market — {date_label}</title>
+<meta name="description" content="Live Indian stock market dashboard — Nifty50, Sensex, Bank Nifty, FX &amp; commodities, sector heatmap, watchlist and top 30 NSE large-caps."/>
+<meta property="og:title" content="Indian Stock Market"/>
+<meta property="og:description" content="Live Nifty50/Sensex/Bank Nifty, FX &amp; commodities, sector heatmap and top NSE large-caps."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#f5c451"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Stock Market"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%88%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
   :root {{
@@ -412,9 +424,20 @@ def build_html(payload: dict) -> str:
 
   footer {{ text-align:center; color:var(--muted); font-size:.74rem; padding:30px; }}
   .disclaimer {{ padding:16px 20px; font-size:.76rem; color:var(--muted); margin-top:22px; line-height:1.6; }}
+  .skip-link {{
+    position:absolute; left:-999px; top:0; background:var(--accent); color:#1a1200;
+    padding:10px 16px; z-index:2000; border-radius:0 0 8px 0; font-size:.85rem; font-weight:700;
+  }}
+  .skip-link:focus {{ left:0; }}
+  .visually-hidden {{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }}
+  @media print {{
+    .ticker-bar, header, .toolbar, .modal-overlay, .skip-link {{ display:none !important; }}
+    body {{ background:#fff !important; color:#000 !important; }}
+  }}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="ticker-bar"><div class="ticker-track">{ticker_items} &nbsp;&bull;&nbsp; {ticker_items}</div></div>
 <header>
   <div class="brand">
@@ -426,13 +449,13 @@ def build_html(payload: dict) -> str:
   </div>
   <div class="stats">
     <a href="../" class="stat-chip" style="text-decoration:none;cursor:pointer" title="Back to India Agents Hub">🏠 Home</a>
-    <span class="stat-chip">{status_html}</span>
+    <span class="stat-chip" role="status" aria-live="polite">{status_html}</span>
     <span class="stat-chip">Synced <b id="generated-at">{generated_at}</b></span>
     <span class="stat-chip">🟢 Up <b>{gainers}</b></span>
     <span class="stat-chip">🔴 Down <b>{losers}</b></span>
   </div>
 </header>
-<main>
+<main id="main-content">
   <div class="section-head">Indices <button class="sort-btn" style="margin-left:auto" onclick="openIndexCompare()">📊 Compare Indices</button></div>
   <div class="indices-grid">
     {index_cards}
@@ -450,6 +473,7 @@ def build_html(payload: dict) -> str:
 
   <div class="section-head">Top Movers <span>30 curated NSE large-caps</span></div>
   <div class="toolbar">
+    <label for="search" class="visually-hidden">Search company or sector</label>
     <input id="search" type="text" placeholder="🔍 Search company or sector…" oninput="filterStocks()"/>
     <button class="sort-btn active" id="sort-gainers" onclick="sortStocks('gainers')">Top Gainers</button>
     <button class="sort-btn" id="sort-losers" onclick="sortStocks('losers')">Top Losers</button>
@@ -638,6 +662,12 @@ def build_html(payload: dict) -> str:
     document.getElementById('sim-result').innerHTML =
       lines.join('<br>') +
       `<br><br><b class="${{gain >= 0 ? 'up' : 'down'}}">TOTAL: ₹${{total.toFixed(0)}} (${{gain >= 0 ? '+' : ''}}₹${{gain.toFixed(0)}})</b>`;
+  }}
+
+  if ("serviceWorker" in navigator) {{
+    window.addEventListener("load", () => {{
+      navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+    }});
   }}
 </script>
 </body>

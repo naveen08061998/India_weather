@@ -32,6 +32,7 @@ BASE_DIR    = Path(__file__).parent
 MARKET_DIR  = BASE_DIR / "market"
 MARKET_JSON = MARKET_DIR / "stock_market_data.json"
 MARKET_HTML = MARKET_DIR / "stock_market_report.html"
+STATIC_DIR  = BASE_DIR / "static"
 
 MARKET_DIR.mkdir(exist_ok=True)
 
@@ -123,6 +124,24 @@ def api_refresh():
         return jsonify({"status": "already_running"}), 202
     threading.Thread(target=_run_orchestrator, daemon=True).start()
     return jsonify({"status": "started"}), 202
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 @app.route("/api/status")
