@@ -556,6 +556,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>India Weather Dashboard — 28 States &amp; 8 Union Territories</title>
+  <meta name="description" content="Live weather for every district across all 28 Indian states and 8 union territories, with alerts, cyclone tracking and a weather glossary."/>
+  <meta property="og:title" content="India Weather Dashboard"/>
+  <meta property="og:description" content="Live weather for every district across India, with alerts and cyclone tracking."/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary"/>
   <meta name="theme-color" content="#f97316"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -763,6 +768,11 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       display:flex; justify-content:space-between; align-items:flex-start;
       margin-bottom:.55rem; position:relative; z-index:1;
     }}
+    .bookmark-btn {{
+      background:none; border:none; cursor:pointer; font-size:1rem; line-height:1;
+      color:#64748b; padding:0 0 .2rem; display:block; margin-left:auto;
+    }}
+    .bookmark-btn[aria-pressed="true"] {{ color:#f59e0b; }}
     .city-name   {{ font-size:.93rem; font-weight:700; color:#f1f5f9; line-height:1.25; }}
     .city-region {{ font-size:.6rem; color:#475569; margin-top:.1rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:165px; }}
     .city-region.wrong-location {{ color:#f87171; font-weight:600; }}
@@ -1916,6 +1926,18 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     </svg>`;
   }}
 
+  function _weatherBookmarks() {{
+    try {{ return JSON.parse(localStorage.getItem('weather_bookmarks') || '[]'); }} catch (e) {{ return []; }}
+  }}
+  function toggleDistrictBookmark(btn) {{
+    const key = btn.dataset.bmkey;
+    let list = _weatherBookmarks();
+    const i = list.indexOf(key);
+    if (i >= 0) {{ list.splice(i, 1); btn.textContent = '☆'; btn.setAttribute('aria-pressed', 'false'); }}
+    else {{ list.push(key); btn.textContent = '★'; btn.setAttribute('aria-pressed', 'true'); }}
+    localStorage.setItem('weather_bookmarks', JSON.stringify(list));
+  }}
+
   function renderCard(el, d) {{
     const ic   = icon(d.desc);
     const rows = d.forecast.map(f=>`
@@ -1967,6 +1989,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
       ? `<div class="city-alerts">${{distAlerts.map(a=>`<span class="alert-badge" style="background:${{a.color}}">${{a.icon}} ${{a.label}}</span>`).join("")}}</div>`
       : "";
 
+    const _bmKey = `${{_stateObj?.name || ""}}::${{d.city}}`;
+    const _bmOn  = _weatherBookmarks().includes(_bmKey);
+
     el.innerHTML = `
       <div class="city-card-top">
         <div>
@@ -1975,6 +2000,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
           <div class="city-obs">${{d.obsTime}}</div>
         </div>
         <div style="text-align:right">
+          <button type="button" class="bookmark-btn" data-bmkey="${{_bmKey}}" onclick="event.stopPropagation(); toggleDistrictBookmark(this)" aria-label="Bookmark ${{displayName(d.city)}}" aria-pressed="${{_bmOn}}">${{_bmOn ? '★' : '☆'}}</button>
           <div class="city-icon">${{ic}}</div>
           <div class="city-temp">${{d.temp}}&deg;C</div>
         </div>
