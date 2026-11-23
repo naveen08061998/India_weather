@@ -33,6 +33,7 @@ BASE_DIR    = Path(__file__).parent
 DIGEST_DIR  = BASE_DIR / "digest"
 DIGEST_JSON = DIGEST_DIR / "short_news_data.json"
 DIGEST_HTML = DIGEST_DIR / "short_news_report.html"
+STATIC_DIR  = BASE_DIR / "static"
 
 DIGEST_DIR.mkdir(exist_ok=True)
 
@@ -128,6 +129,24 @@ def api_refresh():
 @app.route("/api/status")
 def api_status():
     return jsonify(_status)
+
+
+@app.route("/manifest.json")
+def manifest():
+    return send_from_directory(str(STATIC_DIR), "manifest.json")
+
+
+@app.route("/sw.js")
+def service_worker():
+    resp = send_from_directory(str(STATIC_DIR), "sw.js")
+    resp.headers["Content-Type"] = "application/javascript"
+    resp.headers["Service-Worker-Allowed"] = "/"
+    return resp
+
+
+@app.route("/static/<path:filename>")
+def static_files(filename):
+    return send_from_directory(str(STATIC_DIR), filename)
 
 
 def main() -> None:

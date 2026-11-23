@@ -129,6 +129,11 @@ header.hero p.meta { margin: 8px 0 0; color: rgba(255,255,255,0.8); font-size: 0
 
 footer { text-align: center; margin-top: 40px; padding: 18px; color: rgba(255,255,255,0.85); font-size: 0.78rem; }
 @media (max-width: 560px) { header.hero h1 { font-size: 1.6rem; } }
+
+@media print {
+  .skip-link, .toolbar, .stats-strip, .deck-nav, footer { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+}
 """
 
 
@@ -181,6 +186,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Short News — Quick Read</title>
+<meta name="description" content="Every news story condensed to 60 words or less — the full picture, in seconds, across India/World/Business/Tech/Sports/Entertainment/Health."/>
+<meta property="og:title" content="Short News — Quick Read"/>
+<meta property="og:description" content="Every news story condensed to 60 words or less — the full picture, in seconds."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#ff5e57"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Quick Read"/>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="static/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>{CSS}</style>
@@ -360,6 +377,12 @@ document.addEventListener('keydown', e => {{
 }});
 
 filterStories();
+
+if ("serviceWorker" in navigator) {{
+  window.addEventListener("load", () => {{
+    navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+  }});
+}}
 </script>
 
 </body>
