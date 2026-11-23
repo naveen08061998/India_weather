@@ -171,7 +171,7 @@ jobs:
       - name: Assemble multi-app Pages artifact
         run: |
           rm -rf site
-          mkdir -p site/weather/static site/current-affairs/static site/railways site/stock-market site/air-quality/static site/gov-updates site/borders site/highways site/abbreviations/static site/short-news
+          mkdir -p site/weather/static site/current-affairs/static site/railways site/stock-market site/air-quality/static site/gov-updates/static site/borders site/highways site/abbreviations/static site/short-news
 
           cp india_weather/weathers/india_weather_report.html site/weather/index.html
           cp static/manifest.json site/weather/manifest.json
@@ -194,6 +194,10 @@ jobs:
           cp air_quality/static/icon-192.png site/air-quality/static/icon-192.png
           cp air_quality/static/icon-512.png site/air-quality/static/icon-512.png
           [ -f gov_updates/updates/gov_updates_report.html ] && cp gov_updates/updates/gov_updates_report.html site/gov-updates/index.html
+          cp gov_updates/static/manifest.json site/gov-updates/manifest.json
+          cp gov_updates/static/sw.js site/gov-updates/sw.js
+          cp gov_updates/static/icon-192.png site/gov-updates/static/icon-192.png
+          cp gov_updates/static/icon-512.png site/gov-updates/static/icon-512.png
           [ -f india_borders/borders/india_borders_report.html ] && cp india_borders/borders/india_borders_report.html site/borders/index.html
           [ -f india_highways/network/india_highways_report.html ] && cp india_highways/network/india_highways_report.html site/highways/index.html
           [ -f abbreviations/lexicon/abbreviations_report.html ] && cp abbreviations/lexicon/abbreviations_report.html site/abbreviations/index.html

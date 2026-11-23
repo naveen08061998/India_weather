@@ -44,7 +44,7 @@ def _exam_card(e: dict, current_month: str) -> str:
       <div class="bulletin-name">{e['name']}</div>
       <div class="bulletin-body">{e['body']} &middot; <span class="bulletin-cat">{e['category']}</span></div>
       <div class="bulletin-dates">Notification: <b>{e['notify_month']}</b> &nbsp;|&nbsp; Exam: <b>{e['exam_month']}</b></div>
-      <div class="bulletin-countdown" data-notify="{e['notify_month'].replace('"', '&quot;')}">&nbsp;</div>
+      <div class="bulletin-countdown" data-notify="{e['notify_month'].replace('"', '&quot;')}" role="status" aria-live="polite">&nbsp;</div>
       <div class="bulletin-note">{e['note']}</div>
       <a class="bulletin-link" href="{e['site']}" target="_blank" rel="noopener noreferrer">Official website &rarr;</a>
     </div>"""
@@ -94,6 +94,18 @@ def build_html(payload: dict) -> str:
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Government Schemes &amp; Exam Tracker — {date_label}</title>
+<meta name="description" content="Live government scheme announcements and exam/recruitment news, plus a curated UPSC/SSC/IBPS/RRB exam notification calendar."/>
+<meta property="og:title" content="Government Schemes &amp; Exam Tracker"/>
+<meta property="og:description" content="Live scheme and exam/recruitment news with a curated exam notification calendar."/>
+<meta property="og:type" content="website"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="theme-color" content="#122a52"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Gov Updates"/>
+<link rel="manifest" href="manifest.json"/>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%9B%EF%B8%8F%3C/text%3E%3C/svg%3E"/>
+<link rel="apple-touch-icon" href="static/icon-192.png"/>
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
   :root {{
@@ -245,9 +257,20 @@ def build_html(payload: dict) -> str:
     padding:14px 18px; font-size:.78rem; color:var(--muted); margin:22px 0; font-style:italic;
   }}
   footer {{ text-align:center; color:var(--muted); font-size:.72rem; padding:24px; }}
+  .skip-link {{
+    position:absolute; left:-999px; top:0; background:var(--navy); color:#fff;
+    padding:10px 16px; z-index:2000; border-radius:0 0 8px 0; font-size:.85rem;
+  }}
+  .skip-link:focus {{ left:0; }}
+  .visually-hidden {{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; }}
+  @media print {{
+    header, .toolbar, .chip-row, .compare-overlay, .skip-link {{ display:none !important; }}
+    body {{ background:#fff !important; color:#000 !important; }}
+  }}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <div class="tricolor"></div>
 <header>
   <div class="letterhead">
@@ -265,7 +288,7 @@ def build_html(payload: dict) -> str:
   </div>
   <button id="theme-btn" onclick="toggleTheme()">📄 Paper</button>
 </header>
-<main>
+<main id="main-content">
   <div class="section-title">Scheme &amp; Policy Announcements <span>(live news, keyword-filtered)</span></div>
   <div class="article-grid">
     {scheme_cards}
@@ -280,6 +303,7 @@ def build_html(payload: dict) -> str:
     <button id="compare-btn" onclick="openCompare()">⚖️ Compare 2 Exams</button>
   </div>
   <div class="toolbar">
+    <label for="search" class="visually-hidden">Search exam, body or category</label>
     <input id="search" type="text" placeholder="Search exam, body or category…" oninput="filterExams()"/>
   </div>
   <div class="chip-row" id="category-chips">
@@ -292,6 +316,7 @@ def build_html(payload: dict) -> str:
 
   <div class="section-title">Glossary <span>(common scheme, exam &amp; institution terms)</span></div>
   <div class="toolbar">
+    <label for="gloss-search" class="visually-hidden">Search a glossary term</label>
     <input id="gloss-search" type="text" placeholder="Search a term…" oninput="filterGlossary()"/>
   </div>
   <div class="chip-row" id="glossary-chips">
@@ -465,6 +490,12 @@ def build_html(payload: dict) -> str:
   document.addEventListener('keydown', (e) => {{
     if (e.key === 'Escape' && document.getElementById('compare-overlay').classList.contains('open')) closeCompare();
   }});
+
+  if ("serviceWorker" in navigator) {{
+    window.addEventListener("load", () => {{
+      navigator.serviceWorker.register("sw.js", {{ scope: "./" }}).catch(() => {{}});
+    }});
+  }}
 </script>
 </body>
 </html>"""
